@@ -14,8 +14,8 @@ export default function QuotationsTable({ rows }: { rows: QuoteOverviewItem[] })
   const navigate = useNavigate()
 
   return (
-    <div className="ds-table-wrap">
-      <table className="ds-table qt-table">
+    <div className="ds-table-wrap ds-table-wrap--cards">
+      <table className="ds-table ds-table--cards qt-table">
         <thead>
           <tr>
             <th>{t('table.supplier')}</th>
@@ -42,7 +42,7 @@ export default function QuotationsTable({ rows }: { rows: QuoteOverviewItem[] })
                     <span className="qt-source">{t(`source.${quote.source}`)}</span>
                   </span>
                 </td>
-                <td>
+                <td data-label={t('table.request')}>
                   <div className="qt-request">
                     <Tip content={quote.rfq_name}>
                       <Link to={`/rfqs/${quote.rfq_id}`} className="qt-request-name" onClick={event => event.stopPropagation()}>
@@ -52,10 +52,10 @@ export default function QuotationsTable({ rows }: { rows: QuoteOverviewItem[] })
                     {quote.rfq_number && <span className="ds-id">{quote.rfq_number}</span>}
                   </div>
                 </td>
-                <td>
+                <td data-label={t('table.status')}>
                   <QuoteStatusChip status={quoteListStatus(quote)} priceMissing={missingPrice} />
                 </td>
-                <td className="qt-num">
+                <td className="qt-num" data-label={t('table.normalized')}>
                   {quote.normalized_price != null ? (
                     <span className="qt-price">
                       <Money value={quote.normalized_price} currency={quote.normalized_currency} digits="unit" />
@@ -65,7 +65,7 @@ export default function QuotationsTable({ rows }: { rows: QuoteOverviewItem[] })
                     <span className="qt-muted">{missingPrice ? t('table.noPrice') : t('table.notComparable')}</span>
                   )}
                 </td>
-                <td className="qt-num">
+                <td className="qt-num" data-label={t('table.rawPrice')}>
                   {quote.raw_price != null ? (
                     <span className="qt-price">
                       <Money value={quote.raw_price} currency={quote.raw_currency} digits="unit" />
@@ -73,12 +73,12 @@ export default function QuotationsTable({ rows }: { rows: QuoteOverviewItem[] })
                     </span>
                   ) : <span className="qt-muted" aria-label={t('table.notStated')}>—</span>}
                 </td>
-                <td className="qt-num">
+                <td className="qt-num" data-label={t('table.moq')}>
                   {quote.raw_quantity_moq != null
                     ? <span className="qy-num">{fmt.number(quote.raw_quantity_moq)}</span>
                     : <span className="qt-muted" aria-label={t('table.notStated')}>—</span>}
                 </td>
-                <td className="qt-num">
+                <td className="qt-num" data-label={t('table.leadTime')}>
                   {quote.raw_delivery_lead_time_days != null
                     ? <span className="qy-num">{t('table.leadDays', { count: quote.raw_delivery_lead_time_days })}</span>
                     : <span className="qt-muted" aria-label={t('table.notStated')}>—</span>}

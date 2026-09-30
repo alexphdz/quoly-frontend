@@ -17,8 +17,8 @@ export default function SupplierDirectoryList({
   }
 
   return (
-    <div className="ds-table-wrap">
-      <table className="ds-table">
+    <div className="ds-table-wrap ds-table-wrap--cards">
+      <table className="ds-table ds-table--cards">
         <thead>
           <tr>
             <th>{t('suppliers.directory.columns.company')}</th>
@@ -39,7 +39,7 @@ export default function SupplierDirectoryList({
                   </Link>
                   {place && <div className="ds-request-meta">{place}</div>}
                 </td>
-                <td>
+                <td data-label={t('suppliers.directory.columns.contact')}>
                   <div className="sup-contact-name">{primary?.name || supplier.display_name}</div>
                   {(primary?.email || supplier.primary_email) && (
                     <div className="sup-contact-email" title={primary?.email || supplier.primary_email}>
@@ -47,7 +47,7 @@ export default function SupplierDirectoryList({
                     </div>
                   )}
                 </td>
-                <td>
+                <td data-label={t('suppliers.directory.columns.tags')}>
                   <div className="sup-tags">
                     {(supplier.tags ?? []).slice(0, 4).map(tag => (
                       <span key={tag} className="ds-pill ds-pill-muted">{tag}</span>
@@ -55,7 +55,7 @@ export default function SupplierDirectoryList({
                   </div>
                 </td>
                 {onRestore && (
-                  <td className="sup-restore">
+                  <td className="sup-restore ds-cell-actions">
                     <button
                       type="button"
                       className="ds-btn ds-btn-text"

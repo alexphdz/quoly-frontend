@@ -97,8 +97,8 @@ export default function RequestsLedgerTable({ rfqs }: { rfqs: RFQRead[] }) {
   const navigate = useNavigate()
 
   return (
-    <div className="ds-table-wrap">
-      <table className="ds-table qt-table rq-table">
+    <div className="ds-table-wrap ds-table-wrap--cards">
+      <table className="ds-table ds-table--cards qt-table rq-table">
         <thead>
           <tr>
             <th>{t('dashboard.table.request')}</th>
@@ -132,14 +132,14 @@ export default function RequestsLedgerTable({ rfqs }: { rfqs: RFQRead[] }) {
                     <span className="ds-id">{rfqDisplayNumber(rfq)}</span>
                   </div>
                 </td>
-                <td><StatusCell rfq={rfq} /></td>
-                <td className="qt-num">
+                <td data-label={t('dashboard.table.status')}><StatusCell rfq={rfq} /></td>
+                <td className="qt-num" data-label={t('dashboard.table.quantity')}>
                   <span className="qy-num">{fmt.number(rfq.quantity)}</span>
                   <span className="qt-unit"> {unitLabel}</span>
                 </td>
-                <td><QuotesCell rfq={rfq} /></td>
-                <td><DeadlineCell rfq={rfq} /></td>
-                <td className="qt-num rq-muted-text">
+                <td data-label={t('dashboard.table.replies')}><QuotesCell rfq={rfq} /></td>
+                <td data-label={t('dashboard.table.deadline')}><DeadlineCell rfq={rfq} /></td>
+                <td className="qt-num rq-muted-text" data-label={t('dashboard.table.updated')}>
                   {fmt.date(rfq.updated_at, { day: 'numeric', month: 'short' })}
                 </td>
                 <td className="qt-actions" onClick={event => event.stopPropagation()}>

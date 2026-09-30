@@ -348,8 +348,16 @@
 
 @media (max-width: 900px) {
   .ds-page {
-    width: min(100% - 32px, 720px);
+    width: min(100%, 760px);
+    padding-right: max(var(--page-gutter), var(--safe-right));
+    padding-left: max(var(--page-gutter), var(--safe-left));
     padding-top: 20px;
+  }
+
+  /* Comfortable tap target for the search entry in the drawer */
+  .sidebar-search {
+    height: 44px;
+    font-size: 15px;
   }
 
   .mobile-bar .brand-mark {
@@ -373,10 +381,18 @@
   }
 }
 
+/* The ⌘K hint is meaningless on touch — hide it where there's no fine pointer */
+@media (pointer: coarse) {
+  .sidebar-search kbd {
+    display: none;
+  }
+}
+
 @media (max-width: 640px) {
   .ds-page {
-    width: min(100% - 32px, 720px);
-    padding: 16px 0 48px;
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: max(40px, var(--safe-bottom));
   }
 
   .ds-toolbar,

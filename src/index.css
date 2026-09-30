@@ -38,6 +38,25 @@
   --radius-control: 6px;
   --radius-card: 8px;
   --sidebar-width: 228px;
+
+  /* Responsive system — standardized breakpoints (use these values in @media,
+     custom props can't be read inside media queries):
+       sm 480px · md 768px · lg 1024px · xl 1280px
+     Shell switches to the mobile drawer at md (768px). */
+
+  /* Safe-area insets (notch / home indicator), 0 on non-notched devices */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+
+  /* Page gutter — fluid: 16px on phones, up to 32px on wider screens */
+  --page-gutter: clamp(16px, 4vw, 32px);
+
+  /* Fluid type scale (min .. max across the sm→lg range) */
+  --fs-display: clamp(24px, 5vw, 32px);
+  --fs-title: clamp(20px, 3.4vw, 24px);
+  --fs-heading: clamp(17px, 2.4vw, 20px);
 }
 
 [data-theme='dark'] {
@@ -79,6 +98,12 @@
   box-sizing: border-box;
 }
 
+html {
+  /* Stop iOS/Safari from auto-inflating text in landscape */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 html,
 body,
 #root {
@@ -89,6 +114,10 @@ body {
   margin: 0;
   background: var(--bg-app);
   color: var(--text-primary);
+  /* Avoid rubber-band chaining to parent scroll on mobile */
+  overscroll-behavior-y: none;
+  /* Never allow accidental horizontal scroll on small screens */
+  overflow-x: hidden;
 }
 
 button,
@@ -96,6 +125,22 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+/* Comfortable tap feedback without the grey iOS flash */
+a,
+button,
+[role='button'] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Inputs at >=16px on touch screens so iOS Safari doesn't zoom on focus */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: max(16px, 1em);
+  }
 }
 
 a {
@@ -115,6 +160,7 @@ a {
 
 .app-shell {
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg-app);
 }
 
@@ -127,10 +173,13 @@ a {
   display: flex;
   flex-direction: column;
   z-index: 30;
+  /* Keep brand + nav clear of a notch when the drawer is edge-to-edge */
+  padding-left: var(--safe-left);
 }
 
 .app-main {
   min-height: 100vh;
+  min-height: 100dvh;
   padding-left: var(--sidebar-width);
 }
 
@@ -1493,6 +1542,8 @@ textarea.input {
 @media (max-width: 900px) {
   :root {
     --sidebar-width: 0px;
+    /* Height of the sticky mobile top bar incl. notch — used by scrim & drawer */
+    --mobile-bar-h: calc(48px + var(--safe-top));
   }
 
   .mobile-bar {
@@ -1502,8 +1553,8 @@ textarea.input {
     z-index: 40;
     align-items: center;
     gap: 8px;
-    height: 48px;
-    padding: 0 12px;
+    height: var(--mobile-bar-h);
+    padding: var(--safe-top) calc(12px + var(--safe-right)) 0 calc(12px + var(--safe-left));
     background: var(--bg-canvas);
     border-bottom: 1px solid var(--line);
   }
@@ -1519,6 +1570,7 @@ textarea.input {
     background: transparent;
     color: var(--tx-1);
     cursor: pointer;
+    touch-action: manipulation;
   }
 
   .mobile-menu:hover,
@@ -1531,7 +1583,7 @@ textarea.input {
     display: block;
     position: fixed;
     z-index: 25;
-    inset: 48px 0 0;
+    inset: var(--mobile-bar-h) 0 0;
     border: 0;
     background: var(--scrim);
     cursor: pointer;
@@ -1539,14 +1591,20 @@ textarea.input {
 
   .app-sidebar {
     display: flex;
-    top: 48px;
-    width: min(280px, 88vw);
+    top: var(--mobile-bar-h);
+    width: min(300px, 88vw);
+    padding-left: var(--safe-left);
     transform: translateX(-105%);
     transition: transform 180ms ease;
   }
 
   .app-sidebar.is-open {
     transform: translateX(0);
+  }
+
+  /* Keep the signed-in user / settings clear of the home indicator */
+  .sidebar-bottom {
+    padding-bottom: max(12px, var(--safe-bottom));
   }
 
   .nav-item {
@@ -1560,7 +1618,9 @@ textarea.input {
   .page,
   .page-wide,
   .page-ledger {
-    width: min(100% - 32px, 720px);
+    width: min(100%, 760px);
+    padding-right: max(var(--page-gutter), var(--safe-right));
+    padding-left: max(var(--page-gutter), var(--safe-left));
     padding-top: 20px;
   }
 
@@ -1610,8 +1670,9 @@ textarea.input {
   .page,
   .page-wide,
   .page-ledger {
-    width: min(100% - 32px, 720px);
-    padding: 16px 0 48px;
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: max(40px, var(--safe-bottom));
   }
 }
 
