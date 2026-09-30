@@ -1,0 +1,35 @@
+.ds-tabs {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: thin;
+}
+
+.ds-tab {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: -1px;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--tx-body);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &[aria-selected='true'] {
+    color: var(--tx-1);
+    border-bottom-color: var(--accent-line);
+  }
+}
+
+.ds-tab-count {
+  color: var(--tx-2);
+  font-variant-numeric: tabular-nums;
+}

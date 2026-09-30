@@ -1,0 +1,12 @@
+{
+  "specParameters": "Especificación",
+  "buyerAsks": "Espera tu respuesta",
+  "labels": {
+    "quotation": "Cotización",
+    "partial_quotation": "Cotización parcial",
+    "clarification_required": "Aclaración requerida",
+    "acknowledgement": "Acuse de recibo",
+    "declined": "Declinó",
+    "other": "Otro"
+  }
+}

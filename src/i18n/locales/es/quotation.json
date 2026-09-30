@@ -1,0 +1,92 @@
+{
+  "title": "Cotizaciones",
+  "subtitle": "",
+  "loadError": "No se pudieron cargar las cotizaciones. Inténtalo de nuevo.",
+  "empty": {
+    "title": "Aún no hay cotizaciones",
+    "body": ""
+  },
+  "noResults": "Ninguna cotización coincide con estos filtros.",
+  "statusCard": {
+    "title": "Por estado",
+    "total_one": "cotización",
+    "total_other": "cotizaciones"
+  },
+  "byRfq": {
+    "title": "Por solicitud",
+    "hint": "Haz clic en una barra para filtrar",
+    "barLabel": "{{name}}: {{summary}}",
+    "more_one": "+{{count}} solicitud más. Usa el filtro de solicitud abajo.",
+    "more_other": "+{{count}} solicitudes más. Usa el filtro de solicitud abajo."
+  },
+  "filters": {
+    "all": "Todas",
+    "needsReview": "Por revisar",
+    "confirmed": "En la comparación",
+    "rejected": "Quitadas de la comparación",
+    "allRequests": "Todas las solicitudes",
+    "searchPlaceholder": "Proveedor o solicitud",
+    "searchLabel": "Buscar cotizaciones",
+    "clear": "Limpiar filtros",
+    "statusLabel": "Filtrar por estado",
+    "clearRequest": "Quitar filtro de solicitud",
+    "findRequest": "Buscar una solicitud",
+    "noRequest": "Ninguna solicitud coincide"
+  },
+  "source": {
+    "email": "Desde correo",
+    "file": "Archivo",
+    "manual": "Carga manual"
+  },
+  "table": {
+    "supplier": "Proveedor",
+    "kindQuotation": "Cotización",
+    "kindPartial": "Cotización parcial",
+    "request": "Solicitud",
+    "priceAsQuoted": "Precio cotizado",
+    "review": "Revisión",
+    "received": "Recibida",
+    "openRequest": "Abrir solicitud",
+    "noPrice": "Sin precio",
+    "priceMissing": "Falta el precio",
+    "needsReview_one": "{{count}} por revisar",
+    "needsReview_other": "{{count}} por revisar",
+    "status": "Estado",
+    "normalized": "Precio normalizado",
+    "rawPrice": "Precio original",
+    "moq": "MOQ",
+    "leadTime": "Entrega",
+    "completeness": "Completitud",
+    "complete": "Completa",
+    "missing_one": "{{count}} faltante",
+    "missing_other": "{{count}} faltantes",
+    "leadDays": "{{count}} d",
+    "notComparable": "Aún no comparable",
+    "notStated": "No indicado"
+  },
+  "reviewNext": "Revisar siguiente cotización",
+  "reviewNextNone": "No hay cotizaciones por revisar",
+  "queue": {
+    "label": "Cola de revisión",
+    "needReview_one": "{{draft}} de {{total}} cotizaciones por revisar",
+    "needReview_other": "{{draft}} de {{total}} cotizaciones por revisar",
+    "allReviewed_one": "Las {{count}} cotizaciones ya están revisadas",
+    "allReviewed_other": "Las {{count}} cotizaciones ya están revisadas",
+    "confirmed": "En la comparación",
+    "draft": "Por revisar",
+    "rejected": "Quitadas de la comparación",
+    "upNext": "Siguiente, por fecha límite",
+    "toReviewLine_one": "{{count}} por revisar",
+    "toReviewLine_other": "{{count}} por revisar",
+    "includedLine_one": "{{count}} en la comparación",
+    "includedLine_other": "{{count}} en la comparación",
+    "allIncluded": "Las {{count}} en la comparación",
+    "ready": "listas para comparar",
+    "dueWeekday": "vence {{day}}",
+    "dueToday": "vence hoy",
+    "overdue": "vencida",
+    "review": "Revisar →",
+    "compare": "Comparar →",
+    "viewAll": "Ver todas ({{count}})"
+  }
+}

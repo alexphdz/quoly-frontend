@@ -1,0 +1,61 @@
+.ds-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  min-height: 22px;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--selected);
+  color: var(--accent-text);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.ds-pill-neutral {
+  background: var(--bg-band);
+  color: var(--tx-body);
+}
+
+.ds-pill-muted {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--tx-2);
+}
+
+.ds-pill-warn {
+  background: var(--warn-tag);
+  color: var(--warn-fg);
+}
+
+.ds-pill-danger {
+  background: var(--danger-tag);
+  color: var(--danger-fg);
+}
+
+.ds-pill-success {
+  background: var(--success-tag);
+  color: var(--success-fg);
+}
+
+.ds-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--warn-fg);
+  text-decoration: none;
+
+  &::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 1px;
+    background: var(--warn);
+    transform: rotate(45deg);
+  }
+}

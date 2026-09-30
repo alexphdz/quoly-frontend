@@ -1,0 +1,41 @@
+{
+  "title": "Specification evidence",
+  "backToQuote": "Back to quote",
+  "breadcrumb": {
+    "rfq": "Request",
+    "quote": "Quote",
+    "spec": "Specification"
+  },
+  "notFound": {
+    "title": "Specification not available",
+    "message": "This quote may have been removed."
+  },
+  "noReferenceHint": "No reference specification or technical requirements on this request. Showing what the supplier stated.",
+  "openDocument": "Open supplier document",
+  "openComparison": "Open comparison",
+  "openSource": "Source",
+  "empty": "No specification parameters extracted yet.",
+  "states": {
+    "not_received": "Not received",
+    "received": "Supplier specification only",
+    "analyzed": "Compared to the reference"
+  },
+  "filters": {
+    "group": "Verdict",
+    "all": "All"
+  },
+  "table": {
+    "parameter": "Parameter",
+    "reference": "Reference",
+    "supplier": "Supplier",
+    "verdict": "Verdict"
+  },
+  "verdict": {
+    "match": "Match",
+    "deviation": "Deviation",
+    "missing_from_supplier": "Missing from supplier",
+    "not_comparable": "Not comparable",
+    "additional_supplier_parameter": "Additional from supplier",
+    "needs_review": "Needs review"
+  }
+}

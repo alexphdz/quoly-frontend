@@ -1,0 +1,211 @@
+{
+  "rfqStatus": {
+    "draft": "Borrador",
+    "open": "Abierta",
+    "decided": "Cerrada"
+  },
+  "supplierStatus": {
+    "not_contacted": "Sin contactar",
+    "awaiting_response": "Esperando respuesta",
+    "buyer_action_required": "Espera tu respuesta",
+    "partial_response": "Respuesta parcial",
+    "quote_received": "Cotización recibida",
+    "declined": "Declinó",
+    "closed": "Cerrado",
+    "pending": "Sin contactar",
+    "requested": "Esperando respuesta",
+    "quoted": "Cotización recibida"
+  },
+  "quoteStatus": {
+    "draft": "Por revisar",
+    "confirmed": "En la comparación",
+    "rejected": "Quitada de la comparación"
+  },
+  "messageStatus": {
+    "processed": "Procesado",
+    "unmatched": "Sin vincular",
+    "error": "Error"
+  },
+  "messageType": {
+    "quote": "Cotización",
+    "conversation": "Mensaje"
+  },
+  "extractionStatus": {
+    "pending": "Extrayendo…",
+    "extracted": "Extraído",
+    "unsupported": "Formato no compatible",
+    "failed": "Falló la extracción"
+  },
+  "missingField": {
+    "price": "Precio",
+    "currency": "Moneda",
+    "unit": "Unidad",
+    "currency_conversion": "Moneda no convertible",
+    "unit_conversion": "Unidad no convertible",
+    "delivery_lead_time_days": "Plazo de entrega",
+    "delivery_point": "Punto de entrega",
+    "payment_terms": "Condiciones de pago"
+  },
+  "alertType": {
+    "cheapest": "Más barata",
+    "most_expensive": "Más cara",
+    "slow_delivery": "Entrega lenta",
+    "missing_data": "Datos faltantes",
+    "line_missing_data": "Datos faltantes en la línea"
+  },
+  "corrugated": {
+    "boxStyle": {
+      "RSC": "RSC (ranurada regular)",
+      "FOL": "FOL (solapa completa)",
+      "HSC": "HSC (media ranurada)",
+      "CSSC": "CSSC",
+      "die_cut": "Troquelada",
+      "telescope": "Telescópica",
+      "tray": "Charola",
+      "pad": "Pad",
+      "supplier_recommend": "Proveedor recomienda"
+    },
+    "wallConstruction": {
+      "single_wall": "Pared sencilla",
+      "double_wall": "Doble pared",
+      "triple_wall": "Triple pared"
+    },
+    "fluteProfile": {
+      "A": "Flauta A",
+      "B": "Flauta B",
+      "C": "Flauta C",
+      "E": "Flauta E",
+      "F": "Flauta F",
+      "BC": "Flauta BC",
+      "EB": "Flauta EB",
+      "AC": "Flauta AC",
+      "other": "Otro",
+      "supplier_recommend": "Proveedor recomienda"
+    },
+    "strengthMetric": {
+      "ECT": "ECT",
+      "BCT": "BCT",
+      "burst_mullen": "Reventado (Mullen)",
+      "supplier_recommend": "Proveedor recomienda"
+    },
+    "strengthUnit": {
+      "kN_per_m": "kN/m",
+      "N": "N",
+      "kPa": "kPa"
+    },
+    "foodContact": {
+      "yes": "Sí",
+      "no": "No",
+      "not_applicable": "No aplica"
+    },
+    "substitutionPolicy": {
+      "no_without_approval": "Sin sustitución sin aprobación",
+      "equivalent_with_data": "Equivalente con datos de soporte"
+    },
+    "printMethod": {
+      "none": "Ninguna",
+      "flexo_1": "Flexo 1 color",
+      "flexo_2_4": "Flexo 2–4 colores",
+      "litho": "Litografía",
+      "digital": "Digital",
+      "other": "Otro"
+    },
+    "closureMethod": {
+      "tape": "Cinta",
+      "glue": "Pegamento",
+      "self_lock": "Autocierre",
+      "stitch": "Grapado",
+      "other": "Otro"
+    },
+    "dimensionBasis": {
+      "internal": "Interna",
+      "external": "Externa"
+    },
+    "dimensionUnit": {
+      "mm": "mm",
+      "cm": "cm",
+      "in": "in"
+    },
+    "currency": {
+      "USD": "USD",
+      "MXN": "MXN",
+      "EUR": "EUR"
+    },
+    "volumeTierUnit": {
+      "piece": "Pieza",
+      "thousand_piece": "Millar"
+    },
+    "incoterm": {
+      "EXW": "EXW",
+      "FCA": "FCA",
+      "FOB": "FOB",
+      "CFR": "CFR",
+      "CIF": "CIF",
+      "CPT": "CPT",
+      "CIP": "CIP",
+      "DAP": "DAP",
+      "DPU": "DPU",
+      "DDP": "DDP",
+      "not_specified": "No especificado"
+    },
+    "fragility": {
+      "standard": "Estándar",
+      "fragile": "Frágil",
+      "heavy": "Pesado"
+    },
+    "stackingScenario": {
+      "single_stack": "Apilado simple",
+      "warehouse_pallet": "Tarima de almacén",
+      "export_container": "Contenedor de exportación"
+    },
+    "shippingMode": {
+      "parcel": "Paquetería",
+      "ltl_ftl": "LTL / FTL",
+      "export_ocean": "Exportación marítima",
+      "export_air": "Exportación aérea"
+    },
+    "preferredFormat": {
+      "excel_template": "Plantilla Excel",
+      "pdf_ok": "PDF aceptable",
+      "any_with_extraction": "Cualquiera (con extracción)"
+    },
+    "attachmentKind": {
+      "dieline_drawing": "Dieline / plano",
+      "reference_photo": "Foto de referencia",
+      "spec_sheet": "Ficha técnica",
+      "other": "Otro"
+    },
+    "emailLocale": {
+      "en": "Inglés",
+      "es": "Español"
+    },
+    "productWeightUnit": {
+      "g": "g",
+      "kg": "kg"
+    },
+    "grossWeightUnit": {
+      "kg": "kg",
+      "lb": "lb"
+    },
+    "responseField": {
+      "unit_price_per_tier": "Precio unitario por escenario de volumen",
+      "currency": "Moneda",
+      "price_basis": "Base de precio (por pieza / por 1000)",
+      "moq": "MOQ",
+      "tooling_die": "Troquel / tooling (único)",
+      "freight": "Flete (incluido o $)",
+      "other_one_time": "Otros costos únicos",
+      "lead_time_days": "Tiempo de entrega (días)",
+      "incoterm_quoted": "Incoterm + lugar cotizado",
+      "payment_terms": "Condiciones de pago",
+      "quote_validity": "Validez de cotización",
+      "board_spec_quoted": "Cartón/flauta/ECT cotizado",
+      "no_substitution_ack": "Política de sustitución aceptada",
+      "sample_cost_time": "Costo y tiempo de muestra",
+      "certifications": "Certificaciones",
+      "test_report": "Reporte de pruebas / COA",
+      "capacity_per_month": "Capacidad mensual",
+      "master_carton": "Master carton / configuración de tarima"
+    }
+  }
+}

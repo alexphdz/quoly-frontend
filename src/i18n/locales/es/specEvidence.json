@@ -1,0 +1,41 @@
+{
+  "title": "Evidencia de especificación",
+  "backToQuote": "Volver a la cotización",
+  "breadcrumb": {
+    "rfq": "Solicitud",
+    "quote": "Cotización",
+    "spec": "Especificación"
+  },
+  "notFound": {
+    "title": "Especificación no disponible",
+    "message": "Esta cotización pudo haberse eliminado."
+  },
+  "noReferenceHint": "No hay especificación de referencia ni requisitos técnicos en esta solicitud. Se muestra lo que indicó el proveedor.",
+  "openDocument": "Abrir documento del proveedor",
+  "openComparison": "Abrir comparación",
+  "openSource": "Fuente",
+  "empty": "Aún no hay parámetros de especificación extraídos.",
+  "states": {
+    "not_received": "No recibida",
+    "received": "Solo especificación del proveedor",
+    "analyzed": "Comparada con la referencia"
+  },
+  "filters": {
+    "group": "Resultado",
+    "all": "Todas"
+  },
+  "table": {
+    "parameter": "Parámetro",
+    "reference": "Referencia",
+    "supplier": "Proveedor",
+    "verdict": "Resultado"
+  },
+  "verdict": {
+    "match": "Coincide",
+    "deviation": "Desviación",
+    "missing_from_supplier": "Falta en el proveedor",
+    "not_comparable": "No comparable",
+    "additional_supplier_parameter": "Adicional del proveedor",
+    "needs_review": "Por revisar"
+  }
+}

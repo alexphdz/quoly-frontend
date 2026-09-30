@@ -1,0 +1,53 @@
+{
+  "noSubject": "(Sin asunto)",
+  "extracted": "{{count}} extraídos",
+  "attachment": "adjunto",
+  "attachmentsInGmail": "Los archivos originales permanecen en Gmail.",
+  "attachmentStatus": {
+    "pending": "Leyendo…",
+    "extracted": "Extraído",
+    "failed": "Lectura fallida",
+    "unsupported": "No compatible"
+  },
+  "originalInGmail": "original en Gmail",
+  "youReplied": "Respuesta enviada {{date}}",
+  "openQuote": "Abrir cotización",
+  "reply": "Responder",
+  "cancelReply": "Cancelar respuesta",
+  "reclassifying": "Reclasificando…",
+  "reclassify": {
+    "toConversation": "No es cotización · mover a mensajes",
+    "toQuote": "Es cotización · extraer datos",
+    "toConversationHelper": "Quita la cotización de la comparación y trata el correo como un mensaje.",
+    "toQuoteHelper": "Extrae los precios del correo y crea una cotización para comparar."
+  },
+  "emptyTitle": "Aún no hay respuestas",
+  "emptyDescription": "",
+  "filters": {
+    "all": "Todos ({{count}})",
+    "quote": "Cotizaciones ({{count}})",
+    "conversation": "Conversaciones ({{count}})"
+  },
+  "needAttention": "{{count}} requieren atención",
+  "noFilterMessages": "No hay mensajes de este tipo.",
+  "assign": {
+    "title": "Este remitente no coincidió con ningún proveedor",
+    "description": "El remitente no es un proveedor de esta solicitud.",
+    "descriptionConversation": "Elige qué proveedor lo envió para archivar el mensaje bajo su nombre.",
+    "placeholder": "Selecciona un proveedor…",
+    "action": "Asignar proveedor",
+    "assigning": "Asignando…",
+    "noSuppliers": "Agrega un proveedor a esta solicitud primero y luego asigna este mensaje.",
+    "failed": "No se pudo asignar este mensaje."
+  },
+  "notifications": {
+    "newInboundTitle": "Nueva respuesta de proveedor",
+    "newInboundToast": "Nueva respuesta de proveedor de {{from}}"
+  },
+  "reply_panel": {
+    "placeholder": "Respuesta",
+    "sending": "Enviando…",
+    "sendReply": "Enviar respuesta",
+    "replyFailed": "No se pudo enviar la respuesta."
+  }
+}

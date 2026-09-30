@@ -1,0 +1,48 @@
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --bg-canvas: #f1f1f3;
+  --bg-content: #fcfcfd;
+  --bg-surface: #f7f7f8;
+  --bg-band: #ebebee;
+  --line: #e0e0e4;
+  --line-strong: #c8c8ce;
+  --tx-1: #17171a;
+  --tx-body: #3d3d43;
+  --tx-2: #6b6b73;
+  --tx-3: #a0a0a8;
+  --accent: #1a4e72;
+  --accent-hover: #123650;
+  --accent-fg: #fcfcfd;
+  --accent-text: #1a4e72;
+  --accent-line: #2a6a96;
+  --accent-underline: #7aa3c0;
+  --selected: #e8f0f6;
+  --selected-line: #cddce6;
+  --focus: #2a6a96;
+  --warn-bg: #fef8e1;
+  --warn-tag: #fceeb5;
+  --warn-mark: #e9b000;
+  --warn-fg: #7f5b00;
+  --danger-bg: #fdecec;
+  --danger-tag: #fad4d4;
+  --danger-mark: #e23b3b;
+  --danger-fg: #a11f1f;
+  --success-bg: #e8f7ee;
+  --success-tag: #cdefdb;
+  --success-mark: #16a05a;
+  --success-fg: #0c6b3a;
+  --bg-card: #ffffff;
+  --card-shadow: 0 1px 2px rgb(23 23 26 / 0.04), 0 8px 18px rgb(23 23 26 / 0.06);
+  --overlay-shadow: 0 8px 24px rgb(23 23 26 / 0.12), 0 1px 2px rgb(23 23 26 / 0.08);
+  --drawer-shadow: -12px 0 32px rgb(23 23 26 / 0.1);
+  --scrim: rgb(23 23 26 / 0.32);
+  --bg-page: var(--bg-content);
+  --bg-selected: var(--selected);
+  --warn: var(--warn-mark);
+  --radius-control: 6px;
+  --radius-card: 8px;
+  --sidebar-width: 240px;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+}

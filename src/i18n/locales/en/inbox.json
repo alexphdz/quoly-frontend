@@ -1,0 +1,53 @@
+{
+  "noSubject": "(No subject)",
+  "extracted": "{{count}} extracted",
+  "attachment": "attachment",
+  "attachmentsInGmail": "Original files remain in Gmail.",
+  "attachmentStatus": {
+    "pending": "Reading…",
+    "extracted": "Extracted",
+    "failed": "Read failed",
+    "unsupported": "Unsupported"
+  },
+  "originalInGmail": "original in Gmail",
+  "youReplied": "Reply sent {{date}}",
+  "openQuote": "Open quote",
+  "reply": "Reply",
+  "cancelReply": "Cancel reply",
+  "reclassifying": "Reclassifying…",
+  "reclassify": {
+    "toConversation": "Not a quote · move to messages",
+    "toQuote": "Is a quote · extract data",
+    "toConversationHelper": "Removes the quote from the comparison and treats the email as a message.",
+    "toQuoteHelper": "Extracts pricing from the email and creates a quote to compare."
+  },
+  "emptyTitle": "No replies yet",
+  "emptyDescription": "",
+  "filters": {
+    "all": "All ({{count}})",
+    "quote": "Quotes ({{count}})",
+    "conversation": "Conversations ({{count}})"
+  },
+  "needAttention": "{{count}} need attention",
+  "noFilterMessages": "No messages of this type.",
+  "assign": {
+    "title": "This sender didn't match any supplier",
+    "description": "The sender is not a supplier on this request.",
+    "descriptionConversation": "Pick which supplier sent this to file the message under them.",
+    "placeholder": "Select a supplier…",
+    "action": "Assign supplier",
+    "assigning": "Assigning…",
+    "noSuppliers": "Add a supplier to this request first, then assign this message.",
+    "failed": "Couldn't assign this message."
+  },
+  "notifications": {
+    "newInboundTitle": "New supplier response",
+    "newInboundToast": "New supplier response from {{from}}"
+  },
+  "reply_panel": {
+    "placeholder": "Reply",
+    "sending": "Sending…",
+    "sendReply": "Send reply",
+    "replyFailed": "Couldn't send the reply."
+  }
+}

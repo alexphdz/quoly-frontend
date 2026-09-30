@@ -1,0 +1,38 @@
+.ds-stage {
+  min-width: 140px;
+  max-width: 220px;
+
+  &.is-compact {
+    min-width: 72px;
+    max-width: 112px;
+    width: 88px;
+  }
+}
+
+.ds-stage-bar {
+  display: flex;
+  height: 6px;
+  gap: 2px;
+  border-radius: 3px;
+}
+
+.ds-stage-bar span {
+  display: block;
+  height: 100%;
+  min-width: 3px;
+  border-radius: 3px;
+}
+
+.ds-stage-warn { background: var(--warn-mark); }
+.ds-stage-await { background: var(--line-strong); }
+.ds-stage-quoted { background: var(--accent-line); }
+.ds-stage-partial { background: var(--accent-underline); }
+.ds-stage-muted { background: var(--line); }
+.ds-stage-closed { background: var(--tx-3); }
+
+.ds-stage-caption {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--tx-2);
+}

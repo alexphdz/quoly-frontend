@@ -1,0 +1,212 @@
+{
+  "breadcrumb": {
+    "rfq": "Request",
+    "quote": "Quote"
+  },
+  "backToRfq": "Back to request",
+  "title": "Quote review",
+  "supplierIdLabel": "Supplier ID",
+  "notFound": {
+    "title": "Quote not found",
+    "message": "This quote may have been deleted."
+  },
+  "banner": {
+    "confirmed": "This quote is in the comparison.",
+    "missing_one": "{{count}} field is missing before it can be added to the comparison.",
+    "missing_other": "{{count}} fields are missing before it can be added to the comparison.",
+    "review": "Extracted data is not yet in the comparison.",
+    "partialNoPrice": "Partial quote — no price yet. It can still be added to the comparison.",
+    "rejected": "Removed from the comparison. Back to review to add it again."
+  },
+  "specEvidenceLink": "Specification evidence",
+  "actions": {
+    "edit": "Edit",
+    "accept": "Add to comparison",
+    "acceptHelper": "",
+    "acceptHelperCommercial": "A price is not required.",
+    "accepting": "Adding…",
+    "reject": "Remove from comparison",
+    "rejecting": "Removing…",
+    "restore": "Back to review",
+    "restoring": "Moving…",
+    "delete": "Delete",
+    "deleting": "Deleting…",
+    "deleteConfirm": "Delete this quote?",
+    "deleteWarning": "This removes the extracted quote. It will leave the comparison.",
+    "acceptFailed": "Couldn't add the quote to the comparison"
+  },
+  "toast": {
+    "updated": "Quote updated"
+  },
+  "supplierSummary": "Supplier summary",
+  "extractionSnapshot": "Extracted text",
+  "gmailPreserved": "Original stays in Gmail.",
+  "normalized": "Comparable price",
+  "normalizedNote": "Request currency and unit.",
+  "completeness": "Completeness",
+  "complete": "Complete",
+  "source": {
+    "title": "Source",
+    "fileType": "File type",
+    "created": "Created",
+    "updated": "Updated"
+  },
+  "fields": {
+    "extractedFigures": "Extracted figures",
+    "normalized": "Comparable values",
+    "normalizedNote": "Request currency and unit.",
+    "lineData": "Line-level quote data",
+    "lineDataNote": "When a supplier doesn't break the quote down by line, the full amount is shown on the first line.",
+    "price": "Price",
+    "currency": "Currency",
+    "unit": "Unit",
+    "moq": "MOQ",
+    "qtyPerUnit": "Qty per unit",
+    "leadTimeDays": "Lead time (days)",
+    "leadTime": "Lead time",
+    "leadTimeDaysShort": "{{count}} d",
+    "deliveryPoint": "Delivery point",
+    "paymentTerms": "Payment terms",
+    "notes": "Notes",
+    "rawPrice": "Raw price",
+    "normalizedPrice": "Normalized price",
+    "rfqQty": "Request qty",
+    "line": "Line {{index}}",
+    "missing": "Missing"
+  },
+  "commercialOffer": {
+    "title": "Supplier offer structure",
+    "priceTiers": "Price tiers",
+    "tierQuantity": "Quantity",
+    "tierPrice": "Price",
+    "supplierWording": "Supplier wording",
+    "moqWording": "MOQ (supplier wording)",
+    "leadTime": "Lead time",
+    "production": "Production",
+    "transit": "Transit",
+    "total": "Total",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days",
+    "validity": "Quote validity"
+  },
+  "edit": {
+    "title": "Edit raw data",
+    "save": "Save",
+    "saving": "Saving…",
+    "failed": "Update failed"
+  },
+  "upload": {
+    "supplier": "Supplier",
+    "selectSupplier": "Select supplier…",
+    "method": "Quote entry method",
+    "uploadFile": "Upload file",
+    "pasteText": "Paste text",
+    "file": "Quote file",
+    "fileHelper": "Supported formats: PDF, DOCX, XLSX, or CSV.",
+    "quoteText": "Quote text",
+    "pastePlaceholder": "Paste the quote text here…",
+    "supplierRequired": "Select a supplier before uploading.",
+    "fileRequired": "Choose a quote file to upload.",
+    "textRequired": "Paste the quote text before uploading.",
+    "failed": "Upload failed",
+    "submit": "Upload quote",
+    "uploading": "Uploading…"
+  },
+  "intake": {
+    "tiersTitle": "Volume tier pricing",
+    "tierId": "Tier",
+    "unitPrice": "Unit price",
+    "currency": "Currency",
+    "moq": "MOQ",
+    "missingTierPrices": "Some tier unit prices are missing.",
+    "breakdownTitle": "Cost breakdown",
+    "tooling": "Tooling / die",
+    "freight": "Freight",
+    "freightIncluded": "Included",
+    "incoterm": "Incoterm quoted",
+    "boardSpec": "Board / flute / ECT quoted",
+    "substitution": "Substitution policy",
+    "acknowledged": "Acknowledged",
+    "checklistGaps": "Required response gaps"
+  },
+  "list": {
+    "emptyTitle": "No quotes yet",
+    "emptyDescription": "",
+    "headers": {
+      "supplier": "Supplier",
+      "status": "Status",
+      "normalizedPrice": "Normalized price",
+      "completeness": "Completeness"
+    },
+    "missing": "{{count}} missing",
+    "complete": "Complete"
+  },
+  "review": {
+    "crumbRequests": "Requests",
+    "sourceKind": {
+      "email": "Email",
+      "pdf": "PDF quote",
+      "xlsx": "Excel quote",
+      "csv": "CSV quote",
+      "docx": "Word quote"
+    },
+    "received": "Received {{date}}",
+    "sourceTitle": "What the supplier sent",
+    "viewLabel": "Source view",
+    "viewOriginal": "Original",
+    "viewText": "Text",
+    "openOriginal": "Open original",
+    "noText": "No readable text was found in this document.",
+    "hintOriginal": "",
+    "hintText": "",
+    "fieldsTitle": "Extracted fields",
+    "fieldsHint": "",
+    "field": {
+      "price": "Price",
+      "currency": "Currency",
+      "unit": "Price unit",
+      "quantity_per_unit": "Pieces per unit",
+      "quantity_moq": "Minimum order",
+      "delivery_lead_time_days": "Lead time (days)",
+      "payment_terms": "Payment terms",
+      "delivery_point": "Delivery point"
+    },
+    "add": "Add",
+    "state": {
+      "missing": "Missing",
+      "notStated": "Not stated",
+      "edited": "Edited"
+    },
+    "costLines": "Line items as quoted",
+    "lineName": "Line",
+    "lineAmount": "Amount",
+    "lineBasis": "Charged",
+    "included": "Included",
+    "basis": {
+      "per_unit": "Per unit",
+      "lot": "One-time"
+    },
+    "actionsLabel": "Quote actions",
+    "excludedStatus": "Removed from the comparison.",
+    "needsPrice": "A price is required to add this quote to the comparison.",
+    "noEdits": "No unsaved edits",
+    "save": "Save edits",
+    "saved": "Edits saved",
+    "includeNeedsPrice": "Add a price first. The comparison needs a price to rank this quote.",
+    "includedToast": "Quote added to the comparison",
+    "excluded": "Quote removed from the comparison",
+    "more": "More actions",
+    "normTitle": "Comparable price",
+    "normAria": "Normalization formula",
+    "rateHelp": "Day's exchange rate.",
+    "perUnit": "pieces per {{unit}}",
+    "normSame": "Quoted in the request's currency and unit, so no conversion was needed.",
+    "normNote": "Plates, tooling and freight are added separately on the comparison.",
+    "blocked": {
+      "currency_conversion": "No exchange rate is available for this currency, so the price can't be converted yet.",
+      "unit_conversion": "The price unit has no known size. Add pieces per unit to convert it."
+    },
+    "normNeedsPrice": "Add a price to see the comparable value.",
+    "attachment": "Attachment: {{name}}"
+  }
+}

@@ -1,0 +1,231 @@
+.ds-ai {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.75fr);
+  gap: 28px;
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.ds-ai-kicker {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--tx-2);
+}
+
+.ds-ai-name {
+  margin: 4px 0 10px;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.ds-ai-summary {
+  max-width: 62ch;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--tx-body);
+
+  p + p,
+  ul,
+  h3,
+  h4,
+  h5 {
+    margin-top: 10px;
+  }
+
+  h3,
+  h4,
+  h5 {
+    margin-bottom: 0;
+    font-weight: 500;
+    color: var(--tx-1);
+  }
+
+  h3 {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  h4,
+  h5 {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  ul {
+    margin-bottom: 0;
+    padding-left: 18px;
+    list-style: disc;
+  }
+
+  li + li {
+    margin-top: 4px;
+  }
+
+  strong {
+    font-weight: 500;
+    color: var(--tx-1);
+  }
+}
+
+.ds-ai-scan {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--tx-body);
+
+  li::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: var(--tx-3);
+    vertical-align: 2px;
+  }
+}
+
+.ds-rank-head {
+  color: var(--tx-2);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ds-ai-note {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--tx-2);
+}
+
+.ds-ai-action {
+  margin-top: 16px;
+}
+
+.ds-rank {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.ds-rank-row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.ds-rank-row.is-recommended {
+  background: var(--selected);
+}
+
+.ds-rank-name {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-price-meter {
+  width: 96px;
+  height: 6px;
+  margin-top: 6px;
+  border-radius: 3px;
+  background: var(--bg-band);
+
+  span {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+    background: var(--accent-line);
+  }
+}
+
+.ds-matrix-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ds-matrix {
+  min-width: 760px;
+
+  thead th:first-child,
+  tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    min-width: 168px;
+    background: var(--bg-content);
+  }
+
+  thead th:first-child {
+    z-index: 3;
+  }
+
+  thead th,
+  td {
+    min-width: 180px;
+    vertical-align: top;
+    background: var(--bg-content);
+  }
+
+  td.is-recommended,
+  thead th.is-recommended,
+  tbody tr:hover td.is-recommended {
+    background: var(--selected);
+  }
+
+  .ds-matrix-name {
+    font-weight: 500;
+    color: var(--tx-1);
+  }
+
+  .ds-matrix-value {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+  }
+
+  tr.ds-matrix-price th,
+  tr.ds-matrix-price td {
+    border-top: 1px solid var(--line-strong);
+  }
+
+  tr.ds-matrix-price .ds-matrix-value {
+    font-size: 20px;
+    line-height: 26px;
+    letter-spacing: -0.01em;
+  }
+
+  .ds-matrix-sub {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: var(--tx-2);
+  }
+}
+
+@media (max-width: 900px) {
+  .ds-ai {
+    grid-template-columns: 1fr;
+  }
+}

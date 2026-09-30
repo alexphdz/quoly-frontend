@@ -1,0 +1,211 @@
+{
+  "rfqStatus": {
+    "draft": "Draft",
+    "open": "Open",
+    "decided": "Closed"
+  },
+  "supplierStatus": {
+    "not_contacted": "Not contacted",
+    "awaiting_response": "Awaiting response",
+    "buyer_action_required": "Waiting on you",
+    "partial_response": "Partial response",
+    "quote_received": "Quote received",
+    "declined": "Declined",
+    "closed": "Closed",
+    "pending": "Not contacted",
+    "requested": "Awaiting response",
+    "quoted": "Quote received"
+  },
+  "quoteStatus": {
+    "draft": "To review",
+    "confirmed": "In comparison",
+    "rejected": "Removed from comparison"
+  },
+  "messageStatus": {
+    "processed": "Processed",
+    "unmatched": "Unmatched",
+    "error": "Error"
+  },
+  "messageType": {
+    "quote": "Quote",
+    "conversation": "Message"
+  },
+  "extractionStatus": {
+    "pending": "Extracting…",
+    "extracted": "Extracted",
+    "unsupported": "Unsupported file",
+    "failed": "Extraction failed"
+  },
+  "missingField": {
+    "price": "Price",
+    "currency": "Currency",
+    "unit": "Unit",
+    "currency_conversion": "Currency not convertible",
+    "unit_conversion": "Unit not convertible",
+    "delivery_lead_time_days": "Lead time",
+    "delivery_point": "Delivery point",
+    "payment_terms": "Payment terms"
+  },
+  "alertType": {
+    "cheapest": "Cheapest",
+    "most_expensive": "Most expensive",
+    "slow_delivery": "Slow delivery",
+    "missing_data": "Missing data",
+    "line_missing_data": "Line missing data"
+  },
+  "corrugated": {
+    "boxStyle": {
+      "RSC": "RSC (regular slotted)",
+      "FOL": "FOL (full overlap)",
+      "HSC": "HSC (half slotted)",
+      "CSSC": "CSSC",
+      "die_cut": "Die-cut",
+      "telescope": "Telescope",
+      "tray": "Tray",
+      "pad": "Pad",
+      "supplier_recommend": "Supplier recommend"
+    },
+    "wallConstruction": {
+      "single_wall": "Single wall",
+      "double_wall": "Double wall",
+      "triple_wall": "Triple wall"
+    },
+    "fluteProfile": {
+      "A": "A flute",
+      "B": "B flute",
+      "C": "C flute",
+      "E": "E flute",
+      "F": "F flute",
+      "BC": "BC flute",
+      "EB": "EB flute",
+      "AC": "AC flute",
+      "other": "Other",
+      "supplier_recommend": "Supplier recommend"
+    },
+    "strengthMetric": {
+      "ECT": "ECT",
+      "BCT": "BCT",
+      "burst_mullen": "Burst (Mullen)",
+      "supplier_recommend": "Supplier recommend"
+    },
+    "strengthUnit": {
+      "kN_per_m": "kN/m",
+      "N": "N",
+      "kPa": "kPa"
+    },
+    "foodContact": {
+      "yes": "Yes",
+      "no": "No",
+      "not_applicable": "Not applicable"
+    },
+    "substitutionPolicy": {
+      "no_without_approval": "No substitution without approval",
+      "equivalent_with_data": "Equivalent with supporting data"
+    },
+    "printMethod": {
+      "none": "None",
+      "flexo_1": "Flexo 1 color",
+      "flexo_2_4": "Flexo 2–4 colors",
+      "litho": "Litho",
+      "digital": "Digital",
+      "other": "Other"
+    },
+    "closureMethod": {
+      "tape": "Tape",
+      "glue": "Glue",
+      "self_lock": "Self-lock",
+      "stitch": "Stitch",
+      "other": "Other"
+    },
+    "dimensionBasis": {
+      "internal": "Internal",
+      "external": "External"
+    },
+    "dimensionUnit": {
+      "mm": "mm",
+      "cm": "cm",
+      "in": "in"
+    },
+    "currency": {
+      "USD": "USD",
+      "MXN": "MXN",
+      "EUR": "EUR"
+    },
+    "volumeTierUnit": {
+      "piece": "Piece",
+      "thousand_piece": "Thousand pieces"
+    },
+    "incoterm": {
+      "EXW": "EXW",
+      "FCA": "FCA",
+      "FOB": "FOB",
+      "CFR": "CFR",
+      "CIF": "CIF",
+      "CPT": "CPT",
+      "CIP": "CIP",
+      "DAP": "DAP",
+      "DPU": "DPU",
+      "DDP": "DDP",
+      "not_specified": "Not specified"
+    },
+    "fragility": {
+      "standard": "Standard",
+      "fragile": "Fragile",
+      "heavy": "Heavy"
+    },
+    "stackingScenario": {
+      "single_stack": "Single stack",
+      "warehouse_pallet": "Warehouse pallet",
+      "export_container": "Export container"
+    },
+    "shippingMode": {
+      "parcel": "Parcel",
+      "ltl_ftl": "LTL / FTL",
+      "export_ocean": "Export ocean",
+      "export_air": "Export air"
+    },
+    "preferredFormat": {
+      "excel_template": "Excel template",
+      "pdf_ok": "PDF OK",
+      "any_with_extraction": "Any (with extraction)"
+    },
+    "attachmentKind": {
+      "dieline_drawing": "Dieline / drawing",
+      "reference_photo": "Reference photo",
+      "spec_sheet": "Spec / data sheet",
+      "other": "Other"
+    },
+    "emailLocale": {
+      "en": "English",
+      "es": "Spanish"
+    },
+    "productWeightUnit": {
+      "g": "g",
+      "kg": "kg"
+    },
+    "grossWeightUnit": {
+      "kg": "kg",
+      "lb": "lb"
+    },
+    "responseField": {
+      "unit_price_per_tier": "Unit price for each volume tier",
+      "currency": "Currency",
+      "price_basis": "Price basis (per piece / per 1000)",
+      "moq": "MOQ",
+      "tooling_die": "Tooling / die (one-time)",
+      "freight": "Freight (included or $)",
+      "other_one_time": "Other one-time costs",
+      "lead_time_days": "Lead time (days)",
+      "incoterm_quoted": "Incoterm + place quoted",
+      "payment_terms": "Payment terms",
+      "quote_validity": "Quote validity",
+      "board_spec_quoted": "Board/flute/ECT actually quoted",
+      "no_substitution_ack": "Substitution policy acknowledged",
+      "sample_cost_time": "Sample cost & lead time",
+      "certifications": "Certifications",
+      "test_report": "Test report / COA",
+      "capacity_per_month": "Monthly capacity",
+      "master_carton": "Master carton / pallet config"
+    }
+  }
+}

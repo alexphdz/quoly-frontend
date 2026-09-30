@@ -1,0 +1,212 @@
+{
+  "breadcrumb": {
+    "rfq": "Solicitud",
+    "quote": "Cotización"
+  },
+  "backToRfq": "Volver a la solicitud",
+  "title": "Revisión de cotización",
+  "supplierIdLabel": "ID de proveedor",
+  "notFound": {
+    "title": "Cotización no encontrada",
+    "message": "Es posible que esta cotización se haya eliminado."
+  },
+  "banner": {
+    "confirmed": "Esta cotización está en la comparación.",
+    "missing_one": "Falta {{count}} campo para agregarla a la comparación.",
+    "missing_other": "Faltan {{count}} campos para agregarla a la comparación.",
+    "review": "Los datos extraídos aún no están en la comparación.",
+    "partialNoPrice": "Cotización parcial — aún sin precio. Puede agregarse a la comparación.",
+    "rejected": "Quitada de la comparación. Vuelve a revisión para agregarla de nuevo."
+  },
+  "specEvidenceLink": "Evidencia de especificación",
+  "actions": {
+    "edit": "Editar",
+    "accept": "Agregar a la comparación",
+    "acceptHelper": "",
+    "acceptHelperCommercial": "No se exige precio.",
+    "accepting": "Agregando…",
+    "reject": "Quitar de la comparación",
+    "rejecting": "Quitando…",
+    "restore": "Volver a revisar",
+    "restoring": "Moviendo…",
+    "delete": "Eliminar",
+    "deleting": "Eliminando…",
+    "deleteConfirm": "¿Eliminar esta cotización?",
+    "deleteWarning": "Esto elimina la cotización extraída. Saldrá de la comparación.",
+    "acceptFailed": "No se pudo agregar la cotización a la comparación"
+  },
+  "toast": {
+    "updated": "Cotización actualizada"
+  },
+  "supplierSummary": "Resumen del proveedor",
+  "extractionSnapshot": "Texto extraído",
+  "gmailPreserved": "El original queda en Gmail.",
+  "normalized": "Precio comparable",
+  "normalizedNote": "Moneda y unidad de la solicitud.",
+  "completeness": "Completitud",
+  "complete": "Completa",
+  "source": {
+    "title": "Origen",
+    "fileType": "Tipo de archivo",
+    "created": "Creado",
+    "updated": "Actualizado"
+  },
+  "fields": {
+    "extractedFigures": "Cifras extraídas",
+    "normalized": "Valores comparables",
+    "normalizedNote": "Moneda y unidad de la solicitud.",
+    "lineData": "Datos por línea de la cotización",
+    "lineDataNote": "Cuando el proveedor no desglosa la cotización por partida, el monto total se muestra en la primera línea.",
+    "price": "Precio",
+    "currency": "Moneda",
+    "unit": "Unidad",
+    "moq": "Cantidad mínima",
+    "qtyPerUnit": "Cant. por unidad",
+    "leadTimeDays": "Tiempo de entrega (días)",
+    "leadTime": "Tiempo de entrega",
+    "leadTimeDaysShort": "{{count}} d",
+    "deliveryPoint": "Punto de entrega",
+    "paymentTerms": "Términos de pago",
+    "notes": "Notas",
+    "rawPrice": "Precio original",
+    "normalizedPrice": "Precio normalizado",
+    "rfqQty": "Cant. de la solicitud",
+    "line": "Línea {{index}}",
+    "missing": "Falta"
+  },
+  "commercialOffer": {
+    "title": "Estructura de la oferta",
+    "priceTiers": "Escalas de precio",
+    "tierQuantity": "Cantidad",
+    "tierPrice": "Precio",
+    "supplierWording": "Texto del proveedor",
+    "moqWording": "MOQ (texto del proveedor)",
+    "leadTime": "Plazo de entrega",
+    "production": "Producción",
+    "transit": "Tránsito",
+    "total": "Total",
+    "days_one": "{{count}} día",
+    "days_other": "{{count}} días",
+    "validity": "Validez de la cotización"
+  },
+  "edit": {
+    "title": "Editar datos originales",
+    "save": "Guardar",
+    "saving": "Guardando…",
+    "failed": "Error al actualizar"
+  },
+  "upload": {
+    "supplier": "Proveedor",
+    "selectSupplier": "Selecciona proveedor…",
+    "method": "Método de captura de cotización",
+    "uploadFile": "Subir archivo",
+    "pasteText": "Pegar texto",
+    "file": "Archivo de cotización",
+    "fileHelper": "Formatos soportados: PDF, DOCX, XLSX o CSV.",
+    "quoteText": "Texto de la cotización",
+    "pastePlaceholder": "Pega aquí el texto de la cotización…",
+    "supplierRequired": "Selecciona un proveedor antes de subir.",
+    "fileRequired": "Elige un archivo de cotización para subir.",
+    "textRequired": "Pega el texto de la cotización antes de subir.",
+    "failed": "Error al subir",
+    "submit": "Subir cotización",
+    "uploading": "Subiendo…"
+  },
+  "intake": {
+    "tiersTitle": "Precios por escenario de volumen",
+    "tierId": "Escenario",
+    "unitPrice": "Precio unitario",
+    "currency": "Moneda",
+    "moq": "MOQ",
+    "missingTierPrices": "Faltan precios unitarios en algunos escenarios.",
+    "breakdownTitle": "Desglose de costos",
+    "tooling": "Troquel / herramental",
+    "freight": "Flete",
+    "freightIncluded": "Incluido",
+    "incoterm": "Incoterm cotizado",
+    "boardSpec": "Cartón / flauta / ECT cotizado",
+    "substitution": "Política de sustitución",
+    "acknowledged": "Confirmado",
+    "checklistGaps": "Campos requeridos faltantes"
+  },
+  "list": {
+    "emptyTitle": "Aún no hay cotizaciones",
+    "emptyDescription": "",
+    "headers": {
+      "supplier": "Proveedor",
+      "status": "Estado",
+      "normalizedPrice": "Precio normalizado",
+      "completeness": "Completitud"
+    },
+    "missing": "{{count}} faltan",
+    "complete": "Completa"
+  },
+  "review": {
+    "crumbRequests": "Solicitudes",
+    "sourceKind": {
+      "email": "Correo",
+      "pdf": "Cotización PDF",
+      "xlsx": "Cotización Excel",
+      "csv": "Cotización CSV",
+      "docx": "Cotización Word"
+    },
+    "received": "Recibida {{date}}",
+    "sourceTitle": "Lo que envió el proveedor",
+    "viewLabel": "Vista de la fuente",
+    "viewOriginal": "Original",
+    "viewText": "Texto",
+    "openOriginal": "Abrir original",
+    "noText": "No se encontró texto legible en este documento.",
+    "hintOriginal": "",
+    "hintText": "",
+    "fieldsTitle": "Campos extraídos",
+    "fieldsHint": "",
+    "field": {
+      "price": "Precio",
+      "currency": "Moneda",
+      "unit": "Unidad del precio",
+      "quantity_per_unit": "Piezas por unidad",
+      "quantity_moq": "Pedido mínimo",
+      "delivery_lead_time_days": "Tiempo de entrega (días)",
+      "payment_terms": "Condiciones de pago",
+      "delivery_point": "Punto de entrega"
+    },
+    "add": "Agregar",
+    "state": {
+      "missing": "Falta",
+      "notStated": "No indicado",
+      "edited": "Editado"
+    },
+    "costLines": "Conceptos cotizados",
+    "lineName": "Concepto",
+    "lineAmount": "Importe",
+    "lineBasis": "Cobro",
+    "included": "Incluido",
+    "basis": {
+      "per_unit": "Por unidad",
+      "lot": "Pago único"
+    },
+    "actionsLabel": "Acciones de la cotización",
+    "excludedStatus": "Quitada de la comparación.",
+    "needsPrice": "Se necesita un precio para agregarla a la comparación.",
+    "noEdits": "No hay cambios sin guardar",
+    "save": "Guardar cambios",
+    "saved": "Cambios guardados",
+    "includeNeedsPrice": "Primero agrega un precio. La comparación necesita un precio para ordenar esta cotización.",
+    "includedToast": "Cotización agregada a la comparación",
+    "excluded": "Cotización quitada de la comparación",
+    "more": "Más acciones",
+    "normTitle": "Precio comparable",
+    "normAria": "Fórmula de normalización",
+    "rateHelp": "Tipo de cambio del día.",
+    "perUnit": "piezas por {{unit}}",
+    "normSame": "Cotizada en la moneda y unidad de la solicitud, así que no hubo conversión.",
+    "normNote": "Placas, herramentales y flete se suman por separado en la comparación.",
+    "blocked": {
+      "currency_conversion": "No hay tipo de cambio para esta moneda, así que el precio aún no se puede convertir.",
+      "unit_conversion": "La unidad del precio no tiene un tamaño conocido. Agrega piezas por unidad para convertirla."
+    },
+    "normNeedsPrice": "Agrega un precio para ver el valor comparable.",
+    "attachment": "Adjunto: {{name}}"
+  }
+}

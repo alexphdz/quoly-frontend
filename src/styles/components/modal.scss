@@ -1,0 +1,43 @@
+.ds-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--scrim);
+}
+
+.ds-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(960px, 100%);
+  height: min(80vh, 820px);
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--bg-content);
+  box-shadow: var(--overlay-shadow);
+}
+
+.ds-modal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 500;
+  }
+}
+
+.ds-modal iframe {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  background: var(--bg-surface);
+}

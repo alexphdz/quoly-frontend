@@ -1,0 +1,92 @@
+{
+  "title": "Quotes",
+  "subtitle": "",
+  "loadError": "Couldn't load quotes. Try again.",
+  "empty": {
+    "title": "No quotes yet",
+    "body": ""
+  },
+  "noResults": "No quotes match these filters.",
+  "statusCard": {
+    "title": "By status",
+    "total_one": "quote",
+    "total_other": "quotes"
+  },
+  "byRfq": {
+    "title": "By request",
+    "hint": "Click a bar to filter",
+    "barLabel": "{{name}}: {{summary}}",
+    "more_one": "+{{count}} more request. Use the request filter below.",
+    "more_other": "+{{count}} more requests. Use the request filter below."
+  },
+  "filters": {
+    "all": "All",
+    "needsReview": "To review",
+    "confirmed": "In comparison",
+    "rejected": "Removed from comparison",
+    "allRequests": "All requests",
+    "searchPlaceholder": "Supplier or request",
+    "searchLabel": "Search quotes",
+    "clear": "Clear filters",
+    "statusLabel": "Filter by status",
+    "clearRequest": "Clear request filter",
+    "findRequest": "Find a request",
+    "noRequest": "No request matches"
+  },
+  "source": {
+    "email": "From email",
+    "file": "File quote",
+    "manual": "Manual entry"
+  },
+  "table": {
+    "supplier": "Supplier",
+    "kindQuotation": "Quote",
+    "kindPartial": "Partial quote",
+    "request": "Request",
+    "priceAsQuoted": "Price as quoted",
+    "review": "Review",
+    "received": "Received",
+    "openRequest": "Open request",
+    "noPrice": "No price",
+    "priceMissing": "Price missing",
+    "needsReview_one": "{{count}} to review",
+    "needsReview_other": "{{count}} to review",
+    "status": "Status",
+    "normalized": "Normalized price",
+    "rawPrice": "Original price",
+    "moq": "MOQ",
+    "leadTime": "Lead time",
+    "completeness": "Completeness",
+    "complete": "Complete",
+    "missing_one": "{{count}} missing",
+    "missing_other": "{{count}} missing",
+    "leadDays": "{{count}} d",
+    "notComparable": "Can't compare yet",
+    "notStated": "Not stated"
+  },
+  "reviewNext": "Review next quote",
+  "reviewNextNone": "No quotes waiting for review",
+  "queue": {
+    "label": "Review queue",
+    "needReview_one": "{{draft}} of {{total}} quotes to review",
+    "needReview_other": "{{draft}} of {{total}} quotes to review",
+    "allReviewed_one": "All {{count}} quote reviewed",
+    "allReviewed_other": "All {{count}} quotes reviewed",
+    "confirmed": "In comparison",
+    "draft": "To review",
+    "rejected": "Removed from comparison",
+    "upNext": "Up next, by deadline",
+    "toReviewLine_one": "{{count}} to review",
+    "toReviewLine_other": "{{count}} to review",
+    "includedLine_one": "{{count}} in comparison",
+    "includedLine_other": "{{count}} in comparison",
+    "allIncluded": "All {{count}} in comparison",
+    "ready": "ready to compare",
+    "dueWeekday": "due {{day}}",
+    "dueToday": "due today",
+    "overdue": "overdue",
+    "review": "Review →",
+    "compare": "Compare →",
+    "viewAll": "View all ({{count}})"
+  }
+}

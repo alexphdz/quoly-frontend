@@ -1,0 +1,53 @@
+.ds-ask-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.ds-ask {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: 4px 8px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.ds-ask-mark {
+  width: 7px;
+  height: 7px;
+  margin-top: 5px;
+  background: var(--warn-mark);
+  transform: rotate(45deg);
+}
+
+.ds-ask-check {
+  width: 8px;
+  height: 5px;
+  margin-top: 5px;
+  border-left: 2px solid var(--tx-3);
+  border-bottom: 2px solid var(--tx-3);
+  transform: rotate(-45deg);
+}
+
+.ds-ask-kind.is-open {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--warn-fg);
+}
+
+.ds-ask > :not(.ds-ask-mark, .ds-ask-check) {
+  grid-column: 2;
+}
+
+.ds-ask-kind {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.ds-ask-quote {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+}

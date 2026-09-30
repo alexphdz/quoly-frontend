@@ -1,0 +1,12 @@
+{
+  "specParameters": "Specification",
+  "buyerAsks": "Waiting on you",
+  "labels": {
+    "quotation": "Quote",
+    "partial_quotation": "Partial quote",
+    "clarification_required": "Clarification required",
+    "acknowledgement": "Acknowledgement",
+    "declined": "Declined",
+    "other": "Other"
+  }
+}
