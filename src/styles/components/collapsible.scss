@@ -1,0 +1,69 @@
+.ds-collapsible {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-surface);
+}
+
+.ds-collapsible-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 14px;
+  border: 0;
+  background: transparent;
+  color: var(--tx-1);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ds-collapsible-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ds-collapsible-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tx-1);
+}
+
+.ds-collapsible-label .optional {
+  margin-left: 4px;
+  color: var(--tx-3);
+  font-weight: 400;
+}
+
+.ds-collapsible-summary {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--tx-3);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-collapsible-action {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 4px;
+  color: var(--tx-2);
+  font-size: 12px;
+}
+
+.ds-collapsible-caret {
+  transition: transform 0.16s ease;
+}
+
+.ds-collapsible-caret.is-open {
+  transform: rotate(180deg);
+}
+
+.ds-collapsible-body {
+  padding: 2px 14px 14px;
+}
