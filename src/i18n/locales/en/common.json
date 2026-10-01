@@ -13,7 +13,9 @@
     "upload": "Upload",
     "select": "Select",
     "refresh": "Refresh",
-    "retry": "Retry"
+    "retry": "Retry",
+    "showMore": "Show more",
+    "showLess": "Show less"
   },
   "language": {
     "label": "Language",

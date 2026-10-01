@@ -1,4 +1,4 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
+import { forwardRef, useState, type ButtonHTMLAttributes, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AlertDialog, DropdownMenu, Select as RSelect, Tooltip } from 'radix-ui'
@@ -9,6 +9,51 @@ import { Icon } from './Icon'
 
 export { Icon } from './Icon'
 export { MetricCard, type MetricCardProps, type MetricTone } from './MetricCard'
+
+/** Progressive-disclosure panel: a header with an optional marker + collapsed
+ *  summary, and a body revealed on toggle. Used to keep optional/secondary
+ *  content out of the way until the user asks for it. */
+export function Collapsible({
+  label,
+  optional,
+  summary,
+  defaultOpen = false,
+  className,
+  children,
+}: {
+  label: ReactNode
+  optional?: boolean
+  summary?: ReactNode
+  defaultOpen?: boolean
+  className?: string
+  children: ReactNode
+}) {
+  const { t } = useTranslation('common')
+  const [open, setOpen] = useState(defaultOpen)
+  return (
+    <div className={cn('ds-collapsible', open && 'is-open', className)}>
+      <button
+        type="button"
+        className="ds-collapsible-head"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="ds-collapsible-title">
+          <span className="ds-collapsible-label">
+            {label}
+            {optional ? <span className="optional">({t('field.optional')})</span> : null}
+          </span>
+          {!open && summary ? <span className="ds-collapsible-summary">{summary}</span> : null}
+        </span>
+        <span className="ds-collapsible-action">
+          <span className="ds-collapsible-toggle">{open ? t('actions.showLess') : t('actions.showMore')}</span>
+          <Icon name="expand_more" size={16} className={cn('ds-collapsible-caret', open && 'is-open')} />
+        </span>
+      </button>
+      {open ? <div className="ds-collapsible-body">{children}</div> : null}
+    </div>
+  )
+}
 
 export type ChipTone = 'neutral' | 'brand' | 'success' | 'warn' | 'danger' | 'outline'
 
