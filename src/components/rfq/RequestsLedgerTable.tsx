@@ -1,3 +1,4 @@
+import { Fragment, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { RFQRead } from '../../types/rfq'
@@ -95,6 +96,7 @@ export default function RequestsLedgerTable({ rfqs }: { rfqs: RFQRead[] }) {
   const fmt = useFormat()
   const units = useUnitLabel()
   const navigate = useNavigate()
+  const [expandedId, setExpandedId] = useState<string | null>(null)
 
   return (
     <div className="ds-table-wrap ds-table-wrap--cards">
@@ -118,45 +120,79 @@ export default function RequestsLedgerTable({ rfqs }: { rfqs: RFQRead[] }) {
             const destination = requestDestination(rfq)
             const needYou = (rfq.supplier_stage_counts?.buyer_action_required ?? 0) > 0
               && rfqListBucket(rfq) === 'open'
+            const expanded = expandedId === rfq.id
+            const previewText = rfq.technical_requirements || rfq.description || ''
             return (
-              <tr
-                key={rfq.id}
-                className={needYou ? 'is-link is-attention' : 'is-link'}
-                onClick={() => navigate(destination)}
-              >
-                <td>
-                  <div className="qt-request">
-                    <Link to={destination} className="qt-request-name rq-name" title={rfq.name} onClick={event => event.stopPropagation()}>
-                      {rfq.name}
-                    </Link>
-                    <span className="ds-id">{rfqDisplayNumber(rfq)}</span>
-                  </div>
-                </td>
-                <td data-label={t('dashboard.table.status')}><StatusCell rfq={rfq} /></td>
-                <td className="qt-num" data-label={t('dashboard.table.quantity')}>
-                  <span className="qy-num">{fmt.number(rfq.quantity)}</span>
-                  <span className="qt-unit"> {unitLabel}</span>
-                </td>
-                <td data-label={t('dashboard.table.replies')}><QuotesCell rfq={rfq} /></td>
-                <td data-label={t('dashboard.table.deadline')}><DeadlineCell rfq={rfq} /></td>
-                <td className="qt-num rq-muted-text" data-label={t('dashboard.table.updated')}>
-                  {fmt.date(rfq.updated_at, { day: 'numeric', month: 'short' })}
-                </td>
-                <td className="qt-actions" onClick={event => event.stopPropagation()}>
-                  <Menu
-                    label={t('dashboard.table.actions')}
-                    items={[
-                      { label: t('dashboard.row.open'), icon: 'open_in_new', onSelect: () => navigate(destination) },
-                      ...(rfq.confirmed_count > 0
-                        ? [{ label: t('dashboard.row.compare'), icon: 'balance', onSelect: () => navigate(`/rfqs/${rfq.id}/comparison`) }]
-                        : []),
-                      ...(rfqListBucket(rfq) === 'draft' && rfq.request_kind === 'commercial'
-                        ? [{ label: t('dashboard.row.edit'), icon: 'edit', onSelect: () => navigate(`/rfqs/${rfq.id}/edit`) }]
-                        : []),
-                    ]}
-                  />
-                </td>
-              </tr>
+              <Fragment key={rfq.id}>
+                <tr
+                  className={`${needYou ? 'is-link is-attention' : 'is-link'}${expanded ? ' is-expanded' : ''}`}
+                  aria-expanded={expanded}
+                  onClick={() => setExpandedId((id) => (id === rfq.id ? null : rfq.id))}
+                >
+                  <td>
+                    <div className="rq-name-cell">
+                      <Icon name="expand_more" size={14} className={`rq-caret${expanded ? ' is-open' : ''}`} />
+                      <div className="qt-request">
+                        <Link to={destination} className="qt-request-name rq-name" title={rfq.name} onClick={event => event.stopPropagation()}>
+                          {rfq.name}
+                        </Link>
+                        <span className="ds-id">{rfqDisplayNumber(rfq)}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td data-label={t('dashboard.table.status')}><StatusCell rfq={rfq} /></td>
+                  <td className="qt-num" data-label={t('dashboard.table.quantity')}>
+                    <span className="qy-num">{fmt.number(rfq.quantity)}</span>
+                    <span className="qt-unit"> {unitLabel}</span>
+                  </td>
+                  <td data-label={t('dashboard.table.replies')}><QuotesCell rfq={rfq} /></td>
+                  <td data-label={t('dashboard.table.deadline')}><DeadlineCell rfq={rfq} /></td>
+                  <td className="qt-num rq-muted-text" data-label={t('dashboard.table.updated')}>
+                    {fmt.date(rfq.updated_at, { day: 'numeric', month: 'short' })}
+                  </td>
+                  <td className="qt-actions" onClick={event => event.stopPropagation()}>
+                    <Menu
+                      label={t('dashboard.table.actions')}
+                      items={[
+                        { label: t('dashboard.row.open'), icon: 'open_in_new', onSelect: () => navigate(destination) },
+                        ...(rfq.confirmed_count > 0
+                          ? [{ label: t('dashboard.row.compare'), icon: 'balance', onSelect: () => navigate(`/rfqs/${rfq.id}/comparison`) }]
+                          : []),
+                        ...(rfqListBucket(rfq) === 'draft' && rfq.request_kind === 'commercial'
+                          ? [{ label: t('dashboard.row.edit'), icon: 'edit', onSelect: () => navigate(`/rfqs/${rfq.id}/edit`) }]
+                          : []),
+                      ]}
+                    />
+                  </td>
+                </tr>
+                {expanded && (
+                  <tr className="rq-preview-row">
+                    <td colSpan={7}>
+                      <div className="rq-preview">
+                        {previewText && <p className="rq-preview-desc">{previewText}</p>}
+                        <div className="rq-preview-facts">
+                          {rfq.delivery_point && (
+                            <span className="rq-fact"><Icon name="location_on" size={14} />{rfq.delivery_point}</span>
+                          )}
+                          {rfq.incoterms?.rule && (
+                            <span className="rq-fact"><Icon name="incoterm" size={14} />{rfq.incoterms.named_place ? `${rfq.incoterms.rule} · ${rfq.incoterms.named_place}` : rfq.incoterms.rule}</span>
+                          )}
+                          {rfq.base_currency && (
+                            <span className="rq-fact"><Icon name="base_currency" size={14} />{rfq.base_currency}</span>
+                          )}
+                          <span className="rq-fact"><Icon name="apartment" size={14} />{fmt.number(rfq.supplier_count)}</span>
+                        </div>
+                        <div className="rq-preview-actions">
+                          <Link to={destination} className="ds-btn ds-btn-secondary ds-btn-sm" onClick={event => event.stopPropagation()}>
+                            {t('dashboard.row.open')}
+                            <Icon name="arrow_forward" size={16} />
+                          </Link>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </Fragment>
             )
           })}
         </tbody>
