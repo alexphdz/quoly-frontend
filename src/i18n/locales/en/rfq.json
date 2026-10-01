@@ -925,6 +925,9 @@
       "quantity": "Enter a whole quantity greater than zero",
       "place": "Enter the place this Incoterm requires",
       "term": "Choose an Incoterm for this place",
+      "deadlinePast": "The reply-by date can't be earlier than today",
+      "deliveryPast": "The delivery date can't be earlier than today",
+      "deliveryBeforeDeadline": "Delivery can't be earlier than the reply-by date",
       "summary_one": "{{count}} required field is empty. The request is not created until it is filled.",
       "summary_other": "{{count}} required fields are empty. The request is not created until they are filled."
     },

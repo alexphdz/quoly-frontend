@@ -24,11 +24,6 @@ export default function QuotationsPage() {
     [quotes],
   )
 
-  const nextQuote = useMemo(
-    () => all.filter(quote => quoteListStatus(quote) === 'draft').at(-1),
-    [all],
-  )
-
   const rfqOptions: RequestOption[] = useMemo(() => {
     const byRfq = new Map<string, RequestOption>()
     for (const quote of all) {
@@ -84,7 +79,7 @@ export default function QuotationsPage() {
       )}
 
       {all.length > 0 && rfqs && (
-        <ReviewQueue quotes={all} rfqs={rfqs} nextQuoteId={nextQuote?.id} />
+        <ReviewQueue quotes={all} rfqs={rfqs} />
       )}
 
       {all.length > 0 && (

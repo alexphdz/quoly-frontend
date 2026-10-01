@@ -159,8 +159,10 @@
     "noText": "No se encontró texto legible en este documento.",
     "hintOriginal": "",
     "hintText": "",
-    "fieldsTitle": "Campos extraídos",
+    "fieldsTitle": "Datos de la cotización",
     "fieldsHint": "",
+    "editFields": "Editar",
+    "cancelEdit": "Cancelar",
     "field": {
       "price": "Precio",
       "currency": "Moneda",

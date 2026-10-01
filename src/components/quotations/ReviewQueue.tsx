@@ -1,10 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { QuoteOverviewItem } from '../../types/quote'
 import type { RFQRead } from '../../types/rfq'
 import { deadlineDays, rfqDisplayNumber } from '../../lib/rfqDisplay'
 import { quoteListStatus } from '../../lib/quoteDisplay'
-import { Btn } from '../ds'
 import { useFormat } from '../../lib/format'
 
 const STATUS_COLOR = {
@@ -39,15 +38,12 @@ function MiniBar({ counts }: { counts: Counts }) {
 export default function ReviewQueue({
   quotes,
   rfqs,
-  nextQuoteId,
 }: {
   quotes: QuoteOverviewItem[]
   rfqs: RFQRead[]
-  nextQuoteId?: string
 }) {
   const { t } = useTranslation('quotation')
   const fmt = useFormat()
-  const navigate = useNavigate()
   const totals = countsOf(quotes)
   const headline = totals.draft === 0
     ? t('queue.allReviewed', { count: totals.total })
@@ -97,14 +93,6 @@ export default function ReviewQueue({
           <p className="rq-queue-kicker">{t('queue.label')}</p>
           <h2 className="rq-queue-title">{headline}</h2>
         </div>
-        <Btn
-          variant="primary"
-          disabled={!nextQuoteId}
-          disabledReason={t('reviewNextNone')}
-          onClick={() => nextQuoteId && navigate(`/quotes/${nextQuoteId}`)}
-        >
-          {t('reviewNext')}
-        </Btn>
       </header>
 
       <div className="rq-queue-track" aria-hidden>

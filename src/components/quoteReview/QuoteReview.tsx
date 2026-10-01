@@ -82,6 +82,7 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
   const restoreQuote = useRestoreQuote(quote.id, quote.rfq_id)
   const deleteQuote = useDeleteQuote(quote.id, quote.rfq_id)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [editing, setEditing] = useState(false)
   const [active, setActive] = useState<string | null>(null)
   const [pinned, setPinned] = useState<string | null>(null)
   const [view, setView] = useState<'original' | 'text'>('text')
@@ -103,11 +104,17 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
     handleSubmit(data => {
       updateQuote.mutate(toUpdate(data), {
         onSuccess: () => {
+          setEditing(false)
           if (after) after()
           else toast(t('review.saved'))
         },
       })
     })()
+
+  const cancelEdit = () => {
+    reset(toForm(quote))
+    setEditing(false)
+  }
 
   const include = () => {
     const run = () => confirmQuote.mutate(undefined, { onSuccess: () => toast(t('review.includedToast')) })
@@ -189,7 +196,19 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
             </SectionCard>
           )}
 
-          <SectionCard icon="edit" title={t('review.fieldsTitle')}>
+          <SectionCard
+            icon="description"
+            title={t('review.fieldsTitle')}
+            actions={editing ? (
+              <Btn variant="ghost" icon="close" onClick={cancelEdit}>{t('review.cancelEdit')}</Btn>
+            ) : (
+              <div className="qr-fields-actions">
+                <AiMark kind="read" />
+                <Btn variant="ghost" icon="edit" onClick={() => setEditing(true)}>{t('review.editFields')}</Btn>
+              </div>
+            )}
+          >
+            {editing ? (
             <form className="qr-fields" onSubmit={event => { event.preventDefault(); save() }}>
               {FIELDS.map(field => {
                 const saved = quote[REVIEW_FIELD_TO_QUOTE[field.key]]
@@ -252,6 +271,47 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
                 <div className="qr-input"><textarea id="qr-notes" rows={2} {...register('notes')} /></div>
               </div>
             </form>
+            ) : (
+            <div className="qr-fields">
+              {FIELDS.map(field => {
+                const snippet = sources[field.key]
+                const raw = values[field.key].trim()
+                const empty = raw === ''
+                const required = quote.missing_fields.includes(field.key) || (field.key === 'price' && empty)
+                const display = field.type === 'currency' ? raw.toUpperCase() : raw
+                const addon = field.addon?.(values)
+                return (
+                  <div
+                    key={field.key}
+                    className={cn('qr-field', field.wide && 'is-wide', highlight && snippet === highlight && 'is-active')}
+                    onMouseEnter={() => snippet && setActive(snippet)}
+                    onMouseLeave={() => setActive(null)}
+                  >
+                    <div className="qr-field-head">
+                      <span className="qr-field-label">{t(`review.field.${field.key}`)}</span>
+                      {empty && required && <Chip tone="warn" icon="warning">{t('review.state.missing')}</Chip>}
+                    </div>
+                    {empty ? (
+                      <p className="qr-value is-empty">{t('review.state.notStated')}</p>
+                    ) : (
+                      <p className="qr-value">{display}{addon && <span className="qr-value-unit"> {addon}</span>}</p>
+                    )}
+                    {snippet && (
+                      <button type="button" className="qr-snippet" onClick={() => showInSource(snippet)} aria-pressed={pinned === snippet}>
+                        “{snippet}”
+                      </button>
+                    )}
+                  </div>
+                )
+              })}
+              <div className="qr-field is-wide">
+                <div className="qr-field-head"><span className="qr-field-label">{t('fields.notes')}</span></div>
+                {values.notes.trim()
+                  ? <p className="qr-value qr-value-notes">{values.notes}</p>
+                  : <p className="qr-value is-empty">{t('review.state.notStated')}</p>}
+              </div>
+            </div>
+            )}
           </SectionCard>
 
           <NormalizationCard quote={quote} steps={steps} />

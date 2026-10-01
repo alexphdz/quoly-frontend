@@ -121,10 +121,24 @@
 .qy-date-pop .rdp-day_button {
   font-size: 13px;
   font-weight: 400;
+  transition: background-color 120ms ease, color 120ms ease;
 }
 
 .qy-date-pop .rdp-day_button:hover:not(:disabled) {
   background: var(--bg-band);
+}
+
+/* Past / out-of-range days (via minDate) read as clearly unavailable. */
+.qy-date-pop .rdp-disabled .rdp-day_button,
+.qy-date-pop .rdp-day_button:disabled {
+  color: var(--tx-3);
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.qy-date-pop .rdp-disabled .rdp-day_button:hover {
+  background: transparent;
 }
 
 .qy-date-pop .rdp-day_button:focus-visible {

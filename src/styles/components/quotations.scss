@@ -387,7 +387,10 @@
   }
 }
 
-.rq-queue { padding: 16px 20px 12px; }
+/* `.rq-queue` collides with the home-page queue list in requests.scss
+   (padding: 0), which loads later and would win. Scope to the card
+   (`.qy-card.rq-queue`) so the review-queue card keeps its padding. */
+.qy-card.rq-queue { padding: 16px 20px 12px; }
 
 .rq-queue-head {
   display: flex;
@@ -524,7 +527,7 @@
 }
 
 @media (max-width: 640px) {
-  .rq-queue { padding: 16px; }
+  .qy-card.rq-queue { padding: 16px; }
 
   .rq-queue-title {
     font-size: 18px;
@@ -535,6 +538,15 @@
   .rq-queue-head > a.ds-btn {
     width: 100%;
   }
+
+  /* The 90px progress bar crowds the row on phones — drop it so the request
+     name and action have room and never overflow. */
+  .rq-queue-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 12px;
+  }
+
+  .rq-mini-bar { display: none; }
 
   .qt-request { max-width: 100%; }
 }

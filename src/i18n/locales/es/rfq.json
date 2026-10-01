@@ -925,6 +925,9 @@
       "quantity": "Escribe una cantidad entera mayor que cero",
       "place": "Escribe el lugar que exige este Incoterm",
       "term": "Elige un Incoterm para este lugar",
+      "deadlinePast": "La fecha límite de respuesta no puede ser anterior a hoy",
+      "deliveryPast": "La fecha de entrega no puede ser anterior a hoy",
+      "deliveryBeforeDeadline": "La entrega no puede ser anterior a la fecha límite de respuesta",
       "summary_one": "{{count}} campo obligatorio está vacío. La solicitud no se crea hasta completarlo.",
       "summary_other": "{{count}} campos obligatorios están vacíos. La solicitud no se crea hasta completarlos."
     },

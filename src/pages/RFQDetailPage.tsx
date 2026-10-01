@@ -112,7 +112,16 @@ export default function RFQDetailPage() {
         sendPending={sendRequests.isPending}
         sendError={sendRequests.error}
         sendResult={sendRequests.data}
-        onSend={() => sendRequests.mutate()}
+        onSend={() => sendRequests.mutate(undefined, {
+          onSuccess: (data) => {
+            for (const item of data) {
+              if ('gmail_message_id' in item || 'outlook_message_id' in item) {
+                const sent = item as { supplier_name: string, to: string }
+                toast(t('send.sentTo', { name: sent.supplier_name, email: sent.to }))
+              }
+            }
+          },
+        })}
         onCloseSupplier={(supplierId) => {
           closeSupplier.mutate(supplierId, { onSuccess: () => toast(t('suppliers.closedToast')) })
         }}

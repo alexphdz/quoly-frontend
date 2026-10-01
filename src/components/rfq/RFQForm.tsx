@@ -23,6 +23,10 @@ import {
 } from '../../constants/packaging'
 import type { PackagingSpecification } from '../../types/packaging'
 import type { RFQAttachment, RFQCreate, RFQLineItem } from '../../types/rfq'
+import { localDateToIso } from '../ui/DateField'
+
+/** Local YYYY-MM-DD for `min` on native date inputs — no past dates. */
+const todayIso = () => localDateToIso(new Date())
 import { useFormat } from '../../lib/format'
 import { Alert, Badge, Card, SelectInput } from '../ui'
 
@@ -386,7 +390,7 @@ export default function RFQForm({ onSubmit, isPending, error, defaultEmailLocale
           </Field>
           <Select label={t('form.fields.currency')} name="base_currency" register={register} options={CURRENCIES} />
           <Field label={t('form.fields.responseDeadline')} error={errors.response_deadline?.message}>
-            <input type="date" {...register('response_deadline')} className="input" />
+            <input type="date" min={todayIso()} {...register('response_deadline')} className="input" />
           </Field>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -394,7 +398,7 @@ export default function RFQForm({ onSubmit, isPending, error, defaultEmailLocale
             <input {...register('delivery_point')} className="input" placeholder={t('form.fields.deliveryLocationPlaceholder')} />
           </Field>
           <Field label={t('form.fields.requestedDeliveryDate')}>
-            <input type="date" {...register('requested_delivery_date')} className="input" />
+            <input type="date" min={todayIso()} {...register('requested_delivery_date')} className="input" />
           </Field>
           <Field label={t('form.fields.paymentTerms')}>
             <input {...register('payment_terms')} className="input" placeholder={t('form.fields.paymentTermsPlaceholder')} />
@@ -601,7 +605,7 @@ function LineItemEditor({ index, register, control, errors, canRemove, onRemove 
           <input type="number" step="0.0001" {...register(`line_items.${index}.target_unit_price`)} className="input" />
         </Field>
         <Field label={t('form.fields.requestedDeliveryDate')}>
-          <input type="date" {...register(`line_items.${index}.requested_delivery_date`)} className="input" />
+          <input type="date" min={todayIso()} {...register(`line_items.${index}.requested_delivery_date`)} className="input" />
         </Field>
         <Field label={t('form.fields.lineNotes')}>
           <input {...register(`line_items.${index}.notes`)} className="input" />

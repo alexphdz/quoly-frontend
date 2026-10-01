@@ -159,8 +159,10 @@
     "noText": "No readable text was found in this document.",
     "hintOriginal": "",
     "hintText": "",
-    "fieldsTitle": "Extracted fields",
+    "fieldsTitle": "Quote details",
     "fieldsHint": "",
+    "editFields": "Edit",
+    "cancelEdit": "Cancel",
     "field": {
       "price": "Price",
       "currency": "Currency",

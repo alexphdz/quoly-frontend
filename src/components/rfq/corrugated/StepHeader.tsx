@@ -5,6 +5,7 @@ import {
   INCOTERM_OPTIONS,
 } from '../../../constants/corrugatedOptions'
 import { Card } from '../../ui'
+import { localDateToIso } from '../../ui/DateField'
 import { EnumSelect, FormField, TextArea, TextInput, fieldError, type StepProps } from './stepShared'
 
 export default function StepHeader({ register, errors, watch }: StepProps) {
@@ -38,7 +39,7 @@ export default function StepHeader({ register, errors, watch }: StepProps) {
           <TextInput type="email" {...register('buyer_contact_email')} />
         </FormField>
         <FormField label={t('fields.responseDeadline')} required error={fieldError(errors, 'response_deadline', t)}>
-          <TextInput type="date" {...register('response_deadline')} />
+          <TextInput type="date" min={localDateToIso(new Date())} {...register('response_deadline')} />
         </FormField>
         <FormField label={t('fields.quoteValidityDays')} optional>
           <TextInput type="number" min={1} {...register('quote_validity_days_requested')} />

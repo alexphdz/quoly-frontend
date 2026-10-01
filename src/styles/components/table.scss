@@ -50,7 +50,7 @@
   }
 
   tbody tr:hover td {
-    background: var(--bg-surface);
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
   }
 
   tbody tr.is-open td {
@@ -161,11 +161,17 @@ button.ds-link {
     tbody tr {
       position: relative;
       margin: 0 0 12px;
-      padding: 12px 14px;
+      padding: 14px 16px;
       border: 1px solid var(--line);
       border-radius: var(--radius-card);
       background: var(--bg-card);
       box-shadow: var(--card-shadow);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    tbody tr.is-link:active {
+      transform: scale(0.99);
+      box-shadow: var(--shadow-xs);
     }
 
     tbody tr:hover td,

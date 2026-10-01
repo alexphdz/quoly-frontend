@@ -48,6 +48,7 @@ export function DateField({
   placeholder,
   clearLabel,
   disabled,
+  minDate,
 }: {
   name: string
   label: string
@@ -56,6 +57,8 @@ export function DateField({
   placeholder: string
   clearLabel: string
   disabled?: boolean
+  /** Earliest selectable day. Days before it are disabled in the calendar. */
+  minDate?: Date
 }) {
   const { i18n } = useTranslation()
   const fmt = useFormat()
@@ -101,6 +104,7 @@ export function DateField({
             mode="single"
             selected={selected}
             onSelect={pick}
+            disabled={minDate ? { before: minDate } : undefined}
             locale={spanish ? es : enUS}
             month={month}
             onMonthChange={setMonth}

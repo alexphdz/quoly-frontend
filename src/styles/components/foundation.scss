@@ -132,7 +132,7 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
   background: var(--bg-card);
-  box-shadow: none;
+  box-shadow: var(--shadow-sm);
 }
 
 .qy-card-body { padding: 16px 20px; }
@@ -571,7 +571,9 @@
 
 // ---------- Numbers ----------
 .qy-num {
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
   text-align: right;
   white-space: nowrap;
 }

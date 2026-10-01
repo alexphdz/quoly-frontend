@@ -4,6 +4,11 @@
   font-weight: 500;
 }
 
+.field-label .req {
+  margin-left: 2px;
+  color: var(--danger-fg);
+}
+
 .field-help {
   color: var(--tx-2);
   font-size: 12px;
@@ -45,7 +50,7 @@ textarea.input {
 
 .input:focus {
   border-color: var(--accent-line);
-  box-shadow: 0 0 0 1px var(--accent-line);
+  box-shadow: var(--ring);
 }
 
 input[type='checkbox'] {
@@ -149,7 +154,7 @@ input[type='checkbox'] {
   border-radius: 6px;
   background: var(--bg-surface);
 
-  &:focus-within { border-color: var(--accent-line); box-shadow: 0 0 0 1px var(--accent-line); }
+  &:focus-within { border-color: var(--accent-line); box-shadow: var(--ring); }
 
   input {
     flex: 1;
@@ -190,7 +195,9 @@ input[type='checkbox'] {
   margin-top: 8px;
   padding: 12px 0;
   border-top: 1px solid var(--line);
-  background: var(--bg-content);
+  /* Sits directly on the page canvas (the form has no card), so match the
+     canvas — a white bar here reads as a stray box behind the buttons. */
+  background: var(--bg-canvas);
 }
 
 .ds-form-save {

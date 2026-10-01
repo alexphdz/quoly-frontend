@@ -26,25 +26,25 @@
   grid-template-rows: auto 1fr;
   padding: 28px 40px 48px;
   color-scheme: light;
-  --tx-1: #17171a;
-  --tx-body: #3d3d43;
-  --tx-2: #5c6570;
-  --tx-3: #8b939c;
-  --line: #d5dee6;
-  --line-strong: #c3ced8;
-  --bg-surface: #f7fafb;
-  --bg-content: #f7fafb;
-  --bg-band: #e7eef3;
-  --accent: #1a4e72;
-  --accent-hover: #123650;
-  --accent-fg: #fcfcfd;
-  --brand-logo: #1a4e72;
-  --focus: #2a6a96;
-  background-color: #eef3f6;
+  --tx-1: #0e1e1f;
+  --tx-body: #2f403f;
+  --tx-2: #566664;
+  --tx-3: #879997;
+  --line: #cfdddb;
+  --line-strong: #aec4c1;
+  --bg-surface: #f4f9f9;
+  --bg-content: #f4f9f9;
+  --bg-band: #e2eeed;
+  --accent: #0a7a82;
+  --accent-hover: #075f66;
+  --accent-fg: #ffffff;
+  --brand-logo: #0a7a82;
+  --focus: #12939b;
+  background-color: #eaf2f1;
   background-image:
-    radial-gradient(1100px 760px at -4% 108%, rgb(26 78 114 / 0.18), transparent 60%),
-    radial-gradient(860px 560px at 108% -8%, rgb(58 124 168 / 0.14), transparent 56%),
-    linear-gradient(158deg, #fbfcfd 0%, #e3eef4 44%, #f4f8fa 100%);
+    radial-gradient(1100px 760px at -4% 108%, rgb(13 110 116 / 0.20), transparent 60%),
+    radial-gradient(860px 560px at 108% -8%, rgb(23 162 172 / 0.16), transparent 56%),
+    linear-gradient(158deg, #fbfefe 0%, #dcefef 44%, #f1f9f9 100%);
 }
 
 .ds-auth-top,

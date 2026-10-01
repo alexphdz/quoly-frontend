@@ -13,7 +13,7 @@ import {
 import type { CommercialRFQWrite, RFQAttachment, RFQRead } from '../../types/rfq'
 import type { ApiError } from '../../api/client'
 import { Alert, FormField, TextArea, TextInput } from '../ui'
-import { DateField } from '../ui/DateField'
+import { DateField, isoDateToLocal } from '../ui/DateField'
 import { Icon, Segmented } from '../ds'
 import IncotermPicker from './commercial/IncotermPicker'
 import RequestStepArt from './commercial/RequestStepArt'
@@ -41,6 +41,21 @@ const schema = z
     }
     if (place && !rule) {
       ctx.addIssue({ code: 'custom', path: ['incoterm'], message: 'commercial.validation.term' })
+    }
+
+    // Date rules. YYYY-MM-DD strings compare chronologically.
+    const pad = (n: number) => String(n).padStart(2, '0')
+    const now = new Date()
+    const todayIso = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`
+    const delivery = values.requested_delivery_date?.trim() ?? ''
+    const deadline = values.response_deadline?.trim() ?? ''
+    if (deadline && deadline < todayIso) {
+      ctx.addIssue({ code: 'custom', path: ['response_deadline'], message: 'commercial.validation.deadlinePast' })
+    }
+    if (delivery && delivery < todayIso) {
+      ctx.addIssue({ code: 'custom', path: ['requested_delivery_date'], message: 'commercial.validation.deliveryPast' })
+    } else if (delivery && deadline && delivery < deadline) {
+      ctx.addIssue({ code: 'custom', path: ['requested_delivery_date'], message: 'commercial.validation.deliveryBeforeDeadline' })
     }
   })
 
@@ -122,6 +137,12 @@ export default function CommercialRFQForm({
   const deliveryDate = watch('requested_delivery_date') ?? ''
   const replyBy = watch('response_deadline') ?? ''
   const requirements = watch('technical_requirements') ?? ''
+
+  // Date guards: nothing before today; delivery cannot precede the reply-by date.
+  const startToday = new Date()
+  startToday.setHours(0, 0, 0, 0)
+  const deadlineDate = isoDateToLocal(replyBy)
+  const deliveryMin = deadlineDate && deadlineDate > startToday ? deadlineDate : startToday
 
   useEffect(() => {
     if (!reference.trim()) setValue('share_internal_reference', false)
@@ -329,24 +350,26 @@ export default function CommercialRFQForm({
             </>
           )}
           <div className="cr-dates">
-            <FormField label={t('commercial.deliveryDate')} optional>
+            <FormField label={t('commercial.deliveryDate')} optional error={fieldError(errors.requested_delivery_date?.message)}>
               <DateField
                 name="requested_delivery_date"
                 label={t('commercial.deliveryDate')}
                 value={deliveryDate}
-                onChange={(next) => setValue('requested_delivery_date', next, { shouldDirty: true })}
+                onChange={(next) => setValue('requested_delivery_date', next, { shouldDirty: true, shouldValidate: true })}
                 placeholder={t('commercial.datePlaceholder')}
                 clearLabel={t('commercial.dateClear')}
+                minDate={deliveryMin}
               />
             </FormField>
-            <FormField label={t('commercial.responseDeadline')} optional helper={t('commercial.responseDeadlineHelp')}>
+            <FormField label={t('commercial.responseDeadline')} optional helper={t('commercial.responseDeadlineHelp')} error={fieldError(errors.response_deadline?.message)}>
               <DateField
                 name="response_deadline"
                 label={t('commercial.responseDeadline')}
                 value={replyBy}
-                onChange={(next) => setValue('response_deadline', next, { shouldDirty: true })}
+                onChange={(next) => setValue('response_deadline', next, { shouldDirty: true, shouldValidate: true })}
                 placeholder={t('commercial.datePlaceholder')}
                 clearLabel={t('commercial.dateClear')}
+                minDate={startToday}
               />
             </FormField>
           </div>
