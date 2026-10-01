@@ -106,7 +106,7 @@ export function FormField({
       <label className="field-label">
         {label}
         {required && <span className="req"> *</span>}
-        {optional && <span className="font-normal"> {t('field.optional')}</span>}
+        {optional && <span className="optional">({t('field.optional')})</span>}
       </label>
       {children}
       {helper && <div className="field-help">{helper}</div>}

@@ -9,6 +9,12 @@
   color: var(--danger-fg);
 }
 
+.field-label .optional {
+  margin-left: 4px;
+  color: var(--tx-3);
+  font-weight: 400;
+}
+
 .field-help {
   color: var(--tx-2);
   font-size: 12px;
