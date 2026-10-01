@@ -11,13 +11,13 @@ function ProductMark() {
 }
 
 function TermsMark() {
+  // Clipboard with a check: agreed commercial terms (incoterm / dates / currency).
   return (
     <svg viewBox="0 0 64 64" fill="none" aria-hidden>
-      <circle cx="16" cy="40" r="5" stroke="currentColor" strokeWidth="1.4" />
-      <circle cx="48" cy="24" r="5" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M21 38c8-1 12-10 22-12" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-      <path d="M48 16v-4M46 14h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-      <path d="M10 50h44" stroke="currentColor" strokeWidth="1.4" opacity="0.4" strokeLinecap="round" />
+      <rect x="15" y="15" width="34" height="40" rx="4" stroke="currentColor" strokeWidth="1.4" />
+      <rect x="25" y="10" width="14" height="9" rx="2.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M23 35l6 6 11-13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M24 48h16" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" opacity="0.4" />
     </svg>
   )
 }
