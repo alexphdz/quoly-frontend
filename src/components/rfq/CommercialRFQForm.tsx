@@ -14,7 +14,7 @@ import type { CommercialRFQWrite, RFQAttachment, RFQRead } from '../../types/rfq
 import type { ApiError } from '../../api/client'
 import { Alert, FormField, TextArea, TextInput } from '../ui'
 import { DateField, isoDateToLocal } from '../ui/DateField'
-import { Icon, Segmented } from '../ds'
+import { Collapsible, Icon, Segmented } from '../ds'
 import IncotermPicker from './commercial/IncotermPicker'
 import RequestStepArt from './commercial/RequestStepArt'
 import UnitPicker from './commercial/UnitPicker'
@@ -129,6 +129,7 @@ export default function CommercialRFQForm({
 
   const reference = watch('internal_reference') ?? ''
   const incoterm = watch('incoterm') ?? ''
+  const namedPlace = watch('named_place') ?? ''
   const share = watch('share_internal_reference')
   const term = incotermByCode(incoterm)
   const placeLabel = term ? t(`commercial.placeRole.${term.role}`) : t('commercial.namedPlace')
@@ -329,50 +330,6 @@ export default function CommercialRFQForm({
           </div>
         </div>
         <div className="cr-fields">
-          <FormField label={t('commercial.incoterm')} optional error={fieldError(errors.incoterm?.message)}>
-            <IncotermPicker
-              value={incoterm}
-              onChange={(code) => {
-                setValue('incoterm', code, { shouldValidate: true })
-                if (!code) setValue('named_place', '', { shouldValidate: true })
-              }}
-              error={Boolean(errors.incoterm)}
-            />
-          </FormField>
-          {incoterm ? (
-            <FormField label={placeLabel} optional error={fieldError(errors.named_place?.message)}>
-              <TextInput {...register('named_place')} />
-            </FormField>
-          ) : (
-            <>
-              {t('commercial.placePrompt') ? <p className="cr-place-prompt">{t('commercial.placePrompt')}</p> : null}
-              <input type="hidden" {...register('named_place')} />
-            </>
-          )}
-          <div className="cr-dates">
-            <FormField label={t('commercial.deliveryDate')} optional error={fieldError(errors.requested_delivery_date?.message)}>
-              <DateField
-                name="requested_delivery_date"
-                label={t('commercial.deliveryDate')}
-                value={deliveryDate}
-                onChange={(next) => setValue('requested_delivery_date', next, { shouldDirty: true, shouldValidate: true })}
-                placeholder={t('commercial.datePlaceholder')}
-                clearLabel={t('commercial.dateClear')}
-                minDate={deliveryMin}
-              />
-            </FormField>
-            <FormField label={t('commercial.responseDeadline')} optional helper={t('commercial.responseDeadlineHelp')} error={fieldError(errors.response_deadline?.message)}>
-              <DateField
-                name="response_deadline"
-                label={t('commercial.responseDeadline')}
-                value={replyBy}
-                onChange={(next) => setValue('response_deadline', next, { shouldDirty: true, shouldValidate: true })}
-                placeholder={t('commercial.datePlaceholder')}
-                clearLabel={t('commercial.dateClear')}
-                minDate={startToday}
-              />
-            </FormField>
-          </div>
           <FormField label={t('commercial.currency')} required helper={t('commercial.currencyHelp')} error={fieldError(errors.base_currency?.message)}>
             <input type="hidden" {...register('base_currency')} />
             <Segmented
@@ -382,6 +339,65 @@ export default function CommercialRFQForm({
               options={COMMERCIAL_CURRENCIES.map((code) => ({ value: code, label: code }))}
             />
           </FormField>
+
+          <Collapsible
+            label={t('commercial.incoterm')}
+            optional
+            summary={incoterm ? (namedPlace ? `${incoterm} · ${namedPlace}` : incoterm) : undefined}
+          >
+            <div className="cr-fields">
+              <IncotermPicker
+                value={incoterm}
+                onChange={(code) => {
+                  setValue('incoterm', code, { shouldValidate: true })
+                  if (!code) setValue('named_place', '', { shouldValidate: true })
+                }}
+                error={Boolean(errors.incoterm)}
+              />
+              {errors.incoterm ? <div className="field-error">{fieldError(errors.incoterm?.message)}</div> : null}
+              {incoterm ? (
+                <FormField label={placeLabel} optional error={fieldError(errors.named_place?.message)}>
+                  <TextInput {...register('named_place')} />
+                </FormField>
+              ) : (
+                <>
+                  {t('commercial.placePrompt') ? <p className="cr-place-prompt">{t('commercial.placePrompt')}</p> : null}
+                  <input type="hidden" {...register('named_place')} />
+                </>
+              )}
+            </div>
+          </Collapsible>
+
+          <Collapsible
+            label={t('commercial.dates')}
+            optional
+            summary={[deliveryDate, replyBy].filter(Boolean).join(' · ') || undefined}
+          >
+            <div className="cr-dates">
+              <FormField label={t('commercial.deliveryDate')} optional error={fieldError(errors.requested_delivery_date?.message)}>
+                <DateField
+                  name="requested_delivery_date"
+                  label={t('commercial.deliveryDate')}
+                  value={deliveryDate}
+                  onChange={(next) => setValue('requested_delivery_date', next, { shouldDirty: true, shouldValidate: true })}
+                  placeholder={t('commercial.datePlaceholder')}
+                  clearLabel={t('commercial.dateClear')}
+                  minDate={deliveryMin}
+                />
+              </FormField>
+              <FormField label={t('commercial.responseDeadline')} optional helper={t('commercial.responseDeadlineHelp')} error={fieldError(errors.response_deadline?.message)}>
+                <DateField
+                  name="response_deadline"
+                  label={t('commercial.responseDeadline')}
+                  value={replyBy}
+                  onChange={(next) => setValue('response_deadline', next, { shouldDirty: true, shouldValidate: true })}
+                  placeholder={t('commercial.datePlaceholder')}
+                  clearLabel={t('commercial.dateClear')}
+                  minDate={startToday}
+                />
+              </FormField>
+            </div>
+          </Collapsible>
         </div>
       </section>
 

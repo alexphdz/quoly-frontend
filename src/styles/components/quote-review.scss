@@ -23,10 +23,16 @@
 
 .qr-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
   gap: 16px;
 }
+
+/* Prioritize summary + quote details; the raw supplier source sits below,
+   collapsed. */
+.qr-side { order: -1; }
+
+.qr-source-collapsible .qr-source-actions { margin-bottom: 12px; }
 
 // ---------- Source panel ----------
 .qr-source-card {

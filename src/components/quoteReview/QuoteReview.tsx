@@ -24,7 +24,7 @@ import {
   type ReviewFieldKey,
 } from '../../lib/quoteReview'
 import { COMMERCIAL_CURRENCIES } from '../../constants/commercial'
-import { AiMark, Breadcrumbs, Btn, Chip, ConfirmDialog, Icon, Menu, Money, SectionCard, Segmented, Select, Tip } from '../ds'
+import { AiMark, Breadcrumbs, Btn, Chip, Collapsible, ConfirmDialog, Icon, Menu, Money, SectionCard, Segmented, Select, Tip } from '../ds'
 import { QuoteStatusChip } from '../ds/StatusChips'
 import { Alert, cn, toast } from '../ui'
 
@@ -70,8 +70,6 @@ function toUpdate(values: FormValues): QuoteUpdate {
   return out as QuoteUpdate
 }
 
-const SOURCE_ICON: Record<string, string> = { pdf: 'description', xlsx: 'table_chart', csv: 'table_chart', docx: 'description', text: 'mail' }
-
 export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RFQRead }) {
   const { t } = useTranslation('quote')
   const fmt = useFormat()
@@ -97,7 +95,6 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
   const highlight = pinned ?? active
   const steps = normalizationSteps(quote, rfq?.base_unit)
   const priceMissing = values.price.trim() === ''
-  const sourceIcon = SOURCE_ICON[quote.file_type ?? 'text'] ?? 'description'
   const sourceKind = quote.file_type && quote.file_type !== 'text' ? quote.file_type : 'email'
 
   const save = (after?: () => void) =>
@@ -155,39 +152,32 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
       {quote.status === 'rejected' && <Alert tone="warning">{t('banner.rejected')}</Alert>}
 
       <div className="qr-grid">
-        <SectionCard
-          icon={sourceIcon}
-          title={t('review.sourceTitle')}
-          className="qr-source-card"
-          flush
-          actions={(
-            <div className="qr-source-actions">
-              {quote.file_type === 'pdf' && quote.file_url && (
-                <Segmented
-                  ariaLabel={t('review.viewLabel')}
-                  value={view}
-                  onChange={setView}
-                  options={[
-                    { value: 'original', label: t('review.viewOriginal') },
-                    { value: 'text', label: t('review.viewText') },
-                  ]}
-                />
-              )}
-              {quote.file_url && (
-                <a className="ds-btn ds-btn-ghost ds-btn-sm" href={quote.file_url} target="_blank" rel="noreferrer">
-                  <Icon name="open_in_new" size={16} />
-                  {t('review.openOriginal')}
-                </a>
-              )}
-            </div>
-          )}
-        >
+        <Collapsible label={t('review.sourceTitle')} className="qr-source-collapsible">
+          <div className="qr-source-actions">
+            {quote.file_type === 'pdf' && quote.file_url && (
+              <Segmented
+                ariaLabel={t('review.viewLabel')}
+                value={view}
+                onChange={setView}
+                options={[
+                  { value: 'original', label: t('review.viewOriginal') },
+                  { value: 'text', label: t('review.viewText') },
+                ]}
+              />
+            )}
+            {quote.file_url && (
+              <a className="ds-btn ds-btn-ghost ds-btn-sm" href={quote.file_url} target="_blank" rel="noreferrer">
+                <Icon name="open_in_new" size={16} />
+                {t('review.openOriginal')}
+              </a>
+            )}
+          </div>
           {view === 'original' && quote.file_url ? (
             <iframe className="qr-pdf" src={quote.file_url} title={t('review.sourceTitle')} />
           ) : (
             <SourceText text={quote.raw_text ?? ''} highlight={highlight} emptyLabel={t('review.noText')} />
           )}
-        </SectionCard>
+        </Collapsible>
 
         <div className="qr-side">
           {quote.faithful_summary && (
