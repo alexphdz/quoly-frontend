@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { InboundMessageRead } from '../../types/inbound'
@@ -169,11 +169,18 @@ export default function InboundList({ messages, rfqId, suppliers }: { messages: 
   const { t } = useTranslation('inbox')
   const [filter, setFilter] = useState<Filter>('all')
   const markRead = useMarkInboundRead(rfqId)
+  // Mark each message read at most once. Marking invalidates the inbound query,
+  // which refetches and re-runs this effect; without this guard that becomes an
+  // invalidate→refetch→mark infinite loop.
+  const markedRef = useRef<Set<string>>(new Set())
 
   useEffect(() => {
     messages
-      .filter(message => !message.read_at)
-      .forEach(message => markRead.mutate(message.id))
+      .filter(message => !message.read_at && !markedRef.current.has(message.id))
+      .forEach(message => {
+        markedRef.current.add(message.id)
+        markRead.mutate(message.id)
+      })
   }, [messages, markRead])
 
   const counts = useMemo(() => ({
