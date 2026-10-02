@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useOpenBuyerActions, useRFQs } from '../hooks/useRFQs'
 import { useAllQuotes } from '../hooks/useQuotes'
 import RequestsLedgerTable, { requestDestination, useRelativeDays } from '../components/rfq/RequestsLedgerTable'
-import { Btn, Empty, Icon, SectionCard, Skel, Tabs } from '../components/ds'
+import { Btn, Collapsible, Empty, Icon, SectionCard, Skel, Tabs } from '../components/ds'
 import { ErrorState, toast } from '../components/ui'
 import { computeListMetrics, deadlineDays, rfqDisplayNumber, rfqListBucket, rfqSearchHaystack } from '../lib/rfqDisplay'
 import { requestAttentionEvents, requestKpiCounts, responseDeadlineDays, upcomingDeadlines } from '../lib/dashboardMetrics'
@@ -130,8 +130,11 @@ export default function RequestsPage() {
                 {waiting && <p className="rq-ops-quiet">{waiting}</p>}
               </div>
 
-              <section className="rq-plain" aria-labelledby="rq-attention-title">
-                <h2 id="rq-attention-title">{t('dashboard.ops.attention')}</h2>
+              <Collapsible
+                className="rq-attention-collapsible"
+                label={t('dashboard.ops.attention')}
+                summary={attention.length > 0 ? String(attention.length) : undefined}
+              >
                 {attention.length === 0 ? (
                   <p className="rq-quiet">{t('dashboard.attention.caughtUp')}</p>
                 ) : (
@@ -166,7 +169,7 @@ export default function RequestsPage() {
                     })}
                   </ul>
                 )}
-              </section>
+              </Collapsible>
 
               <section className="rq-plain" aria-labelledby="rq-upcoming-title">
                 <h2 id="rq-upcoming-title">{t('dashboard.ops.upcoming')}</h2>
