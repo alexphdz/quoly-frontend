@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import type { QuoteRead, QuoteUpdate } from '../../types/quote'
 import type { ApiError } from '../../api/client'
-import { Alert, Button, FormField, TextArea, TextInput } from '../ui'
+import { Button, FormFeedback, FormField, TextArea, TextInput } from '../ui'
 
 interface Props {
   quote: QuoteRead
@@ -79,7 +79,7 @@ export default function QuoteEditForm({ quote, onSubmit, isPending, error, onCan
       </FormField>
 
       {error && (
-        <Alert tone="error">{(error as ApiError).detail || t('edit.failed')}</Alert>
+        <FormFeedback>{(error as ApiError).detail || t('edit.failed')}</FormFeedback>
       )}
 
       <div className="flex gap-2">

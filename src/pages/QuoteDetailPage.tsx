@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next'
 import { useEnumLabels } from '../i18n/labels'
 import { useFormat } from '../lib/format'
 import { useUnitLabel } from '../lib/units'
-import { Alert, Dialog, ErrorState, MissingFields, PageSkeleton, toast } from '../components/ui'
+import { Alert, Dialog, ErrorState, FormFeedback, MissingFields, PageSkeleton, toast } from '../components/ui'
 
 export default function QuoteDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -223,7 +223,7 @@ export default function QuoteDetailPage() {
           </aside>
 
           {confirmQuote.error && (
-            <Alert tone="error">{(confirmQuote.error as ApiError).detail || t('actions.acceptFailed')}</Alert>
+            <FormFeedback>{(confirmQuote.error as ApiError).detail || t('actions.acceptFailed')}</FormFeedback>
           )}
         </div>
       )}

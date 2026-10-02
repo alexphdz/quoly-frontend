@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import { authErrorMessage } from '../lib/authError'
-import { Alert, FormField } from '../components/ui'
+import { FormFeedback, FormField } from '../components/ui'
 import { Icon } from '../components/ds'
 import AuthStage from '../components/auth/AuthStage'
 
@@ -62,7 +62,7 @@ export default function RegisterPage() {
         </FormField>
 
         {registerMutation.error && (
-          <Alert tone="error">{authErrorMessage(registerMutation.error, t)}</Alert>
+          <FormFeedback>{authErrorMessage(registerMutation.error, t)}</FormFeedback>
         )}
 
         <button type="submit" className="ds-btn ds-btn-primary" disabled={registerMutation.isPending}>

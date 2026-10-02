@@ -244,31 +244,54 @@
   width: min(720px, 100%);
 }
 
+/* Banner — persistent, page-level context only (archived entity, next step,
+   blocking state). Minimalist: a 2px tone accent + a low-alpha tint, never a
+   saturated fill. For field validation use .field-error, for transient action
+   outcomes use a toast. See docs/design-system/feedback.md. */
 .alert {
+  display: flex;
   align-items: flex-start;
+  gap: 8px;
   border: 0;
-  border-left: 3px solid var(--accent-line);
-  border-radius: 0 4px 4px 0;
-  background: var(--selected);
+  border-left: 2px solid var(--line-strong);
+  border-radius: 0 6px 6px 0;
+  background: color-mix(in srgb, var(--tx-1) 4%, transparent);
   color: var(--tx-body);
-  padding: 10px 14px 10px 13px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.45;
 }
+
+.alert-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.alert-body { flex: 1; min-width: 0; }
+
+.alert-title {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.alert-text { color: inherit; }
 
 .alert-warning {
   border-left-color: var(--warn-mark);
-  background: var(--warn-bg);
+  background: color-mix(in srgb, var(--warn-mark) 8%, transparent);
   color: var(--warn-fg);
 }
 
 .alert-error {
   border-left-color: var(--danger-mark);
-  background: var(--danger-bg);
+  background: color-mix(in srgb, var(--danger-mark) 8%, transparent);
   color: var(--danger-fg);
 }
 
 .alert-success {
   border-left-color: var(--success-mark);
-  background: var(--success-bg);
+  background: color-mix(in srgb, var(--success-mark) 8%, transparent);
   color: var(--success-fg);
 }
 

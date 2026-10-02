@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next'
 import { useEnumLabels } from '../i18n/labels'
 import { useFormat } from '../lib/format'
 import { useUnreadCount } from '../hooks/useInboundStream'
-import { Alert, Badge, Button, Card, Dialog, EmptyState, ErrorState, PageSkeleton, ProgressBar, StatusBadge, toast } from '../components/ui'
+import { Alert, Badge, Button, Card, Dialog, EmptyState, ErrorState, FormFeedback, PageSkeleton, ProgressBar, StatusBadge, toast } from '../components/ui'
 
 export default function RFQDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -320,7 +320,7 @@ export default function RFQDetailPage() {
               <AddSupplierFromDirectory suppliers={directorySuppliers ?? []} isLoading={directoryLoading} isPending={addSupplierFromDirectory.isPending} onAdd={(supplierCompanyId) => addSupplierFromDirectory.mutate(supplierCompanyId)} />
               <hr className="border-[var(--border-subtle)]" />
               <AddSupplierForm onSubmit={handleAddSupplier} isPending={addSupplier.isPending} error={addSupplier.error} />
-              {addSupplierFromDirectory.error && <Alert tone="error">{t('detail.directoryAddError')}</Alert>}
+              {addSupplierFromDirectory.error && <FormFeedback>{t('detail.directoryAddError')}</FormFeedback>}
             </div>
           </Dialog>
         </Card>

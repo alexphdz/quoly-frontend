@@ -14,7 +14,7 @@ import {
 } from '../schemas/corrugatedRfq'
 import { formValuesToCorrugatedPayload } from '../lib/corrugatedPayload'
 import type { ApiError } from '../api/client'
-import { Alert, Button, PageHeader, toast } from '../components/ui'
+import { Button, FormFeedback, PageHeader, toast } from '../components/ui'
 import StepHeader from '../components/rfq/corrugated/StepHeader'
 import StepProduct from '../components/rfq/corrugated/StepProduct'
 import StepBoard from '../components/rfq/corrugated/StepBoard'
@@ -178,8 +178,8 @@ export default function RFQCorrugatedCreatePage() {
         ))}
       </ol>
 
-      {stepError && <Alert tone="warning" className="mb-4">{t('validation.fixStep')}</Alert>}
-      {submitError && <Alert tone="error" className="mb-4">{submitError}</Alert>}
+      {stepError && <FormFeedback className="mb-4">{t('validation.fixStep')}</FormFeedback>}
+      {submitError && <FormFeedback className="mb-4">{submitError}</FormFeedback>}
 
       <form
         onSubmit={(e) => {

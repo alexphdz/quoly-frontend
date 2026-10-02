@@ -28,7 +28,7 @@ import { localDateToIso } from '../ui/DateField'
 /** Local YYYY-MM-DD for `min` on native date inputs — no past dates. */
 const todayIso = () => localDateToIso(new Date())
 import { useFormat } from '../../lib/format'
-import { Alert, Badge, Card, SelectInput } from '../ui'
+import { Alert, Badge, Card, FormFeedback, SelectInput } from '../ui'
 
 const optionalNumber = z.union([z.coerce.number(), z.literal('')]).optional()
 
@@ -506,7 +506,7 @@ export default function RFQForm({ onSubmit, isPending, error, defaultEmailLocale
         <ResponseFieldChecklist watch={watch} setValue={setValue} />
       </section>
 
-      {error && <Alert tone="error">{error}</Alert>}
+      {error && <FormFeedback>{error}</FormFeedback>}
 
       <div className="grid gap-3 text-center">
         <button type="submit" disabled={isPending} className="btn btn-primary w-full">

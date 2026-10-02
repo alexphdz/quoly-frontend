@@ -3,7 +3,7 @@ import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { SupplierRead } from '../../types/rfq'
 import type { ApiError } from '../../api/client'
-import { Alert, Button, FormField, SelectInput, TextArea } from '../ui'
+import { Button, FormFeedback, FormField, SelectInput, TextArea } from '../ui'
 
 interface Props {
   suppliers: SupplierRead[]
@@ -91,9 +91,9 @@ export default function QuoteUploadForm({ suppliers, onSubmit, isPending, error 
         </FormField>
       )}
 
-      {submitError && <Alert tone="warning">{submitError}</Alert>}
+      {submitError && <FormFeedback>{submitError}</FormFeedback>}
       {error && (
-        <Alert tone="error">{(error as ApiError).detail || t('upload.failed')}</Alert>
+        <FormFeedback>{(error as ApiError).detail || t('upload.failed')}</FormFeedback>
       )}
 
       <Button

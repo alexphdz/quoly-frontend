@@ -27,6 +27,30 @@
   font-weight: 500;
 }
 
+/* Inline form-level feedback — a submit error that maps to the whole form
+   (wrong password, "couldn't save"). Text + small mark, no filled box. Pair
+   with role="alert". Success variant is quiet, never a green block. */
+.form-feedback {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.form-feedback .qy-icon,
+.form-feedback svg { flex-shrink: 0; }
+
+.form-feedback-error { color: var(--danger-fg); }
+.form-feedback-error .qy-icon,
+.form-feedback-error svg { color: var(--danger-mark); }
+
+.form-feedback-success { color: var(--success-fg); }
+.form-feedback-success .qy-icon,
+.form-feedback-success svg { color: var(--success-mark); }
+
 .input,
 textarea.input,
 select.input {

@@ -61,6 +61,12 @@ export function Badge({
   return <span className={cn('badge', `badge-${tone}`, dot && 'badge-dot', className)}>{children}</span>
 }
 
+/**
+ * Banner — persistent, page-level context only (archived entity, next-step
+ * guidance, blocking state, a standing note). NOT for field validation
+ * (use FormField's `error`) and NOT for transient action outcomes (use
+ * `toast`). See docs/design-system/feedback.md.
+ */
 export function Alert({
   tone = 'info',
   title,
@@ -74,14 +80,43 @@ export function Alert({
   children: ReactNode
   className?: string
 }) {
+  const assertive = tone === 'error' || tone === 'warning'
   return (
-    <div className={cn('alert', tone !== 'info' && `alert-${tone}`, className)}>
-      {icon && <span className="flex shrink-0 items-center">{icon}</span>}
-      <div className="flex-1">
-        {title && <div className="font-semibold">{title}</div>}
-        <div className="text-sm leading-relaxed">{children}</div>
+    <div
+      className={cn('alert', tone !== 'info' && `alert-${tone}`, className)}
+      role={assertive ? 'alert' : 'status'}
+      aria-live={assertive ? 'assertive' : 'polite'}
+    >
+      {icon && <span className="alert-icon">{icon}</span>}
+      <div className="alert-body">
+        {title && <div className="alert-title">{title}</div>}
+        <div className="alert-text">{children}</div>
       </div>
     </div>
+  )
+}
+
+/**
+ * Inline form feedback — a submit-level message that maps to the whole form
+ * (wrong password, "couldn't save, try again"), rendered as a single line near
+ * the submit button. Text + small mark, never a filled box. Returns null when
+ * empty so callers can pass a maybe-undefined message directly.
+ */
+export function FormFeedback({
+  tone = 'error',
+  children,
+  className,
+}: {
+  tone?: 'error' | 'success'
+  children?: ReactNode
+  className?: string
+}) {
+  if (!children) return null
+  return (
+    <p className={cn('form-feedback', `form-feedback-${tone}`, className)} role={tone === 'error' ? 'alert' : 'status'}>
+      <Icon name={tone === 'error' ? 'error' : 'check_circle'} size={14} />
+      <span>{children}</span>
+    </p>
   )
 }
 
@@ -110,7 +145,7 @@ export function FormField({
       </label>
       {children}
       {helper && <div className="field-help">{helper}</div>}
-      {error && <div className="field-error">{error}</div>}
+      {error && <div className="field-error" role="alert">{error}</div>}
     </div>
   )
 }
