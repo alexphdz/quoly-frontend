@@ -4,7 +4,7 @@ import type { QuoteRead, QuoteUpdate } from '../../types/quote'
 import type { QuoteLineItemsV2 } from '../../types/quoteIntake'
 import type { VolumeTier } from '../../types/rfq'
 import type { ApiError } from '../../api/client'
-import { Alert, Button, FormField, TextArea, TextInput } from '../ui'
+import { Button, FormFeedback, FormField, TextArea, TextInput } from '../ui'
 
 interface Props {
   quote: QuoteRead
@@ -170,7 +170,7 @@ export default function CorrugatedQuoteEditForm({
       </FormField>
 
       {error && (
-        <Alert tone="error">{(error as ApiError).detail || t('edit.failed')}</Alert>
+        <FormFeedback>{(error as ApiError).detail || t('edit.failed')}</FormFeedback>
       )}
 
       <div className="flex gap-2">

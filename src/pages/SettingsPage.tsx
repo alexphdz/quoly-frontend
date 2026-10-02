@@ -10,7 +10,7 @@ import { useAuth } from '../hooks/useAuth'
 import { getToken, post, type ApiError } from '../api/client'
 import { SUPPORTED_LOCALES, type Locale } from '../i18n'
 import { useFormat } from '../lib/format'
-import { Alert, FormField, SelectInput, toast } from '../components/ui'
+import { FormFeedback, FormField, SelectInput, toast } from '../components/ui'
 import { useTheme, type ThemePreference } from '../components/ui/theme'
 import GmailIcon from '../components/icons/GmailIcon'
 
@@ -140,11 +140,11 @@ function SecuritySection() {
         </FormField>
 
         {changePassword.error && (
-          <Alert tone="error">
+          <FormFeedback>
             {changePassword.error instanceof Error && 'detail' in changePassword.error
               ? (changePassword.error as ApiError).detail
               : t('settings.security.error')}
-          </Alert>
+          </FormFeedback>
         )}
 
         <div>
@@ -202,7 +202,7 @@ function PreferencesSection() {
           </SelectInput>
         </FormField>
         {updateProfile.error && (
-          <Alert tone="error">{t('settings.preferences.saveError')}</Alert>
+          <FormFeedback>{t('settings.preferences.saveError')}</FormFeedback>
         )}
       </div>
     </section>

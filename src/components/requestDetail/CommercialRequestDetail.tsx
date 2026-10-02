@@ -12,7 +12,7 @@ import { deadlineDays, journeyIndex } from '../../lib/rfqDisplay'
 import { referenceSpecificationAttachments } from '../../lib/specScenario'
 import { Breadcrumbs, Btn, Chip, Empty, Icon, IconBtn, KeyFacts, Money, SectionCard, Tabs, type Fact } from '../ds'
 import { RequestStatusChip, SupplierStatusChip } from '../ds/StatusChips'
-import { Alert, ProgressBar } from '../ui'
+import { Alert, FormFeedback, ProgressBar } from '../ui'
 import AddSupplierForm from '../rfq/AddSupplierForm'
 import AddSupplierFromDirectory from '../rfq/AddSupplierFromDirectory'
 import SendButton from '../rfq/SendButton'
@@ -428,7 +428,7 @@ function SuppliersTab(props: CommercialRequestDetailProps) {
                   {addTab === 'directory'
                     ? <AddSupplierFromDirectory suppliers={props.directorySuppliers} isLoading={props.directoryLoading} isPending={props.addFromDirectoryPending} onAdd={props.onAddFromDirectory} />
                     : <AddSupplierForm onSubmit={props.onAddSupplier} isPending={props.addSupplierPending} error={props.addSupplierError} />}
-                  {props.addFromDirectoryError && <Alert tone="error">{t('detail.directoryAddError')}</Alert>}
+                  {props.addFromDirectoryError && <FormFeedback>{t('detail.directoryAddError')}</FormFeedback>}
                 </div>
               </div>
             )}

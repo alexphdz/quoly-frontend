@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import type { ComparisonRow } from '../../types/comparison'
 import type { ApiError } from '../../api/client'
 import { useFormat } from '../../lib/format'
-import { Alert, Dialog, FormField } from '../ui'
+import { Dialog, FormFeedback, FormField } from '../ui'
 
 interface Props {
   quoteId: string
@@ -40,7 +40,7 @@ export default function DecisionForm({ quoteId, rows, baseCurrency, onConfirm, o
       </FormField>
 
       {error && (
-        <Alert tone="error">{(error as ApiError).detail || t('decision.failed')}</Alert>
+        <FormFeedback>{(error as ApiError).detail || t('decision.failed')}</FormFeedback>
       )}
 
       <div className="ds-dialog-actions">

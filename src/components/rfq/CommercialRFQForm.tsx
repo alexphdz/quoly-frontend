@@ -12,7 +12,7 @@ import {
 } from '../../constants/commercial'
 import type { CommercialRFQWrite, RFQAttachment, RFQRead } from '../../types/rfq'
 import type { ApiError } from '../../api/client'
-import { Alert, FormField, TextArea, TextInput } from '../ui'
+import { FormFeedback, FormField, TextArea, TextInput } from '../ui'
 import { DateField, isoDateToLocal } from '../ui/DateField'
 import { Collapsible, Icon, Segmented } from '../ds'
 import IncotermPicker from './commercial/IncotermPicker'
@@ -248,10 +248,10 @@ export default function CommercialRFQForm({
 
   return (
     <form ref={formRef} className="cr-form" onSubmit={(event) => event.preventDefault()}>
-      {error && <Alert tone="error">{error}</Alert>}
-      {specError && <Alert tone="error">{specError}</Alert>}
+      {error && <FormFeedback>{error}</FormFeedback>}
+      {specError && <FormFeedback>{specError}</FormFeedback>}
       {attempted && missingCount > 0 && (
-        <Alert tone="error">{t('commercial.validation.summary', { count: missingCount })}</Alert>
+        <FormFeedback>{t('commercial.validation.summary', { count: missingCount })}</FormFeedback>
       )}
 
       <div className="cr-steps-wrap">

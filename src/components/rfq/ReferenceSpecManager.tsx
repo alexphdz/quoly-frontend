@@ -5,7 +5,7 @@ import { deleteReferenceSpec, uploadReferenceSpec } from '../../api/rfqs'
 import type { ApiError } from '../../api/client'
 import type { RFQAttachment } from '../../types/rfq'
 import { referenceSpecificationAttachments } from '../../lib/specScenario'
-import { Alert } from '../ui'
+import { FormFeedback } from '../ui'
 
 interface Props {
   rfqId: string
@@ -63,7 +63,7 @@ export default function ReferenceSpecManager({ rfqId, attachments, readOnly }: P
 
   return (
     <div>
-      {error && <Alert tone="error">{error}</Alert>}
+      {error && <FormFeedback>{error}</FormFeedback>}
       {specs.length > 0 && (
         <ul>
           {specs.map((spec) => (

@@ -5,7 +5,7 @@ import SupplierForm from '../components/suppliers/SupplierForm'
 import { Btn, Empty, Icon, Select, Skel, Tabs } from '../components/ds'
 import { useCreateSupplierCompany, useSetSupplierActive, useSupplierDirectory } from '../hooks/useSupplierDirectory'
 import type { ApiError } from '../api/client'
-import { Alert, toast } from '../components/ui'
+import { FormFeedback, toast } from '../components/ui'
 
 const ALL = 'all'
 
@@ -80,7 +80,7 @@ export default function SupplierDirectoryPage() {
             isPending={createSupplier.isPending}
           />
           {createSupplier.error && (
-            <Alert tone="error">{(createSupplier.error as ApiError).detail || t('suppliers.directory.createError')}</Alert>
+            <FormFeedback>{(createSupplier.error as ApiError).detail || t('suppliers.directory.createError')}</FormFeedback>
           )}
         </section>
       )}

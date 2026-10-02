@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import type { ApiError } from '../../api/client'
 import type { EmailPayload, SendRequestsResponse } from '../../types/rfq'
-import { Alert } from '../ui'
+import { FormFeedback } from '../ui'
 import EmailPayloadDisplay from './EmailPayloadDisplay'
 
 interface Props {
@@ -39,7 +39,7 @@ export default function SendButton({
       {payloads.length > 0 && <EmailPayloadDisplay payloads={payloads} />}
 
       {error && (
-        <Alert tone="error" className="mt-3">{(error as ApiError).detail || t('send.failed')}</Alert>
+        <FormFeedback className="mt-3">{(error as ApiError).detail || t('send.failed')}</FormFeedback>
       )}
     </div>
   )

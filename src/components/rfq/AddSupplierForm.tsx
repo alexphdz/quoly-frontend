@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { useTranslation } from 'react-i18next'
 import type { ApiError } from '../../api/client'
 import type { SupplierCreate } from '../../types/rfq'
-import { Alert, Button } from '../ui'
+import { Button, FormFeedback } from '../ui'
 
 const schema = z.object({
   name: z.string().min(1, 'addForm.required'),
@@ -53,7 +53,7 @@ export default function AddSupplierForm({ onSubmit, isPending, error }: Props) {
           <Icon name="person_add" size={16} /> {isPending ? t('addForm.adding') : t('addForm.add')}
         </Button>
       </div>
-      {error && <Alert tone="error">{(error as ApiError).detail || t('addForm.error')}</Alert>}
+      {error && <FormFeedback>{(error as ApiError).detail || t('addForm.error')}</FormFeedback>}
     </form>
   )
 }

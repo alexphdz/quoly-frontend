@@ -14,7 +14,7 @@ import {
 } from '../hooks/useSupplierDirectory'
 import type { ApiError } from '../api/client'
 import type { SupplierContactCreate } from '../types/supplierDirectory'
-import { Alert, ErrorState, PageSkeleton, toast } from '../components/ui'
+import { Alert, ErrorState, FormFeedback, PageSkeleton, toast } from '../components/ui'
 import { useFormat } from '../lib/format'
 
 function websiteHref(raw: string): string | null {
@@ -269,7 +269,7 @@ export default function SupplierDetailPage() {
           </form>
         )}
         {addContact.error && (
-          <Alert tone="error" className="mt-4">{(addContact.error as ApiError).detail || t('suppliers.detail.addContactError')}</Alert>
+          <FormFeedback className="mt-4">{(addContact.error as ApiError).detail || t('suppliers.detail.addContactError')}</FormFeedback>
         )}
       </section>
     </div>
