@@ -8,22 +8,22 @@
   --font-mono: "Geist Mono", ui-monospace, monospace;
   /* Legacy/Tailwind token names — kept in lockstep with tokens-light.scss so
      .card/.btn match .qy-card/.ds-btn on the same screen (esp. in dark mode). */
-  --bg-app: #e7eded;
-  --bg-auth: #e7eded;
-  --surface-sidebar: #e0e9e8;
+  --bg-app: #f7f8fb;
+  --bg-auth: #f7f8fb;
+  --surface-sidebar: #f1f3f8;
   --surface-card: #ffffff;
-  --surface-card-subtle: #eef4f3;
-  --surface-muted: #d9e6e5;
-  --border-subtle: #cfdddb;
-  --border-strong: #aec4c1;
-  --text-primary: #0e1e1f;
-  --text-secondary: #2f403f;
-  --text-muted: #566664;
-  --brand: #0a7a82;
-  --brand-hover: #075f66;
-  --brand-soft: #c8ebed;
-  --brand-border: #58bcc2;
-  --brand-logo: #0a7a82;
+  --surface-card-subtle: #f1f3f8;
+  --surface-muted: #eceef4;
+  --border-subtle: #e4e7ee;
+  --border-strong: #ccd1dc;
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --brand: #2563eb;
+  --brand-hover: #1d4ed8;
+  --brand-soft: #e4edfd;
+  --brand-border: #93b4fb;
+  --brand-logo: #2563eb;
   --success-bg: #e0f3e6;
   --success-text: #0b6538;
   --success-border: #7fcfa0;
@@ -33,12 +33,12 @@
   --error-bg: #fdeae8;
   --error-text: #a01f18;
   --error-border: #f0908a;
-  --info-bg: #c8ebed;
-  --info-text: #0a6f77;
-  --info-border: #58bcc2;
-  --shadow-xs: 0 1px 2px rgb(10 30 32 / 0.07), 0 1px 1px rgb(10 30 32 / 0.05);
-  --shadow-sm: 0 1px 2px rgb(10 30 32 / 0.07), 0 6px 16px rgb(10 30 32 / 0.10);
-  --shadow-soft: 0 16px 34px rgb(10 30 32 / 0.16);
+  --info-bg: #e4edfd;
+  --info-text: #1d4ed8;
+  --info-border: #93b4fb;
+  --shadow-xs: 0 1px 2px rgb(17 24 39 / 0.06), 0 1px 1px rgb(17 24 39 / 0.04);
+  --shadow-sm: 0 1px 2px rgb(17 24 39 / 0.06), 0 6px 16px rgb(17 24 39 / 0.09);
+  --shadow-soft: 0 16px 34px rgb(17 24 39 / 0.15);
   --radius-control: 6px;
   --radius-card: 8px;
   --radius-card-lg: 12px;
@@ -66,23 +66,23 @@
 
 [data-theme='dark'] {
   color-scheme: dark;
-  /* Mirrors tokens-dark.scss — neutral graphite, no navy tint. */
-  --bg-app: #0f1718;
-  --bg-auth: #0a1112;
-  --surface-sidebar: #0a1112;
-  --surface-card: #0f1718;
-  --surface-card-subtle: #162021;
-  --surface-muted: #1e2b2b;
-  --border-subtle: #24312f;
-  --border-strong: #374847;
-  --text-primary: #ecf3f2;
-  --text-secondary: #c2cecc;
-  --text-muted: #90a1a0;
-  --brand: #1ab2bd;
-  --brand-hover: #45c9d3;
-  --brand-soft: #103a3d;
-  --brand-border: #1ab2bd;
-  --brand-logo: #84dee5;
+  /* Mirrors tokens-dark.scss — neutral graphite, blue accent. */
+  --bg-app: #111620;
+  --bg-auth: #0b0e13;
+  --surface-sidebar: #0b0e13;
+  --surface-card: #111620;
+  --surface-card-subtle: #171d28;
+  --surface-muted: #202735;
+  --border-subtle: #273041;
+  --border-strong: #3a4455;
+  --text-primary: #eef1f6;
+  --text-secondary: #c4ccd8;
+  --text-muted: #939dac;
+  --brand: #4f8dff;
+  --brand-hover: #74a6ff;
+  --brand-soft: #152a4d;
+  --brand-border: #4f8dff;
+  --brand-logo: #9ec5ff;
   --success-bg: #0f2419;
   --success-text: #85dba7;
   --success-border: #235b38;
@@ -92,9 +92,9 @@
   --error-bg: #2e1816;
   --error-text: #f39a8f;
   --error-border: #8a2c3a;
-  --info-bg: #103a3d;
-  --info-text: #84dee5;
-  --info-border: #235f63;
+  --info-bg: #152a4d;
+  --info-text: #9ec5ff;
+  --info-border: #2d4a7d;
   --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.38), 0 1px 1px rgb(0 0 0 / 0.30);
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.38), 0 8px 18px rgb(0 0 0 / 0.42);
   --shadow-soft: 0 18px 40px rgb(0 0 0 / 0.54);
@@ -1186,9 +1186,9 @@ textarea.input {
 }
 
 .ledger-spread-warn { background: #e9b000; }
-.ledger-spread-partial { background: #64b6bb; }
+.ledger-spread-partial { background: #60a5fa; }
 .ledger-spread-quoted { background: #1f9e57; }
-.ledger-spread-awaiting { background: #0d6e74; }
+.ledger-spread-awaiting { background: #1d4ed8; }
 .ledger-spread-muted { background: #c8c8ce; }
 
 .ledger-spread-caption {
@@ -1425,11 +1425,11 @@ textarea.input {
 .price-bar-fill {
   height: 100%;
   border-radius: 99px;
-  background: linear-gradient(90deg, #bfe0e2, #64b6bb);
+  background: linear-gradient(90deg, #bfd4fb, #60a5fa);
 }
 
 .price-bar-fill.tone-price.is-lead {
-  background: linear-gradient(90deg, #12868d, #0d6e74);
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
 }
 
 .price-bar-fill.tone-lead {
