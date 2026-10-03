@@ -148,11 +148,6 @@ export default function QuoteDetailPage() {
         <div className="grid-2">
           <div>
             <QuoteFields quote={quote} volumeTiers={rfq?.volume_tiers ?? undefined} />
-            {isCommercialRfq && quote.status === 'confirmed' && (
-              <Link to={`/quotes/${quote.id}/spec-evidence`} className="ds-btn ds-btn-secondary" style={{ marginTop: 16 }}>
-                {t('specEvidenceLink')}
-              </Link>
-            )}
             <div className="ds-toolbar-actions" style={{ marginTop: 20 }}>
               {quote.status === 'draft' && (
                 <button type="button" className="ds-btn ds-btn-primary" onClick={handleConfirm} disabled={confirmQuote.isPending}>

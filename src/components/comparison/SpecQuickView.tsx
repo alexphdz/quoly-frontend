@@ -1,8 +1,11 @@
-import { useEffect } from 'react'
+import { useRef } from 'react'
+import { Dialog } from 'radix-ui'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import type { ComparisonRow } from '../../types/comparison'
-import SpecEvidenceTable from '../spec/SpecEvidenceTable'
+import { useQuote } from '../../hooks/useQuotes'
+import SpecEvidenceSummary from '../spec/SpecEvidenceSummary'
+import OriginalDocument from '../documents/OriginalDocument'
+import { AiMark, Icon, Skel } from '../ds'
 
 interface Props {
   row: ComparisonRow
@@ -11,71 +14,53 @@ interface Props {
 
 export default function SpecQuickView({ row, onClose }: Props) {
   const { t } = useTranslation('comparison')
-
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
-
-  const evidenceLines = row.spec_evidence_lines ?? []
-  const params = row.extracted_parameters ?? []
-  const showVerdicts = Boolean(row.buyer_has_reference && evidenceLines.length > 0)
+  const { data: quote, isLoading } = useQuote(row.quote_id)
+  const returnFocus = useRef(document.activeElement instanceof HTMLElement ? document.activeElement : null)
+  const evidenceLines = row.spec_evidence_lines?.length
+    ? row.spec_evidence_lines
+    : (row.extracted_parameters ?? []).map(entry => ({ parameter_name: entry.name, supplier_wording: entry.value }))
+  const summary = quote?.faithful_summary || quote?.extraction_pass?.summary
 
   return (
-    <div className="ds-drawer-root">
-      <button type="button" className="ds-drawer-catcher" aria-label={t('specQuickView.close')} onClick={onClose} />
-      <aside className="ds-drawer" role="dialog" aria-labelledby="spec-quick-view-title">
-        <div className="ds-drawer-head">
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <div>
-              <p className="ds-drawer-kicker">{t('specQuickView.eyebrow')}</p>
-              <h2 id="spec-quick-view-title" className="ds-drawer-title">{row.supplier_name}</h2>
-            </div>
-            <button type="button" className="ds-btn ds-btn-secondary" onClick={onClose}>
-              {t('specQuickView.close')}
-            </button>
-          </div>
-        </div>
-        <div className="ds-drawer-body">
-          <p className="ds-meta">{t('specQuickView.statusLabel')}</p>
-          <p>{t(`specQuickView.states.${row.spec_state ?? 'not_received'}`)}</p>
-
-          {row.spec_document_name && (
-            <div style={{ marginTop: 16 }}>
-              <p>{row.spec_document_name}</p>
-              {row.spec_source_url && (
-                <a href={row.spec_source_url} target="_blank" rel="noreferrer" className="ds-link">
-                  {t('specQuickView.openDocument')}
-                </a>
-              )}
-            </div>
-          )}
-
-          {evidenceLines.length > 0 ? (
-            <div style={{ marginTop: 16 }}>
-              <SpecEvidenceTable lines={evidenceLines} showVerdicts={showVerdicts} />
-            </div>
-          ) : params.length > 0 ? (
-            <dl style={{ marginTop: 16 }}>
-              {params.map(entry => (
-                <div key={`${entry.name}-${entry.value}`} style={{ padding: '8px 0', borderBottom: '1px solid var(--line)' }}>
-                  <dt className="ds-meta">{entry.name}</dt>
-                  <dd>{entry.value}</dd>
+    <Dialog.Root open onOpenChange={open => { if (!open) onClose() }}>
+      <Dialog.Portal>
+        <div className="ds-drawer-root">
+          <Dialog.Overlay className="ds-drawer-catcher" />
+          <Dialog.Content asChild onCloseAutoFocus={event => { event.preventDefault(); returnFocus.current?.focus() }}>
+            <aside className="ds-drawer">
+              <div className="ds-drawer-head spec-drawer-head">
+                <div>
+                  <p className="ds-drawer-kicker">{t('specQuickView.eyebrow')}</p>
+                  <Dialog.Title className="ds-drawer-title">{row.supplier_name}</Dialog.Title>
+                  <Dialog.Description className="sr-only">{t('specQuickView.summaryTitle')}</Dialog.Description>
                 </div>
-              ))}
-            </dl>
-          ) : (
-            !row.spec_document_name && <p className="ds-meta" style={{ marginTop: 16 }}>{t('specQuickView.empty')}</p>
-          )}
+                <Dialog.Close asChild>
+                  <button type="button" className="ds-btn ds-btn-secondary" aria-label={t('specQuickView.close')}>
+                    <Icon name="close" size={16} />
+                  </button>
+                </Dialog.Close>
+              </div>
+              <div className="ds-drawer-body spec-drawer-body">
+                {row.spec_source_url && (
+                  <OriginalDocument endpoint={`/quotes/${row.quote_id}/original`}
+                    fileType={row.file_type || row.spec_document_name?.split('.').pop()} />
+                )}
+                <section className="ai-panel spec-summary">
+                  <div className="ai-panel-head">
+                    <h3>{t('specQuickView.summaryTitle')}</h3>
+                    <AiMark kind="read" />
+                  </div>
+                  {summary ? <p className="ai-panel-summary">{summary}</p>
+                    : isLoading ? <Skel h={14} /> : null}
+                  {evidenceLines.length > 0
+                    ? <SpecEvidenceSummary lines={evidenceLines} showVerdicts={Boolean(row.buyer_has_reference)} />
+                    : !summary && !isLoading && <p className="ds-meta">{t('specQuickView.empty')}</p>}
+                </section>
+              </div>
+            </aside>
+          </Dialog.Content>
         </div>
-        <div className="ds-drawer-foot" style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-          <Link to={`/quotes/${row.quote_id}`} className="ds-btn ds-btn-secondary">{t('specQuickView.openQuote')}</Link>
-          <Link to={`/quotes/${row.quote_id}/spec-evidence`} className="ds-btn ds-btn-primary">{t('specQuickView.openFullSpec')}</Link>
-        </div>
-      </aside>
-    </div>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }

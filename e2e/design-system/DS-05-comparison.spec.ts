@@ -38,7 +38,8 @@ test.describe('DS-05 Comparison', () => {
       await viewSpec.click()
       const dialog = page.getByRole('dialog')
       await expect(dialog).toBeVisible()
-      await expect(dialog.locator('iframe')).toBeVisible()
+      await expect(dialog.locator('iframe')).toHaveCount(0)
+      await expect(dialog.getByRole('heading', { name: 'Quoly summary' })).toBeVisible()
       await dialog.getByRole('button', { name: 'Close' }).click()
       await expect(dialog).toHaveCount(0)
     }

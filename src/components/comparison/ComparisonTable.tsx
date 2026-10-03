@@ -19,7 +19,6 @@ interface Props {
   onPick?: (quoteId: string) => void
   showPick: boolean
   onViewSpec?: (row: ComparisonRow) => void
-  onViewSpecSheet?: (row: ComparisonRow) => void
   awardedQuoteId?: string | null
 }
 
@@ -39,7 +38,6 @@ export default function ComparisonTable({
   onPick,
   showPick,
   onViewSpec,
-  onViewSpecSheet,
   awardedQuoteId = null,
 }: Props) {
   const { t } = useTranslation('comparison')
@@ -185,9 +183,7 @@ export default function ComparisonTable({
               {sorted.map(row => (
                 <td key={row.quote_id} className={row.quote_id === bestId ? 'is-recommended' : undefined}>
                   {row.spec_state && row.spec_state !== 'not_received' ? (
-                    <button type="button" className="ds-link" onClick={() => onViewSpec?.(row)}>
-                      {t(`table.specStatus.${row.spec_state}`)}
-                    </button>
+                    <span>{t(`table.specStatus.${row.spec_state}`)}</span>
                   ) : (
                     <span className="ds-muted">{t('table.specStatus.not_received')}</span>
                   )}
@@ -200,8 +196,8 @@ export default function ComparisonTable({
             <MatrixRow label={t('table.headers.specSheet')}>
               {sorted.map(row => (
                 <td key={row.quote_id} className={row.quote_id === bestId ? 'is-recommended' : undefined}>
-                  {row.spec_source_url ? (
-                    <button type="button" className="ds-link" onClick={() => onViewSpecSheet?.(row)}>
+                  {row.spec_source_url || row.spec_evidence_lines?.length || row.extracted_parameters?.length || (row.spec_state && row.spec_state !== 'not_received') ? (
+                    <button type="button" className="ds-btn ds-btn-secondary ds-btn-sm" onClick={() => onViewSpec?.(row)}>
                       {t('table.viewSpec')}
                     </button>
                   ) : (

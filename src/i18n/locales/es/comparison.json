@@ -83,25 +83,11 @@
     "openAsks_other": "{{count}} preguntas abiertas",
     "noOpenAsks": "Sin preguntas abiertas"
   },
-  "specPdf": {
-    "title": "Especificación · {{supplier}}",
-    "close": "Cerrar"
-  },
   "specQuickView": {
-    "eyebrow": "Vista rápida de especificación",
-    "statusLabel": "Estado",
+    "eyebrow": "Ficha técnica",
     "close": "Cerrar",
-    "openDocument": "Abrir documento del proveedor",
-    "extractedTitle": "Extraído de la cotización",
-    "empty": "Aún no hay documento de especificación ni parámetros extraídos para este proveedor.",
-    "openQuote": "Abrir cotización completa",
-    "openFullSpec": "Abrir evidencia de especificación",
-    "states": {
-      "not_received": "No recibida",
-      "received": "Recibida — vista lado a lado",
-      "analyzed": "Comparada con referencia",
-      "pending_analysis": "Comparada con referencia"
-    }
+    "empty": "Aún no hay información técnica extraída de esta respuesta.",
+    "summaryTitle": "Resumen de Quoly"
   },
   "table": {
     "emptyTitle": "Aún no hay cotizaciones en la comparación",

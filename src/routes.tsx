@@ -9,7 +9,7 @@ import RFQDetailPage from './pages/RFQDetailPage'
 import QuoteDetailPage from './pages/QuoteDetailPage'
 import QuotationsPage from './pages/QuotationsPage'
 import ComparisonPage from './pages/ComparisonPage'
-import SpecEvidencePage from './pages/SpecEvidencePage'
+import SpecEvidenceRedirect from './components/comparison/SpecEvidenceRedirect'
 import SupplierDirectoryPage from './pages/SupplierDirectoryPage'
 import SupplierDetailPage from './pages/SupplierDetailPage'
 import SettingsPage from './pages/SettingsPage'
@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
       { path: 'rfqs/:id', element: <RFQDetailPage /> },
       { path: 'rfqs/:id/comparison', element: <ComparisonPage /> },
       { path: 'quotes/:id', element: <QuoteDetailPage /> },
-      { path: 'quotes/:id/spec-evidence', element: <SpecEvidencePage /> },
+      { path: 'quotes/:id/spec-evidence', element: <SpecEvidenceRedirect /> },
       { path: 'quotations', element: <QuotationsPage /> },
       { path: 'suppliers', element: <SupplierDirectoryPage /> },
       { path: 'suppliers/:id', element: <SupplierDetailPage /> },

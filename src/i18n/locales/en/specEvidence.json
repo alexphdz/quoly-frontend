@@ -37,5 +37,6 @@
     "not_comparable": "Not comparable",
     "additional_supplier_parameter": "Additional from supplier",
     "needs_review": "Needs review"
-  }
+  },
+  "notStated": "Not stated"
 }
