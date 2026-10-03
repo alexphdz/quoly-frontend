@@ -151,7 +151,7 @@
       "docx": "Cotización Word"
     },
     "received": "Recibida {{date}}",
-    "sourceTitle": "Lo que envió el proveedor",
+    "sourceTitle": "Respuesta original",
     "viewLabel": "Vista de la fuente",
     "viewOriginal": "Original",
     "viewText": "Texto",
