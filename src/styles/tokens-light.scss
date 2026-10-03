@@ -28,6 +28,9 @@
   --warn-tag: #f6e2a0;
   --warn-mark: #d99400;
   --warn-fg: #7e5600;
+  /* Vivid attention yellow — brighter than the muted warn-mark, for the
+     "Requieren atención" slice/dot where it needs to grab the eye. */
+  --attention-fill: #eab308;
   --danger-bg: #fdeae8;
   --danger-tag: #f7cdc8;
   --danger-mark: #dd4433;

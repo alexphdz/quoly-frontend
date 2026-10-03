@@ -295,7 +295,7 @@
   span { min-width: 4px; border-radius: 1px; }
   .is-quotes { background: var(--accent); }
   .is-waiting { background: var(--tx-3); }
-  .is-attention { background: var(--warn-fg); }
+  .is-attention { background: var(--attention-fill); }
   .is-other { background: var(--line-strong); }
 }
 
@@ -325,7 +325,7 @@
   border-radius: 1px;
   &.is-quotes { background: var(--accent); }
   &.is-waiting { background: var(--tx-3); }
-  &.is-attention { background: var(--warn-fg); }
+  &.is-attention { background: var(--attention-fill); }
   &.is-other { background: var(--line-strong); }
 }
 
