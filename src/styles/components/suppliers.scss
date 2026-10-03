@@ -3,6 +3,18 @@
   gap: 16px;
 }
 
+/* Company cell: circular initials avatar + name/place stack */
+.sup-company-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sup-company-copy {
+  min-width: 0;
+}
+
 .sup-page .qy-page-head > .ds-btn {
   flex: none;
   white-space: nowrap;

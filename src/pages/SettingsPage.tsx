@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Icon, Skel } from '../components/ds'
 import { MicrosoftOutlookLogo } from '@phosphor-icons/react'
 import { useForm } from 'react-hook-form'
@@ -10,8 +10,10 @@ import { useAuth } from '../hooks/useAuth'
 import { getToken, post, type ApiError } from '../api/client'
 import { SUPPORTED_LOCALES, type Locale } from '../i18n'
 import { useFormat } from '../lib/format'
-import { FormFeedback, FormField, SelectInput, toast } from '../components/ui'
+import { Avatar, Dialog, FormFeedback, FormField, SelectInput, toast } from '../components/ui'
 import { useTheme, type ThemePreference } from '../components/ui/theme'
+import ProfilePhotoDialog from '../components/settings/ProfilePhotoDialog'
+import { displayNameFromEmail } from '../lib/displayName'
 import GmailIcon from '../components/icons/GmailIcon'
 
 const passwordSchema = z
@@ -69,6 +71,47 @@ function ProfileSection() {
           <dd>{userLoading && !memberSince ? <Skel w="8rem" h={16} /> : (memberSince || '—')}</dd>
         </div>
       </dl>
+    </section>
+  )
+}
+
+function PhotoSection() {
+  const { t } = useTranslation('common')
+  const { user, removeAvatar } = useAuth()
+  const [editing, setEditing] = useState(false)
+  const [confirming, setConfirming] = useState(false)
+  const [error, setError] = useState('')
+
+  const remove = async () => {
+    setError('')
+    try {
+      await removeAvatar.mutateAsync()
+      setConfirming(false)
+      toast(t('settings.photo.removed'), 'success')
+    } catch {
+      setError(t('settings.photo.removeError'))
+    }
+  }
+
+  return (
+    <section className="ds-form-section" id="profile-photo">
+      <h2>{t('settings.photo.title')}</h2>
+      <div className="ds-form-fields">
+        <div className="photo-profile">
+          <Avatar name={user ? displayNameFromEmail(user.email) : null} src={user?.avatar_url} />
+          <button type="button" className="ds-btn ds-btn-secondary" disabled={!user || removeAvatar.isPending} onClick={() => setEditing(true)}>{t('settings.photo.change')}</button>
+          {user?.avatar_url && <button type="button" className="ds-btn ds-btn-quiet" disabled={removeAvatar.isPending} onClick={() => { setError(''); setConfirming(true) }}>{t('settings.photo.remove')}</button>}
+        </div>
+      </div>
+      {editing && <ProfilePhotoDialog onClose={() => setEditing(false)} />}
+      <Dialog open={confirming} onClose={() => { if (!removeAvatar.isPending) setConfirming(false) }} title={t('settings.photo.removeTitle')}>
+        <p className="ds-meta">{t('settings.photo.removeHelp')}</p>
+        {error && <FormFeedback>{error}</FormFeedback>}
+        <div className="photo-actions">
+          <button type="button" className="ds-btn ds-btn-secondary" disabled={removeAvatar.isPending} onClick={() => setConfirming(false)}>{t('actions.cancel')}</button>
+          <button type="button" className="ds-btn ds-btn-primary" disabled={removeAvatar.isPending} onClick={() => void remove()}>{t('settings.photo.remove')}</button>
+        </div>
+      </Dialog>
     </section>
   )
 }
@@ -370,6 +413,7 @@ export default function SettingsPage() {
         <h1 className="ds-detail-title">{t('settings.title')}</h1>
       </header>
       <ProfileSection />
+      <PhotoSection />
       <AppearanceSection />
       <PreferencesSection />
       <SecuritySection />

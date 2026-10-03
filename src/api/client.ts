@@ -131,7 +131,7 @@ export async function put<T>(path: string, body: unknown): Promise<T> {
   return handleResponse<T>(res, hadAuth)
 }
 
-export async function del(path: string): Promise<void> {
+export async function del<T = void>(path: string): Promise<T> {
   const { headers, hadAuth } = buildHeaders()
   const res = await apiFetch(`${BASE_URL}${path}`, {
     method: 'DELETE',
@@ -151,6 +151,9 @@ export async function del(path: string): Promise<void> {
     const detail = apiErrorDetail(body.detail, 'Delete failed')
     throw new ApiError(res.status, detail)
   }
+  if (res.status === 204) return undefined as T
+  const text = await res.text()
+  return (text ? JSON.parse(text) : undefined) as T
 }
 
 export async function postFormData<T>(path: string, formData: FormData): Promise<T> {

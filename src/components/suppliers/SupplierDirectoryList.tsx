@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { SupplierCompanyRead } from '../../types/supplierDirectory'
-import { EmptyState } from '../ui'
+import { Avatar, EmptyState } from '../ui'
 
 export default function SupplierDirectoryList({
   suppliers,
@@ -34,10 +34,15 @@ export default function SupplierDirectoryList({
             return (
               <tr key={supplier.id} className="is-link" onClick={() => navigate(`/suppliers/${supplier.id}`)}>
                 <td>
-                  <Link to={`/suppliers/${supplier.id}`} className="ds-request-name" title={supplier.display_name} style={{ color: supplier.is_active ? undefined : 'var(--tx-2)' }} onClick={event => event.stopPropagation()}>
-                    {supplier.display_name}
-                  </Link>
-                  {place && <div className="ds-request-meta">{place}</div>}
+                  <div className="sup-company-cell">
+                    <Avatar name={supplier.display_name} seed={supplier.id} />
+                    <div className="sup-company-copy">
+                      <Link to={`/suppliers/${supplier.id}`} className="ds-request-name" title={supplier.display_name} style={{ color: supplier.is_active ? undefined : 'var(--tx-2)' }} onClick={event => event.stopPropagation()}>
+                        {supplier.display_name}
+                      </Link>
+                      {place && <div className="ds-request-meta">{place}</div>}
+                    </div>
+                  </div>
                 </td>
                 <td data-label={t('suppliers.directory.columns.contact')}>
                   <div className="sup-contact-name">{primary?.name || supplier.display_name}</div>

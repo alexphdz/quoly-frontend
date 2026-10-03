@@ -83,6 +83,20 @@ export function useAuth() {
       authApi.changePassword(currentPassword, newPassword),
   })
 
+  const uploadAvatarMutation = useMutation({
+    mutationFn: (blob: Blob) => authApi.uploadAvatar(blob),
+    onSuccess: (profile) => {
+      queryClient.setQueryData(['me'], profile)
+    },
+  })
+
+  const removeAvatarMutation = useMutation({
+    mutationFn: authApi.deleteAvatar,
+    onSuccess: (profile) => {
+      queryClient.setQueryData(['me'], profile)
+    },
+  })
+
   return {
     user,
     userLoading,
@@ -96,5 +110,7 @@ export function useAuth() {
     disconnectOutlook: disconnectOutlookMutation,
     changePassword: changePasswordMutation,
     updateProfile: updateProfileMutation,
+    uploadAvatar: uploadAvatarMutation,
+    removeAvatar: removeAvatarMutation,
   }
 }

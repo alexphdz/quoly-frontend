@@ -40,3 +40,7 @@ Capture: `QUOLY_SCREENSHOTS=1 npx playwright test e2e/design-system/screenshots.
 **Directory cleanup (module 8):** `directory-cleanup-qa.spec.ts` (DIR-01). Legacy full directory flow: `providers-directory.spec.ts`.
 
 **Enum parity:** `npm run enums:check` (Backend `corrugated_enums.py` ↔ Frontend `corrugatedOptions.ts`).
+
+**Profile photo:** `npx playwright test --config playwright.photo.config.ts` runs isolated desktop/mobile checks with real cropper/canvas and mocked API responses. It needs no buyer credentials or API server. Regular `npm run test:e2e` also includes the photo spec. Storage is verified separately by `Backend/scripts/setup_avatar_storage.py --probe`.
+
+**Supplier original documents:** `npx playwright test --config playwright.documents.config.ts` runs isolated Spanish desktop/mobile checks with mocked authorized-link APIs and fixture PDF navigation/download. Live private-storage access is checked separately with `Backend/scripts/probe_document_access.py`.

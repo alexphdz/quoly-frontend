@@ -1,0 +1,26 @@
+.original-document {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-card);
+}
+.original-document-row { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.original-document-pdf { flex: none; color: var(--danger, #b42318); }
+.original-document-icon { flex: none; color: var(--tx-2); }
+.original-document-copy {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  strong { font-size: 14px; font-weight: 500; overflow-wrap: anywhere; }
+}
+.original-document-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.original-document > .form-feedback { margin-top: 12px; }
+@media (max-width: 640px) {
+  .original-document-row { flex-wrap: wrap; }
+  .original-document-actions { width: 100%; padding-left: 48px; }
+  .original-document-actions .ds-btn { min-height: 40px; }
+}
+
+.inbound-document { display: grid; gap: 8px; padding: 12px 0; }
+.inbound-document > span { justify-self: start; }

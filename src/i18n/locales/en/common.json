@@ -208,6 +208,26 @@
       "loading": "Loading demo data…",
       "loaded": "Demo data loaded",
       "already": "Demo data is already loaded for this account"
+    },
+    "photo": {
+      "title": "Profile photo",
+      "change": "Change photo",
+      "remove": "Remove photo",
+      "dialogTitle": "Crop profile photo",
+      "choose": "Choose image",
+      "help": "PNG, JPEG or WebP, up to 20 MB. Drag to position the photo, or use the arrow keys.",
+      "zoom": "Zoom",
+      "position": "Photo position",
+      "saving": "Saving…",
+      "saved": "Profile photo updated",
+      "removed": "Profile photo removed",
+      "typeError": "Choose a PNG, JPEG or WebP image.",
+      "sizeError": "Choose an image smaller than 20 MB.",
+      "imageError": "This image could not be opened. Choose another image.",
+      "saveError": "The photo could not be saved. Try again.",
+      "removeError": "The photo could not be removed. Try again.",
+      "removeTitle": "Remove profile photo?",
+      "removeHelp": "Your initials will appear instead."
     }
   },
   "suppliers": {
@@ -363,5 +383,16 @@
     "actions": "Actions",
     "pages": "Pages",
     "reviewNext": "Review next quote"
+  },
+  "documents": {
+    "originalPdf": "Original PDF",
+    "originalFile": "Original file",
+    "supplierDocument": "Supplier document",
+    "open": "Open in new tab",
+    "download": "Download",
+    "opening": "Opening…",
+    "downloading": "Downloading…",
+    "accessError": "The document could not be opened. Try again.",
+    "popupBlocked": "Allow new tabs in your browser and try again."
   }
 }

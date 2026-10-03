@@ -1,30 +1,32 @@
 [data-theme='dark'] {
   color-scheme: dark;
-  /* "Instrument" dark — deep teal-black with a bright teal accent. */
-  --bg-canvas: #0a1112;
-  --bg-content: #0f1718;
-  --bg-surface: #162021;
-  --bg-band: #1e2b2b;
-  --line: #24312f;
-  --line-strong: #374847;
-  --tx-1: #ecf3f2;
-  --tx-body: #c2cecc;
-  --tx-2: #90a1a0;
-  --tx-3: #61716f;
-  --accent: #1ab2bd;
-  --accent-hover: #45c9d3;
-  --accent-fg: #04211f;
-  --accent-text: #84dee5;
-  --accent-line: #5fd0d9;
-  --accent-underline: #1ab2bd;
-  --selected: #103a3d;
-  --selected-line: #235f63;
-  --focus: #84dee5;
+  /* Quoly dark — neutral graphite (no teal/navy tint) with the same blue accent
+     as light, so the brand is consistent across themes. */
+  --bg-canvas: #0b0e13;
+  --bg-content: #111620;
+  --bg-surface: #171d28;
+  --bg-band: #202735;
+  --line: #273041;
+  --line-strong: #3a4455;
+  --tx-1: #eef1f6;
+  --tx-body: #c4ccd8;
+  --tx-2: #939dac;
+  --tx-3: #646e7e;
+  --accent: #4f8dff;
+  --accent-hover: #74a6ff;
+  --accent-fg: #06142e;
+  --accent-text: #9ec5ff;
+  --accent-line: #74a6ff;
+  --accent-underline: #4f8dff;
+  --selected: #152a4d;
+  --selected-line: #2d4a7d;
+  --focus: #9ec5ff;
   --ring: 0 0 0 3px color-mix(in srgb, var(--focus) 30%, transparent);
   --warn-bg: #2a2410;
   --warn-tag: #3d3213;
   --warn-mark: #e9b000;
   --warn-fg: #f3cf55;
+  --attention-fill: #facc15;
   --danger-bg: #2e1816;
   --danger-tag: #431f1c;
   --danger-mark: #e84a3a;
@@ -33,12 +35,12 @@
   --success-tag: #163526;
   --success-mark: #24b567;
   --success-fg: #85dba7;
-  --bg-card: #0f1718;
+  --bg-card: #111620;
   --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.38), 0 1px 1px rgb(0 0 0 / 0.3);
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.38), 0 8px 18px rgb(0 0 0 / 0.42);
   --shadow-md: 0 2px 6px rgb(0 0 0 / 0.48), 0 18px 40px rgb(0 0 0 / 0.54);
   --card-shadow: var(--shadow-sm);
-  --overlay-shadow: 0 10px 28px rgb(0 0 0 / 0.5), 0 0 0 1px #24312f;
+  --overlay-shadow: 0 10px 28px rgb(0 0 0 / 0.5), 0 0 0 1px #273041;
   --drawer-shadow: -14px 0 36px rgb(0 0 0 / 0.5);
   --scrim: rgb(0 0 0 / 0.62);
 }

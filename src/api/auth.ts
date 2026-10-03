@@ -1,4 +1,4 @@
-import { get, patch, post, put } from './client'
+import { del, get, patch, post, postFormData, put } from './client'
 import type { TokenResponse, UserProfile } from '../types/auth'
 
 export function register(email: string, password: string): Promise<TokenResponse> {
@@ -31,6 +31,16 @@ export function getOutlookConnectUrl(): Promise<{ authorize_url: string }> {
 
 export function disconnectOutlook(): Promise<{ status: string }> {
   return post<{ status: string }>('/auth/outlook/disconnect')
+}
+
+export function uploadAvatar(blob: Blob): Promise<UserProfile> {
+  const form = new FormData()
+  form.append('file', blob, blob.type === 'image/jpeg' ? 'avatar.jpg' : 'avatar.webp')
+  return postFormData<UserProfile>('/auth/me/avatar', form)
+}
+
+export function deleteAvatar(): Promise<UserProfile> {
+  return del<UserProfile>('/auth/me/avatar')
 }
 
 export function changePassword(currentPassword: string, newPassword: string): Promise<{ status: string }> {

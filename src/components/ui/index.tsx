@@ -8,6 +8,7 @@ import {
   useState,
   type ButtonHTMLAttributes,
   type ChangeEvent,
+  type CSSProperties,
   type FocusEvent,
   type InputHTMLAttributes,
   type ReactElement,
@@ -19,6 +20,7 @@ import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { Select as RadixSelect } from 'radix-ui'
 import { Icon } from '../ds/Icon'
+import { avatarHue } from '../../lib/avatarColor'
 import { Toaster, toast as sonnerToast } from 'sonner'
 import { useTheme } from './theme'
 export function cn(...parts: Array<string | false | null | undefined>) {
@@ -239,14 +241,30 @@ export const SelectInput = forwardRef<HTMLInputElement, SelectHTMLAttributes<HTM
   )
 })
 
-export function Avatar({ name, size = 'md' }: { name?: string | null, size?: 'sm' | 'md' }) {
+export function Avatar({ name, size = 'md', seed, src }: { name?: string | null, size?: 'sm' | 'md', seed?: string | null, src?: string | null }) {
+  const [imgFailed, setImgFailed] = useState(false)
+  useEffect(() => { setImgFailed(false) }, [src])
+
   const initials = (name || '?')
     .split(/\s|@/)
     .filter(Boolean)
     .slice(0, 2)
     .map(part => part[0]?.toUpperCase())
     .join('')
-  return <span className={cn('avatar', size === 'sm' && 'avatar-sm')}>{initials || '?'}</span>
+  // When a seed is given, tint the avatar with a stable per-seed hue instead of
+  // the brand colour (used for suppliers so each reads distinct).
+  const tint = seed
+    ? ({ ['--avatar-hue' as string]: avatarHue(seed) } as CSSProperties)
+    : undefined
+
+  const showImg = src && !imgFailed
+  return (
+    <span className={cn('avatar', size === 'sm' && 'avatar-sm', !showImg && seed && 'avatar--tinted')} style={showImg ? undefined : tint}>
+      {showImg
+        ? <img className="avatar-img" src={src} alt={name ?? ''} onError={() => setImgFailed(true)} />
+        : (initials || '?')}
+    </span>
+  )
 }
 
 export function ProgressBar({ value }: { value: number }) {
