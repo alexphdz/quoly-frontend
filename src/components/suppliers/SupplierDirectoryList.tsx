@@ -35,7 +35,7 @@ export default function SupplierDirectoryList({
               <tr key={supplier.id} className="is-link" onClick={() => navigate(`/suppliers/${supplier.id}`)}>
                 <td>
                   <div className="sup-company-cell">
-                    <Avatar name={supplier.display_name} />
+                    <Avatar name={supplier.display_name} seed={supplier.id} />
                     <div className="sup-company-copy">
                       <Link to={`/suppliers/${supplier.id}`} className="ds-request-name" title={supplier.display_name} style={{ color: supplier.is_active ? undefined : 'var(--tx-2)' }} onClick={event => event.stopPropagation()}>
                         {supplier.display_name}

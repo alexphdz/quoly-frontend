@@ -487,6 +487,18 @@ a {
   font-size: 10px;
 }
 
+/* Per-seed tinted avatar (suppliers): stable hue set inline via --avatar-hue,
+   lightness tuned per theme so initials stay legible. */
+.avatar--tinted {
+  background: hsl(var(--avatar-hue, 220) 62% 90%);
+  color: hsl(var(--avatar-hue, 220) 48% 34%);
+}
+
+[data-theme='dark'] .avatar--tinted {
+  background: hsl(var(--avatar-hue, 220) 32% 26%);
+  color: hsl(var(--avatar-hue, 220) 72% 80%);
+}
+
 .section-icon {
   display: inline-grid;
   place-items: center;
