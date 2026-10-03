@@ -393,6 +393,7 @@
     "opening": "Opening…",
     "downloading": "Downloading…",
     "accessError": "The document could not be opened. Try again.",
-    "popupBlocked": "Allow new tabs in your browser and try again."
+    "popupBlocked": "Allow new tabs in your browser and try again.",
+    "unnamedFile": "Attached file"
   }
 }

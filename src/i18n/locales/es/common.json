@@ -393,6 +393,7 @@
     "opening": "Abriendo…",
     "downloading": "Descargando…",
     "accessError": "No se pudo abrir el documento. Inténtalo de nuevo.",
-    "popupBlocked": "Permite abrir nuevas pestañas en el navegador e inténtalo de nuevo."
+    "popupBlocked": "Permite abrir nuevas pestañas en el navegador e inténtalo de nuevo.",
+    "unnamedFile": "Archivo adjunto"
   }
 }

@@ -39,7 +39,7 @@
   "export": {
     "action": "Download PDF report",
     "preparing": "Preparing PDF…",
-      "error": "Couldn't export the award report."
+    "error": "Couldn't export the award report."
   },
   "supplierComparison": "Supplier-level comparison",
   "selectPrompt": "Suppliers do not receive this record.",
@@ -83,25 +83,11 @@
     "openAsks_other": "{{count}} open asks",
     "noOpenAsks": "No open asks"
   },
-  "specPdf": {
-    "title": "Specification · {{supplier}}",
-    "close": "Close"
-  },
   "specQuickView": {
-    "eyebrow": "Specification quick view",
-    "statusLabel": "Status",
+    "eyebrow": "Specification",
     "close": "Close",
-    "openDocument": "Open supplier document",
-    "extractedTitle": "Extracted from quote",
-    "empty": "No specification document or extracted parameters yet for this supplier.",
-    "openQuote": "Open full quote",
-    "openFullSpec": "Open specification evidence",
-    "states": {
-      "not_received": "Not received",
-      "received": "Received — side-by-side view",
-      "analyzed": "Compared to reference",
-      "pending_analysis": "Compared to reference"
-    }
+    "empty": "No technical information has been extracted from this response yet.",
+    "summaryTitle": "Quoly summary"
   },
   "table": {
     "emptyTitle": "No quotes in the comparison yet",

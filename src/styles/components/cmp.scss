@@ -518,3 +518,27 @@ td.qy-num .cmp-clip { margin-left: auto; }
   .cmp-review-impact, .cmp-review-row > a { grid-column: 2; }
   .cmp-winner { flex-wrap: wrap; padding: 16px; }
 }
+
+// One final specification drawer: document actions and Quoly's reading.
+.spec-drawer-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.spec-drawer-body { display: grid; align-content: start; gap: 16px; }
+.spec-summary {
+  margin-top: 0;
+  h3 { margin: 0; font-size: 13px; font-weight: 500; }
+}
+.spec-parameters { margin: 0; }
+.ai-panel-summary + .spec-parameters { margin-top: 16px; }
+.spec-parameter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+  &:first-child { border-top: 0; }
+  dt { color: var(--tx-2); }
+  dd { margin: 0; display: grid; justify-items: start; gap: 6px; min-width: 0; }
+}
+.spec-parameter-reference { color: var(--tx-2); font-size: 11px; }

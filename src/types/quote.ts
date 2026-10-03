@@ -53,6 +53,7 @@ export interface QuoteRead {
   missing_fields: string[]
   line_items?: QuoteLineItem[] | import('./quoteIntake').QuoteLineItemsV2 | null
   extraction_pass?: {
+    summary?: string | null
     buyer_actions?: Array<{ question: string; context?: string | null }>
     spec_parameters?: Array<{ name: string; value: string; source?: string | null }>
     message_labels?: string[]

@@ -22,7 +22,7 @@ for (const width of [1280, 390]) {
         expect(route.request().headers().authorization).toBe('Bearer document-test-token')
         const download = url.searchParams.get('download') === 'true'
         modes.push(download)
-        if (fail) { await route.fulfill({ status: 502, json: { detail: 'document_access_failed' } }); return }
+        if (fail && download) { await route.fulfill({ status: 502, json: { detail: 'document_access_failed' } }); return }
         await route.fulfill({ json: { url: `http://localhost:5173/test-original.pdf?token=temp${download ? '&download=1' : ''}`, filename: 'Supplier-offer.pdf', expires_in: 300 } })
       } else if (url.pathname.endsWith('/quotes/document-quote')) {
         await route.fulfill({ json: {
@@ -39,7 +39,7 @@ for (const width of [1280, 390]) {
     })
     await page.goto('/quotes/document-quote')
     const card = page.locator('.original-document')
-    await expect(card.getByText('PDF original', { exact: true })).toBeVisible()
+    await expect(card.getByText('Supplier-offer.pdf', { exact: true })).toBeVisible()
     await expect(card).toBeInViewport()
     await expect(card.locator('svg.original-document-pdf')).toBeVisible()
     await expect(page.locator('iframe')).toHaveCount(0)
@@ -61,7 +61,7 @@ for (const width of [1280, 390]) {
     await card.getByRole('button', { name: 'Descargar', exact: true }).click()
     const download = await downloadPromise
     expect(download.suggestedFilename()).toBe('Supplier-offer.pdf')
-    expect(modes).toEqual([true, false, true])
+    expect(modes).toEqual([false, true, false, true])
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   })
 }
