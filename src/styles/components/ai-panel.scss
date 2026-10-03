@@ -1,0 +1,84 @@
+/* AI panel — the standard surface for content Quoly's AI produced (extraction
+   reading, summaries). A soft brand-tinted card with a 2px teal accent so the
+   buyer can tell at a glance what came from AI vs. the supplier's own words.
+   Subtle on purpose: tint, not a saturated fill. */
+.ai-panel {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--line));
+  border-left: 2px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  background: color-mix(in srgb, var(--accent) 4%, transparent);
+}
+
+.ai-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.ai-panel-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ai-panel-summary {
+  margin: 0;
+  color: var(--tx-body);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.ai-panel-block {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 12%, var(--line));
+}
+
+.ai-panel-label {
+  margin: 0 0 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--tx-2);
+}
+
+.ai-panel-label-warn {
+  color: var(--warn-fg);
+
+  svg { color: var(--warn-mark); }
+}
+
+.ai-panel-asks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.ai-panel-asks li {
+  display: grid;
+  gap: 2px;
+  padding-left: 10px;
+  border-left: 2px solid color-mix(in srgb, var(--warn-mark) 45%, transparent);
+}
+
+.ai-panel-ask-q {
+  color: var(--tx-1);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.ai-panel-ask-ctx {
+  color: var(--tx-2);
+  font-size: 12px;
+  line-height: 18px;
+}

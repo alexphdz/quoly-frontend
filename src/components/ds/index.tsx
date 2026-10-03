@@ -427,15 +427,15 @@ export function Skel({ w = '100%', h = 14, r, className }: { w?: number | string
 export function AiMark({ kind = 'read' }: { kind?: 'read' | 'suggests' }) {
   const { t } = useTranslation('common')
   return (
-    <span className="qy-ai">
+    <span className="qy-ai" title={kind === 'read' ? t('ds.aiRead') : t('ds.aiSuggests')}>
       <QuolyGlyph />
-      {kind === 'read' ? t('ds.aiRead') : t('ds.aiSuggests')}
+      <span className="qy-ai-label">{kind === 'read' ? t('ds.aiRead') : t('ds.aiSuggests')}</span>
     </span>
   )
 }
 
 function QuolyGlyph() {
-  return <span className="brand-mark" aria-hidden style={{ width: 14, height: 14 }} />
+  return <span className="brand-mark qy-ai-glyph" aria-hidden />
 }
 
 export function Segmented<T extends string>({

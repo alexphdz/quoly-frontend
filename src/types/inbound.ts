@@ -5,6 +5,7 @@ export interface InboundAttachmentRead {
   size_bytes: number
   extraction_status: 'pending' | 'extracted' | 'unsupported' | 'failed' | string
   extraction_method: string | null
+  file_url: string | null
   error_detail: string | null
   created_at: string
 }

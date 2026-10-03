@@ -258,6 +258,13 @@ input[type='checkbox'] {
   color: var(--tx-1);
 }
 
+.ds-file-row-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 @media (max-width: 800px) {
   .ds-form-section {
     grid-template-columns: 1fr;

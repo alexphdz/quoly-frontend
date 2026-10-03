@@ -151,7 +151,7 @@
       "docx": "Word quote"
     },
     "received": "Received {{date}}",
-    "sourceTitle": "What the supplier sent",
+    "sourceTitle": "Original response",
     "viewLabel": "Source view",
     "viewOriginal": "Original",
     "viewText": "Text",

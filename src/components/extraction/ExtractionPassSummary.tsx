@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { AiMark, Icon } from '../ds'
 
 export interface ExtractionPassData {
   message_labels?: string[]
@@ -19,22 +20,25 @@ export default function ExtractionPassSummary({ data }: { data: ExtractionPassDa
   }
 
   return (
-    <div style={{ marginTop: 12 }}>
-      {labels.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {labels.map((label) => (
-            <span key={label} className="ds-pill ds-pill-muted">
-              {t(`labels.${label}`, { defaultValue: label.replace(/_/g, ' ') })}
-            </span>
-          ))}
-        </div>
-      )}
-      {data.summary && (
-        <p style={{ marginTop: 8, color: 'var(--tx-body)', fontSize: 14, lineHeight: '22px' }}>{data.summary}</p>
-      )}
+    <section className="ai-panel" aria-label={t('panelTitle')}>
+      <header className="ai-panel-head">
+        <AiMark kind="read" />
+        {labels.length > 0 && (
+          <div className="ai-panel-labels">
+            {labels.map((label) => (
+              <span key={label} className="ds-pill ds-pill-muted">
+                {t(`labels.${label}`, { defaultValue: label.replace(/_/g, ' ') })}
+              </span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      {data.summary && <p className="ai-panel-summary">{data.summary}</p>}
+
       {specs.length > 0 && (
-        <div style={{ marginTop: 12 }}>
-          <p className="ds-meta">{t('specParameters')}</p>
+        <div className="ai-panel-block">
+          <p className="ai-panel-label">{t('specParameters')}</p>
           <dl className="ds-facts">
             {specs.map((entry) => (
               <div key={`${entry.name}-${entry.value}`}>
@@ -45,19 +49,23 @@ export default function ExtractionPassSummary({ data }: { data: ExtractionPassDa
           </dl>
         </div>
       )}
+
       {asks.length > 0 && (
-        <div style={{ marginTop: 12 }}>
-          <p className="ds-meta" style={{ color: 'var(--warn-fg)' }}>{t('buyerAsks')}</p>
-          <ul>
+        <div className="ai-panel-block">
+          <p className="ai-panel-label ai-panel-label-warn">
+            <Icon name="warning" size={13} />
+            {t('buyerAsks')}
+          </p>
+          <ul className="ai-panel-asks">
             {asks.map((item) => (
-              <li key={item.question} style={{ marginTop: 8, color: 'var(--tx-1)' }}>
-                “{item.question}”
-                {item.context && <p className="ds-meta">{item.context}</p>}
+              <li key={item.question}>
+                <span className="ai-panel-ask-q">{item.question}</span>
+                {item.context && <span className="ai-panel-ask-ctx">{item.context}</span>}
               </li>
             ))}
           </ul>
         </div>
       )}
-    </div>
+    </section>
   )
 }
