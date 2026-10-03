@@ -9,6 +9,7 @@ import {
   useDeleteQuote,
 } from '../hooks/useQuotes'
 import ExtractionPassSummary from '../components/extraction/ExtractionPassSummary'
+import OriginalDocument from '../components/documents/OriginalDocument'
 import QuoteReview from '../components/quoteReview/QuoteReview'
 import QuoteFields from '../components/quotes/QuoteFields'
 import QuoteEditForm from '../components/quotes/QuoteEditForm'
@@ -93,6 +94,8 @@ export default function QuoteDetailPage() {
           {quote.supplier_name ?? `${t('supplierIdLabel')} ${quote.supplier_id}`}
         </p>
       </div>
+
+      {quote.file_url && <OriginalDocument endpoint={`/quotes/${quote.id}/original`} fileType={quote.file_type} />}
 
       {rfq && (
         <Alert

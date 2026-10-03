@@ -241,7 +241,10 @@ export const SelectInput = forwardRef<HTMLInputElement, SelectHTMLAttributes<HTM
   )
 })
 
-export function Avatar({ name, size = 'md', seed }: { name?: string | null, size?: 'sm' | 'md', seed?: string | null }) {
+export function Avatar({ name, size = 'md', seed, src }: { name?: string | null, size?: 'sm' | 'md', seed?: string | null, src?: string | null }) {
+  const [imgFailed, setImgFailed] = useState(false)
+  useEffect(() => { setImgFailed(false) }, [src])
+
   const initials = (name || '?')
     .split(/\s|@/)
     .filter(Boolean)
@@ -253,9 +256,13 @@ export function Avatar({ name, size = 'md', seed }: { name?: string | null, size
   const tint = seed
     ? ({ ['--avatar-hue' as string]: avatarHue(seed) } as CSSProperties)
     : undefined
+
+  const showImg = src && !imgFailed
   return (
-    <span className={cn('avatar', size === 'sm' && 'avatar-sm', seed && 'avatar--tinted')} style={tint}>
-      {initials || '?'}
+    <span className={cn('avatar', size === 'sm' && 'avatar-sm', !showImg && seed && 'avatar--tinted')} style={showImg ? undefined : tint}>
+      {showImg
+        ? <img className="avatar-img" src={src} alt={name ?? ''} onError={() => setImgFailed(true)} />
+        : (initials || '?')}
     </span>
   )
 }

@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { DropdownMenu } from 'radix-ui'
 import { Icon } from '../ds'
+import { Avatar } from '../ui'
 import CommandPalette, { useCommandPalette } from './CommandPalette'
 import { useAuth } from '../../hooks/useAuth'
 import { useRFQs } from '../../hooks/useRFQs'
@@ -69,7 +70,6 @@ export default function Navbar() {
   }, [rfqs])
 
   const displayName = user ? displayNameFromEmail(user.email) : ''
-  const initial = displayName.slice(0, 1)
 
   return (
     <>
@@ -123,7 +123,9 @@ export default function Navbar() {
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
                 <button type="button" className="sidebar-user-button">
-                  <span className="sidebar-avatar" aria-hidden="true">{initial}</span>
+                  <span className="sidebar-avatar" aria-hidden="true">
+                    <Avatar name={displayName} src={user.avatar_url} size="sm" />
+                  </span>
                   <span className="sidebar-user-copy">
                     <span className="sidebar-user-name">{displayName}</span>
                     <span className="sidebar-user-email truncate">{user.email}</span>

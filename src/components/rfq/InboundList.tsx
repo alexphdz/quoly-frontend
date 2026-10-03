@@ -9,7 +9,7 @@ import { useFormat } from '../../lib/format'
 import InboundReplyPanel from './InboundReplyPanel'
 import ExtractionPassSummary from '../extraction/ExtractionPassSummary'
 import { Alert, EmptyState, SelectInput } from '../ui'
-import { Icon } from '../ds'
+import OriginalDocument from '../documents/OriginalDocument'
 
 type Filter = 'all' | 'quote' | 'conversation'
 
@@ -101,24 +101,16 @@ function InboundItem({ message, rfqId, suppliers }: { message: InboundMessageRea
       {message.attachments && message.attachments.length > 0 && (
         <ul>
           {message.attachments.map((att) => (
-            <li key={att.id} className="ds-file-row">
-              <span className="truncate">{att.filename}</span>
-              <span className="ds-file-row-actions">
-                <span className={attachmentClass(att.extraction_status)}>
-                  {t(`attachmentStatus.${att.extraction_status}`, { defaultValue: att.extraction_status })}
-                </span>
-                {att.file_url && (
-                  <a
-                    className="ds-btn ds-btn-ghost ds-btn-sm"
-                    href={att.file_url}
-                    target="_blank"
-                    rel="noreferrer"
-                    download={att.filename}
-                  >
-                    <Icon name="download" size={14} />
-                    {t('downloadOriginal')}
-                  </a>
-                )}
+            <li key={att.id} className="inbound-document">
+              {att.file_url ? (
+                <OriginalDocument
+                  endpoint={`/inbound/${message.id}/attachments/${att.id}/original`}
+                  filename={att.filename}
+                  fileType={att.filename.split('.').pop()}
+                />
+              ) : <span>{att.filename}</span>}
+              <span className={attachmentClass(att.extraction_status)}>
+                {t(`attachmentStatus.${att.extraction_status}`, { defaultValue: att.extraction_status })}
               </span>
             </li>
           ))}

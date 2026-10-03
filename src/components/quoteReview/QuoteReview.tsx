@@ -24,9 +24,10 @@ import {
   type ReviewFieldKey,
 } from '../../lib/quoteReview'
 import { COMMERCIAL_CURRENCIES } from '../../constants/commercial'
-import { AiMark, Breadcrumbs, Btn, Chip, Collapsible, ConfirmDialog, Icon, Menu, Money, SectionCard, Segmented, Select, Tip } from '../ds'
+import { AiMark, Breadcrumbs, Btn, Chip, Collapsible, ConfirmDialog, Icon, Menu, Money, SectionCard, Select, Tip } from '../ds'
 import { QuoteStatusChip } from '../ds/StatusChips'
 import { Alert, cn, toast } from '../ui'
+import OriginalDocument from '../documents/OriginalDocument'
 
 interface FieldDef {
   key: ReviewFieldKey
@@ -83,7 +84,6 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
   const [editing, setEditing] = useState(false)
   const [active, setActive] = useState<string | null>(null)
   const [pinned, setPinned] = useState<string | null>(null)
-  const [view, setView] = useState<'original' | 'text'>('text')
   const inputs = useRef<Partial<Record<ReviewFieldKey, HTMLElement | null>>>({})
 
   const form = useForm<FormValues>({ defaultValues: toForm(quote) })
@@ -121,7 +121,6 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
 
   const showInSource = (snippet: string) => {
     setPinned(current => (current === snippet ? null : snippet))
-    setView('text')
   }
 
   return (
@@ -149,34 +148,13 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
         </p>
       </header>
 
+      {quote.file_url && <OriginalDocument endpoint={`/quotes/${quote.id}/original`} fileType={quote.file_type} />}
+
       {quote.status === 'rejected' && <Alert tone="warning">{t('banner.rejected')}</Alert>}
 
       <div className="qr-grid">
         <Collapsible label={t('review.sourceTitle')} className="qr-source-collapsible">
-          <div className="qr-source-actions">
-            {quote.file_type === 'pdf' && quote.file_url && (
-              <Segmented
-                ariaLabel={t('review.viewLabel')}
-                value={view}
-                onChange={setView}
-                options={[
-                  { value: 'original', label: t('review.viewOriginal') },
-                  { value: 'text', label: t('review.viewText') },
-                ]}
-              />
-            )}
-            {quote.file_url && (
-              <a className="ds-btn ds-btn-ghost ds-btn-sm" href={quote.file_url} target="_blank" rel="noreferrer">
-                <Icon name="open_in_new" size={16} />
-                {t('review.openOriginal')}
-              </a>
-            )}
-          </div>
-          {view === 'original' && quote.file_url ? (
-            <iframe className="qr-pdf" src={quote.file_url} title={t('review.sourceTitle')} />
-          ) : (
-            <SourceText text={quote.raw_text ?? ''} highlight={highlight} emptyLabel={t('review.noText')} />
-          )}
+          <SourceText text={quote.raw_text ?? ''} highlight={highlight} emptyLabel={t('review.noText')} />
         </Collapsible>
 
         <div className="qr-side">
