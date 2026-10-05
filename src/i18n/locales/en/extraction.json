@@ -3,6 +3,55 @@
   "summaryLabel": "Summary",
   "specParameters": "Specification",
   "buyerAsks": "Waiting on you",
+  "retrieval": {
+    "title": "Related source context considered",
+    "contextNote": "These source passages provide context. They are not statements from the current supplier reply.",
+    "noMatches": "No related passages were retrieved. This does not establish that the information is absent.",
+    "notEvaluated": "Related passages were found but were not included in the interpretation. Review the source directly.",
+    "ambiguousPredecessor": "Multiple approved prior quotes exist for this supplier. Prior supplier terms were withheld; choose the applicable version before relying on inherited terms.",
+    "sourceKind": {
+      "buyer_reference": "Buyer reference",
+      "supplier_message": "Earlier supplier message",
+      "supplier_attachment": "Earlier supplier attachment"
+    }
+  },
+  "evidence": {
+    "facts": "Extracted facts and sources",
+    "page": "page {{page}}",
+    "sheetRow": "{{sheet}}, row {{row}}",
+    "section": {
+      "email_subject": "Email subject",
+      "latest_reply": "Latest reply",
+      "signature": "Email signature",
+      "quoted_history": "Quoted email history",
+      "pasted_text": "Pasted supplier text",
+      "unknown": "Source location unavailable"
+    },
+    "review": {
+      "not_evaluated": "Source not verified",
+      "ambiguous": "Needs review",
+      "conflicting": "Conflicting sources",
+      "inherited": "Inherited",
+      "buyer_corrected": "Buyer corrected",
+      "absent": "Not stated"
+    }
+  },
+  "processing": {
+    "failed": "Quoly could not interpret this response",
+    "partial": "Only part of the response was interpreted",
+    "partialHelp_one": "{{count}} source section was not evaluated. Verify the original before relying on missing fields.",
+    "partialHelp_other": "{{count}} source sections were not evaluated. Verify the original before relying on missing fields.",
+    "retry": "Retry interpretation"
+  },
+  "failure": {
+    "provider_unavailable": "The interpretation service is unavailable. The original response is still preserved.",
+    "timeout": "Interpretation timed out. The original response is still preserved.",
+    "invalid_output": "The response could not be converted into reliable structured data.",
+    "output_truncated": "The interpretation ended before all output was returned.",
+    "context_budget_exceeded": "The required request and supplier evidence exceed the interpretation context limit. No partial result was created.",
+    "upstream_parse_failure": "One or more source files could not be read.",
+    "unknown_error": "Interpretation failed. The original response is still preserved."
+  },
   "labels": {
     "quotation": "Quote",
     "partial_quotation": "Partial quote",

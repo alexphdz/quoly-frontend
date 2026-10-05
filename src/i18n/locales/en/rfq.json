@@ -513,6 +513,8 @@
   "addForm": {
     "title": "Add supplier manually",
     "namePlaceholder": "Supplier name",
+    "companyNamePlaceholder": "Company name",
+    "contactNamePlaceholder": "Contact person (optional)",
     "emailPlaceholder": "email@supplier.com",
     "adding": "Adding…",
     "add": "Add",

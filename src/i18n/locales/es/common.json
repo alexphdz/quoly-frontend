@@ -29,6 +29,7 @@
     "complete": "Completa"
   },
   "apiErrors": {
+    "quote_revision_conflict": "Esta cotización cambió desde que la abriste. Recárgala antes de volver a guardar.",
     "invalid_credentials": "Correo o contraseña incorrectos. Inténtalo de nuevo.",
     "email_not_confirmed": "El correo debe confirmarse antes de iniciar sesión.",
     "user_banned": "Esta cuenta ha sido suspendida.",

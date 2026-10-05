@@ -8,9 +8,12 @@ import type { SupplierCreate } from '../../types/rfq'
 import { Button, FormFeedback } from '../ui'
 
 const schema = z.object({
-  name: z.string().min(1, 'addForm.required'),
+  company_name: z.string().min(1, 'addForm.required'),
   email: z.string().email('addForm.invalidEmail'),
+  contact_name: z.string().optional(),
 })
+
+type FormValues = z.infer<typeof schema>
 
 interface Props {
   onSubmit: (data: SupplierCreate) => void
@@ -20,12 +23,17 @@ interface Props {
 
 export default function AddSupplierForm({ onSubmit, isPending, error }: Props) {
   const { t } = useTranslation('rfq')
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<SupplierCreate>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
   })
 
-  const handleAdd = (data: SupplierCreate) => {
-    onSubmit(data)
+  const handleAdd = (data: FormValues) => {
+    const contact = data.contact_name?.trim()
+    onSubmit({
+      company_name: data.company_name.trim(),
+      email: data.email,
+      contact_name: contact ? contact : null,
+    })
     reset()
   }
 
@@ -35,11 +43,11 @@ export default function AddSupplierForm({ onSubmit, isPending, error }: Props) {
       <div className="flex flex-wrap items-start gap-3">
         <div className="flex-1 min-w-[160px]">
           <input
-            {...register('name')}
-            placeholder={t('addForm.namePlaceholder')}
+            {...register('company_name')}
+            placeholder={t('addForm.companyNamePlaceholder')}
             className="input"
           />
-          {errors.name && <p className="text-[var(--error-text)] text-xs mt-1">{t(errors.name.message as 'addForm.required')}</p>}
+          {errors.company_name && <p className="text-[var(--error-text)] text-xs mt-1">{t(errors.company_name.message as 'addForm.required')}</p>}
         </div>
         <div className="flex-1 min-w-[200px]">
           <input
@@ -48,6 +56,13 @@ export default function AddSupplierForm({ onSubmit, isPending, error }: Props) {
             className="input"
           />
           {errors.email && <p className="text-[var(--error-text)] text-xs mt-1">{t(errors.email.message as 'addForm.invalidEmail')}</p>}
+        </div>
+        <div className="flex-1 min-w-[160px]">
+          <input
+            {...register('contact_name')}
+            placeholder={t('addForm.contactNamePlaceholder')}
+            className="input"
+          />
         </div>
         <Button type="submit" variant="secondary" disabled={isPending}>
           <Icon name="person_add" size={16} /> {isPending ? t('addForm.adding') : t('addForm.add')}

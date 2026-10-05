@@ -45,7 +45,9 @@ export default function SupplierDirectoryList({
                   </div>
                 </td>
                 <td data-label={t('suppliers.directory.columns.contact')}>
-                  <div className="sup-contact-name">{primary?.name || supplier.display_name}</div>
+                  {/* Contact person only — never fall back to the company name here,
+                      so a company without a contact doesn't read as a person. */}
+                  <div className="sup-contact-name">{primary?.name || <span className="ds-muted">—</span>}</div>
                   {(primary?.email || supplier.primary_email) && (
                     <div className="sup-contact-email" title={primary?.email || supplier.primary_email}>
                       {primary?.email || supplier.primary_email}

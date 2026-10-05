@@ -56,6 +56,9 @@ export default function SupplierList({
                         <Link to={`/suppliers/${s.supplier_company_id}`} className="hover:underline">{s.name}</Link>
                       ) : s.name}
                     </div>
+                    {s.contact_name && (
+                      <div className="text-xs text-[var(--text-muted)]">{s.contact_name}</div>
+                    )}
                     <Badge tone="neutral">{s.supplier_company_id ? t('suppliers.fromDirectory') : t('suppliers.addedManually')}</Badge>
                   </div>
                 </div>

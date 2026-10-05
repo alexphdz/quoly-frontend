@@ -28,6 +28,19 @@ export function useReclassifyInbound(inboundId: string, rfqId: string) {
   })
 }
 
+export function useRetryInboundExtraction(inboundId: string, rfqId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: () => inboundApi.retryInboundExtraction(inboundId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['inbound', rfqId] })
+      queryClient.invalidateQueries({ queryKey: ['quotes', rfqId] })
+      queryClient.invalidateQueries({ queryKey: ['comparison', rfqId], exact: false })
+      queryClient.invalidateQueries({ queryKey: ['rfq', rfqId] })
+    },
+  })
+}
+
 export function useAssignSupplier(inboundId: string, rfqId: string) {
   const queryClient = useQueryClient()
   return useMutation({

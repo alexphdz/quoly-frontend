@@ -54,6 +54,8 @@ export interface ComparisonModel {
 }
 
 export function comparablePrice(row: ComparisonRow): number | null {
+  if (row.missing_fields.some(field => field === 'moq_above_requested_quantity'
+    || field === 'cost_line_amount_missing' || field.startsWith('unquoted_'))) return null
   return row.all_in_price ?? row.normalized_price ?? null
 }
 
@@ -93,7 +95,8 @@ export function buildComparisonModel(cmp: ComparisonResponse, requestedQuantity?
   let rank = 0
   const ranked: RankedRow[] = sorted.map(row => {
     const comparable = comparablePrice(row)
-    const blocked = row.missing_fields.some(field => CONVERSION_FLAGS.includes(field))
+    const blocked = row.missing_fields.some(field => [...CONVERSION_FLAGS, 'moq_above_requested_quantity', 'cost_line_amount_missing'].includes(field)
+      || field.startsWith('unquoted_'))
     const itemized = (row.cost_breakdown ?? []).length > 0
     const mine = quotedKinds(row)
     const unquotedKinds = kindsQuoted.filter(kind => !mine.has(kind) && (itemized || kind !== 'other'))

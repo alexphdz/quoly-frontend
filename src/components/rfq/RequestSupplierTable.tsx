@@ -90,7 +90,9 @@ export default function RequestSupplierTable({
                 >
                   <td>
                     <div className="ds-request-name">{supplier.name}</div>
-                    <div className="ds-request-meta">{supplier.email}</div>
+                    <div className="ds-request-meta">
+                      {supplier.contact_name ? `${supplier.contact_name} · ${supplier.email}` : supplier.email}
+                    </div>
                   </td>
                   <td>
                     <span className={stage === 'buyer_action_required' ? 'ds-pill ds-pill-warn' : stage === 'quote_received' || stage === 'partial_response' ? 'ds-pill' : 'ds-pill ds-pill-muted'}>

@@ -142,6 +142,14 @@
     "complete": "Complete"
   },
   "review": {
+    "retryComplete": "Interpretation completed",
+    "retryStillFailed": "Interpretation still could not be completed",
+    "priceApplicability": {
+      "above_requested_quantity": "This price applies from {{offered}} {{offeredUnit}}; the request is for {{requested}} {{requestedUnit}}. It is not used for price ranking.",
+      "unit_mismatch": "The price-tier unit cannot be compared with the requested unit. Confirm the applicable price before comparing.",
+      "unknown_quantity_basis": "The supplier stated a quantity price, but it is unclear whether it is an exact quantity or a minimum break. Confirm it before comparing.",
+      "missing_requested_quantity": "The applicable price cannot be selected until the request quantity is known."
+    },
     "crumbRequests": "Requests",
     "sourceKind": {
       "email": "Email",
@@ -180,6 +188,11 @@
       "edited": "Edited"
     },
     "costLines": "Line items as quoted",
+    "conditions": "Offer conditions",
+    "conditionType": { "exclusion": "Excluded", "inclusion": "Included", "validity": "Validity", "payment": "Payment", "delivery": "Delivery", "quantity_break": "Quantity break", "trigger": "Trigger", "other": "Condition" },
+    "conditionField": "Applies to {{field}}",
+    "paymentMilestones": "Payment schedule",
+    "paymentMilestone": "Payment milestone",
     "lineName": "Line",
     "lineAmount": "Amount",
     "lineBasis": "Charged",

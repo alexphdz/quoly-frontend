@@ -29,6 +29,7 @@
     "complete": "Complete"
   },
   "apiErrors": {
+    "quote_revision_conflict": "This quote changed since you opened it. Reload it before saving again.",
     "invalid_credentials": "Incorrect email or password. Try again.",
     "email_not_confirmed": "Confirm the email before signing in.",
     "user_banned": "This account has been suspended.",
