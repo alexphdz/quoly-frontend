@@ -127,7 +127,7 @@ function SupplierBlock({
       return text ? { text } : null
     }
     const chip = chipsById[item.id]?.find(c => c.id === choice)
-    return chip ? { chip, text: chip.label } : null
+    return chip ? { chip, text: chip.technicalLine ?? chip.label } : null
   }
 
   const saveSpec = async () => {

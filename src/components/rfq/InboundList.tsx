@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { InboundMessageRead } from '../../types/inbound'
 import type { SupplierRead } from '../../types/rfq'
-import { useAssignSupplier, useMarkInboundRead, useReclassifyInbound } from '../../hooks/useInboundActions'
+import { useAssignSupplier, useMarkInboundRead, useReclassifyInbound, useRetryInboundExtraction } from '../../hooks/useInboundActions'
 import { useEnumLabels } from '../../i18n/labels'
 import { useFormat } from '../../lib/format'
 import InboundReplyPanel from './InboundReplyPanel'
 import ExtractionPassSummary from '../extraction/ExtractionPassSummary'
-import { Alert, EmptyState, SelectInput } from '../ui'
+import { Alert, EmptyState, SelectInput, toast } from '../ui'
 import OriginalDocument from '../documents/OriginalDocument'
 
 type Filter = 'all' | 'quote' | 'conversation'
@@ -65,6 +65,7 @@ function InboundItem({ message, rfqId, suppliers }: { message: InboundMessageRea
   const fmt = useFormat()
   const [showReply, setShowReply] = useState(false)
   const reclassify = useReclassifyInbound(message.id, rfqId)
+  const retryExtraction = useRetryInboundExtraction(message.id, rfqId)
   const labels = useEnumLabels()
 
   const oppositeType = message.message_type === 'conversation' ? 'quote' : 'conversation'
@@ -120,7 +121,19 @@ function InboundItem({ message, rfqId, suppliers }: { message: InboundMessageRea
         <p className="ds-meta" style={{ marginTop: 8 }}>{t('attachmentsInGmail')}</p>
       )}
 
-      {message.extraction_pass && <ExtractionPassSummary data={message.extraction_pass} />}
+      {message.extraction_pass && (
+        <ExtractionPassSummary
+          data={message.extraction_pass}
+          retrying={retryExtraction.isPending}
+          onRetry={message.status === 'error' && message.extraction_pass.processing?.status === 'failed'
+            ? () => retryExtraction.mutate(undefined, {
+                onSuccess: result => toast(result.status === 'processed'
+                  ? t('retryComplete')
+                  : t('retryStillFailed'), result.status === 'processed' ? 'success' : 'error'),
+              })
+            : undefined}
+        />
+      )}
 
       {message.replied_at && message.reply_text && (
         <div style={{ marginTop: 12 }}>
@@ -129,7 +142,7 @@ function InboundItem({ message, rfqId, suppliers }: { message: InboundMessageRea
         </div>
       )}
 
-      {message.error_detail && (
+      {message.error_detail && message.extraction_pass?.processing?.status !== 'failed' && (
         <Alert tone={message.status === 'error' ? 'error' : 'warning'} className="mt-3">{message.error_detail}</Alert>
       )}
 

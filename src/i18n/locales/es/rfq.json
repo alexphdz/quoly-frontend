@@ -513,6 +513,8 @@
   "addForm": {
     "title": "Agregar proveedor manualmente",
     "namePlaceholder": "Nombre del proveedor",
+    "companyNamePlaceholder": "Nombre de la empresa",
+    "contactNamePlaceholder": "Persona de contacto (opcional)",
     "emailPlaceholder": "correo@proveedor.com",
     "adding": "Agregando…",
     "add": "Agregar",

@@ -14,6 +14,14 @@
   "openDocument": "Open supplier document",
   "openComparison": "Open comparison",
   "openSource": "Source",
+  "sourcePage": "page {{page}}",
+  "sourceSheetRow": "{{sheet}}, row {{row}}",
+  "sourceSection": {
+    "email_subject": "Email subject",
+    "latest_reply": "Latest reply",
+    "quoted_history": "Quoted email history",
+    "unknown": "Source location unavailable"
+  },
   "empty": "No specification parameters extracted yet.",
   "states": {
     "not_received": "Not received",
@@ -37,6 +45,19 @@
     "not_comparable": "Not comparable",
     "additional_supplier_parameter": "Additional from supplier",
     "needs_review": "Needs review"
+  },
+  "reason": {
+    "exact_value": "The stated values are the same.",
+    "equivalent_value": "The values are equivalent after unit conversion.",
+    "polarity_conflict": "One statement affirms the requirement and the other explicitly negates it.",
+    "threshold_satisfied": "The supplier value satisfies the requested threshold.",
+    "threshold_not_satisfied": "The supplier value does not satisfy the requested threshold.",
+    "unit_mismatch": "The units describe different or unsupported measurements.",
+    "value_mismatch": "The stated values differ.",
+    "unparsed_value": "Quoly could not compare this wording reliably.",
+    "missing_supplier_value": "The supplier value is empty.",
+    "missing_supplier_parameter": "The supplier did not address this requirement in the interpreted material.",
+    "additional_supplier_parameter": "The supplier stated this parameter outside the buyer reference."
   },
   "notStated": "Not stated"
 }

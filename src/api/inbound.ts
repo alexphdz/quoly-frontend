@@ -13,6 +13,10 @@ export function reclassifyInbound(inboundId: string, messageType: string): Promi
   return patch<InboundMessageRead>(`/inbound/${inboundId}/reclassify`, { message_type: messageType })
 }
 
+export function retryInboundExtraction(inboundId: string): Promise<InboundMessageRead> {
+  return post<InboundMessageRead>(`/inbound/${inboundId}/retry-extraction`)
+}
+
 export function assignSupplier(inboundId: string, supplierId: string): Promise<InboundMessageRead> {
   return post<InboundMessageRead>(`/inbound/${inboundId}/assign-supplier`, { supplier_id: supplierId })
 }

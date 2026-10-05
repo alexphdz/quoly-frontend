@@ -79,6 +79,19 @@ export function useConfirmQuote(quoteId: string, rfqId: string) {
   })
 }
 
+export function useRetryQuoteExtraction(quoteId: string, rfqId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: () => quotesApi.retryQuoteExtraction(quoteId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['quote', quoteId] })
+      queryClient.invalidateQueries({ queryKey: ['quotes', rfqId] })
+      queryClient.invalidateQueries({ queryKey: ['comparison', rfqId], exact: false })
+      queryClient.invalidateQueries({ queryKey: ['rfq', rfqId] })
+    },
+  })
+}
+
 export function useRejectQuote(quoteId: string, rfqId: string) {
   const queryClient = useQueryClient()
   return useMutation({

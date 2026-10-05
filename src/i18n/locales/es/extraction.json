@@ -3,6 +3,55 @@
   "summaryLabel": "Resumen",
   "specParameters": "Especificación",
   "buyerAsks": "Espera tu respuesta",
+  "retrieval": {
+    "title": "Contexto de fuentes relacionadas",
+    "contextNote": "Estos fragmentos aportan contexto. No son afirmaciones de la respuesta actual del proveedor.",
+    "noMatches": "No se recuperaron fragmentos relacionados. Esto no confirma que la información esté ausente.",
+    "notEvaluated": "Se encontraron fragmentos relacionados, pero no se incluyeron en la interpretación. Revisa la fuente directamente.",
+    "ambiguousPredecessor": "Hay varias cotizaciones anteriores aprobadas para este proveedor. Se ocultaron esos términos; selecciona la versión aplicable antes de confiar en datos heredados.",
+    "sourceKind": {
+      "buyer_reference": "Referencia del comprador",
+      "supplier_message": "Mensaje anterior del proveedor",
+      "supplier_attachment": "Archivo anterior del proveedor"
+    }
+  },
+  "evidence": {
+    "facts": "Datos extraídos y sus fuentes",
+    "page": "página {{page}}",
+    "sheetRow": "{{sheet}}, fila {{row}}",
+    "section": {
+      "email_subject": "Asunto del correo",
+      "latest_reply": "Respuesta más reciente",
+      "signature": "Firma del correo",
+      "quoted_history": "Historial citado del correo",
+      "pasted_text": "Texto del proveedor pegado",
+      "unknown": "Ubicación de la fuente no disponible"
+    },
+    "review": {
+      "not_evaluated": "Fuente sin verificar",
+      "ambiguous": "Requiere revisión",
+      "conflicting": "Fuentes en conflicto",
+      "inherited": "Heredado",
+      "buyer_corrected": "Corregido por el comprador",
+      "absent": "No indicado"
+    }
+  },
+  "processing": {
+    "failed": "Quoly no pudo interpretar esta respuesta",
+    "partial": "Solo se interpretó una parte de la respuesta",
+    "partialHelp_one": "No se evaluó {{count}} sección de origen. Verifica el original antes de confiar en los datos faltantes.",
+    "partialHelp_other": "No se evaluaron {{count}} secciones de origen. Verifica el original antes de confiar en los datos faltantes.",
+    "retry": "Reintentar interpretación"
+  },
+  "failure": {
+    "provider_unavailable": "El servicio de interpretación no está disponible. La respuesta original sigue guardada.",
+    "timeout": "La interpretación excedió el tiempo disponible. La respuesta original sigue guardada.",
+    "invalid_output": "La respuesta no pudo convertirse en datos estructurados confiables.",
+    "output_truncated": "La interpretación terminó antes de devolver todo el resultado.",
+    "context_budget_exceeded": "La solicitud y la evidencia del proveedor exceden el límite de contexto. No se creó un resultado parcial.",
+    "upstream_parse_failure": "No se pudieron leer uno o más archivos de origen.",
+    "unknown_error": "La interpretación falló. La respuesta original sigue guardada."
+  },
   "labels": {
     "quotation": "Cotización",
     "partial_quotation": "Cotización parcial",

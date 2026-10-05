@@ -16,6 +16,8 @@
   "reply": "Reply",
   "cancelReply": "Cancel reply",
   "reclassifying": "Reclassifying…",
+  "retryComplete": "Interpretation completed and added to the request.",
+  "retryStillFailed": "Interpretation still could not be completed. The saved source is unchanged.",
   "reclassify": {
     "toConversation": "Not a quote · move to messages",
     "toQuote": "Is a quote · extract data",

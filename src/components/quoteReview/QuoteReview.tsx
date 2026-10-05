@@ -9,6 +9,7 @@ import {
   useConfirmQuote,
   useDeleteQuote,
   useRejectQuote,
+  useRetryQuoteExtraction,
   useRestoreQuote,
   useUpdateQuote,
 } from '../../hooks/useQuotes'
@@ -28,6 +29,7 @@ import { AiMark, Breadcrumbs, Btn, Chip, Collapsible, ConfirmDialog, Icon, Menu,
 import { QuoteStatusChip } from '../ds/StatusChips'
 import { Alert, cn, toast } from '../ui'
 import OriginalDocument from '../documents/OriginalDocument'
+import ExtractionPassSummary from '../extraction/ExtractionPassSummary'
 
 interface FieldDef {
   key: ReviewFieldKey
@@ -79,6 +81,7 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
   const confirmQuote = useConfirmQuote(quote.id, quote.rfq_id)
   const rejectQuote = useRejectQuote(quote.id, quote.rfq_id)
   const restoreQuote = useRestoreQuote(quote.id, quote.rfq_id)
+  const retryExtraction = useRetryQuoteExtraction(quote.id, quote.rfq_id)
   const deleteQuote = useDeleteQuote(quote.id, quote.rfq_id)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [editing, setEditing] = useState(false)
@@ -99,7 +102,7 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
 
   const save = (after?: () => void) =>
     handleSubmit(data => {
-      updateQuote.mutate(toUpdate(data), {
+      updateQuote.mutate({ ...toUpdate(data), expected_approved_revision: quote.approved_revision ?? 0 }, {
         onSuccess: () => {
           setEditing(false)
           if (after) after()
@@ -151,6 +154,32 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
       {quote.file_url && <OriginalDocument endpoint={`/quotes/${quote.id}/original`} fileType={quote.file_type} />}
 
       {quote.status === 'rejected' && <Alert tone="warning">{t('banner.rejected')}</Alert>}
+      {quote.extraction_pass && (
+        <ExtractionPassSummary
+          data={quote.extraction_pass}
+          onEvidenceSelect={showInSource}
+          retrying={retryExtraction.isPending}
+          onRetry={quote.extraction_pass.processing?.status === 'failed'
+            ? () => retryExtraction.mutate(undefined, {
+                onSuccess: result => toast(result.extraction_pass?.processing?.status === 'failed'
+                  ? t('review.retryStillFailed')
+                  : t('review.retryComplete')),
+              })
+            : undefined}
+        />
+      )}
+      {quote.commercial_offer?.price_applicability
+        && quote.commercial_offer.price_applicability.status !== 'applicable'
+        && quote.commercial_offer.price_applicability.status !== 'not_available' && (
+        <Alert tone="warning">
+          {t(`review.priceApplicability.${quote.commercial_offer.price_applicability.reason}`, {
+            offered: quote.commercial_offer.price_applicability.offered_quantity,
+            offeredUnit: quote.commercial_offer.price_applicability.offered_unit ?? '',
+            requested: quote.commercial_offer.price_applicability.requested_quantity,
+            requestedUnit: quote.commercial_offer.price_applicability.requested_unit ?? '',
+          })}
+        </Alert>
+      )}
 
       <div className="qr-grid">
         <Collapsible label={t('review.sourceTitle')} className="qr-source-collapsible">
@@ -322,6 +351,35 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
               </table>
             </SectionCard>
           )}
+
+          {(quote.commercial_offer?.conditions?.length ?? 0) > 0 && (
+            <SectionCard icon="rule" title={t('review.conditions')}>
+              <ul className="qr-commercial-conditions">
+                {quote.commercial_offer!.conditions!.map((condition, index) => (
+                  <li key={`${condition.kind}-${index}`}>
+                    <strong>{t(`review.conditionType.${condition.kind}`, { defaultValue: t('review.conditionType.other') })}</strong>
+                    <p>{condition.wording}</p>
+                    {condition.field_name && <span>{t('review.conditionField', { field: condition.field_name })}</span>}
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          )}
+
+          {(quote.commercial_offer?.payment_milestones?.length ?? 0) > 0 && (
+            <SectionCard icon="payments" title={t('review.paymentMilestones')}>
+              <ul className="qr-commercial-conditions">
+                {quote.commercial_offer!.payment_milestones!.map((milestone, index) => (
+                  <li key={`payment-${index}`}>
+                    <strong>{milestone.percentage != null ? `${milestone.percentage}%` : t('review.paymentMilestone')}</strong>
+                    {milestone.trigger && <p>{milestone.trigger}</p>}
+                    {milestone.due && <p>{milestone.due}</p>}
+                    {milestone.source_wording && <button type="button" className="qr-snippet" onClick={() => showInSource(milestone.source_wording!)}>“{milestone.source_wording}”</button>}
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          )}
         </div>
       </div>
 
@@ -354,8 +412,8 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
             <Btn
               variant="primary"
               icon="check_circle"
-              disabled={priceMissing}
-              disabledReason={t('review.includeNeedsPrice')}
+              disabled={priceMissing && rfq?.request_kind !== 'commercial'}
+              disabledReason={priceMissing && rfq?.request_kind !== 'commercial' ? t('review.includeNeedsPrice') : undefined}
               loading={confirmQuote.isPending}
               onClick={include}
             >

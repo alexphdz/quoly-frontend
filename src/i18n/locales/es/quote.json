@@ -142,6 +142,14 @@
     "complete": "Completa"
   },
   "review": {
+    "retryComplete": "La interpretación se completó",
+    "retryStillFailed": "La interpretación todavía no pudo completarse",
+    "priceApplicability": {
+      "above_requested_quantity": "Este precio aplica desde {{offered}} {{offeredUnit}}; la solicitud es por {{requested}} {{requestedUnit}}. No se utiliza para ordenar precios.",
+      "unit_mismatch": "La unidad de la escala de precio no puede compararse con la unidad solicitada. Confirma el precio aplicable antes de comparar.",
+      "unknown_quantity_basis": "El proveedor indicó un precio por cantidad, pero no está claro si es una cantidad exacta o un mínimo. Confírmalo antes de comparar.",
+      "missing_requested_quantity": "No se puede seleccionar el precio aplicable hasta conocer la cantidad solicitada."
+    },
     "crumbRequests": "Solicitudes",
     "sourceKind": {
       "email": "Correo",
@@ -180,6 +188,11 @@
       "edited": "Editado"
     },
     "costLines": "Conceptos cotizados",
+    "conditions": "Condiciones de la oferta",
+    "conditionType": { "exclusion": "Excluido", "inclusion": "Incluido", "validity": "Vigencia", "payment": "Pago", "delivery": "Entrega", "quantity_break": "Escala por cantidad", "trigger": "Condición de inicio", "other": "Condición" },
+    "conditionField": "Aplica a {{field}}",
+    "paymentMilestones": "Calendario de pagos",
+    "paymentMilestone": "Hito de pago",
     "lineName": "Concepto",
     "lineAmount": "Importe",
     "lineBasis": "Cobro",

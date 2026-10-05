@@ -22,7 +22,11 @@ interface Props {
   awardedQuoteId?: string | null
 }
 
-const CONVERSION_FLAGS = ['currency_conversion', 'unit_conversion']
+const COMPARISON_BLOCK_FLAGS = ['currency_conversion', 'unit_conversion', 'moq_above_requested_quantity', 'cost_line_amount_missing']
+
+function priceBlocked(row: ComparisonRow) {
+  return row.missing_fields.some(field => COMPARISON_BLOCK_FLAGS.includes(field) || field.startsWith('unquoted_'))
+}
 
 type CurrencyView = 'normalized' | 'original'
 
@@ -43,7 +47,7 @@ export default function ComparisonTable({
   const { t } = useTranslation('comparison')
   const fmt = useFormat()
   const [currencyView, setCurrencyView] = useState<CurrencyView>('normalized')
-  const bestId = ranking[0] ?? null
+  const bestId = sortedBestId(rows, ranking)
 
   const sorted = [...rows].sort((a, b) => {
     const ai = ranking.indexOf(a.quote_id)
@@ -54,7 +58,7 @@ export default function ComparisonTable({
     return (a.normalized_price ?? Number.MAX_SAFE_INTEGER) - (b.normalized_price ?? Number.MAX_SAFE_INTEGER)
   })
 
-  const priced = sorted.filter(row => row.normalized_price != null)
+  const priced = sorted.filter(row => row.normalized_price != null && !priceBlocked(row))
   const maxPrice = priced.reduce((max, row) => Math.max(max, row.normalized_price ?? 0), 0)
 
   if (rows.length === 0) {
@@ -128,7 +132,7 @@ export default function ComparisonTable({
                     view={currencyView}
                     baseCurrency={baseCurrency}
                     maxPrice={maxPrice}
-                    showMeter={currencyView === 'normalized' && priced.length > 1 && maxPrice > 0}
+                    showMeter={currencyView === 'normalized' && !priceBlocked(row) && priced.length > 1 && maxPrice > 0}
                     rfqQuantity={rfqQuantity}
                   />
                 </td>
@@ -244,6 +248,7 @@ function PriceCell({
   const fmt = useFormat()
   const units = useUnitLabel()
   const tiers = formatPriceTierSummary(row.commercial_offer, fmt, units.per)
+  const blockedReason = row.missing_fields.find(field => COMPARISON_BLOCK_FLAGS.includes(field) || field.startsWith('unquoted_'))
   const extended = row.normalized_price != null && rfqQuantity
     ? fmt.money(row.normalized_price * rfqQuantity, baseCurrency, { maximumFractionDigits: 0 })
     : null
@@ -264,11 +269,13 @@ function PriceCell({
     )
   }
 
-  const blocked = row.missing_fields.some(field => CONVERSION_FLAGS.includes(field))
+  const blocked = priceBlocked(row)
   return (
     <div>
       <div className="ds-matrix-value tnum">
-        {row.normalized_price != null
+        {blocked
+          ? t('table.notComparable')
+          : row.normalized_price != null
           ? fmt.unitMoney(row.normalized_price, baseCurrency)
           : tiers.length > 0
             ? tiers[0]
@@ -276,7 +283,10 @@ function PriceCell({
               ? t('table.notComparable')
               : t('table.notProvided')}
       </div>
-      {tiers.length > 0 && row.normalized_price != null && (
+      {blocked && blockedReason && (
+        <div className="ds-matrix-sub">{t(`table.priceBlocked.${blockedReason}`, { defaultValue: t('table.notComparable') })}</div>
+      )}
+      {tiers.length > 0 && row.normalized_price != null && !blocked && (
         <div className="ds-matrix-sub">{tiers.join(' · ')}</div>
       )}
       {tiers.length > 1 && row.normalized_price == null && (
@@ -290,7 +300,14 @@ function PriceCell({
       {row.raw_price != null && (
         <div className="ds-matrix-sub">{row.raw_price} {row.raw_currency ?? ''}/{units.per(row.raw_unit) || row.raw_unit || ''}</div>
       )}
-      {extended && <div className="ds-matrix-sub">{t('table.totalLine', { amount: extended })}</div>}
+      {!blocked && extended && <div className="ds-matrix-sub">{t('table.totalLine', { amount: extended })}</div>}
     </div>
   )
+}
+
+function sortedBestId(rows: ComparisonRow[], ranking: string[]): string | null {
+  const eligible = new Set(rows.filter(row => row.normalized_price != null
+    && !row.missing_fields.some(field => COMPARISON_BLOCK_FLAGS.includes(field) || field.startsWith('unquoted_')))
+    .map(row => row.quote_id))
+  return ranking.find(quoteId => eligible.has(quoteId)) ?? null
 }

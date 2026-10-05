@@ -16,6 +16,8 @@
   "reply": "Responder",
   "cancelReply": "Cancelar respuesta",
   "reclassifying": "Reclasificando…",
+  "retryComplete": "La interpretación se completó y se agregó a la solicitud.",
+  "retryStillFailed": "La interpretación todavía no pudo completarse. La fuente guardada no cambió.",
   "reclassify": {
     "toConversation": "No es cotización · mover a mensajes",
     "toQuote": "Es cotización · extraer datos",

@@ -44,6 +44,10 @@ export function confirmQuote(id: string): Promise<QuoteRead> {
   return post<QuoteRead>(`/quotes/${id}/confirm`)
 }
 
+export function retryQuoteExtraction(id: string): Promise<QuoteRead> {
+  return post<QuoteRead>(`/quotes/${id}/retry-extraction`)
+}
+
 export function rejectQuote(id: string): Promise<QuoteRead> {
   return post<QuoteRead>(`/quotes/${id}/reject`)
 }
