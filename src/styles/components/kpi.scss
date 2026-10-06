@@ -35,8 +35,8 @@
 .qy-metric-open { --metric-bg: color-mix(in srgb, var(--selected) 55%, var(--bg-card)); --metric-accent: var(--accent-text); }
 .qy-metric-review { --metric-bg: color-mix(in srgb, var(--accent-line) 6%, var(--bg-card)); --metric-accent: var(--accent-text); }
 .qy-metric-warn { --metric-bg: color-mix(in srgb, var(--warn-bg) 70%, var(--bg-card)); --metric-accent: var(--warn-fg); }
-.qy-metric-wait { --metric-bg: color-mix(in srgb, #5a6e7c 5%, var(--bg-card)); --metric-accent: color-mix(in srgb, #3e5566 55%, var(--tx-2)); }
-.qy-metric-week { --metric-bg: color-mix(in srgb, var(--accent) 6%, var(--bg-card)); --metric-accent: color-mix(in srgb, #1d4ed8 55%, var(--tx-2)); }
+.qy-metric-wait { --metric-bg: color-mix(in srgb, var(--tx-2) 6%, var(--bg-card)); --metric-accent: var(--tx-2); }
+.qy-metric-week { --metric-bg: color-mix(in srgb, var(--ice) 7%, var(--bg-card)); --metric-accent: var(--accent-text); }
 .qy-metric-rate { --metric-bg: color-mix(in srgb, var(--success-bg) 62%, var(--bg-card)); --metric-accent: var(--success-fg); }
 .qy-metric-done { --metric-bg: color-mix(in srgb, var(--accent) 5%, var(--bg-card)); --metric-accent: var(--accent-text); }
 
@@ -86,7 +86,7 @@
   display: block;
   min-width: 0;
   overflow-wrap: anywhere;
-  color: var(--accent-text);
+  color: var(--tx-1);
   font-family: var(--font-mono);
   font-size: 30px;
   font-weight: 500;
@@ -167,7 +167,7 @@
 
 [data-theme='dark'] {
   .qy-metric-wait { --metric-accent: #a8bcc8; }
-  .qy-metric-week { --metric-accent: #9ec5ff; }
+  .qy-metric-week { --metric-accent: var(--accent-text); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -255,12 +255,12 @@
 
 .home-card:hover {
   border-color: var(--line-strong);
-  background: color-mix(in srgb, var(--accent) 6%, var(--bg-card));
+  background: color-mix(in srgb, var(--ice) 6%, var(--bg-card));
 }
 
 .home-card .home-card-num {
   margin: 8px 0 0;
-  color: var(--accent-text);
+  color: var(--tx-1);
   font-family: var(--font-mono);
   font-size: 30px;
   font-weight: 500;
@@ -270,13 +270,20 @@
   text-align: left;
 }
 
+/* Open requests is the dashboard's main overview — its count is the anchor. */
+.home-card-open .home-card-num {
+  font-size: 40px;
+  margin-top: 10px;
+}
+
 .home-card-inline {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
 
-  .home-card-num { margin: 0; font-size: 28px; }
+  /* Response rate reads as a key figure. */
+  .home-card-num { margin: 0; font-size: 32px; }
 }
 
 .home-card-note {
@@ -286,14 +293,19 @@
   line-height: 18px;
 }
 
+/* Thinner, more refined request-status bar. Ice = with quotes, muted neutral =
+   waiting, restrained amber = needs attention, quiet neutral = other open.
+   Colours stay unsaturated so the bar reads calm, not like a chart legend. */
 .home-split {
   display: flex;
-  gap: 3px;
-  height: 6px;
-  margin-top: 16px;
+  gap: 2px;
+  height: 5px;
+  margin-top: 18px;
+  border-radius: 99px;
+  overflow: hidden;
 
-  span { min-width: 4px; border-radius: 1px; }
-  .is-quotes { background: var(--accent); }
+  span { min-width: 4px; }
+  .is-quotes { background: var(--ice); }
   .is-waiting { background: var(--tx-3); }
   .is-attention { background: var(--attention-fill); }
   .is-other { background: var(--line-strong); }
@@ -316,35 +328,46 @@
     line-height: 18px;
   }
 
-  b { color: var(--tx-1); font-weight: 500; }
+  b {
+    color: var(--tx-1);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
 }
 
 .home-swatch {
   width: 8px;
   height: 8px;
   border-radius: 1px;
-  &.is-quotes { background: var(--accent); }
+  &.is-quotes { background: var(--ice); }
   &.is-waiting { background: var(--tx-3); }
   &.is-attention { background: var(--attention-fill); }
   &.is-other { background: var(--line-strong); }
 }
 
+/* Actionable queue — whitespace between requests, not a ruled table. A subtle
+   Ice hover marks the interactive row without permanently tinting the list. */
 .home-queue {
-  margin: 12px 0 0;
+  margin: 14px 0 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid var(--line);
 
-  li { border-bottom: 1px solid var(--line); }
   a {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 12px;
-    padding: 8px 0;
+    padding: 7px 8px;
+    margin: 0 -8px;
+    border-radius: 6px;
     color: inherit;
     text-decoration: none;
-    &:hover .home-queue-name { color: var(--accent-text); }
+    transition: background 140ms ease;
+    &:hover {
+      background: color-mix(in srgb, var(--ice) 8%, transparent);
+      .home-queue-name { color: var(--accent-text); }
+    }
   }
 }
 
@@ -360,14 +383,18 @@
 .home-queue-meta {
   flex: none;
   color: var(--tx-3);
+  font-family: var(--font-mono);
   font-size: 12px;
+  font-variant-numeric: tabular-nums;
 }
 
 .home-rate {
   height: 4px;
   margin-top: 14px;
+  border-radius: 99px;
   background: var(--line);
-  span { display: block; height: 100%; background: var(--accent); }
+  overflow: hidden;
+  span { display: block; height: 100%; background: var(--ice); }
 }
 
 .home-award-latest {
@@ -388,6 +415,33 @@
   }
   strong { font-size: 14px; font-weight: 500; }
   &:hover strong { color: var(--accent-text); }
+}
+
+/* Awarded this month is a full-width panel — use the width editorially: the
+   count/notes lead on the left, the latest award sits to the right so the card
+   isn't mostly empty space. No extra nested cards. */
+@media (min-width: 901px) {
+  .home-card-award {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 40px;
+    row-gap: 2px;
+    align-items: baseline;
+  }
+
+  .home-card-award > h2,
+  .home-card-award > .home-card-num,
+  .home-card-award > .home-card-note { grid-column: 1; }
+
+  .home-card-award > .home-award-latest {
+    grid-column: 2;
+    grid-row: 1 / 99;
+    align-self: center;
+    margin-top: 0;
+    padding: 0 0 0 32px;
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
 }
 
 @media (max-width: 900px) {

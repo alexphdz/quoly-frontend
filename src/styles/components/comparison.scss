@@ -204,6 +204,15 @@
     font-weight: 600;
   }
 
+  /* Numeric comparison figures (price, MOQ, lead) are marked .tnum in markup:
+     Geist Mono + tabular so columns align and read as data. Text cells
+     (delivery point, payment terms, validity) stay Geist. */
+  .ds-matrix-value.tnum {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
   tr.ds-matrix-price th,
   tr.ds-matrix-price td {
     border-top: 1px solid var(--line-strong);
@@ -212,7 +221,7 @@
   tr.ds-matrix-price .ds-matrix-value {
     font-size: 20px;
     line-height: 26px;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   .ds-matrix-sub {

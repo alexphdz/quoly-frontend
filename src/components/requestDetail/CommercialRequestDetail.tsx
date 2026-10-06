@@ -555,7 +555,7 @@ function Rail({
           {present.map(item => (
             <div key={item.key}>
               <dt>{item.label}</dt>
-              <dd>{item.value}</dd>
+              <dd className={item.key === 'quantity' ? 'rd-detail-num' : undefined}>{item.value}</dd>
             </div>
           ))}
         </dl>

@@ -126,6 +126,50 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
     setPinned(current => (current === snippet ? null : snippet))
   }
 
+  // Read-only Quote-details helpers: a commercial-snapshot stat cell and a
+  // quieter secondary-detail row. Both preserve the source-excerpt provenance
+  // and hover-to-highlight behaviour of the original field list.
+  const sourceExcerpt = (snippet?: string) => snippet
+    ? <button type="button" className="qr-snippet" onClick={() => showInSource(snippet)} aria-pressed={pinned === snippet}>{`“${snippet}”`}</button>
+    : null
+
+  const statCell = (key: ReviewFieldKey, label: string, value: ReactNode, empty: boolean) => {
+    const snippet = sources[key]
+    return (
+      <div
+        className={cn('qr-stat', highlight && snippet === highlight && 'is-active')}
+        onMouseEnter={() => snippet && setActive(snippet)}
+        onMouseLeave={() => setActive(null)}
+      >
+        <span className="qr-stat-label">{label}</span>
+        {empty
+          ? <p className="qr-stat-value is-empty">{t('review.state.notStated')}</p>
+          : <p className="qr-stat-value">{value}</p>}
+        {sourceExcerpt(snippet)}
+      </div>
+    )
+  }
+
+  const detailRow = (key: ReviewFieldKey, mono = false) => {
+    const snippet = sources[key]
+    const raw = values[key].trim()
+    const display = key === 'currency' ? raw.toUpperCase() : raw
+    return (
+      <div
+        key={key}
+        className={cn('qr-detail', highlight && snippet === highlight && 'is-active')}
+        onMouseEnter={() => snippet && setActive(snippet)}
+        onMouseLeave={() => setActive(null)}
+      >
+        <dt className="qr-detail-label">{t(`review.field.${key}`)}</dt>
+        <dd className={cn('qr-detail-value', !raw && 'is-empty', mono && raw && 'qr-value-num')}>
+          {raw ? display : t('review.state.notStated')}
+        </dd>
+        {sourceExcerpt(snippet)}
+      </div>
+    )
+  }
+
   return (
     <div className="ds-page qr-page">
       <Breadcrumbs
@@ -187,12 +231,9 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
         </Collapsible>
 
         <div className="qr-side">
-          {quote.faithful_summary && (
-            <SectionCard icon="format_list_bulleted" title={t('supplierSummary')} actions={<AiMark kind="read" />}>
-              <p className="qr-summary">{quote.faithful_summary}</p>
-            </SectionCard>
-          )}
-
+          {/* The supplier summary is already surfaced by the Quoly Intelligence
+              panel above (extraction_pass.summary); a second identical card was
+              redundant, so it was removed. */}
           <SectionCard
             icon="description"
             title={t('review.fieldsTitle')}
@@ -268,47 +309,55 @@ export default function QuoteReview({ quote, rfq }: { quote: QuoteRead, rfq?: RF
                 <div className="qr-input"><textarea id="qr-notes" rows={2} {...register('notes')} /></div>
               </div>
             </form>
-            ) : (
-            <div className="qr-fields">
-              {FIELDS.map(field => {
-                const snippet = sources[field.key]
-                const raw = values[field.key].trim()
-                const empty = raw === ''
-                const required = quote.missing_fields.includes(field.key) || (field.key === 'price' && empty)
-                const display = field.type === 'currency' ? raw.toUpperCase() : raw
-                const addon = field.addon?.(values)
-                return (
-                  <div
-                    key={field.key}
-                    className={cn('qr-field', field.wide && 'is-wide', highlight && snippet === highlight && 'is-active')}
-                    onMouseEnter={() => snippet && setActive(snippet)}
-                    onMouseLeave={() => setActive(null)}
-                  >
-                    <div className="qr-field-head">
-                      <span className="qr-field-label">{t(`review.field.${field.key}`)}</span>
-                      {empty && required && <Chip tone="warn" icon="warning">{t('review.state.missing')}</Chip>}
-                    </div>
-                    {empty ? (
-                      <p className="qr-value is-empty">{t('review.state.notStated')}</p>
-                    ) : (
-                      <p className="qr-value">{display}{addon && <span className="qr-value-unit"> {addon}</span>}</p>
-                    )}
-                    {snippet && (
-                      <button type="button" className="qr-snippet" onClick={() => showInSource(snippet)} aria-pressed={pinned === snippet}>
-                        “{snippet}”
-                      </button>
-                    )}
+            ) : (() => {
+              // Order the buyer's scan: price → lead time → MOQ → payment first
+              // (primary commercial facts), then quieter secondary details, then
+              // notes. No information is dropped — every field still appears.
+              const cur = values.currency.trim().toUpperCase()
+              const priceUnit = values.unit.trim()
+              const leadRaw = values.delivery_lead_time_days.trim()
+              const daysWord = leadRaw
+                ? t('commercialOffer.days', { count: Number(leadRaw) }).replace(/^[\s\d.,]+/, '').trim()
+                : ''
+              return (
+                <div className="qr-review-body">
+                  <div className="qr-snapshot">
+                    {statCell('price', t('review.field.price'),
+                      <>
+                        <span className="qr-stat-num">{values.price.trim()}</span>
+                        {(cur || priceUnit) && <span className="qr-stat-unit"> {cur}{priceUnit ? ` / ${priceUnit}` : ''}</span>}
+                      </>,
+                      values.price.trim() === '')}
+                    {statCell('delivery_lead_time_days', t('fields.leadTime'),
+                      <>
+                        <span className="qr-stat-num">{leadRaw}</span>
+                        {daysWord && <span className="qr-stat-unit"> {daysWord}</span>}
+                      </>,
+                      leadRaw === '')}
+                    {statCell('quantity_moq', t('fields.moq'),
+                      <span className="qr-stat-num">{values.quantity_moq.trim()}</span>,
+                      values.quantity_moq.trim() === '')}
+                    {statCell('payment_terms', t('review.field.payment_terms'),
+                      <span className="qr-stat-text">{values.payment_terms.trim()}</span>,
+                      values.payment_terms.trim() === '')}
                   </div>
-                )
-              })}
-              <div className="qr-field is-wide">
-                <div className="qr-field-head"><span className="qr-field-label">{t('fields.notes')}</span></div>
-                {values.notes.trim()
-                  ? <p className="qr-value qr-value-notes">{values.notes}</p>
-                  : <p className="qr-value is-empty">{t('review.state.notStated')}</p>}
-              </div>
-            </div>
-            )}
+
+                  <dl className="qr-secondary">
+                    {detailRow('currency', true)}
+                    {detailRow('unit')}
+                    {detailRow('quantity_per_unit', true)}
+                    {detailRow('delivery_point')}
+                  </dl>
+
+                  <div className="qr-notes-block">
+                    <span className="qr-detail-label">{t('fields.notes')}</span>
+                    {values.notes.trim()
+                      ? <p className="qr-value qr-value-notes">{values.notes}</p>
+                      : <p className="qr-value is-empty">{t('review.state.notStated')}</p>}
+                  </div>
+                </div>
+              )
+            })()}
           </SectionCard>
 
           <NormalizationCard quote={quote} steps={steps} />
@@ -493,9 +542,21 @@ function NormalizationCard({ quote, steps }: { quote: QuoteRead, steps: ReturnTy
   const rawUnit = units.per(steps?.raw.unit) || steps?.raw.unit || ''
   const resultUnit = units.per(steps?.result.unit) || steps?.result.unit || ''
   const blocked = quote.missing_fields.filter(field => field === 'currency_conversion' || field === 'unit_conversion')
+  const noConversion = steps != null && steps.rate == null && steps.divisor == null
   return (
     <SectionCard icon="calculate" title={t('review.normTitle')}>
       {steps ? (
+        noConversion ? (
+          // No conversion happened — the comparable value equals the quoted one.
+          // Show it once as a compact row, not a "A = A" calculation.
+          <div className="qr-norm-plain">
+            <p className="qr-norm-value">
+              <span className="qr-norm-num">{fmt.unitNumber(steps.result.price)}</span>
+              <span className="qr-norm-unit"> {steps.result.currency} / {resultUnit}</span>
+            </p>
+            <p className="qr-note">{t('review.normSame')}</p>
+          </div>
+        ) : (
         <>
           <p className="qr-math" aria-label={t('review.normAria')}>
             <span className="qr-math-term">{fmt.unitNumber(steps.raw.price)} {steps.raw.currency}<span className="qr-math-unit"> / {rawUnit}</span></span>
@@ -510,10 +571,9 @@ function NormalizationCard({ quote, steps }: { quote: QuoteRead, steps: ReturnTy
             <span className="qr-math-eq">=</span>
             <span className="qr-math-result">{fmt.unitNumber(steps.result.price)} {steps.result.currency}<span className="qr-math-unit"> / {resultUnit}</span></span>
           </p>
-          <p className="qr-note">
-            {steps.rate == null && steps.divisor == null ? t('review.normSame') : t('review.normNote')}
-          </p>
+          <p className="qr-note">{t('review.normNote')}</p>
         </>
+        )
       ) : (
         <p className="qr-note">
           {blocked.length > 0

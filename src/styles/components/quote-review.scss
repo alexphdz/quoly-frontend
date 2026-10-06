@@ -71,11 +71,12 @@
   &:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
 }
 
+/* Extracted-source highlight = provenance, so it speaks Ice, not warning (§24). */
 .qr-mark {
   padding: 1px 2px;
   border-radius: 3px;
-  background: var(--warn-bg);
-  box-shadow: 0 0 0 1px var(--warn-mark);
+  background: var(--selected);
+  box-shadow: 0 0 0 1px var(--accent-line);
   color: var(--tx-1);
 }
 
@@ -93,7 +94,6 @@
 // ---------- Side ----------
 .qr-side { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 
-.qr-summary { margin: 0; color: var(--tx-body); font-size: 14px; line-height: 22px; }
 
 .qr-count { color: var(--tx-2); font-size: 12px; }
 
@@ -139,8 +139,141 @@
   &.is-empty { color: var(--tx-3); }
 }
 
-.qr-value-unit { color: var(--tx-2); font-size: 12px; }
+/* Extracted numeric values (price, MOQ, lead time) lead their field: Geist
+   Mono, tabular, a touch stronger. Text fields (unit, payment, delivery) stay
+   Geist via the default .qr-value. */
+.qr-value-num {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.qr-value-unit { color: var(--tx-2); font-size: 12px; font-family: var(--font-sans); }
 .qr-value-notes { white-space: pre-wrap; }
+
+// ---------- Read-only Quote details: buyer-scan hierarchy ----------
+/* Progressive hierarchy: primary commercial snapshot → secondary details →
+   notes. Importance comes from scale, mono and spacing — never colour fills or
+   underlines on the values. */
+.qr-review-body {
+  display: grid;
+  gap: 22px;
+}
+
+/* Primary commercial facts: price → lead time → MOQ → payment.
+   Responsive 4 → 2 → 1 columns via auto-fit (desktop / medium / mobile). */
+.qr-snapshot {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  column-gap: 28px;
+  row-gap: 20px;
+}
+
+.qr-stat {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background-color 120ms ease;
+
+  &.is-active { background: color-mix(in srgb, var(--ice) 8%, transparent); }
+}
+
+.qr-stat-label {
+  color: var(--tx-2);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.qr-stat-value {
+  margin: 0;
+  color: var(--tx-1);
+  line-height: 1.2;
+
+  &.is-empty { color: var(--tx-3); font-size: 15px; font-weight: 400; }
+}
+
+.qr-stat-num {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Price is the strongest commercial value in the snapshot. */
+.qr-snapshot > .qr-stat:first-child .qr-stat-num { font-size: 30px; }
+
+.qr-stat-unit {
+  color: var(--tx-3);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.qr-stat-text {
+  color: var(--tx-1);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+/* A single rule separates the primary snapshot from the quieter secondary
+   details; inside, fields are separated by spacing, not lines. */
+.qr-secondary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  column-gap: 28px;
+  row-gap: 16px;
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.qr-detail {
+  display: grid;
+  align-content: start;
+  gap: 3px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 120ms ease;
+
+  &.is-active { background: color-mix(in srgb, var(--ice) 8%, transparent); }
+}
+
+.qr-detail-label { color: var(--tx-2); font-size: 12px; font-weight: 500; }
+
+.qr-detail-value {
+  margin: 0;
+  color: var(--tx-1);
+  font-size: 14px;
+  line-height: 1.4;
+
+  &.is-empty { color: var(--tx-3); }
+}
+
+.qr-notes-block {
+  display: grid;
+  gap: 6px;
+}
+
+// ---------- Comparable price: compact no-conversion state ----------
+.qr-norm-plain { display: grid; gap: 4px; }
+.qr-norm-value { margin: 0; color: var(--tx-1); }
+
+.qr-norm-num {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.qr-norm-unit { color: var(--tx-3); font-size: 13px; }
 
 .qr-fields-actions {
   display: flex;

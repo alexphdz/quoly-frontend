@@ -1,18 +1,23 @@
+// RFQ stage chart palette — Graphite + Ice Blue.
+// The old brand-blue ramp migrated into the new Ice family; genuine category
+// hues (attention amber, quote green, declined red, neutral grey) kept as
+// semantic meaning but aligned to the editorial palette. Mid-tones chosen to
+// read on both light and dark canvases.
 export const STAGE_COLORS: Record<string, string> = {
-  buyer_action_required: '#e9b000',
-  partial_response: '#7aa3c0',
-  quote_received: '#16a05a',
-  awaiting_response: '#2a6a96',
-  not_contacted: '#c8c8ce',
-  declined: '#e23b3b',
-  closed: '#6b6b73',
-  pending: '#c8c8ce',
-  requested: '#2a6a96',
-  quoted: '#16a05a',
+  buyer_action_required: '#cc9a3f', // attention amber
+  partial_response: '#9cc6d4',      // light ice
+  quote_received: '#4f8a6d',        // success green
+  awaiting_response: '#4e7f90',     // deep ice
+  not_contacted: '#c6ccca',         // neutral
+  declined: '#b9635b',              // danger red
+  closed: '#969d9f',                // muted neutral
+  pending: '#c6ccca',               // neutral
+  requested: '#4e7f90',             // deep ice
+  quoted: '#4f8a6d',                // success green
 }
 
 export const MIX_COLORS = {
-  open: '#1a4e72',
-  draft: '#7aa3c0',
-  closed: '#c8c8ce',
+  open: '#356b7c',    // ice ink
+  draft: '#9cc6d4',   // light ice
+  closed: '#c6ccca',  // neutral
 } as const
