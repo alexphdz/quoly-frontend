@@ -1,59 +1,94 @@
 :root,
 [data-theme='light'] {
   color-scheme: light;
-  /* Quoly light — near-white paper with a blue "primary" brand. Neutral cool
-     greys (no teal tint) so the accent reads as the only colour on the page;
-     cards sit pure white on an almost-white canvas. */
-  --bg-canvas: #f7f8fb;
-  --bg-content: #ffffff;
-  --bg-surface: #f1f3f8;
-  --bg-band: #eceef4;
-  --line: #e4e7ee;
-  --line-strong: #ccd1dc;
-  --tx-1: #111827;
-  --tx-body: #374151;
-  --tx-2: #6b7280;
-  --tx-3: #9aa2b1;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-fg: #ffffff;
-  --accent-text: #1d4ed8;
-  --accent-line: #2563eb;
-  --accent-underline: #93b4fb;
-  --selected: #e4edfd;
-  --selected-line: #b9ccfb;
-  --focus: #3b82f6;
-  --ring: 0 0 0 3px color-mix(in srgb, var(--focus) 34%, transparent);
-  --warn-bg: #fdf3d8;
-  --warn-tag: #f6e2a0;
-  --warn-mark: #d99400;
-  --warn-fg: #7e5600;
-  /* Vivid attention yellow — brighter than the muted warn-mark, for the
-     "Requieren atención" slice/dot where it needs to grab the eye. */
-  --attention-fill: #eab308;
-  --danger-bg: #fdeae8;
-  --danger-tag: #f7cdc8;
-  --danger-mark: #dd4433;
-  --danger-fg: #a01f18;
-  --success-bg: #e0f3e6;
-  --success-tag: #bfe6cd;
-  --success-mark: #1f9e57;
-  --success-fg: #0b6538;
+  /* Quoly light — Graphite + Ice Blue. Warm-neutral paper canvas, pure-white
+     surfaces, graphite primary actions, Ice Blue reserved for focus / source
+     provenance / active accents. Information-led, not container-led. */
+
+  /* ---- Foundational brand ---- */
+  --graphite: #262b2d;
+  --graphite-strong: #15181a; /* primary-action hover */
+  --ice: #7fb8c9;             /* focus, provenance, large accents */
+  --ice-soft: #bfdce4;        /* restrained underline / border */
+  --ice-ink: #356b7c;         /* interactive text — AA on white */
+
+  /* ---- Semantic roles (source of truth) ---- */
+  --action: var(--graphite);
+  --action-hover: var(--graphite-strong);
+  --on-action: #ffffff;
+  --focus: var(--ice);
+
+  /* ---- Surfaces ---- */
+  --bg-canvas: #f5f6f5;
+  --bg-content: #ffffff;  /* surface */
+  --bg-raised: #ffffff;   /* raised surface (light = same as surface) */
+  --bg-surface: #ecefee;  /* soft surface */
+  --bg-band: #ecefee;     /* hover band */
   --bg-card: #ffffff;
-  /* Neutral elevation — cards read as a clear step above the near-white canvas. */
-  --shadow-xs: 0 1px 2px rgb(17 24 39 / 0.06), 0 1px 1px rgb(17 24 39 / 0.04);
-  --shadow-sm: 0 1px 2px rgb(17 24 39 / 0.06), 0 6px 16px rgb(17 24 39 / 0.09);
-  --shadow-md: 0 2px 6px rgb(17 24 39 / 0.10), 0 16px 34px rgb(17 24 39 / 0.15);
+  --line: #dde1e0;
+  --line-strong: #c6ccca;
+
+  /* ---- Text ---- */
+  --tx-1: #171a1b;    /* primary ink */
+  --tx-body: #3d4344; /* body */
+  --tx-2: #6a6f71;    /* secondary */
+  --tx-3: #969d9f;    /* muted */
+
+  /* ---- Accent aliases (kept for component compatibility) ---- */
+  --accent: var(--action);
+  --accent-hover: var(--action-hover);
+  --accent-fg: var(--on-action);
+  --accent-text: var(--ice-ink);  /* links / active / clickable names */
+  --accent-line: var(--ice);      /* provenance / source relationships */
+  --accent-underline: var(--ice-soft);
+  --selected: #e7f0f3;            /* pale ice selected tint */
+  --selected-line: var(--ice-soft);
+  --ring: 0 0 0 3px color-mix(in srgb, var(--focus) 34%, transparent);
+
+  /* ---- Semantic feedback — desaturated editorial tones ---- */
+  --success-fg: #4f8a6d;
+  --success-bg: #edf4ef;
+  --success-mark: #4f8a6d;
+  --success-tag: #d8e8df;
+
+  --warn-fg: #b68a45;
+  --warn-bg: #f7f1e5;
+  --warn-mark: #b68a45;
+  --warn-tag: #ead9b8;
+  --warn: var(--warn-mark);
+  /* Vivid attention amber — brighter than warn-mark, for the "requieren
+     atención" slice/dot where it needs to grab the eye. */
+  --attention-fill: #cc9a3f;
+
+  --danger-fg: #b9635b;
+  --danger-bg: #f8ecea;
+  --danger-mark: #b9635b;
+  --danger-tag: #eed2ce;
+
+  --info-fg: #5f95a5;
+  --info-bg: #ebf3f5;
+  --info-mark: #5f95a5;
+  --info-tag: #cfe3e8;
+
+  /* ---- Elevation — neutral, restrained (no colored shadows) ---- */
+  --shadow-xs: 0 1px 2px rgb(23 26 27 / 0.05), 0 1px 1px rgb(23 26 27 / 0.04);
+  --shadow-sm: 0 1px 2px rgb(23 26 27 / 0.06), 0 6px 16px rgb(23 26 27 / 0.08);
+  --shadow-md: 0 2px 6px rgb(23 26 27 / 0.09), 0 16px 34px rgb(23 26 27 / 0.14);
   --card-shadow: var(--shadow-sm);
   --overlay-shadow: var(--shadow-md);
-  --drawer-shadow: -14px 0 36px rgb(17 24 39 / 0.16);
-  --scrim: rgb(17 24 39 / 0.4);
+  --drawer-shadow: -14px 0 36px rgb(23 26 27 / 0.15);
+  --scrim: rgb(23 26 27 / 0.4);
+
+  /* ---- Legacy aliases ---- */
   --bg-page: var(--bg-content);
   --bg-selected: var(--selected);
-  --warn: var(--warn-mark);
-  --radius-control: 6px;
+
+  /* ---- Radius (controlled, brief §16) ---- */
+  --radius-badge: 6px;
+  --radius-control: 8px; /* inputs, buttons */
   --radius-card: 8px;
-  --radius-card-lg: 12px;
+  --radius-card-lg: 12px; /* modals */
+
   --sidebar-width: 240px;
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;

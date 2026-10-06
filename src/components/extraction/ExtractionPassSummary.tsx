@@ -1,5 +1,26 @@
+import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AiMark, Btn, Icon } from '../ds'
+
+/* Wrap numeric / technical tokens (a number with an optional unit, including
+   dimension pairs like "85 mm × 190 mm") in a mono span so figures scan, while
+   descriptive words stay Geist. Presentation only — the string is unchanged. */
+const NUM_TOKEN = /\d[\d.,]*(?:\s?(?:mm²|mm|cm|µm|nm|mL|ml|oz|kg|g|pcs|pc|L|l|%|°C|°|m))?(?:\s?[×x]\s?\d[\d.,]*(?:\s?(?:mm²|mm|cm|µm|nm|mL|ml|oz|kg|g|pcs|pc|L|l|%|°C|°|m))?)*/g
+
+function withNums(value: string): ReactNode {
+  const nodes: ReactNode[] = []
+  let last = 0
+  let key = 0
+  for (const match of value.matchAll(NUM_TOKEN)) {
+    const start = match.index ?? 0
+    if (match[0] === '' || start < last) continue
+    if (start > last) nodes.push(value.slice(last, start))
+    nodes.push(<span key={key++} className="ai-panel-num">{match[0]}</span>)
+    last = start + match[0].length
+  }
+  if (last < value.length) nodes.push(value.slice(last))
+  return nodes.length ? nodes : value
+}
 
 export interface ExtractionPassData {
   message_labels?: string[]
@@ -165,7 +186,7 @@ export default function ExtractionPassSummary({
               <div key={`${entry.name}-${entry.value}`}>
                 <dt>{entry.name}</dt>
                 <dd>
-                  {entry.value}
+                  {withNums(entry.value)}
                   {entry.evidence && <div>{evidence(entry.evidence)}</div>}
                 </dd>
               </div>
@@ -182,9 +203,9 @@ export default function ExtractionPassSummary({
               <div key={`${fact.field_name}-${index}`}>
                 <dt>{fact.field_name.replace(/_/g, ' ')}</dt>
                 <dd>
-                  {typeof fact.raw_value === 'string' || typeof fact.raw_value === 'number'
+                  {withNums(`${typeof fact.raw_value === 'string' || typeof fact.raw_value === 'number'
                     ? String(fact.raw_value)
-                    : JSON.stringify(fact.raw_value ?? '—')}{fact.unit ? ` ${fact.unit}` : ''}
+                    : JSON.stringify(fact.raw_value ?? '—')}${fact.unit ? ` ${fact.unit}` : ''}`)}
                   {fact.review_state && fact.review_state !== 'supported' && (
                     <span className="ds-meta">{t(`evidence.review.${fact.review_state}`, { defaultValue: fact.review_state })}</span>
                   )}
@@ -197,9 +218,8 @@ export default function ExtractionPassSummary({
       )}
 
       {asks.length > 0 && (
-        <div className="ai-panel-block">
-          <p className="ai-panel-label ai-panel-label-warn">
-            <Icon name="warning" size={13} />
+        <div className="ai-panel-block ai-panel-asks-block">
+          <p className="ai-panel-label ai-panel-action-label">
             {t('buyerAsks')}
           </p>
           <ul className="ai-panel-asks">

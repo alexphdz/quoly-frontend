@@ -1,22 +1,58 @@
-/* AI panel — the standard surface for content Quoly's AI produced (extraction
-   reading, summaries). A soft brand-tinted card with a 2px teal accent so the
-   buyer can tell at a glance what came from AI vs. the supplier's own words.
-   Subtle on purpose: tint, not a saturated fill. */
+/* Quoly Intelligence panel — a first-class, product-native interpretation
+   surface, not a tinted container of labels. Identity comes from a very pale
+   Ice surface, a soft border, and a short top-left Ice accent segment (not a
+   full coloured edge). Internal hierarchy is built from typography, spacing and
+   sectional rhythm — never gradients, glow, decorative AI effects, or cards.
+
+   Reading order the styling enforces:
+     1. Quoly Intelligence (header)   2. interpretation summary
+     3. structured specification      4. buyer action / open question  */
 .ai-panel {
-  margin-top: 12px;
-  padding: 14px 16px;
-  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--line));
-  border-left: 2px solid var(--accent);
-  border-radius: 0 10px 10px 0;
-  background: color-mix(in srgb, var(--accent) 4%, transparent);
+  position: relative;
+  margin-top: 14px;
+  padding: 22px 24px;
+  border: 1px solid color-mix(in srgb, var(--ice) 16%, var(--line));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--ice) 6%, var(--bg-content));
 }
 
+/* Short top-left identity segment — a deliberate Quoly tick, not a full edge. */
+.ai-panel::before {
+  content: "";
+  position: absolute;
+  top: 22px;
+  left: 0;
+  width: 3px;
+  height: 20px;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent-line);
+}
+
+/* ---- Header: Quoly Intelligence leads, message labels are secondary ---- */
 .ai-panel-head {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+/* In this panel the marker reads as a header, not a pill: no fill/border, just
+   the Ice Quoly mark + a confident Geist label. */
+.ai-panel-head .qy-ai {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.ai-panel-head .qy-ai-glyph {
+  width: 14px;
+  height: 14px;
 }
 
 .ai-panel-labels {
@@ -25,35 +61,107 @@
   gap: 6px;
 }
 
+/* Status metadata ("Cotización") sits clearly below the Intelligence label in
+   importance: quiet, small, no loud fill. */
+.ai-panel-labels .ds-pill {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--tx-2);
+  letter-spacing: 0.01em;
+}
+
+/* ---- Interpretation summary — the main AI layer, larger than body copy ---- */
 .ai-panel-summary {
   margin: 0;
-  color: var(--tx-body);
-  font-size: 14px;
-  line-height: 22px;
+  max-width: 68ch;
+  color: var(--tx-1);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
+/* ---- Blocks: spacing-led rhythm, rules only where they earn it (§11) ---- */
 .ai-panel-block {
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid color-mix(in srgb, var(--accent) 12%, var(--line));
+  margin-top: 20px;
 }
 
+/* One rule between the summary and the first structured block. */
+.ai-panel-summary + .ai-panel-block {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid color-mix(in srgb, var(--ice) 14%, var(--line));
+}
+
+/* ---- Section label ("ESPECIFICACIÓN") ---- */
 .ai-panel-label {
-  margin: 0 0 8px;
+  margin: 0 0 14px;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--tx-2);
 }
 
+/* Genuine warnings (processing failed / partial) keep the warning tone. */
 .ai-panel-label-warn {
   color: var(--warn-fg);
 
   svg { color: var(--warn-mark); }
+}
+
+/* ---- Specification fields: label/value hierarchy + 2-col where it fits ---- */
+.ai-panel .ds-facts {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  column-gap: 28px;
+  row-gap: 18px;
+  margin: 0;
+
+  dt {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--tx-2);
+  }
+
+  dd {
+    margin: 5px 0 0;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--tx-1);
+  }
+}
+
+/* Numeric / technical tokens inside a value read as data (Geist Mono, tabular)
+   while the surrounding descriptive text stays Geist. Wrapped in markup so only
+   the figures switch font. */
+.ai-panel-num {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Evidence excerpt under a value stays quiet, clearly below the value. */
+.ai-panel-evidence {
+  display: block;
+  margin-top: 6px;
+
+  .ds-meta { display: block; margin-top: 2px; }
+}
+
+/* ---- Buyer action / open question — an actionable Quoly state, not a warning ---- */
+.ai-panel-asks-block {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+/* Calm action label: a restrained warm cue, Geist 500, no triangle, no box. */
+.ai-panel-action-label {
+  color: var(--warn-fg);
 }
 
 .ai-panel-asks {
@@ -61,24 +169,25 @@
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 10px;
+  gap: 14px;
 }
 
 .ai-panel-asks li {
   display: grid;
-  gap: 2px;
-  padding-left: 10px;
-  border-left: 2px solid color-mix(in srgb, var(--warn-mark) 45%, transparent);
+  gap: 4px;
+  padding-left: 14px;
+  border-left: 2px solid color-mix(in srgb, var(--warn-mark) 38%, var(--line));
 }
 
 .ai-panel-ask-q {
   color: var(--tx-1);
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .ai-panel-ask-ctx {
   color: var(--tx-2);
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 13px;
+  line-height: 1.5;
 }

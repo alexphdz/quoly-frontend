@@ -26,25 +26,26 @@
   grid-template-rows: auto 1fr;
   padding: 28px 40px 48px;
   color-scheme: light;
-  --tx-1: #111827;
-  --tx-body: #374151;
-  --tx-2: #6b7280;
-  --tx-3: #9aa2b1;
-  --line: #e4e7ee;
-  --line-strong: #ccd1dc;
+  /* Forced-light auth stage — Graphite + Ice Blue. */
+  --tx-1: #171a1b;
+  --tx-body: #3d4344;
+  --tx-2: #6a6f71;
+  --tx-3: #969d9f;
+  --line: #dde1e0;
+  --line-strong: #c6ccca;
   --bg-surface: #ffffff;
   --bg-content: #ffffff;
-  --bg-band: #eef1f8;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
+  --bg-band: #ecefee;
+  --accent: #262b2d;
+  --accent-hover: #15181a;
   --accent-fg: #ffffff;
-  --brand-logo: #2563eb;
-  --focus: #3b82f6;
-  background-color: #f7f8fb;
+  --brand-logo: #262b2d;
+  --focus: #7fb8c9;
+  background-color: #f5f6f5;
   background-image:
-    radial-gradient(1100px 760px at -4% 108%, rgb(37 99 235 / 0.12), transparent 60%),
-    radial-gradient(860px 560px at 108% -8%, rgb(59 130 246 / 0.10), transparent 56%),
-    linear-gradient(158deg, #ffffff 0%, #eaf0fd 44%, #f7f9ff 100%);
+    radial-gradient(1100px 760px at -4% 108%, rgb(127 184 201 / 0.16), transparent 60%),
+    radial-gradient(860px 560px at 108% -8%, rgb(38 43 45 / 0.06), transparent 56%),
+    linear-gradient(158deg, #ffffff 0%, #eef4f5 46%, #f5f6f5 100%);
 }
 
 .ds-auth-top,
