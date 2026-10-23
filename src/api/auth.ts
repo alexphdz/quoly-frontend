@@ -9,6 +9,21 @@ export function login(email: string, password: string): Promise<TokenResponse> {
   return post<TokenResponse>('/auth/login', { email, password })
 }
 
+export function requestPasswordReset(email: string): Promise<{ status: string }> {
+  return post<{ status: string }>('/auth/password/reset', { email })
+}
+
+export function confirmPasswordReset(accessToken: string, newPassword: string): Promise<{ status: string }> {
+  return post<{ status: string }>('/auth/password/reset/confirm', {
+    access_token: accessToken,
+    new_password: newPassword,
+  })
+}
+
+export function resendConfirmation(email: string): Promise<{ status: string }> {
+  return post<{ status: string }>('/auth/confirm/resend', { email })
+}
+
 export function getMe(): Promise<UserProfile> {
   return get<UserProfile>('/auth/me')
 }
