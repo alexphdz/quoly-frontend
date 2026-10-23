@@ -2,6 +2,8 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import AppLayout from './components/layout/AppLayout'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 import DashboardPage from './pages/DashboardPage'
 import RequestsPage from './pages/RequestsPage'
 import CommercialRFQPage from './pages/CommercialRFQPage'
@@ -25,6 +27,18 @@ function PublicOnly({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }
 
+// A Supabase recovery link may land on the site root (e.g. when triggered from
+// the Supabase dashboard, which redirects to the Site URL, not our
+// redirect_to) with the session in the URL hash. Route it to the reset page
+// before the router resolves, so the token isn't lost to the auth redirect.
+if (
+  typeof window !== 'undefined' &&
+  window.location.hash.includes('type=recovery') &&
+  window.location.pathname !== '/reset-password'
+) {
+  window.history.replaceState(null, '', `/reset-password${window.location.hash}`)
+}
+
 export const router = createBrowserRouter([
   {
     path: '/login',
@@ -33,6 +47,16 @@ export const router = createBrowserRouter([
   {
     path: '/register',
     element: <PublicOnly><RegisterPage /></PublicOnly>,
+  },
+  {
+    path: '/forgot-password',
+    element: <PublicOnly><ForgotPasswordPage /></PublicOnly>,
+  },
+  {
+    // Not PublicOnly: the recovery link may be opened while a stale token is
+    // still in localStorage, and the user must still be able to reset.
+    path: '/reset-password',
+    element: <ResetPasswordPage />,
   },
   {
     path: '/',

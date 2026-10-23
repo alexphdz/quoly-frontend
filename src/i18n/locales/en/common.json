@@ -87,6 +87,9 @@
     "quote_not_confirmed": "That quote is not in the comparison.",
     "decision_not_found": "No award recorded for this request.",
     "invalid_token": "Invalid or expired token.",
+  "otp_expired": "This link has expired. Request a new one.",
+  "password_reset_failed": "Couldn't reset the password. Try again.",
+  "resend_failed": "Couldn't resend the email. Try again.",
     "invalid_token_payload": "Invalid token payload.",
     "network_error": "Can't reach Quoly. Try again.",
     "volume_tiers_required": "At least one volume tier is required.",
@@ -141,7 +144,8 @@
       "submit": "Sign in",
       "submitting": "Signing in…",
       "newToQuoly": "Don't have an account?",
-      "createAccount": "Create account"
+      "createAccount": "Create account",
+      "forgotPassword": "Forgot your password?"
     },
     "register": {
       "title": "Create account",
@@ -152,7 +156,39 @@
       "submit": "Create account",
       "submitting": "Creating account…",
       "haveAccount": "Already have an account?",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "checkEmail": {
+        "title": "Confirm your email",
+        "body": "We sent a confirmation link to {{email}}. Click it to activate your account, then sign in.",
+        "resend": "Resend email",
+        "resending": "Sending…",
+        "resent": "Email sent. Check your inbox (and spam).",
+        "backToLogin": "Back to sign in"
+      }
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email and we'll send you a link to set a new password.",
+      "email": "Email",
+      "submit": "Send reset link",
+      "submitting": "Sending…",
+      "sentTitle": "Check your email",
+      "sentBody": "If an account exists for {{email}}, we sent a link to reset your password.",
+      "backToLogin": "Back to sign in"
+    },
+    "reset": {
+      "title": "Set a new password",
+      "password": "New password",
+      "confirm": "Confirm password",
+      "submit": "Update password",
+      "submitting": "Updating…",
+      "mismatch": "Passwords don't match",
+      "successTitle": "Password updated",
+      "successBody": "Your password has been changed. You can now sign in.",
+      "goToLogin": "Go to sign in",
+      "invalidTitle": "Invalid or expired link",
+      "invalidBody": "This reset link is no longer valid. Request a new one.",
+      "requestNew": "Request a new link"
     }
   },
   "settings": {

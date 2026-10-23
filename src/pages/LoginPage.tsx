@@ -65,6 +65,10 @@ export default function LoginPage() {
           <FormFeedback>{authErrorMessage(login.error, t)}</FormFeedback>
         )}
 
+        <p className="ds-auth-forgot">
+          <Link to="/forgot-password" className="ds-link">{t('auth.login.forgotPassword')}</Link>
+        </p>
+
         <button type="submit" className="ds-btn ds-btn-primary" disabled={login.isPending}>
           {login.isPending ? t('auth.login.submitting') : t('auth.login.submit')}
         </button>

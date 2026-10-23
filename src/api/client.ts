@@ -63,7 +63,13 @@ async function handleResponse<T>(res: Response, hadAuth: boolean): Promise<T> {
   return res.json() as Promise<T>
 }
 
-const PUBLIC_AUTH_PATHS = new Set(['/auth/login', '/auth/register'])
+const PUBLIC_AUTH_PATHS = new Set([
+  '/auth/login',
+  '/auth/register',
+  '/auth/password/reset',
+  '/auth/password/reset/confirm',
+  '/auth/confirm/resend',
+])
 
 function buildHeaders(isJson = true, path?: string): { headers: HeadersInit; hadAuth: boolean } {
   const h: Record<string, string> = {}

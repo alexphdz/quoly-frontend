@@ -87,6 +87,9 @@
     "quote_not_confirmed": "Esa cotización no está en la comparación.",
     "decision_not_found": "No hay adjudicación registrada para esta solicitud.",
     "invalid_token": "Token inválido o expirado.",
+    "otp_expired": "Este enlace expiró. Solicita uno nuevo.",
+    "password_reset_failed": "No se pudo restablecer la contraseña. Inténtalo de nuevo.",
+    "resend_failed": "No se pudo reenviar el correo. Inténtalo de nuevo.",
     "invalid_token_payload": "Payload de token inválido.",
     "network_error": "No se puede contactar Quoly. Inténtalo de nuevo.",
     "volume_tiers_required": "Se requiere al menos un escenario de volumen.",
@@ -141,7 +144,8 @@
       "submit": "Iniciar sesión",
       "submitting": "Iniciando sesión…",
       "newToQuoly": "¿No tienes cuenta?",
-      "createAccount": "Crear cuenta"
+      "createAccount": "Crear cuenta",
+      "forgotPassword": "¿Olvidaste tu contraseña?"
     },
     "register": {
       "title": "Crear cuenta",
@@ -152,7 +156,39 @@
       "submit": "Crear cuenta",
       "submitting": "Creando cuenta…",
       "haveAccount": "¿Ya tienes una cuenta?",
-      "signIn": "Iniciar sesión"
+      "signIn": "Iniciar sesión",
+      "checkEmail": {
+        "title": "Confirma tu correo",
+        "body": "Te enviamos un enlace de confirmación a {{email}}. Haz clic para activar tu cuenta y luego inicia sesión.",
+        "resend": "Reenviar correo",
+        "resending": "Enviando…",
+        "resent": "Correo enviado. Revisa tu bandeja (y spam).",
+        "backToLogin": "Volver a iniciar sesión"
+      }
+    },
+    "forgot": {
+      "title": "Restablecer contraseña",
+      "subtitle": "Ingresa tu correo y te enviaremos un enlace para crear una nueva contraseña.",
+      "email": "Correo electrónico",
+      "submit": "Enviar enlace",
+      "submitting": "Enviando…",
+      "sentTitle": "Revisa tu correo",
+      "sentBody": "Si existe una cuenta para {{email}}, te enviamos un enlace para restablecer tu contraseña.",
+      "backToLogin": "Volver a iniciar sesión"
+    },
+    "reset": {
+      "title": "Crea una nueva contraseña",
+      "password": "Nueva contraseña",
+      "confirm": "Confirmar contraseña",
+      "submit": "Actualizar contraseña",
+      "submitting": "Actualizando…",
+      "mismatch": "Las contraseñas no coinciden",
+      "successTitle": "Contraseña actualizada",
+      "successBody": "Tu contraseña se cambió. Ya puedes iniciar sesión.",
+      "goToLogin": "Ir a iniciar sesión",
+      "invalidTitle": "Enlace inválido o expirado",
+      "invalidBody": "Este enlace de restablecimiento ya no es válido. Solicita uno nuevo.",
+      "requestNew": "Solicitar un nuevo enlace"
     }
   },
   "settings": {
