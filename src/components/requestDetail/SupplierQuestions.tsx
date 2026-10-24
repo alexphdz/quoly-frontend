@@ -7,6 +7,7 @@ import type { QuoteListItem } from '../../types/quote'
 import type { RFQDetail, SupplierRead } from '../../types/rfq'
 import { composeSupplierReply, patchFromAnswers, quickAnswersForQuestion, type QuickChip } from '../../lib/quickAnswers'
 import { useResolveBuyerAction, useUpdateCommercialRFQ } from '../../hooks/useRFQs'
+import { useSuggestReply } from '../../hooks/useInboundActions'
 import { replyToInbound } from '../../api/inbound'
 import { Btn, SectionCard } from '../ds'
 import { toast } from '../ui'
@@ -118,6 +119,33 @@ function SupplierBlock({
   const [note, setNote] = useState('')
   const [sending, setSending] = useState(false)
   const blocking = blocksQuote(supplier, quotes)
+
+  // AI-suggested reply: generated on request, shown for review, sent as-is
+  // (it is a complete reply, not wrapped in the quick-answer template).
+  const inboundId = items.find(item => item.inbound_message_id)?.inbound_message_id ?? inbound[0]?.id
+  const suggest = useSuggestReply(inboundId ?? '')
+  const [suggestion, setSuggestion] = useState<string | null>(null)
+  const [aiDraft, setAiDraft] = useState<string | null>(null)
+  const [sendingAi, setSendingAi] = useState(false)
+
+  const handleSuggest = () => {
+    if (!inboundId) return
+    suggest.mutate(undefined, { onSuccess: data => setSuggestion(data.suggested_reply) })
+  }
+
+  const sendAiReply = async () => {
+    if (!inboundId || !aiDraft?.trim()) return
+    setSendingAi(true)
+    try {
+      await replyToInbound(inboundId, aiDraft)
+      for (const item of items) await resolve.mutateAsync(item.id)
+      toast(t('buyerActions.sentToast'))
+    } catch {
+      toast(t('buyerActions.sendFailed'), 'error')
+    } finally {
+      setSendingAi(false)
+    }
+  }
 
   const answerFor = (item: BuyerActionRead): { chip?: QuickChip, text: string } | null => {
     const choice = picked[item.id]
@@ -232,27 +260,83 @@ function SupplierBlock({
         })}
       </ul>
 
-      <label className="rd-sq-note">
-        <span className="sr-only">{t('buyerActions.note')}</span>
-        <textarea
-          rows={2}
-          value={note}
-          onChange={event => setNote(event.target.value)}
-          placeholder={t('buyerActions.note')}
-        />
-      </label>
+      {aiDraft === null && (
+        <>
+          <label className="rd-sq-note">
+            <span className="sr-only">{t('buyerActions.note')}</span>
+            <textarea
+              rows={2}
+              value={note}
+              onChange={event => setNote(event.target.value)}
+              placeholder={t('buyerActions.note')}
+            />
+          </label>
 
-      <footer className="rd-sq-foot">
-        <p>{t('buyerActions.specHelper')}</p>
-        <div className="rd-sq-foot-actions">
-          <Btn variant="text" loading={resolve.isPending && !sending} onClick={() => void markResolved()}>
-            {t('buyerActions.resolve')}
-          </Btn>
-          <Btn variant="primary" loading={sending} onClick={() => void sendAnswers()}>
-            {t('buyerActions.sendAnswers')}
-          </Btn>
+          <footer className="rd-sq-foot">
+            <p>{t('buyerActions.specHelper')}</p>
+            <div className="rd-sq-foot-actions">
+              <Btn variant="text" loading={resolve.isPending && !sending && !sendingAi} onClick={() => void markResolved()}>
+                {t('buyerActions.resolve')}
+              </Btn>
+              <Btn variant="primary" loading={sending} onClick={() => void sendAnswers()}>
+                {t('buyerActions.sendAnswers')}
+              </Btn>
+            </div>
+          </footer>
+        </>
+      )}
+
+      {inboundId && (
+        <div className="rd-sq-ai" style={{ borderTop: '1px solid var(--line)', marginTop: 10, paddingTop: 10 }}>
+          {aiDraft === null ? (
+            <>
+              <button
+                type="button"
+                className="ds-btn ds-btn-secondary"
+                disabled={suggest.isPending}
+                onClick={handleSuggest}
+              >
+                {suggest.isPending ? t('buyerActions.suggesting') : t('buyerActions.suggest')}
+              </button>
+              {suggest.error && (
+                <p className="ds-meta" style={{ color: 'var(--danger-fg)', marginTop: 6 }}>{t('buyerActions.suggestFailed')}</p>
+              )}
+              {suggestion && (
+                <div style={{ border: '1px solid var(--line-strong)', borderRadius: 8, background: 'var(--bg-subtle)', padding: '10px 12px', marginTop: 8 }}>
+                  <p className="ds-meta" style={{ marginBottom: 6 }}>{t('buyerActions.suggestionLabel')}</p>
+                  <p style={{ whiteSpace: 'pre-wrap', margin: '0 0 10px', color: 'var(--tx-1)' }}>{suggestion}</p>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button type="button" className="ds-btn ds-btn-primary" onClick={() => { setAiDraft(suggestion); setSuggestion(null) }}>
+                      {t('buyerActions.useSuggestion')}
+                    </button>
+                    <button type="button" className="ds-btn ds-btn-quiet" onClick={() => setSuggestion(null)}>
+                      {t('buyerActions.dismissSuggestion')}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <div>
+              <p className="ds-meta" style={{ marginBottom: 6 }}>{t('buyerActions.suggestionLabel')}</p>
+              <textarea
+                value={aiDraft}
+                onChange={event => setAiDraft(event.target.value)}
+                rows={5}
+                style={{ width: '100%', minHeight: 110, padding: '8px 12px', border: '1px solid var(--line-strong)', borderRadius: 6, background: 'var(--bg-surface)', color: 'var(--tx-1)' }}
+              />
+              <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+                <Btn variant="primary" loading={sendingAi} onClick={() => void sendAiReply()}>
+                  {t('buyerActions.sendReply')}
+                </Btn>
+                <Btn variant="text" onClick={() => setAiDraft(null)}>
+                  {t('buyerActions.cancelAi')}
+                </Btn>
+              </div>
+            </div>
+          )}
         </div>
-      </footer>
+      )}
     </article>
   )
 }

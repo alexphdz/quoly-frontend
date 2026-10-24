@@ -494,7 +494,15 @@
     "sendAnswers": "Send answers",
     "sentToast": "Answers sent",
     "needAnswers": "Choose an answer for each question first.",
-    "sendFailed": "Could not send the answers."
+    "sendFailed": "Could not send the answers.",
+    "suggest": "Suggest reply (AI)",
+    "suggesting": "Generating…",
+    "suggestionLabel": "AI suggestion — review and edit before sending",
+    "useSuggestion": "Use this suggestion",
+    "dismissSuggestion": "Dismiss",
+    "sendReply": "Send reply",
+    "cancelAi": "Cancel",
+    "suggestFailed": "Couldn't generate a suggestion. Write your reply."
   },
   "suppliers": {
     "emptyTitle": "No suppliers yet",
