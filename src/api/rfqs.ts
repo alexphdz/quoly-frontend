@@ -61,6 +61,10 @@ export function resolveBuyerAction(rfqId: string, actionId: string): Promise<Buy
   return post<BuyerActionRead>(`/rfqs/${rfqId}/buyer-actions/${actionId}/resolve`)
 }
 
+export function suggestBuyerActionReply(rfqId: string, actionId: string): Promise<{ suggested_reply: string }> {
+  return post<{ suggested_reply: string }>(`/rfqs/${rfqId}/buyer-actions/${actionId}/suggest-reply`)
+}
+
 export function sendRequests(rfqId: string): Promise<SendRequestsResponse> {
   return post<SendRequestsResponse>(`/rfqs/${rfqId}/send`)
 }
