@@ -51,6 +51,12 @@
     "placeholder": "Respuesta",
     "sending": "Enviando…",
     "sendReply": "Enviar respuesta",
-    "replyFailed": "No se pudo enviar la respuesta."
+    "replyFailed": "No se pudo enviar la respuesta.",
+    "suggest": "Sugerir respuesta (IA)",
+    "suggesting": "Generando…",
+    "suggestionLabel": "Sugerencia de IA — revísala y edítala antes de enviar",
+    "useSuggestion": "Usar esta sugerencia",
+    "dismissSuggestion": "Descartar",
+    "suggestFailed": "No se pudo generar la sugerencia. Escribe tu respuesta."
   }
 }
