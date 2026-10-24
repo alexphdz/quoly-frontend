@@ -495,14 +495,14 @@
     "sentToast": "Respuestas enviadas",
     "needAnswers": "Elige una respuesta para cada pregunta.",
     "sendFailed": "No se pudieron enviar las respuestas.",
-    "suggest": "Sugerir respuesta (IA)",
-    "suggesting": "Generando…",
-    "suggestionLabel": "Sugerencia de IA — revísala y edítala antes de enviar",
-    "useSuggestion": "Usar esta sugerencia",
-    "dismissSuggestion": "Descartar",
+    "suggestionLabel": "Respuesta sugerida (IA)",
+    "generatingSuggestion": "Generando una respuesta sugerida…",
+    "useSuggestion": "Usar esta respuesta",
+    "writeOwn": "Escribir la mía",
+    "editHint": "Usa la sugerencia tal cual, edítala, o escribe la tuya.",
     "sendReply": "Enviar respuesta",
     "cancelAi": "Cancelar",
-    "suggestFailed": "No se pudo generar la sugerencia. Escribe tu respuesta."
+    "suggestFailed": "No se pudo generar la sugerencia — escribe tu respuesta abajo."
   },
   "suppliers": {
     "emptyTitle": "Aún no hay proveedores",

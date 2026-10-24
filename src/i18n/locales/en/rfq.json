@@ -495,14 +495,14 @@
     "sentToast": "Answers sent",
     "needAnswers": "Choose an answer for each question first.",
     "sendFailed": "Could not send the answers.",
-    "suggest": "Suggest reply (AI)",
-    "suggesting": "Generating…",
-    "suggestionLabel": "AI suggestion — review and edit before sending",
-    "useSuggestion": "Use this suggestion",
-    "dismissSuggestion": "Dismiss",
+    "suggestionLabel": "Suggested reply (AI)",
+    "generatingSuggestion": "Writing a suggested reply…",
+    "useSuggestion": "Use this reply",
+    "writeOwn": "Write my own",
+    "editHint": "Use the suggestion as-is, edit it, or write your own.",
     "sendReply": "Send reply",
     "cancelAi": "Cancel",
-    "suggestFailed": "Couldn't generate a suggestion. Write your reply."
+    "suggestFailed": "Couldn't generate a suggestion — write your reply below."
   },
   "suppliers": {
     "emptyTitle": "No suppliers yet",

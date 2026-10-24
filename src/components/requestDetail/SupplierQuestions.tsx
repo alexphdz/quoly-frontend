@@ -1,13 +1,13 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
 import type { BuyerActionRead } from '../../types/buyerAction'
 import type { InboundMessageRead } from '../../types/inbound'
 import type { QuoteListItem } from '../../types/quote'
 import type { RFQDetail, SupplierRead } from '../../types/rfq'
-import { composeSupplierReply, patchFromAnswers, quickAnswersForQuestion, type QuickChip } from '../../lib/quickAnswers'
+import { patchFromAnswers, quickAnswersForQuestion, type QuickChip } from '../../lib/quickAnswers'
 import { useResolveBuyerAction, useUpdateCommercialRFQ } from '../../hooks/useRFQs'
-import { useSuggestReply } from '../../hooks/useInboundActions'
+import { suggestBuyerActionReply } from '../../api/rfqs'
 import { replyToInbound } from '../../api/inbound'
 import { Btn, SectionCard } from '../ds'
 import { toast } from '../ui'
@@ -110,59 +110,52 @@ function SupplierBlock({
   const resolve = useResolveBuyerAction(rfq.id)
   const name = supplier?.name ?? items[0].supplier_name ?? t('buyerActions.unknownSupplier')
   const latest = items.reduce((max, item) => (item.created_at > max ? item.created_at : max), items[0].created_at)
+  const blocking = blocksQuote(supplier, quotes)
+
   const chipsById = useMemo(
     () => Object.fromEntries(items.map(item => [item.id, quickAnswersForQuestion(item.question, rfq)])),
     [items, rfq],
   )
-  const [picked, setPicked] = useState<Record<string, string>>({})
-  const [other, setOther] = useState<Record<string, string>>({})
-  const [note, setNote] = useState('')
-  const [sending, setSending] = useState(false)
-  const blocking = blocksQuote(supplier, quotes)
+  const allChips = useMemo(() => items.flatMap(item => chipsById[item.id] ?? []), [items, chipsById])
 
-  // AI-suggested reply: generated on request, shown for review, sent as-is
-  // (it is a complete reply, not wrapped in the quick-answer template).
-  const inboundId = items.find(item => item.inbound_message_id)?.inbound_message_id ?? inbound[0]?.id
-  const suggest = useSuggestReply(inboundId ?? '')
+  // The AI reply is generated automatically when the block appears. The buyer
+  // then uses it as-is, edits it, or writes their own. Nothing is auto-sent.
   const [suggestion, setSuggestion] = useState<string | null>(null)
-  const [aiDraft, setAiDraft] = useState<string | null>(null)
-  const [sendingAi, setSendingAi] = useState(false)
+  const [loadingSuggestion, setLoadingSuggestion] = useState(true)
+  const [suggestionError, setSuggestionError] = useState(false)
+  const [draft, setDraft] = useState('')
+  const [mode, setMode] = useState<'choose' | 'write'>('choose')
+  const [usedChips, setUsedChips] = useState<QuickChip[]>([])
+  const [sending, setSending] = useState(false)
+  const fetched = useRef(false)
 
-  const handleSuggest = () => {
-    if (!inboundId) return
-    suggest.mutate(undefined, { onSuccess: data => setSuggestion(data.suggested_reply) })
+  useEffect(() => {
+    if (fetched.current) return
+    fetched.current = true
+    suggestBuyerActionReply(rfq.id, items[0].id)
+      .then(res => setSuggestion(res.suggested_reply))
+      .catch(() => { setSuggestionError(true); setMode('write') })
+      .finally(() => setLoadingSuggestion(false))
+  }, [rfq.id, items])
+
+  const useSuggestion = () => {
+    setDraft(suggestion ?? '')
+    setMode('write')
   }
-
-  const sendAiReply = async () => {
-    if (!inboundId || !aiDraft?.trim()) return
-    setSendingAi(true)
-    try {
-      await replyToInbound(inboundId, aiDraft)
-      for (const item of items) await resolve.mutateAsync(item.id)
-      toast(t('buyerActions.sentToast'))
-    } catch {
-      toast(t('buyerActions.sendFailed'), 'error')
-    } finally {
-      setSendingAi(false)
-    }
+  const writeOwn = () => {
+    setDraft('')
+    setMode('write')
   }
-
-  const answerFor = (item: BuyerActionRead): { chip?: QuickChip, text: string } | null => {
-    const choice = picked[item.id]
-    if (!choice) return null
-    if (choice === '__other') {
-      const text = other[item.id]?.trim()
-      return text ? { text } : null
-    }
-    const chip = chipsById[item.id]?.find(c => c.id === choice)
-    return chip ? { chip, text: chip.technicalLine ?? chip.label } : null
+  const addChip = (chip: QuickChip) => {
+    const line = chip.technicalLine ?? chip.label
+    setDraft(prev => (prev.trim() ? `${prev.trim()}\n${line}` : line))
+    setUsedChips(prev => (prev.some(c => c.id === chip.id) ? prev : [...prev, chip]))
+    setMode('write')
   }
 
   const saveSpec = async () => {
-    const chips = items.map(item => answerFor(item)?.chip).filter((chip): chip is QuickChip => !!chip)
-    const others = items.map(item => (picked[item.id] === '__other' ? other[item.id] : '')).filter(Boolean)
-    if (chips.length === 0 && others.length === 0) return
-    await updateRfq.mutateAsync({ id: rfq.id, data: patchFromAnswers(rfq, chips, others) })
+    if (usedChips.length === 0) return
+    await updateRfq.mutateAsync({ id: rfq.id, data: patchFromAnswers(rfq, usedChips, []) })
   }
 
   const markResolved = async () => {
@@ -171,28 +164,24 @@ function SupplierBlock({
     toast(t('buyerActions.resolvedToast'))
   }
 
-  const sendAnswers = async () => {
-    const rows = items.map(item => ({ question: item.question, answer: answerFor(item)?.text ?? '' }))
-    if (rows.some(row => !row.answer)) {
-      toast(t('buyerActions.needAnswers'), 'error')
-      return
-    }
+  const sendReply = async () => {
+    if (!draft.trim()) return
     setSending(true)
     try {
       await saveSpec()
-      const body = composeSupplierReply(name, rows, note)
-      const inboundId = items.find(item => item.inbound_message_id)?.inbound_message_id
-        ?? inbound[0]?.id
+      const inboundId = items.find(item => item.inbound_message_id)?.inbound_message_id ?? inbound[0]?.id
+      const mailto = () => {
+        if (!supplier?.email) throw new Error('no_channel')
+        window.location.href = `mailto:${supplier.email}?subject=${encodeURIComponent(rfq.name)}&body=${encodeURIComponent(draft)}`
+      }
       if (inboundId) {
         try {
-          await replyToInbound(inboundId, body)
+          await replyToInbound(inboundId, draft)
         } catch {
-          const email = supplier?.email
-          if (email) window.location.href = `mailto:${email}?subject=${encodeURIComponent(rfq.name)}&body=${encodeURIComponent(body)}`
-          else throw new Error('no_channel')
+          mailto()
         }
-      } else if (supplier?.email) {
-        window.location.href = `mailto:${supplier.email}?subject=${encodeURIComponent(rfq.name)}&body=${encodeURIComponent(body)}`
+      } else {
+        mailto()
       }
       for (const item of items) await resolve.mutateAsync(item.id)
       toast(t('buyerActions.sentToast'))
@@ -202,6 +191,16 @@ function SupplierBlock({
       setSending(false)
     }
   }
+
+  const textareaStyle = {
+    width: '100%',
+    minHeight: 120,
+    padding: '8px 12px',
+    border: '1px solid var(--line-strong)',
+    borderRadius: 6,
+    background: 'var(--bg-surface)',
+    color: 'var(--tx-1)',
+  } as const
 
   return (
     <article className="rd-sq-block">
@@ -221,122 +220,70 @@ function SupplierBlock({
       </header>
 
       <ul className="rd-sq-questions">
-        {items.map((item) => {
-          const chips = chipsById[item.id] ?? []
-          const choice = picked[item.id]
-          return (
-            <li key={item.id}>
-              <p className="rd-sq-q">{item.question}</p>
-              <div className="rd-sq-chips" role="group" aria-label={t('buyerActions.quickAnswers')}>
-                {chips.map(chip => (
-                  <button
-                    key={chip.id}
-                    type="button"
-                    className={choice === chip.id ? 'rd-sq-chip is-on' : 'rd-sq-chip'}
-                    onClick={() => setPicked(prev => ({ ...prev, [item.id]: chip.id }))}
-                  >
-                    {chip.label}
-                    {choice === chip.id && <span className="rd-sq-check" aria-hidden>✓</span>}
-                  </button>
-                ))}
-                <button
-                  type="button"
-                  className={choice === '__other' ? 'rd-sq-chip is-on' : 'rd-sq-chip'}
-                  onClick={() => setPicked(prev => ({ ...prev, [item.id]: '__other' }))}
-                >
-                  {t('buyerActions.other')}
-                </button>
-              </div>
-              {choice === '__other' && (
-                <input
-                  className="rd-sq-other"
-                  value={other[item.id] ?? ''}
-                  onChange={event => setOther(prev => ({ ...prev, [item.id]: event.target.value }))}
-                  placeholder={t('buyerActions.otherPlaceholder')}
-                />
-              )}
-            </li>
-          )
-        })}
+        {items.map(item => (
+          <li key={item.id}>
+            <p className="rd-sq-q">{item.question}</p>
+          </li>
+        ))}
       </ul>
 
-      {aiDraft === null && (
-        <>
-          <label className="rd-sq-note">
-            <span className="sr-only">{t('buyerActions.note')}</span>
-            <textarea
-              rows={2}
-              value={note}
-              onChange={event => setNote(event.target.value)}
-              placeholder={t('buyerActions.note')}
-            />
-          </label>
+      {/* AI reply: generated automatically, used as-is / edited / replaced. */}
+      <div className="rd-sq-ai">
+        <p className="ds-meta rd-sq-ai-label">{t('buyerActions.suggestionLabel')}</p>
 
-          <footer className="rd-sq-foot">
-            <p>{t('buyerActions.specHelper')}</p>
-            <div className="rd-sq-foot-actions">
-              <Btn variant="text" loading={resolve.isPending && !sending && !sendingAi} onClick={() => void markResolved()}>
-                {t('buyerActions.resolve')}
-              </Btn>
-              <Btn variant="primary" loading={sending} onClick={() => void sendAnswers()}>
-                {t('buyerActions.sendAnswers')}
-              </Btn>
-            </div>
-          </footer>
-        </>
-      )}
-
-      {inboundId && (
-        <div className="rd-sq-ai" style={{ borderTop: '1px solid var(--line)', marginTop: 10, paddingTop: 10 }}>
-          {aiDraft === null ? (
-            <>
-              <button
-                type="button"
-                className="ds-btn ds-btn-secondary"
-                disabled={suggest.isPending}
-                onClick={handleSuggest}
-              >
-                {suggest.isPending ? t('buyerActions.suggesting') : t('buyerActions.suggest')}
+        {loadingSuggestion ? (
+          <p className="ds-meta">{t('buyerActions.generatingSuggestion')}</p>
+        ) : mode === 'choose' && suggestion ? (
+          <div className="rd-sq-ai-card" style={{ border: '1px solid var(--line-strong)', borderRadius: 8, background: 'var(--bg-subtle)', padding: '10px 12px' }}>
+            <p style={{ whiteSpace: 'pre-wrap', margin: '0 0 10px', color: 'var(--tx-1)' }}>{suggestion}</p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <button type="button" className="ds-btn ds-btn-primary" onClick={useSuggestion}>
+                {t('buyerActions.useSuggestion')}
               </button>
-              {suggest.error && (
-                <p className="ds-meta" style={{ color: 'var(--danger-fg)', marginTop: 6 }}>{t('buyerActions.suggestFailed')}</p>
-              )}
-              {suggestion && (
-                <div style={{ border: '1px solid var(--line-strong)', borderRadius: 8, background: 'var(--bg-subtle)', padding: '10px 12px', marginTop: 8 }}>
-                  <p className="ds-meta" style={{ marginBottom: 6 }}>{t('buyerActions.suggestionLabel')}</p>
-                  <p style={{ whiteSpace: 'pre-wrap', margin: '0 0 10px', color: 'var(--tx-1)' }}>{suggestion}</p>
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <button type="button" className="ds-btn ds-btn-primary" onClick={() => { setAiDraft(suggestion); setSuggestion(null) }}>
-                      {t('buyerActions.useSuggestion')}
-                    </button>
-                    <button type="button" className="ds-btn ds-btn-quiet" onClick={() => setSuggestion(null)}>
-                      {t('buyerActions.dismissSuggestion')}
-                    </button>
-                  </div>
-                </div>
-              )}
-            </>
-          ) : (
-            <div>
-              <p className="ds-meta" style={{ marginBottom: 6 }}>{t('buyerActions.suggestionLabel')}</p>
-              <textarea
-                value={aiDraft}
-                onChange={event => setAiDraft(event.target.value)}
-                rows={5}
-                style={{ width: '100%', minHeight: 110, padding: '8px 12px', border: '1px solid var(--line-strong)', borderRadius: 6, background: 'var(--bg-surface)', color: 'var(--tx-1)' }}
-              />
-              <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-                <Btn variant="primary" loading={sendingAi} onClick={() => void sendAiReply()}>
-                  {t('buyerActions.sendReply')}
-                </Btn>
-                <Btn variant="text" onClick={() => setAiDraft(null)}>
-                  {t('buyerActions.cancelAi')}
-                </Btn>
-              </div>
+              <button type="button" className="ds-btn ds-btn-secondary" onClick={writeOwn}>
+                {t('buyerActions.writeOwn')}
+              </button>
             </div>
+          </div>
+        ) : (
+          <>
+            {suggestionError && (
+              <p className="ds-meta" style={{ color: 'var(--danger-fg)', marginBottom: 6 }}>{t('buyerActions.suggestFailed')}</p>
+            )}
+            <p className="ds-meta" style={{ marginBottom: 6 }}>{t('buyerActions.editHint')}</p>
+            <textarea
+              value={draft}
+              onChange={event => setDraft(event.target.value)}
+              rows={5}
+              style={textareaStyle}
+            />
+          </>
+        )}
+      </div>
+
+      {allChips.length > 0 && (
+        <div className="rd-sq-chips" role="group" aria-label={t('buyerActions.quickAnswers')} style={{ marginTop: 8 }}>
+          {items.flatMap(item =>
+            (chipsById[item.id] ?? []).map(chip => (
+              <button key={`${item.id}-${chip.id}`} type="button" className="rd-sq-chip" onClick={() => addChip(chip)}>
+                {chip.label}
+              </button>
+            )),
           )}
         </div>
       )}
+
+      <footer className="rd-sq-foot">
+        <p>{t('buyerActions.specHelper')}</p>
+        <div className="rd-sq-foot-actions">
+          <Btn variant="text" loading={resolve.isPending && !sending} onClick={() => void markResolved()}>
+            {t('buyerActions.resolve')}
+          </Btn>
+          <Btn variant="primary" loading={sending} disabled={!draft.trim()} onClick={() => void sendReply()}>
+            {t('buyerActions.sendReply')}
+          </Btn>
+        </div>
+      </footer>
     </article>
   )
 }
