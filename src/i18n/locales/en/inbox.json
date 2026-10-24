@@ -51,6 +51,12 @@
     "placeholder": "Reply",
     "sending": "Sending…",
     "sendReply": "Send reply",
-    "replyFailed": "Couldn't send the reply."
+    "replyFailed": "Couldn't send the reply.",
+    "suggest": "Suggest reply (AI)",
+    "suggesting": "Generating…",
+    "suggestionLabel": "AI suggestion — review and edit before sending",
+    "useSuggestion": "Use this suggestion",
+    "dismissSuggestion": "Dismiss",
+    "suggestFailed": "Couldn't generate a suggestion. Write your reply."
   }
 }
