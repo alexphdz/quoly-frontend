@@ -40,6 +40,100 @@
     "search": "Search",
     "settings": "Settings"
   },
+  "qi": {
+    "completeness": {
+      "available": "{{available}} of {{total}} fields available",
+      "availableShort": "available",
+      "confirmed_one": "confirmed",
+      "confirmed_other": "confirmed",
+      "description": "Fields present in the source and their review status. It does not measure accuracy.",
+      "missing_one": "not provided",
+      "missing_other": "not provided",
+      "noncomparable_one": "not comparable",
+      "noncomparable_other": "not comparable",
+      "pending_one": "to review",
+      "pending_other": "to review",
+      "title": "Information completeness"
+    },
+    "editor": {
+      "add": "Add value",
+      "confirm": "Confirm",
+      "correct": "Correct {{field}}",
+      "edit": "Edit",
+      "editing": "Editing · {{state}}",
+      "note": "Saving records a buyer correction; confirming is a separate action.",
+      "required": "Enter a value or cancel editing.",
+      "save": "Save change"
+    },
+    "evidence": {
+      "linked": "Linked passage · {{field}}",
+      "noPassage": "The source has no passage for this field.",
+      "noneSelected": "No field selected",
+      "notLinked": "No linked passage · {{field}}",
+      "openOriginal": "Open original",
+      "region": "Evidence: {{source}}",
+      "selectField": "Select a field to see its passage.",
+      "subject": "Subject: {{subject}}",
+      "view": "View evidence"
+    },
+    "history": {
+      "extracted": "Extracted value: {{value}}",
+      "original": "Original: {{value}}",
+      "originalExtracted": "Extracted original: {{value}}",
+      "originalMissing": "Original: not provided in the source"
+    },
+    "noValue": "No value",
+    "notInSource": "Not provided in the source",
+    "provenance": {
+      "corrected": "Corrected by buyer",
+      "proposed": "Proposed by AI"
+    },
+    "source": {
+      "attachment": "Attachment",
+      "document": "Document",
+      "email": "Supplier email",
+      "pdf": "Attached PDF"
+    },
+    "state": {
+      "confirmed": "Confirmed",
+      "missing": "Not provided",
+      "noncomparable": "Not comparable",
+      "toConfirm": "To confirm",
+      "toReview": "To review"
+    },
+    "summary": {
+      "analyzing": "Analyzing the message and its attachments",
+      "availableFields": "Available fields",
+      "label": "Extraction summary",
+      "missing": "Not provided: {{fields}}",
+      "nothingToReview": "No fields to review",
+      "retry": "Retry extraction",
+      "review": "Review fields",
+      "status": {
+        "failed": "Could not extract",
+        "partial": "Partial extraction",
+        "processing": "Processing",
+        "ready": "Ready for review",
+        "reviewed": "Reviewed"
+      },
+      "toReview_one": "{{count}} to review",
+      "toReview_other": "{{count}} to review"
+    },
+    "workspace": {
+      "claimPending": "The commercial data of the offer was identified.",
+      "claimReviewed": "The available values were reviewed by the buyer.",
+      "emailFrom": "Email from {{supplier}}",
+      "fieldOf": "Field {{current}} of {{total}}",
+      "fields": "Extracted fields",
+      "next": "Next field",
+      "previous": "Previous field",
+      "source": "Original source",
+      "summaryPending_one": "The buyer must review 1 field before using the information.",
+      "summaryPending_other": "The buyer must review {{count}} fields before using the information.",
+      "summaryReviewed": "Confirmation records the human review; it does not validate the technical document.",
+      "title": "Interpreted data"
+    }
+  },
   "rfq": {
     "created": "Created on {{date}}",
     "lifecycleLabel": "Request stage",

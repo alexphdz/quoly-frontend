@@ -40,6 +40,100 @@
     "search": "Buscar",
     "settings": "Configuración"
   },
+  "qi": {
+    "completeness": {
+      "available": "{{available}} de {{total}} campos disponibles",
+      "availableShort": "disponibles",
+      "confirmed_one": "confirmado",
+      "confirmed_other": "confirmados",
+      "description": "Campos presentes en la fuente y su estado de revisión. No mide la exactitud.",
+      "missing_one": "no indicado",
+      "missing_other": "no indicados",
+      "noncomparable_one": "no comparable",
+      "noncomparable_other": "no comparables",
+      "pending_one": "por revisar",
+      "pending_other": "por revisar",
+      "title": "Completitud de información"
+    },
+    "editor": {
+      "add": "Añadir valor",
+      "confirm": "Confirmar",
+      "correct": "Corregir {{field}}",
+      "edit": "Editar",
+      "editing": "Editando · {{state}}",
+      "note": "Guardar registra una corrección del comprador; la confirmación es una acción aparte.",
+      "required": "Ingresa un valor o cancela la edición.",
+      "save": "Guardar cambio"
+    },
+    "evidence": {
+      "linked": "Fragmento asociado · {{field}}",
+      "noPassage": "La fuente no contiene un pasaje para este campo.",
+      "noneSelected": "Ningún campo seleccionado",
+      "notLinked": "Sin fragmento asociado · {{field}}",
+      "openOriginal": "Abrir original",
+      "region": "Evidencia: {{source}}",
+      "selectField": "Selecciona un campo para ver su pasaje.",
+      "subject": "Asunto: {{subject}}",
+      "view": "Ver evidencia"
+    },
+    "history": {
+      "extracted": "Valor extraído: {{value}}",
+      "original": "Original: {{value}}",
+      "originalExtracted": "Original extraído: {{value}}",
+      "originalMissing": "Original: no indicado en la fuente"
+    },
+    "noValue": "Sin valor",
+    "notInSource": "No indicado en la fuente",
+    "provenance": {
+      "corrected": "Corregido por comprador",
+      "proposed": "Propuesto por IA"
+    },
+    "source": {
+      "attachment": "Adjunto",
+      "document": "Documento",
+      "email": "Correo del proveedor",
+      "pdf": "PDF adjunto"
+    },
+    "state": {
+      "confirmed": "Confirmado",
+      "missing": "No indicado",
+      "noncomparable": "No comparable",
+      "toConfirm": "Por confirmar",
+      "toReview": "Por revisar"
+    },
+    "summary": {
+      "analyzing": "Analizando el mensaje y sus adjuntos",
+      "availableFields": "Campos disponibles",
+      "label": "Resumen de extracción",
+      "missing": "No indicado: {{fields}}",
+      "nothingToReview": "Sin campos por revisar",
+      "retry": "Reintentar extracción",
+      "review": "Revisar campos",
+      "status": {
+        "failed": "No se pudo extraer",
+        "partial": "Extracción parcial",
+        "processing": "Procesando",
+        "ready": "Lista para revisión",
+        "reviewed": "Revisada"
+      },
+      "toReview_one": "{{count}} por revisar",
+      "toReview_other": "{{count}} por revisar"
+    },
+    "workspace": {
+      "claimPending": "Se identificaron los datos comerciales de la oferta.",
+      "claimReviewed": "Los valores disponibles fueron revisados por el comprador.",
+      "emailFrom": "Correo de {{supplier}}",
+      "fieldOf": "Campo {{current}} de {{total}}",
+      "fields": "Campos extraídos",
+      "next": "Campo siguiente",
+      "previous": "Campo anterior",
+      "source": "Fuente original",
+      "summaryPending_one": "El comprador debe revisar 1 campo antes de utilizar la información.",
+      "summaryPending_other": "El comprador debe revisar {{count}} campos antes de utilizar la información.",
+      "summaryReviewed": "La confirmación registra la revisión humana; no valida el documento técnico.",
+      "title": "Datos interpretados"
+    }
+  },
   "rfq": {
     "created": "Creada el {{date}}",
     "lifecycleLabel": "Etapa de la solicitud",

@@ -63,9 +63,9 @@ import { Button, DataTable, StatusBadge } from '../design-system'
   - overlays: Dialog, ConfirmDialog, SideSheet y Drawer
 
 - **05C.1 · Solicitudes y proveedores:** RfqHeader, RfqLifecycle, RfqSummary, ResponseTracker, SupplierRow (+ SupplierRowHeader), SupplierQuestion
+- **05C.2 · Quote Intelligence:** ExtractionSummary, ExtractedField, EvidenceReference/EvidencePanel, FieldReviewEditor, ExtractionCompleteness, ReviewWorkspace
 
 **Pendiente.** Componentes de dominio restantes, siguiendo sus guidelines:
-- Intelligence (`quote-intelligence.md`)
 - Comparison (`quote-comparison.md`)
 - Decision (`decision-award.md`)
 - Charts (`charts.md`)

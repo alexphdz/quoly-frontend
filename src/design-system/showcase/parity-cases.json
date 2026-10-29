@@ -1546,5 +1546,251 @@
         "answeredBy": "Respondida por Ana Ruiz"
       }
     ]
+  ],
+  [
+    "qi-evidence-ref",
+    [
+      "EvidenceReference",
+      {
+        "source": "email",
+        "label": "Correo del proveedor",
+        "location": "párrafo 2"
+      }
+    ]
+  ],
+  [
+    "qi-evidence-ref-active",
+    [
+      "EvidenceReference",
+      {
+        "source": "email",
+        "label": "Correo del proveedor",
+        "location": "párrafo 2",
+        "active": true,
+        "onClick": true
+      }
+    ]
+  ],
+  [
+    "qi-evidence-ref-btn",
+    [
+      "EvidenceReference",
+      {
+        "source": "email",
+        "label": "Correo del proveedor",
+        "location": "párrafo 2",
+        "onClick": true
+      }
+    ]
+  ],
+  [
+    "qi-evidence-panel",
+    [
+      "EvidencePanel",
+      {
+        "id": "ep1",
+        "from": "Empaques del Norte <ventas@ejemplo.test>",
+        "received": "28 oct, 10:42",
+        "subject": "Cotización RFQ-0318",
+        "segments": [
+          "Hola Ana,\n\nTe compartimos nuestra propuesta. ",
+          {
+            "id": "p1",
+            "text": "Precio unitario: 14,20 MXN por caja"
+          },
+          ", con ",
+          {
+            "id": "p2",
+            "text": "entrega en 15 días hábiles"
+          },
+          ".\n\nSaludos."
+        ],
+        "active": "p1",
+        "activeLabel": "Precio unitario",
+        "onOpen": true
+      }
+    ]
+  ],
+  [
+    "qi-evidence-passage-only",
+    [
+      "EvidencePanel",
+      {
+        "id": "ep2",
+        "segments": [
+          "Hola Ana,\n\nTe compartimos nuestra propuesta. ",
+          {
+            "id": "p1",
+            "text": "Precio unitario: 14,20 MXN por caja"
+          },
+          ", con ",
+          {
+            "id": "p2",
+            "text": "entrega en 15 días hábiles"
+          },
+          ".\n\nSaludos."
+        ],
+        "active": "p2",
+        "activeLabel": "Plazo de entrega",
+        "passageOnly": true
+      }
+    ]
+  ],
+  [
+    "qi-field-proposed",
+    [
+      "ExtractedField",
+      {
+        "label": "Precio unitario",
+        "value": "14,20",
+        "currency": "MXN",
+        "unit": "por caja",
+        "evidence": {
+          "source": "email",
+          "label": "Correo del proveedor",
+          "location": "párrafo 2"
+        }
+      }
+    ]
+  ],
+  [
+    "qi-field-confirmed",
+    [
+      "ExtractedField",
+      {
+        "label": "Plazo de entrega",
+        "value": "15 días hábiles",
+        "state": "confirmed",
+        "selected": true
+      }
+    ]
+  ],
+  [
+    "qi-field-corrected",
+    [
+      "ExtractedField",
+      {
+        "label": "Cantidad mínima",
+        "value": "5.000",
+        "unit": "uds",
+        "corrected": true,
+        "original": "500"
+      }
+    ]
+  ],
+  [
+    "qi-field-missing",
+    [
+      "ExtractedField",
+      {
+        "label": "Condiciones de pago",
+        "value": null,
+        "state": "missing"
+      }
+    ]
+  ],
+  [
+    "qi-field-noncomparable",
+    [
+      "ExtractedField",
+      {
+        "label": "Flete",
+        "state": "noncomparable",
+        "value": "Incluido",
+        "reason": "Incoterm distinto (EXW)"
+      }
+    ]
+  ],
+  [
+    "qi-editor",
+    [
+      "FieldReviewEditor",
+      {
+        "label": "Precio unitario",
+        "value": "14,20",
+        "currency": "MXN",
+        "evidence": {
+          "source": "email",
+          "label": "Correo del proveedor",
+          "location": "párrafo 2"
+        }
+      }
+    ]
+  ],
+  [
+    "qi-editor-editing",
+    [
+      "FieldReviewEditor",
+      {
+        "label": "Precio unitario",
+        "value": "14,20",
+        "currency": "MXN",
+        "startEditing": true,
+        "draftValue": "14,50"
+      }
+    ]
+  ],
+  [
+    "qi-completeness",
+    [
+      "ExtractionCompleteness",
+      {
+        "total": 7,
+        "confirmed": 2,
+        "pending": 3,
+        "missing": 1,
+        "noncomparable": 1
+      }
+    ]
+  ],
+  [
+    "qi-completeness-continuous",
+    [
+      "ExtractionCompleteness",
+      {
+        "total": 40,
+        "confirmed": 20,
+        "pending": 10,
+        "missing": 10
+      }
+    ]
+  ],
+  [
+    "qi-summary",
+    [
+      "ExtractionSummary",
+      {
+        "title": "Se identificaron los datos comerciales de la oferta.",
+        "summary": "El comprador debe revisar 3 campos antes de utilizar la información.",
+        "meta": "Correo de Empaques del Norte",
+        "available": 6,
+        "total": 7,
+        "reviewCount": 3,
+        "missing": [
+          "Condiciones de pago"
+        ],
+        "onReview": true
+      }
+    ]
+  ],
+  [
+    "qi-summary-processing",
+    [
+      "ExtractionSummary",
+      {
+        "status": "processing"
+      }
+    ]
+  ],
+  [
+    "qi-summary-failed",
+    [
+      "ExtractionSummary",
+      {
+        "status": "failed",
+        "title": "No se pudo leer el adjunto.",
+        "onRetry": true
+      }
+    ]
   ]
 ]

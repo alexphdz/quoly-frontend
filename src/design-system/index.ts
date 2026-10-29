@@ -93,3 +93,12 @@ export { ResponseTracker, type ResponseTrackerProps } from './components/rfq/Res
 export { SupplierRow, SupplierRowHeader, type SupplierRowProps, type SupplierParticipation } from './components/rfq/SupplierRow'
 export { SupplierQuestion, type SupplierQuestionProps } from './components/rfq/SupplierQuestion'
 export { useElementWidth } from './hooks'
+
+// 05C.2 · Quote Intelligence & human review
+export { EvidenceReference, EvidencePanel, type EvidenceReferenceProps, type EvidencePanelProps, type EvidenceSegment } from './components/intelligence/EvidenceReference'
+export { ExtractedField, type ExtractedFieldProps } from './components/intelligence/ExtractedField'
+export { FieldReviewEditor, type FieldReviewEditorProps, type FieldReviewChange } from './components/intelligence/FieldReviewEditor'
+export { ExtractionCompleteness, type ExtractionCompletenessProps } from './components/intelligence/ExtractionCompleteness'
+export { ExtractionSummary, type ExtractionSummaryProps, type ExtractionStatus } from './components/intelligence/ExtractionSummary'
+export { ReviewWorkspace, type ReviewWorkspaceProps, type ReviewField } from './components/intelligence/ReviewWorkspace'
+export { type EvidenceSource, type FieldState } from './components/intelligence/shared'

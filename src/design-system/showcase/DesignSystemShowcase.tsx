@@ -9,6 +9,7 @@ import {
   SplitButton, StatusBadge, Switch, TableCell, TablePagination, TableToolbar, Tabs, Tag, TextButton, TextInput,
   Textarea, Toast, Tooltip, TooltipBubble, ValidationMessage, notify, type DataTableColumn, type NavItem,
   RfqHeader, RfqLifecycle, RfqSummary, ResponseTracker, SupplierRow, SupplierRowHeader, SupplierQuestion,
+  ReviewWorkspace, ExtractionSummary, EvidenceReference, type ReviewField,
 } from '..'
 import './showcase.scss'
 
@@ -37,6 +38,21 @@ const NAV: NavItem[] = [
   { value: 'quotes', label: 'Cotizaciones', icon: 'quotes', count: 4 },
   { value: 'suppliers', label: 'Proveedores', icon: 'users-three' },
 ]
+
+const QI_EVIDENCE = { source: 'email' as const, location: 'párrafo 2' }
+const QI_FIELDS: ReviewField[] = [
+  { key: 'price', label: 'Precio unitario', value: '14,20', currency: 'MXN', unit: 'por caja', passage: 'p1', evidence: QI_EVIDENCE },
+  { key: 'lead', label: 'Plazo de entrega', value: '15 días hábiles', passage: 'p2', evidence: QI_EVIDENCE },
+  { key: 'moq', label: 'Cantidad mínima', value: '5.000', unit: 'uds', state: 'confirmed' },
+  { key: 'payment', label: 'Condiciones de pago', value: null, state: 'missing' },
+  { key: 'freight', label: 'Flete', value: 'Incluido', state: 'noncomparable', reason: 'Incoterm distinto (EXW)' },
+]
+const QI_SOURCE = {
+  from: 'Empaques del Norte (ficticio) <ventas@ejemplo.test>',
+  received: '28 oct, 10:42',
+  subject: 'Cotización RFQ-0318',
+  segments: ['Hola Ana,\n\nTe compartimos nuestra propuesta. ', { id: 'p1', text: 'Precio unitario: 14,20 MXN por caja' }, ', con ', { id: 'p2', text: 'entrega en 15 días hábiles' }, '.\n\nSaludos.'],
+}
 
 const COLOR_ROLES = [
   'canvas', 'surface', 'surface-elevated', 'surface-sunken', 'surface-inverse', 'brand', 'action-primary-bg',
@@ -424,6 +440,13 @@ export default function DesignSystemShowcase() {
               <SupplierQuestion sender="Cartonera Andina (ficticio)" channel="Correo" received="Ayer, 14:20" question="¿La entrega puede ser en dos lotes?" context="Sobre: condiciones de entrega" onRespond={() => undefined} />
               <SupplierQuestion sender="Empaques del Norte (ficticio)" question="¿Aceptan cartón reciclado?" state="answered" answer="Sí, siempre que cumpla ECT 32." answeredBy="Respondida por Ana Ruiz" last />
             </div>
+          </div>
+        </ContentSection>
+        <ContentSection title="05C.2 · Quote Intelligence y revisión humana">
+          <div className="ds-sc-stack">
+            <div className="ds-sc-row"><EvidenceReference {...QI_EVIDENCE} onClick={() => undefined} /><EvidenceReference {...QI_EVIDENCE} /></div>
+            <ExtractionSummary status="processing" />
+            <ReviewWorkspace fields={QI_FIELDS} source={QI_SOURCE} supplier="Empaques del Norte (ficticio)" meta="Recibida 28 oct" onOpenSource={() => undefined} />
           </div>
         </ContentSection>
       </main>
