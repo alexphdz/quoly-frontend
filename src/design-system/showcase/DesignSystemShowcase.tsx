@@ -12,8 +12,30 @@ import {
   ReviewWorkspace, ExtractionSummary, EvidenceReference, type ReviewField,
   ComparisonOverview, ComparisonFocus, type ComparisonGroup, type ComparisonSupplier,
   DecisionRow, DecisionRowHeader, DecisionCandidate, DecisionSummary, DecisionRationale, AwardConfirmation, AwardRecord, DecisionTimeline,
+  ChartHeader, BarChart, HBarChart, LineChart, DonutChart, DistributionChart, DotPlot, ChartState, ChartNote, ChartDataTable,
+  CompactDonut, SegmentedDistribution, RadialGauge, CompactBars,
 } from '..'
 import './showcase.scss'
+
+/* Datos ficticios para la sección de gráficas. */
+const CH_MONTHS = [
+  { label: 'Mayo 2026', short: 'May' }, { label: 'Junio 2026', short: 'Jun' }, { label: 'Julio 2026', short: 'Jul' },
+  { label: 'Agosto 2026', short: 'Ago' }, { label: 'Septiembre 2026', short: 'Sep' }, { label: 'Octubre 2026', short: 'Oct' },
+]
+const CH_SENT = [14, 18, 12, 21, 17, 19]
+const CH_RESP = [9, 13, 10, 16, 11, 15]
+const CH_BY_MONTH = CH_MONTHS.map((m, i) => ({ ...m, values: [CH_SENT[i], CH_RESP[i]] }))
+const CH_SERIES = [{ name: 'Enviadas', color: 'violet' }, { name: 'Respondidas', color: 'mint' }]
+const CH_PRICES = [
+  { label: 'Northstar Drinkware', value: 7.95 }, { label: 'Hanyu Steelware Co.', value: 7.4 },
+  { label: 'Altamar Envases Industriales S.A. de C.V.', value: 8.62 }, { label: 'Copa Industrial', value: 8.1 },
+  { label: 'Termos del Bajío', value: null, reason: 'Precio por lote sin tamaño de referencia' },
+]
+const CH_STATUS = [
+  { label: 'Confirmadas', value: 5, color: 'mint' }, { label: 'Por revisar', value: 4, color: 'violet' },
+  { label: 'Información faltante', value: 2, color: 'yellow' }, { label: 'No comparable', value: 1, color: 'teal' },
+]
+const CH_LEAD = [18, 21, 22, 25, 25, 26, 28, 28, 30, 30, 30, 32, 33, 35, 35, 38, 40, 40, 42, 45, 48, 50, 55, 60]
 
 type QuoteRow = {
   id: string
@@ -499,6 +521,46 @@ export default function DesignSystemShowcase() {
             reference="PRV-0056"
             price={{ amount: 14.2, currency: 'MXN', unit: '/ caja' }}
           />
+        </ContentSection>
+
+        <ContentSection title="06A · Gráficas" description="Datos ficticios. Escalas desde cero, sin rankings; un valor ausente es texto, nunca cero.">
+          <div className="ds-sc-stack">
+            <div>
+              <ChartHeader
+                context="Últimos 6 meses"
+                title="Solicitudes enviadas y respondidas"
+                description="Conteo mensual de solicitudes de cotización."
+                value="101"
+                unit="solicitudes"
+                comparison="74 con al menos una respuesta"
+              />
+              <BarChart data={CH_BY_MONTH} series={CH_SERIES} yLabel="Solicitudes" ariaLabel="Solicitudes enviadas y respondidas por mes" />
+            </div>
+            <LineChart
+              periods={CH_MONTHS}
+              area
+              series={[{ name: 'Respondidas', color: 'violet', values: [9, 13, null, 16, 11, 15] }]}
+              ariaLabel="Respuestas por mes"
+            />
+            <ChartNote>{'Julio sin datos: la sincronización del buzón estuvo detenida.'}</ChartNote>
+            <HBarChart rows={CH_PRICES} unit="USD" decimals={2} color="blue" ariaLabel="Precio unitario por proveedor" axisLabel="USD / unidad" />
+            <DotPlot rows={CH_PRICES} unit="USD" valueLabel="Precio unitario" ariaLabel="Precio unitario por proveedor" basis="Precio por unidad, sin flete" />
+            <div className="ds-sc-grid">
+              <DonutChart segments={CH_STATUS} size="compact" centerLabel="cotizaciones" ariaLabel="Estado de las cotizaciones" />
+              <DistributionChart values={CH_LEAD} unit="días" showQuartiles ariaLabel="Tiempo de entrega" />
+            </div>
+            <ChartDataTable caption="Solicitudes por mes" columns={['Mes', 'Enviadas', 'Respondidas']} rows={CH_BY_MONTH.map((d) => [d.label, ...d.values])} />
+            <div className="ds-sc-grid">
+              <CompactDonut segments={CH_STATUS} caption="12 cotizaciones recibidas" />
+              <SegmentedDistribution unit="USD" categories={[{ label: 'Confirmadas', value: 48200, color: 'mint' }, { label: 'Por revisar', value: 31750, color: 'violet' }, { label: 'Faltante', value: 9800, color: 'yellow' }]} />
+              <RadialGauge value={9} total={12} startLabel="0" endLabel="12" caption="9 de 12 cotizaciones revisadas" />
+              <CompactBars title="Respuestas" value="74" unit="este semestre" data={CH_MONTHS.map((m, i) => ({ ...m, value: CH_RESP[i] }))} />
+            </div>
+            <div className="ds-sc-grid">
+              <ChartState state="loading" shape="line" height={160} />
+              <ChartState state="noresults" onClear={() => undefined} narrow />
+            </div>
+          </div>
         </ContentSection>
       </main>
 

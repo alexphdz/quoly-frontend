@@ -2419,5 +2419,794 @@
       "DecisionTimeline",
       {}
     ]
+  ],
+  [
+    "ch-header",
+    [
+      "ChartHeader",
+      {
+        "context": "Últimos 6 meses",
+        "title": "Solicitudes enviadas y respondidas",
+        "description": "Conteo mensual de solicitudes de cotización.",
+        "value": "101",
+        "unit": "solicitudes",
+        "comparison": "74 con al menos una respuesta"
+      }
+    ]
+  ],
+  [
+    "ch-header-plain",
+    [
+      "ChartHeader",
+      {
+        "title": "Tiempo de respuesta por proveedor"
+      }
+    ]
+  ],
+  [
+    "ch-bar",
+    [
+      "BarChart",
+      {
+        "data": [
+          {
+            "label": "Mayo 2026",
+            "short": "May",
+            "value": 9
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun",
+            "value": 13
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul",
+            "value": 10
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago",
+            "value": 16
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep",
+            "value": 11
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct",
+            "value": 15
+          }
+        ],
+        "series": [
+          {
+            "name": "Respondidas",
+            "color": "violet"
+          }
+        ],
+        "ariaLabel": "Respuestas por mes",
+        "yLabel": "Solicitudes"
+      }
+    ]
+  ],
+  [
+    "ch-bar-grouped",
+    [
+      "BarChart",
+      {
+        "data": [
+          {
+            "label": "Mayo 2026",
+            "short": "May",
+            "values": [
+              14,
+              9
+            ]
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun",
+            "values": [
+              18,
+              13
+            ]
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul",
+            "values": [
+              12,
+              10
+            ]
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago",
+            "values": [
+              21,
+              16
+            ]
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep",
+            "values": [
+              17,
+              11
+            ]
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct",
+            "values": [
+              19,
+              15
+            ]
+          }
+        ],
+        "series": [
+          {
+            "name": "Enviadas",
+            "color": "violet"
+          },
+          {
+            "name": "Respondidas",
+            "color": "mint"
+          }
+        ],
+        "size": "compact",
+        "ariaLabel": "Enviadas y respondidas"
+      }
+    ]
+  ],
+  [
+    "ch-bar-active",
+    [
+      "BarChart",
+      {
+        "data": [
+          {
+            "label": "Mayo 2026",
+            "short": "May",
+            "values": [
+              14,
+              9
+            ]
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun",
+            "values": [
+              18,
+              13
+            ]
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul",
+            "values": [
+              12,
+              10
+            ]
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago",
+            "values": [
+              21,
+              16
+            ]
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep",
+            "values": [
+              17,
+              11
+            ]
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct",
+            "values": [
+              19,
+              15
+            ]
+          }
+        ],
+        "series": [
+          {
+            "name": "Enviadas",
+            "color": "violet"
+          },
+          {
+            "name": "Respondidas",
+            "color": "mint"
+          }
+        ],
+        "activeIndex": 3,
+        "ariaLabel": "Enviadas y respondidas"
+      }
+    ]
+  ],
+  [
+    "ch-hbar",
+    [
+      "HBarChart",
+      {
+        "rows": [
+          {
+            "label": "Northstar Drinkware",
+            "value": 2.5
+          },
+          {
+            "label": "Hanyu Steelware Co.",
+            "value": 4
+          },
+          {
+            "label": "Altamar Envases Industriales S.A. de C.V.",
+            "value": 1.5
+          },
+          {
+            "label": "Copa Industrial",
+            "value": 6
+          },
+          {
+            "label": "Termos del Bajío",
+            "value": 3
+          }
+        ],
+        "unit": "días",
+        "decimals": 1,
+        "axisLabel": "Días",
+        "ariaLabel": "Tiempo de respuesta"
+      }
+    ]
+  ],
+  [
+    "ch-hbar-missing",
+    [
+      "HBarChart",
+      {
+        "rows": [
+          {
+            "label": "Northstar Drinkware",
+            "value": 7.95
+          },
+          {
+            "label": "Hanyu Steelware Co.",
+            "value": 7.4
+          },
+          {
+            "label": "Altamar Envases Industriales S.A. de C.V.",
+            "value": 8.62
+          },
+          {
+            "label": "Copa Industrial",
+            "value": 8.1
+          },
+          {
+            "label": "Termos del Bajío",
+            "value": null,
+            "missing": "No comparable",
+            "reason": "Precio por lote sin tamaño de referencia"
+          }
+        ],
+        "unit": "USD",
+        "decimals": 2,
+        "color": "blue",
+        "ariaLabel": "Precio unitario",
+        "activeIndex": 1
+      }
+    ]
+  ],
+  [
+    "ch-line",
+    [
+      "LineChart",
+      {
+        "periods": [
+          {
+            "label": "Mayo 2026",
+            "short": "May"
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun"
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul"
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago"
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep"
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct"
+          }
+        ],
+        "series": [
+          {
+            "name": "Enviadas",
+            "color": "violet",
+            "values": [
+              14,
+              18,
+              12,
+              21,
+              17,
+              19
+            ]
+          },
+          {
+            "name": "Respondidas",
+            "color": "mint",
+            "values": [
+              9,
+              13,
+              10,
+              16,
+              11,
+              15
+            ]
+          }
+        ],
+        "ariaLabel": "Tendencia"
+      }
+    ]
+  ],
+  [
+    "ch-line-area",
+    [
+      "LineChart",
+      {
+        "periods": [
+          {
+            "label": "Mayo 2026",
+            "short": "May"
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun"
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul"
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago"
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep"
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct"
+          }
+        ],
+        "area": true,
+        "series": [
+          {
+            "name": "Respondidas",
+            "color": "violet",
+            "values": [
+              9,
+              13,
+              null,
+              16,
+              11,
+              15
+            ]
+          }
+        ],
+        "ariaLabel": "Tendencia",
+        "activeIndex": 4
+      }
+    ]
+  ],
+  [
+    "ch-donut",
+    [
+      "DonutChart",
+      {
+        "segments": [
+          {
+            "label": "Confirmadas",
+            "value": 5,
+            "color": "mint"
+          },
+          {
+            "label": "Por revisar",
+            "value": 4,
+            "color": "violet"
+          },
+          {
+            "label": "Información faltante",
+            "value": 2,
+            "color": "yellow"
+          },
+          {
+            "label": "No comparable",
+            "value": 1,
+            "color": "teal"
+          }
+        ],
+        "ariaLabel": "Estado",
+        "centerLabel": "cotizaciones"
+      }
+    ]
+  ],
+  [
+    "ch-donut-compact",
+    [
+      "DonutChart",
+      {
+        "segments": [
+          {
+            "label": "Confirmadas",
+            "value": 5,
+            "color": "mint"
+          },
+          {
+            "label": "Por revisar",
+            "value": 4,
+            "color": "violet"
+          },
+          {
+            "label": "Información faltante",
+            "value": 2,
+            "color": "yellow"
+          },
+          {
+            "label": "No comparable",
+            "value": 1,
+            "color": "teal"
+          }
+        ],
+        "size": "compact",
+        "ariaLabel": "Estado",
+        "activeIndex": 0
+      }
+    ]
+  ],
+  [
+    "ch-dist",
+    [
+      "DistributionChart",
+      {
+        "values": [
+          18,
+          21,
+          22,
+          25,
+          25,
+          26,
+          28,
+          28,
+          30,
+          30,
+          30,
+          32,
+          33,
+          35,
+          35,
+          38,
+          40,
+          40,
+          42,
+          45,
+          48,
+          50,
+          55,
+          60
+        ],
+        "unit": "días",
+        "ariaLabel": "Tiempo de entrega",
+        "showQuartiles": true
+      }
+    ]
+  ],
+  [
+    "ch-dist-empty",
+    [
+      "DistributionChart",
+      {
+        "values": [
+          3,
+          5
+        ],
+        "ariaLabel": "Tiempo de entrega"
+      }
+    ]
+  ],
+  [
+    "ch-dot",
+    [
+      "DotPlot",
+      {
+        "rows": [
+          {
+            "label": "Northstar Drinkware",
+            "value": 7.95
+          },
+          {
+            "label": "Hanyu Steelware Co.",
+            "value": 7.4
+          },
+          {
+            "label": "Altamar Envases Industriales S.A. de C.V.",
+            "value": 8.62
+          },
+          {
+            "label": "Copa Industrial",
+            "value": 8.1
+          },
+          {
+            "label": "Termos del Bajío",
+            "value": null,
+            "missing": "No comparable",
+            "reason": "Precio por lote sin tamaño de referencia"
+          }
+        ],
+        "unit": "USD",
+        "valueLabel": "Precio unitario",
+        "ariaLabel": "Precio unitario"
+      }
+    ]
+  ],
+  [
+    "ch-tooltip",
+    [
+      "ChartTooltip",
+      {
+        "inline": true,
+        "title": "Agosto 2026",
+        "rows": [
+          {
+            "label": "Enviadas",
+            "value": "21",
+            "color": "violet"
+          },
+          {
+            "label": "Respondidas",
+            "value": "16",
+            "color": "mint"
+          }
+        ],
+        "context": "Incluye respuestas parciales"
+      }
+    ]
+  ],
+  [
+    "ch-legend",
+    [
+      "ChartLegend",
+      {
+        "items": [
+          {
+            "label": "Enviadas",
+            "color": "violet"
+          },
+          {
+            "label": "Respondidas",
+            "color": "mint"
+          },
+          {
+            "label": "Meta",
+            "color": "coral",
+            "shape": "line"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "ch-state-loading",
+    [
+      "ChartState",
+      {
+        "state": "loading",
+        "shape": "bar",
+        "height": 160
+      }
+    ]
+  ],
+  [
+    "ch-state-loading-hbar",
+    [
+      "ChartState",
+      {
+        "state": "loading",
+        "shape": "hbar"
+      }
+    ]
+  ],
+  [
+    "ch-state-empty",
+    [
+      "ChartState",
+      {
+        "state": "empty"
+      }
+    ]
+  ],
+  [
+    "ch-state-noresults",
+    [
+      "ChartState",
+      {
+        "state": "noresults",
+        "onClear": true
+      }
+    ]
+  ],
+  [
+    "ch-state-error",
+    [
+      "ChartState",
+      {
+        "state": "error",
+        "onRetry": true
+      }
+    ]
+  ],
+  [
+    "ch-note",
+    [
+      "ChartNote",
+      {},
+      "Dos proveedores no reportaron tiempo de entrega; no se incluyen en la distribución."
+    ]
+  ],
+  [
+    "ch-datatable",
+    [
+      "ChartDataTable",
+      {
+        "caption": "Respuestas por mes",
+        "columns": [
+          "Mes",
+          "Enviadas",
+          "Respondidas"
+        ],
+        "rows": [
+          [
+            "Mayo",
+            14,
+            9
+          ],
+          [
+            "Junio",
+            18,
+            13
+          ]
+        ],
+        "defaultOpen": true
+      }
+    ]
+  ],
+  [
+    "ch-cdonut",
+    [
+      "CompactDonut",
+      {
+        "segments": [
+          {
+            "label": "Confirmadas",
+            "value": 5,
+            "color": "mint"
+          },
+          {
+            "label": "Por revisar",
+            "value": 4,
+            "color": "violet"
+          },
+          {
+            "label": "Información faltante",
+            "value": 2,
+            "color": "yellow"
+          },
+          {
+            "label": "No comparable",
+            "value": 1,
+            "color": "teal"
+          }
+        ],
+        "caption": "12 cotizaciones recibidas"
+      }
+    ]
+  ],
+  [
+    "ch-seg",
+    [
+      "SegmentedDistribution",
+      {
+        "unit": "USD",
+        "categories": [
+          {
+            "label": "Confirmadas",
+            "value": 48200,
+            "color": "mint"
+          },
+          {
+            "label": "Por revisar",
+            "value": 31750,
+            "color": "violet"
+          },
+          {
+            "label": "Faltante",
+            "value": 9800,
+            "color": "yellow"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "ch-gauge",
+    [
+      "RadialGauge",
+      {
+        "value": 9,
+        "total": 12,
+        "startLabel": "0",
+        "endLabel": "12",
+        "caption": "9 de 12 cotizaciones revisadas"
+      }
+    ]
+  ],
+  [
+    "ch-cbars",
+    [
+      "CompactBars",
+      {
+        "title": "Respuestas",
+        "value": "74",
+        "unit": "este semestre",
+        "comparison": "6 meses",
+        "data": [
+          {
+            "label": "Mayo 2026",
+            "short": "May",
+            "value": 9
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun",
+            "value": 13
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul",
+            "value": 10
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago",
+            "value": 16
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep",
+            "value": 11
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct",
+            "value": 15
+          }
+        ]
+      }
+    ]
   ]
 ]

@@ -66,9 +66,9 @@ import { Button, DataTable, StatusBadge } from '../design-system'
 - **05C.2 · Quote Intelligence:** ExtractionSummary, ExtractedField, EvidenceReference/EvidencePanel, FieldReviewEditor, ExtractionCompleteness, ReviewWorkspace
 - **05C.3 · Comparación:** ComparisonOverview, SupplierComparisonHeader, ComparisonMatrix, ComparisonFocus, PriceDifference, CommercialException (+ Detail), ComparisonEvidenceLink
 - **05C.4 · Decisión:** SelectionIndicator, DecisionCandidate, DecisionSummary, DecisionRationale, DecisionRow (+ header), AwardConfirmation, AwardRecord, DecisionTimeline
+- **06A · Gráficas:** ChartHeader, BarChart, HBarChart, LineChart, DonutChart, DistributionChart, DotPlot, ChartTooltip, ChartLegend, ChartState, ChartNote, ChartDataTable y tiles compactos (CompactDonut, SegmentedDistribution, RadialGauge, CompactBars). SVG/CSS propios sobre tokens `--chart-*`; números en el locale de la app; inspección por puntero y teclado con tabla oculta para lectores de pantalla. `recharts` y `stagePalette.ts` siguen en las pantallas actuales hasta su migración.
 
 **Pendiente.** Componentes de dominio restantes, siguiendo sus guidelines:
-- Charts (`charts.md`)
 - Compositions (`compositions.md`)
 - Forms (`form-extensions.md`)
 

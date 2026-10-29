@@ -126,3 +126,18 @@ export { AwardConfirmation, type AwardConfirmationProps } from './components/dec
 export { AwardRecord, type AwardRecordProps } from './components/decision/AwardRecord'
 export { DecisionTimeline, type DecisionTimelineProps, type DecisionEvent } from './components/decision/DecisionTimeline'
 export { type DecisionPrice, type DecisionFact } from './components/decision/shared'
+
+// 06A · Charts
+export { ChartHeader, type ChartHeaderProps } from './components/charts/ChartHeader'
+export { BarChart, HBarChart, type BarChartProps, type BarDatum, type BarSeries, type HBarChartProps, type HBarRow } from './components/charts/BarChart'
+export { LineChart, type LineChartProps, type LineSeries, type LinePeriod } from './components/charts/LineChart'
+export { DonutChart, type DonutChartProps, type DonutSegment } from './components/charts/DonutChart'
+export { DistributionChart, type DistributionChartProps } from './components/charts/DistributionChart'
+export { DotPlot, type DotPlotProps, type DotPlotRow } from './components/charts/DotPlot'
+export { ChartTooltip, ChartLegend, type ChartTooltipProps, type ChartTooltipRow, type ChartLegendProps, type ChartLegendItem } from './components/charts/ChartTooltip'
+export { ChartState, ChartNote, ChartDataTable, type ChartStateProps, type ChartDataTableProps } from './components/charts/ChartState'
+export {
+  CompactDonut, CompactCharts, SegmentedDistribution, RadialGauge, CompactBars,
+  type CompactDonutProps, type CompactSegment, type SegmentedDistributionProps, type RadialGaugeProps, type CompactBarsProps,
+} from './components/charts/CompactCharts'
+export { SERIES, chartColor, niceTicks, niceRange, sharePct, type SeriesColor } from './components/charts/shared'

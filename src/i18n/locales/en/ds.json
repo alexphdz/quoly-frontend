@@ -10,6 +10,71 @@
   "breadcrumbs": {
     "label": "Breadcrumb"
   },
+  "chart": {
+    "col": {
+      "category": "Category",
+      "count": "Count",
+      "interval": "Interval",
+      "period": "Period",
+      "share": "Share",
+      "supplier": "Supplier",
+      "value": "Value"
+    },
+    "compact": {
+      "countOf": "{{value}} of {{total}}",
+      "donutTitle": "Quote status",
+      "gaugeDescriptor": "Resolved",
+      "gaugeTitle": "Percent resolved",
+      "ofTotal": "{{pct}}% of total",
+      "segmentedTitle": "Quote value",
+      "unitLabel": "quotes"
+    },
+    "dist": {
+      "caption": "{{caption}}. Median {{value}}",
+      "emptyText_one": "At least {{min}} numeric values are needed to group into intervals. There is {{count}}.",
+      "emptyText_other": "At least {{min}} numeric values are needed to group into intervals. There are {{count}}.",
+      "emptyTitle": "Not enough data to show a distribution",
+      "median": "Median",
+      "records": "records",
+      "shareOf_one": "{{pct}}% of {{count}} value",
+      "shareOf_other": "{{pct}}% of {{count}} values"
+    },
+    "dot": {
+      "scaleNote": "{{label}} in {{unit}}. Common scale for all rows; position does not indicate preference."
+    },
+    "legend": "Legend",
+    "noComparable": "Not comparable",
+    "noComparableValue": "No comparable value",
+    "noData": "No data",
+    "role": {
+      "bar": "bar chart",
+      "compactBars": "compact bar chart",
+      "donut": "donut chart",
+      "dot": "dot plot",
+      "hbar": "horizontal bar chart",
+      "histogram": "histogram",
+      "line": "line chart",
+      "segmented": "distribution bar"
+    },
+    "state": {
+      "clear": "Reset filters",
+      "emptyText": "The chart will appear once requests with recorded responses exist in the period.",
+      "emptyTitle": "No data for this chart yet",
+      "errorLabel": "Data unavailable",
+      "errorText": "The connection was interrupted. The period and filters have been kept.",
+      "errorTitle": "The chart could not be loaded",
+      "loading": "Loading chart",
+      "noResultsLabel": "No matches",
+      "noResultsText": "Try another period or remove the active filters.",
+      "noResultsTitle": "No data for the selected filters",
+      "retry": "Retry loading"
+    },
+    "table": {
+      "hide": "Hide data table",
+      "show": "View as table"
+    },
+    "total": "total"
+  },
   "chip": {
     "remove": "Remove {{label}}"
   },

@@ -10,6 +10,71 @@
   "breadcrumbs": {
     "label": "Ruta de navegación"
   },
+  "chart": {
+    "col": {
+      "category": "Categoría",
+      "count": "Cantidad",
+      "interval": "Intervalo",
+      "period": "Periodo",
+      "share": "Proporción",
+      "supplier": "Proveedor",
+      "value": "Valor"
+    },
+    "compact": {
+      "countOf": "{{value}} de {{total}}",
+      "donutTitle": "Estado de las cotizaciones",
+      "gaugeDescriptor": "Resuelto",
+      "gaugeTitle": "Porcentaje resuelto",
+      "ofTotal": "{{pct}}% del total",
+      "segmentedTitle": "Valor de cotizaciones",
+      "unitLabel": "cotizaciones"
+    },
+    "dist": {
+      "caption": "{{caption}}. Mediana {{value}}",
+      "emptyText_one": "Se necesitan al menos {{min}} valores numéricos para agrupar en intervalos. Hay {{count}}.",
+      "emptyText_other": "Se necesitan al menos {{min}} valores numéricos para agrupar en intervalos. Hay {{count}}.",
+      "emptyTitle": "Datos insuficientes para mostrar una distribución",
+      "median": "Mediana",
+      "records": "registros",
+      "shareOf_one": "{{pct}}% de {{count}} valor",
+      "shareOf_other": "{{pct}}% de {{count}} valores"
+    },
+    "dot": {
+      "scaleNote": "{{label}} en {{unit}}. Escala común para todas las filas; la posición no indica preferencia."
+    },
+    "legend": "Leyenda",
+    "noComparable": "No comparable",
+    "noComparableValue": "Sin valor comparable",
+    "noData": "Sin datos",
+    "role": {
+      "bar": "gráfica de barras",
+      "compactBars": "gráfica de barras compacta",
+      "donut": "gráfica de anillo",
+      "dot": "gráfica de puntos",
+      "hbar": "gráfica de barras horizontales",
+      "histogram": "histograma",
+      "line": "gráfica de líneas",
+      "segmented": "barra de distribución"
+    },
+    "state": {
+      "clear": "Restablecer filtros",
+      "emptyText": "La gráfica aparecerá cuando existan solicitudes con respuestas registradas en el periodo.",
+      "emptyTitle": "Todavía no hay datos para esta gráfica",
+      "errorLabel": "Datos no disponibles",
+      "errorText": "La conexión se interrumpió. El periodo y los filtros se han conservado.",
+      "errorTitle": "No se pudo cargar la gráfica",
+      "loading": "Cargando gráfica",
+      "noResultsLabel": "Sin coincidencias",
+      "noResultsText": "Prueba con otro periodo o elimina los filtros activos.",
+      "noResultsTitle": "Sin datos para los filtros seleccionados",
+      "retry": "Reintentar carga"
+    },
+    "table": {
+      "hide": "Ocultar tabla de datos",
+      "show": "Ver como tabla"
+    },
+    "total": "total"
+  },
   "chip": {
     "remove": "Quitar {{label}}"
   },
