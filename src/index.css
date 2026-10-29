@@ -88,9 +88,50 @@ a {
 }
 
 .app-shell {
+  display: flex;
   min-height: 100vh;
   min-height: 100dvh;
-  background: var(--bg-app);
+  background: var(--color-canvas);
+}
+
+.app-shell.is-mobile {
+  flex-direction: column;
+}
+
+/* Menú lateral Quoly 2.0: fijo a la altura de la ventana; la página sigue usando el scroll del documento. */
+.app-sidebar-slot {
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+  height: 100dvh;
+  z-index: 30;
+}
+
+.app-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: calc(56px + var(--safe-top));
+  padding: var(--safe-top) 12px 0;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-divider);
+}
+
+.app-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--nav-fg-strong);
+}
+
+.app-topbar-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .app-sidebar {
@@ -107,9 +148,8 @@ a {
 }
 
 .app-main {
-  min-height: 100vh;
-  min-height: 100dvh;
-  padding-left: var(--sidebar-width);
+  flex: 1;
+  min-width: 0;
 }
 
 .page {
