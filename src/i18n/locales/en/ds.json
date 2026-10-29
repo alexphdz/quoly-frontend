@@ -40,6 +40,66 @@
     "search": "Search",
     "settings": "Settings"
   },
+  "rfq": {
+    "created": "Created on {{date}}",
+    "lifecycleLabel": "Request stage",
+    "question": {
+      "answerSent": "Response sent",
+      "answered": "Answered",
+      "label": "Question from {{sender}}",
+      "needsAnswer": "Needs a response",
+      "respond": "Respond",
+      "respondTo": "to {{sender}}"
+    },
+    "stage": {
+      "closed": "Closed",
+      "draft": "Draft",
+      "quotes": "Quotes",
+      "sent": "Sent"
+    },
+    "stageState": {
+      "current": ", current stage",
+      "done": ", completed",
+      "future": ", pending"
+    },
+    "summary": {
+      "currency": "Base currency",
+      "deadline": "Response deadline",
+      "label": "Commercial summary",
+      "leading": "Leading quote",
+      "noComparable": "No comparable quotes",
+      "noSuppliers": "No suppliers invited",
+      "overdue": "Deadline passed",
+      "quantity": "Requested quantity",
+      "responded": "{{responded}} of {{total}} responded",
+      "suppliers": "Suppliers"
+    },
+    "supplier": {
+      "header": {
+        "activity": "Last activity",
+        "participation": "Participation",
+        "quote": "Quote",
+        "supplier": "Supplier"
+      },
+      "noActivity": "No activity yet",
+      "noContact": "No contact on file",
+      "status": {
+        "declined": "Not participating",
+        "invited": "Invited",
+        "question": "Open question",
+        "responded": "Responded",
+        "viewed": "Awaiting response"
+      }
+    },
+    "tracker": {
+      "label": "Suppliers",
+      "pending_one": "pending",
+      "pending_other": "pending",
+      "responded_one": "responded",
+      "responded_other": "responded",
+      "valueText": "{{responded}} of {{total}} suppliers responded"
+    }
+  },
   "search": {
     "clear": "Clear search"
   },

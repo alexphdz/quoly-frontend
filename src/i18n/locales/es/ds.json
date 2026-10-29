@@ -40,6 +40,66 @@
     "search": "Buscar",
     "settings": "Configuración"
   },
+  "rfq": {
+    "created": "Creada el {{date}}",
+    "lifecycleLabel": "Etapa de la solicitud",
+    "question": {
+      "answerSent": "Respuesta enviada",
+      "answered": "Respondida",
+      "label": "Pregunta de {{sender}}",
+      "needsAnswer": "Requiere respuesta",
+      "respond": "Responder",
+      "respondTo": "a {{sender}}"
+    },
+    "stage": {
+      "closed": "Cerrada",
+      "draft": "Borrador",
+      "quotes": "Cotizaciones",
+      "sent": "Enviada"
+    },
+    "stageState": {
+      "current": ", etapa actual",
+      "done": ", completada",
+      "future": ", pendiente"
+    },
+    "summary": {
+      "currency": "Moneda base",
+      "deadline": "Plazo de respuesta",
+      "label": "Resumen comercial",
+      "leading": "Cotización líder",
+      "noComparable": "Sin cotizaciones comparables",
+      "noSuppliers": "Sin proveedores invitados",
+      "overdue": "Plazo vencido",
+      "quantity": "Cantidad solicitada",
+      "responded": "{{responded}} de {{total}} respondieron",
+      "suppliers": "Proveedores"
+    },
+    "supplier": {
+      "header": {
+        "activity": "Última actividad",
+        "participation": "Participación",
+        "quote": "Cotización",
+        "supplier": "Proveedor"
+      },
+      "noActivity": "Sin actividad registrada",
+      "noContact": "Sin contacto registrado",
+      "status": {
+        "declined": "No participa",
+        "invited": "Invitado",
+        "question": "Pregunta abierta",
+        "responded": "Respondió",
+        "viewed": "Pendiente de respuesta"
+      }
+    },
+    "tracker": {
+      "label": "Proveedores",
+      "pending_one": "pendiente",
+      "pending_other": "pendientes",
+      "responded_one": "respondió",
+      "responded_other": "respondieron",
+      "valueText": "{{responded}} de {{total}} proveedores respondieron"
+    }
+  },
   "search": {
     "clear": "Borrar búsqueda"
   },

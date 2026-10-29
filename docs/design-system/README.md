@@ -62,8 +62,9 @@ import { Button, DataTable, StatusBadge } from '../design-system'
   - SectionHeader, ContentSection, InfoGroup, KeyValueGroup, Metric/MetricGroup, ContextPanel, DetailPanel, Expandable y EmptySection
   - overlays: Dialog, ConfirmDialog, SideSheet y Drawer
 
-**Pendiente (fase de pantallas).** Los componentes de dominio se implementan junto a la pantalla que los usa, siguiendo sus guidelines:
-- RFQ (`rfq-workflow-components.md`)
+- **05C.1 · Solicitudes y proveedores:** RfqHeader, RfqLifecycle, RfqSummary, ResponseTracker, SupplierRow (+ SupplierRowHeader), SupplierQuestion
+
+**Pendiente.** Componentes de dominio restantes, siguiendo sus guidelines:
 - Intelligence (`quote-intelligence.md`)
 - Comparison (`quote-comparison.md`)
 - Decision (`decision-award.md`)

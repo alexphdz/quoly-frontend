@@ -84,3 +84,12 @@ export { Dialog, type DialogProps, type DialogSize } from './components/structur
 export { ConfirmDialog, type ConfirmDialogProps } from './components/structure/ConfirmDialog'
 export { SideSheet, type SideSheetProps } from './components/structure/SideSheet'
 export { Drawer, type DrawerProps } from './components/structure/Drawer'
+
+// 05C.1 · RFQ & supplier workflow
+export { RfqHeader, type RfqHeaderProps, type RfqStatus } from './components/rfq/RfqHeader'
+export { RfqLifecycle, RFQ_STAGES, type RfqLifecycleProps, type RfqStage } from './components/rfq/RfqLifecycle'
+export { RfqSummary, type RfqSummaryProps } from './components/rfq/RfqSummary'
+export { ResponseTracker, type ResponseTrackerProps } from './components/rfq/ResponseTracker'
+export { SupplierRow, SupplierRowHeader, type SupplierRowProps, type SupplierParticipation } from './components/rfq/SupplierRow'
+export { SupplierQuestion, type SupplierQuestionProps } from './components/rfq/SupplierQuestion'
+export { useElementWidth } from './hooks'

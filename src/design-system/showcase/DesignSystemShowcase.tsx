@@ -8,6 +8,7 @@ import {
   QuolyMark, Radio, SearchInput, SectionHeader, SegmentedControl, Select, SideSheet, Sidebar, Skeleton, Spinner,
   SplitButton, StatusBadge, Switch, TableCell, TablePagination, TableToolbar, Tabs, Tag, TextButton, TextInput,
   Textarea, Toast, Tooltip, TooltipBubble, ValidationMessage, notify, type DataTableColumn, type NavItem,
+  RfqHeader, RfqLifecycle, RfqSummary, ResponseTracker, SupplierRow, SupplierRowHeader, SupplierQuestion,
 } from '..'
 import './showcase.scss'
 
@@ -405,6 +406,24 @@ export default function DesignSystemShowcase() {
               <TextInput label="Nombre" defaultValue="Caja corrugada 40×30" />
             </Dialog>
             <ConfirmDialog inline tone="destructive" title="¿Eliminar la solicitud?" description="Esta acción no se puede deshacer." details={[{ label: 'Solicitud', value: 'RFQ-0318' }, { label: 'Proveedores', value: '5' }]} confirmLabel="Eliminar" />
+          </div>
+        </ContentSection>
+        <ContentSection title="05C.1 · Solicitudes y proveedores">
+          <div className="ds-sc-stack">
+            <RfqHeader title="Caja corrugada 40×30 doble pared (ficticio)" reference="RFQ-0318" status="quotes" created="21 oct 2026" action={<Button variant="secondary" icon="columns">Comparar cotizaciones</Button>} />
+            <RfqLifecycle current="quotes" />
+            <RfqSummary quantity="12.000" unit="uds" deadline="4 nov 2026" deadlineDetail="En 6 días" currency="MXN" suppliersResponded={3} suppliersTotal={5} leading={{ price: '14,20 MXN / ud', supplier: 'Empaques del Norte (ficticio)' }} />
+            <div className="ds-sc-grid"><ResponseTracker responded={3} total={5} /><ResponseTracker responded={9} total={20} /></div>
+            <div>
+              <SupplierRowHeader />
+              <SupplierRow name="Empaques del Norte (ficticio)" contact="ventas@ejemplo.test" status="responded" activity="Respondió hace 2 h" price="14,20 MXN" priceDetail="por unidad" onClick={() => undefined} />
+              <SupplierRow name="Cartonera Andina (ficticio)" status="question" activity="Ayer" onClick={() => undefined} />
+              <SupplierRow name="Corrugados Delta (ficticio)" contact="compras@ejemplo.test" status="viewed" activity="Vio la solicitud el lunes" last />
+            </div>
+            <div>
+              <SupplierQuestion sender="Cartonera Andina (ficticio)" channel="Correo" received="Ayer, 14:20" question="¿La entrega puede ser en dos lotes?" context="Sobre: condiciones de entrega" onRespond={() => undefined} />
+              <SupplierQuestion sender="Empaques del Norte (ficticio)" question="¿Aceptan cartón reciclado?" state="answered" answer="Sí, siempre que cumpla ECT 32." answeredBy="Respondida por Ana Ruiz" last />
+            </div>
           </div>
         </ContentSection>
       </main>

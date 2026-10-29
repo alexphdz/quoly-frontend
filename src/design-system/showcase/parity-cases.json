@@ -1,118 +1,1550 @@
 [
-  ["btn-primary", ["Button", {}, "Crear solicitud"]],
-  ["btn-secondary", ["Button", {"variant": "secondary"}, "Revisar cotización"]],
-  ["btn-tertiary", ["Button", {"variant": "tertiary"}, "Ver respuesta"]],
-  ["btn-destructive", ["Button", {"variant": "destructive", "icon": "trash"}, "Descartar respuesta"]],
-  ["btn-destructive-strong", ["Button", {"variant": "destructive-strong"}, "Eliminar borrador"]],
-  ["btn-icon-end", ["Button", {"variant": "secondary", "iconEnd": "caret-right"}, "Siguiente proveedor"]],
-  ["btn-xs", ["Button", {"size": "xs"}, "Extra pequeño"]],
-  ["btn-sm", ["Button", {"size": "sm", "icon": "plus"}, "Pequeño"]],
-  ["btn-lg", ["Button", {"size": "lg", "icon": "paper-plane-tilt"}, "Grande"]],
-  ["btn-xl", ["Button", {"size": "xl"}, "Extra grande"]],
-  ["btn-disabled", ["Button", {"disabled": true}, "Deshabilitado"]],
-  ["btn-loading", ["Button", {"loading": true}, "Enviando…"]],
-  ["btn-selected", ["Button", {"variant": "secondary", "selected": true}, "Seleccionado"]],
-  ["iconbtn-tertiary", ["IconButton", {"icon": "pencil-simple", "label": "Editar"}]],
-  ["iconbtn-secondary-sm", ["IconButton", {"icon": "copy", "label": "Copiar", "variant": "secondary", "size": "sm"}]],
-  ["iconbtn-selected", ["IconButton", {"icon": "flag", "label": "Marcar", "variant": "secondary", "selected": true}]],
-  ["iconbtn-lg", ["IconButton", {"icon": "x", "label": "Cerrar", "size": "lg"}]],
-  ["textbtn", ["TextButton", {"icon": "plus"}, "Agregar proveedor"]],
-  ["textbtn-destructive-sm", ["TextButton", {"tone": "destructive", "size": "sm"}, "Quitar"]],
-  ["splitbtn", ["SplitButton", {"icon": "export"}, "Exportar decisión"]],
-  ["splitbtn-secondary", ["SplitButton", {"variant": "secondary"}, "Exportar"]],
-  ["btngroup", ["ButtonGroup", {"attached": true, "label": "Vista", "items": [{"label": "Tabla", "selected": true}, {"label": "Tarjetas"}, {"icon": "list", "ariaLabel": "Lista"}]}]],
-
-  ["text-input", ["TextInput", {"id": "c1", "label": "Nombre de la solicitud", "placeholder": "Ej. Caja corrugada", "required": true}]],
-  ["text-input-desc", ["TextInput", {"id": "c2", "label": "Correo", "icon": "envelope-simple", "defaultValue": "ventas@ejemplo.test", "description": "Usaremos este correo."}]],
-  ["text-input-error", ["TextInput", {"id": "c3", "label": "Código postal", "defaultValue": "0600", "status": "error", "message": "Debe tener 5 dígitos."}]],
-  ["text-input-readonly", ["TextInput", {"id": "c4", "label": "Referencia", "defaultValue": "RFQ-0318", "readOnly": true}]],
-  ["text-input-disabled", ["TextInput", {"id": "c5", "label": "Deshabilitado", "placeholder": "No editable", "disabled": true}]],
-  ["text-input-sm", ["TextInput", {"id": "c6", "size": "sm", "placeholder": "Pequeño", "suffix": "kg"}]],
-  ["number-input", ["NumberInput", {"id": "c7", "label": "Cantidad", "unit": "uds", "defaultValue": "12000"}]],
-  ["currency-input", ["CurrencyInput", {"id": "c8", "label": "Precio objetivo", "defaultValue": "14.50", "currency": "MXN", "unit": "/ ud"}]],
-  ["search-input", ["SearchInput", {"id": "c9", "placeholder": "Buscar proveedores", "shortcut": "/"}]],
-  ["select", ["Select", {"id": "c10", "label": "Incoterm", "placeholder": "Seleccionar", "options": ["EXW", "FOB", "DAP"]}]],
-  ["textarea", ["Textarea", {"id": "c11", "label": "Notas", "maxLength": 280, "placeholder": "Condiciones…", "rows": 3}]],
-  ["date-input", ["DateInput", {"id": "c12", "label": "Fecha límite"}]],
-  ["multiselect", ["MultiSelect", {"id": "c13", "label": "Países", "value": ["mx", "co", "pe"], "options": [{"value": "mx", "label": "México"}, {"value": "co", "label": "Colombia"}, {"value": "pe", "label": "Perú"}]}]],
-
-  ["checkbox", ["Checkbox", {"id": "c14", "label": "Incluir flete", "defaultChecked": true}]],
-  ["checkbox-off-desc", ["Checkbox", {"id": "c15", "label": "Notificar", "description": "Envía un aviso al proveedor."}]],
-  ["checkbox-indeterminate", ["Checkbox", {"id": "c16", "label": "Parcial", "indeterminate": true}]],
-  ["checkbox-error", ["Checkbox", {"id": "c17", "label": "Acepto", "status": "error", "message": "Necesario."}]],
-  ["radio-on", ["Radio", {"id": "c18", "name": "r", "label": "Entrega en planta", "checked": true, "description": "El proveedor entrega."}]],
-  ["radio-off", ["Radio", {"id": "c19", "name": "r2", "label": "Recolección", "checked": false}]],
-  ["switch-on", ["Switch", {"id": "c20", "label": "Recordatorios", "description": "Cada 48 h.", "defaultChecked": true}]],
-  ["switch-off-labels", ["Switch", {"id": "c21", "label": "Etiquetas", "stateLabels": ["Sí", "No"]}]],
-  ["segmented", ["SegmentedControl", {"label": "Filtro", "value": "all", "options": [{"value": "all", "label": "Todas", "count": 24}, {"value": "open", "label": "Abiertas", "count": 9}, {"value": "closed", "label": "Cerradas"}]}]],
-  ["segmented-sm", ["SegmentedControl", {"label": "Vista", "size": "sm", "value": "a", "options": [{"value": "a", "label": "Tabla", "icon": "columns"}, {"value": "b", "label": "Lista", "icon": "list"}]}]],
-
-  ["badge-success", ["StatusBadge", {"tone": "success"}, "Recibida"]],
-  ["badge-warning", ["StatusBadge", {"tone": "warning"}, "Por vencer"]],
-  ["badge-error", ["StatusBadge", {"tone": "error"}, "Declinada"]],
-  ["badge-info", ["StatusBadge", {"tone": "info"}, "Enviada"]],
-  ["badge-ai", ["StatusBadge", {"tone": "ai"}, "Propuesto por IA"]],
-  ["badge-neutral", ["StatusBadge", {}, "Borrador"]],
-  ["badge-strong", ["StatusBadge", {"tone": "success", "variant": "strong"}, "Adjudicada"]],
-  ["badge-quiet", ["StatusBadge", {"tone": "warning", "variant": "quiet"}, "Pendiente"]],
-  ["tag", ["Tag", {}, "Corrugado"]],
-  ["tag-outline", ["Tag", {"variant": "outline", "icon": "package"}, "Caja RSC"]],
-  ["chip-selected", ["Chip", {"selected": true, "count": 4}, "Recibidas"]],
-  ["chip", ["Chip", {"count": 2}, "Pendientes"]],
-  ["chip-removable", ["Chip", {"removable": true}, "México"]],
-  ["counter", ["Counter", {"value": 128}]],
-  ["counter-subtle", ["Counter", {"value": 7, "variant": "subtle"}]],
-  ["notify-count", ["NotificationIndicator", {"label": "3 nuevas", "count": 3}, ["IconButton", {"icon": "tray-arrow-down", "label": "Bandeja"}]]],
-  ["progress-linear", ["Progress", {"label": "Extracción", "value": 64, "valueText": "64%"}]],
-  ["progress-ratio", ["Progress", {"label": "Respuestas", "variant": "ratio", "value": 3, "max": 5, "valueText": "3 de 5"}]],
-  ["progress-steps", ["Progress", {"label": "Pasos", "variant": "steps", "value": 2, "steps": 4, "stepLabels": ["Datos", "Proveedores", "Revisión", "Envío"]}]],
-
-  ["validation-error", ["ValidationMessage", {}, "Campo obligatorio."]],
-  ["validation-success", ["ValidationMessage", {"tone": "success"}, "Guardado."]],
-  ["alert-notice", ["InlineAlert", {"tone": "info", "title": "Recordatorio:"}, "Dos proveedores no han respondido."]],
-  ["alert-contextual", ["InlineAlert", {"prominence": "contextual", "tone": "ai", "title": "Campos propuestos por IA"}, "Revisa y confirma los valores extraídos."]],
-  ["alert-blocking", ["InlineAlert", {"prominence": "blocking", "tone": "error", "title": "No se pudo enviar", "resolution": "Verifica la conexión de correo."}, "El servidor rechazó la autenticación."]],
-  ["toast", ["Toast", {"title": "Solicitud enviada"}, "5 proveedores notificados."]],
-  ["toast-error", ["Toast", {"tone": "error", "title": "Error al guardar"}]],
-  ["tooltip", ["Tooltip|TooltipBubble", {"shortcut": "⌘K"}, "Buscar"]],
-  ["popover", ["Popover|PopoverPanel", {"title": "Plazo de respuesta"}, "Los proveedores podrán responder hasta la fecha límite."]],
-  ["spinner", ["Spinner", {"showLabel": true, "label": "Cargando"}]],
-  ["skeleton", ["Skeleton", {"lines": 3, "width": 240}]],
-  ["empty-state", ["EmptyState", {"title": "Sin cotizaciones"}, "Las respuestas aparecerán aquí."]],
-  ["empty-state-sm", ["EmptyState", {"title": "Sin archivos", "size": "sm", "align": "start", "icon": "paperclip"}]],
-
-  ["divider-label", ["Divider", {"label": "o"}]],
-  ["avatar", ["Avatar", {"name": "Ana Ruiz"}]],
-  ["avatar-org", ["Avatar", {"name": "Empaques del Norte", "kind": "organization", "size": 40}]],
-  ["kbd", ["Kbd", {"keys": ["⌘", "K"]}]],
-  ["tabs", ["Tabs", {"label": "Secciones", "value": "resumen", "items": [{"value": "resumen", "label": "Resumen"}, {"value": "prov", "label": "Proveedores", "count": 5}, {"value": "docs", "label": "Documentos"}]}]],
-  ["tabs-secondary", ["Tabs", {"variant": "secondary", "value": "Todas", "items": ["Todas", "Recibidas", "Pendientes"]}]],
-
-  ["sidebar", ["Sidebar", {"height": 600, "active": "rfq", "user": "Ana Ruiz", "workspace": "Empaques Demo", "items": [{"value": "home", "label": "Inicio", "icon": "house"}, {"value": "rfq", "label": "Solicitudes", "icon": "files", "count": 12}, {"value": "quotes", "label": "Cotizaciones", "icon": "quotes"}, {"value": "suppliers", "label": "Proveedores", "icon": "users-three"}]}]],
-  ["sidebar-collapsed", ["Sidebar", {"height": 600, "collapsed": true, "active": "rfq", "user": "Ana Ruiz", "items": [{"value": "home", "label": "Inicio", "icon": "house"}, {"value": "rfq", "label": "Solicitudes", "icon": "files"}, {"value": "quotes", "label": "Cotizaciones", "icon": "quotes"}]}]],
-
-  ["section-header", ["SectionHeader", {"title": "Resumen de la solicitud", "description": "Hechos clave de la RFQ.", "meta": "Actualizado hoy", "divider": true}]],
-  ["info-group", ["InfoGroup", {"items": [{"label": "Proveedores", "value": "5", "detail": "3 respondieron"}, {"label": "Cantidad", "value": "12.000 uds"}, {"label": "Incoterm", "value": "DAP"}, {"label": "Presupuesto", "value": null}]}]],
-  ["kv-group", ["KeyValueGroup", {"items": [{"label": "Material", "value": "Cartón corrugado"}, {"label": "Dimensiones", "value": "40 × 30 × 25 cm"}, {"label": "Notas", "value": "Entrega en dos lotes.", "span": true, "long": true}]}]],
-  ["metric", ["Metric", {"label": "Respuestas", "value": "3", "unit": "de 5", "detail": "2 pendientes"}]],
-  ["metric-hero", ["Metric", {"label": "Ahorro potencial", "value": "14.200", "unit": "MXN", "size": "hero"}]],
-  ["context-panel", ["ContextPanel", {"title": "Contexto", "icon": "info"}, "RFQ-0318 enviada el 21 oct."]],
-  ["detail-panel", ["DetailPanel", {"context": "Cotización", "title": "Empaques del Norte", "meta": "Recibida 28 oct"}, "Oferta por 12.000 cajas con entrega DAP."]],
-  ["expandable-open", ["Expandable", {"title": "Condiciones comerciales", "meta": "3 campos", "defaultOpen": true}, "Pago a 30 días."]],
-  ["expandable-closed", ["Expandable", {"title": "Historial"}, "Solicitud creada."]],
-  ["empty-section", ["EmptySection", {"title": "Sin documentos", "text": "Adjunta planos o especificaciones."}]],
-  ["dialog", ["Dialog", {"inline": true, "title": "Renombrar solicitud", "description": "El nombre es visible para los proveedores."}, "Contenido del diálogo."]],
-  ["confirm", ["ConfirmDialog", {"inline": true, "tone": "destructive", "title": "¿Eliminar la solicitud?", "description": "No se puede deshacer.", "details": [{"label": "Solicitud", "value": "RFQ-0318"}], "confirmLabel": "Eliminar", "cancelLabel": "Cancelar"}]],
-
-  ["cell-identity", ["TableCell", {"type": "identity", "value": "Empaques del Norte", "secondary": "PRV-0056"}]],
-  ["cell-money", ["TableCell", {"type": "money", "value": 184250.5, "currency": "MXN", "unit": "ud"}]],
-  ["cell-number", ["TableCell", {"type": "number", "value": 12000, "unit": "uds"}]],
-  ["cell-date-overdue", ["TableCell", {"type": "date", "value": "2026-10-27", "tone": "overdue", "note": "Hace 2 días"}]],
-  ["cell-status", ["TableCell", {"type": "status", "value": "Recibida", "tone": "success"}]],
-  ["cell-missing", ["TableCell", {"type": "money", "value": null, "reason": "Sin cotización"}]],
-  ["toolbar", ["TableToolbar", {"title": "Cotizaciones", "count": 24, "context": "RFQ-0318"}]],
-  ["toolbar-selected", ["TableToolbar", {"selectedCount": 3, "onClearSelection": true}]],
-  ["pagination", ["TablePagination", {"page": 1, "pageSize": 25, "total": 248}]],
-  ["datatable", ["DataTable", {"rowKey": "id", "selectable": true, "defaultSelected": ["b"], "columns": [{"key": "name", "header": "Proveedor", "type": "identity"}, {"key": "total", "header": "Total", "type": "money", "sortable": true}, {"key": "status", "header": "Estado", "type": "status"}], "rows": [{"id": "a", "name": "Empaques del Norte", "total": 184250.5, "status": "Recibida"}, {"id": "b", "name": "Cartonera Andina", "total": 176900, "status": "Pendiente"}]}]],
-  ["datatable-empty", ["DataTable", {"state": "empty", "columns": [{"key": "name", "header": "Proveedor", "type": "identity"}, {"key": "total", "header": "Total", "type": "money"}], "rows": []}]]
+  [
+    "btn-primary",
+    [
+      "Button",
+      {},
+      "Crear solicitud"
+    ]
+  ],
+  [
+    "btn-secondary",
+    [
+      "Button",
+      {
+        "variant": "secondary"
+      },
+      "Revisar cotización"
+    ]
+  ],
+  [
+    "btn-tertiary",
+    [
+      "Button",
+      {
+        "variant": "tertiary"
+      },
+      "Ver respuesta"
+    ]
+  ],
+  [
+    "btn-destructive",
+    [
+      "Button",
+      {
+        "variant": "destructive",
+        "icon": "trash"
+      },
+      "Descartar respuesta"
+    ]
+  ],
+  [
+    "btn-destructive-strong",
+    [
+      "Button",
+      {
+        "variant": "destructive-strong"
+      },
+      "Eliminar borrador"
+    ]
+  ],
+  [
+    "btn-icon-end",
+    [
+      "Button",
+      {
+        "variant": "secondary",
+        "iconEnd": "caret-right"
+      },
+      "Siguiente proveedor"
+    ]
+  ],
+  [
+    "btn-xs",
+    [
+      "Button",
+      {
+        "size": "xs"
+      },
+      "Extra pequeño"
+    ]
+  ],
+  [
+    "btn-sm",
+    [
+      "Button",
+      {
+        "size": "sm",
+        "icon": "plus"
+      },
+      "Pequeño"
+    ]
+  ],
+  [
+    "btn-lg",
+    [
+      "Button",
+      {
+        "size": "lg",
+        "icon": "paper-plane-tilt"
+      },
+      "Grande"
+    ]
+  ],
+  [
+    "btn-xl",
+    [
+      "Button",
+      {
+        "size": "xl"
+      },
+      "Extra grande"
+    ]
+  ],
+  [
+    "btn-disabled",
+    [
+      "Button",
+      {
+        "disabled": true
+      },
+      "Deshabilitado"
+    ]
+  ],
+  [
+    "btn-loading",
+    [
+      "Button",
+      {
+        "loading": true
+      },
+      "Enviando…"
+    ]
+  ],
+  [
+    "btn-selected",
+    [
+      "Button",
+      {
+        "variant": "secondary",
+        "selected": true
+      },
+      "Seleccionado"
+    ]
+  ],
+  [
+    "iconbtn-tertiary",
+    [
+      "IconButton",
+      {
+        "icon": "pencil-simple",
+        "label": "Editar"
+      }
+    ]
+  ],
+  [
+    "iconbtn-secondary-sm",
+    [
+      "IconButton",
+      {
+        "icon": "copy",
+        "label": "Copiar",
+        "variant": "secondary",
+        "size": "sm"
+      }
+    ]
+  ],
+  [
+    "iconbtn-selected",
+    [
+      "IconButton",
+      {
+        "icon": "flag",
+        "label": "Marcar",
+        "variant": "secondary",
+        "selected": true
+      }
+    ]
+  ],
+  [
+    "iconbtn-lg",
+    [
+      "IconButton",
+      {
+        "icon": "x",
+        "label": "Cerrar",
+        "size": "lg"
+      }
+    ]
+  ],
+  [
+    "textbtn",
+    [
+      "TextButton",
+      {
+        "icon": "plus"
+      },
+      "Agregar proveedor"
+    ]
+  ],
+  [
+    "textbtn-destructive-sm",
+    [
+      "TextButton",
+      {
+        "tone": "destructive",
+        "size": "sm"
+      },
+      "Quitar"
+    ]
+  ],
+  [
+    "splitbtn",
+    [
+      "SplitButton",
+      {
+        "icon": "export"
+      },
+      "Exportar decisión"
+    ]
+  ],
+  [
+    "splitbtn-secondary",
+    [
+      "SplitButton",
+      {
+        "variant": "secondary"
+      },
+      "Exportar"
+    ]
+  ],
+  [
+    "btngroup",
+    [
+      "ButtonGroup",
+      {
+        "attached": true,
+        "label": "Vista",
+        "items": [
+          {
+            "label": "Tabla",
+            "selected": true
+          },
+          {
+            "label": "Tarjetas"
+          },
+          {
+            "icon": "list",
+            "ariaLabel": "Lista"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "text-input",
+    [
+      "TextInput",
+      {
+        "id": "c1",
+        "label": "Nombre de la solicitud",
+        "placeholder": "Ej. Caja corrugada",
+        "required": true
+      }
+    ]
+  ],
+  [
+    "text-input-desc",
+    [
+      "TextInput",
+      {
+        "id": "c2",
+        "label": "Correo",
+        "icon": "envelope-simple",
+        "defaultValue": "ventas@ejemplo.test",
+        "description": "Usaremos este correo."
+      }
+    ]
+  ],
+  [
+    "text-input-error",
+    [
+      "TextInput",
+      {
+        "id": "c3",
+        "label": "Código postal",
+        "defaultValue": "0600",
+        "status": "error",
+        "message": "Debe tener 5 dígitos."
+      }
+    ]
+  ],
+  [
+    "text-input-readonly",
+    [
+      "TextInput",
+      {
+        "id": "c4",
+        "label": "Referencia",
+        "defaultValue": "RFQ-0318",
+        "readOnly": true
+      }
+    ]
+  ],
+  [
+    "text-input-disabled",
+    [
+      "TextInput",
+      {
+        "id": "c5",
+        "label": "Deshabilitado",
+        "placeholder": "No editable",
+        "disabled": true
+      }
+    ]
+  ],
+  [
+    "text-input-sm",
+    [
+      "TextInput",
+      {
+        "id": "c6",
+        "size": "sm",
+        "placeholder": "Pequeño",
+        "suffix": "kg"
+      }
+    ]
+  ],
+  [
+    "number-input",
+    [
+      "NumberInput",
+      {
+        "id": "c7",
+        "label": "Cantidad",
+        "unit": "uds",
+        "defaultValue": "12000"
+      }
+    ]
+  ],
+  [
+    "currency-input",
+    [
+      "CurrencyInput",
+      {
+        "id": "c8",
+        "label": "Precio objetivo",
+        "defaultValue": "14.50",
+        "currency": "MXN",
+        "unit": "/ ud"
+      }
+    ]
+  ],
+  [
+    "search-input",
+    [
+      "SearchInput",
+      {
+        "id": "c9",
+        "placeholder": "Buscar proveedores",
+        "shortcut": "/"
+      }
+    ]
+  ],
+  [
+    "select",
+    [
+      "Select",
+      {
+        "id": "c10",
+        "label": "Incoterm",
+        "placeholder": "Seleccionar",
+        "options": [
+          "EXW",
+          "FOB",
+          "DAP"
+        ]
+      }
+    ]
+  ],
+  [
+    "textarea",
+    [
+      "Textarea",
+      {
+        "id": "c11",
+        "label": "Notas",
+        "maxLength": 280,
+        "placeholder": "Condiciones…",
+        "rows": 3
+      }
+    ]
+  ],
+  [
+    "date-input",
+    [
+      "DateInput",
+      {
+        "id": "c12",
+        "label": "Fecha límite"
+      }
+    ]
+  ],
+  [
+    "multiselect",
+    [
+      "MultiSelect",
+      {
+        "id": "c13",
+        "label": "Países",
+        "value": [
+          "mx",
+          "co",
+          "pe"
+        ],
+        "options": [
+          {
+            "value": "mx",
+            "label": "México"
+          },
+          {
+            "value": "co",
+            "label": "Colombia"
+          },
+          {
+            "value": "pe",
+            "label": "Perú"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "checkbox",
+    [
+      "Checkbox",
+      {
+        "id": "c14",
+        "label": "Incluir flete",
+        "defaultChecked": true
+      }
+    ]
+  ],
+  [
+    "checkbox-off-desc",
+    [
+      "Checkbox",
+      {
+        "id": "c15",
+        "label": "Notificar",
+        "description": "Envía un aviso al proveedor."
+      }
+    ]
+  ],
+  [
+    "checkbox-indeterminate",
+    [
+      "Checkbox",
+      {
+        "id": "c16",
+        "label": "Parcial",
+        "indeterminate": true
+      }
+    ]
+  ],
+  [
+    "checkbox-error",
+    [
+      "Checkbox",
+      {
+        "id": "c17",
+        "label": "Acepto",
+        "status": "error",
+        "message": "Necesario."
+      }
+    ]
+  ],
+  [
+    "radio-on",
+    [
+      "Radio",
+      {
+        "id": "c18",
+        "name": "r",
+        "label": "Entrega en planta",
+        "checked": true,
+        "description": "El proveedor entrega."
+      }
+    ]
+  ],
+  [
+    "radio-off",
+    [
+      "Radio",
+      {
+        "id": "c19",
+        "name": "r2",
+        "label": "Recolección",
+        "checked": false
+      }
+    ]
+  ],
+  [
+    "switch-on",
+    [
+      "Switch",
+      {
+        "id": "c20",
+        "label": "Recordatorios",
+        "description": "Cada 48 h.",
+        "defaultChecked": true
+      }
+    ]
+  ],
+  [
+    "switch-off-labels",
+    [
+      "Switch",
+      {
+        "id": "c21",
+        "label": "Etiquetas",
+        "stateLabels": [
+          "Sí",
+          "No"
+        ]
+      }
+    ]
+  ],
+  [
+    "segmented",
+    [
+      "SegmentedControl",
+      {
+        "label": "Filtro",
+        "value": "all",
+        "options": [
+          {
+            "value": "all",
+            "label": "Todas",
+            "count": 24
+          },
+          {
+            "value": "open",
+            "label": "Abiertas",
+            "count": 9
+          },
+          {
+            "value": "closed",
+            "label": "Cerradas"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "segmented-sm",
+    [
+      "SegmentedControl",
+      {
+        "label": "Vista",
+        "size": "sm",
+        "value": "a",
+        "options": [
+          {
+            "value": "a",
+            "label": "Tabla",
+            "icon": "columns"
+          },
+          {
+            "value": "b",
+            "label": "Lista",
+            "icon": "list"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "badge-success",
+    [
+      "StatusBadge",
+      {
+        "tone": "success"
+      },
+      "Recibida"
+    ]
+  ],
+  [
+    "badge-warning",
+    [
+      "StatusBadge",
+      {
+        "tone": "warning"
+      },
+      "Por vencer"
+    ]
+  ],
+  [
+    "badge-error",
+    [
+      "StatusBadge",
+      {
+        "tone": "error"
+      },
+      "Declinada"
+    ]
+  ],
+  [
+    "badge-info",
+    [
+      "StatusBadge",
+      {
+        "tone": "info"
+      },
+      "Enviada"
+    ]
+  ],
+  [
+    "badge-ai",
+    [
+      "StatusBadge",
+      {
+        "tone": "ai"
+      },
+      "Propuesto por IA"
+    ]
+  ],
+  [
+    "badge-neutral",
+    [
+      "StatusBadge",
+      {},
+      "Borrador"
+    ]
+  ],
+  [
+    "badge-strong",
+    [
+      "StatusBadge",
+      {
+        "tone": "success",
+        "variant": "strong"
+      },
+      "Adjudicada"
+    ]
+  ],
+  [
+    "badge-quiet",
+    [
+      "StatusBadge",
+      {
+        "tone": "warning",
+        "variant": "quiet"
+      },
+      "Pendiente"
+    ]
+  ],
+  [
+    "tag",
+    [
+      "Tag",
+      {},
+      "Corrugado"
+    ]
+  ],
+  [
+    "tag-outline",
+    [
+      "Tag",
+      {
+        "variant": "outline",
+        "icon": "package"
+      },
+      "Caja RSC"
+    ]
+  ],
+  [
+    "chip-selected",
+    [
+      "Chip",
+      {
+        "selected": true,
+        "count": 4
+      },
+      "Recibidas"
+    ]
+  ],
+  [
+    "chip",
+    [
+      "Chip",
+      {
+        "count": 2
+      },
+      "Pendientes"
+    ]
+  ],
+  [
+    "chip-removable",
+    [
+      "Chip",
+      {
+        "removable": true
+      },
+      "México"
+    ]
+  ],
+  [
+    "counter",
+    [
+      "Counter",
+      {
+        "value": 128
+      }
+    ]
+  ],
+  [
+    "counter-subtle",
+    [
+      "Counter",
+      {
+        "value": 7,
+        "variant": "subtle"
+      }
+    ]
+  ],
+  [
+    "notify-count",
+    [
+      "NotificationIndicator",
+      {
+        "label": "3 nuevas",
+        "count": 3
+      },
+      [
+        "IconButton",
+        {
+          "icon": "tray-arrow-down",
+          "label": "Bandeja"
+        }
+      ]
+    ]
+  ],
+  [
+    "progress-linear",
+    [
+      "Progress",
+      {
+        "label": "Extracción",
+        "value": 64,
+        "valueText": "64%"
+      }
+    ]
+  ],
+  [
+    "progress-ratio",
+    [
+      "Progress",
+      {
+        "label": "Respuestas",
+        "variant": "ratio",
+        "value": 3,
+        "max": 5,
+        "valueText": "3 de 5"
+      }
+    ]
+  ],
+  [
+    "progress-steps",
+    [
+      "Progress",
+      {
+        "label": "Pasos",
+        "variant": "steps",
+        "value": 2,
+        "steps": 4,
+        "stepLabels": [
+          "Datos",
+          "Proveedores",
+          "Revisión",
+          "Envío"
+        ]
+      }
+    ]
+  ],
+  [
+    "validation-error",
+    [
+      "ValidationMessage",
+      {},
+      "Campo obligatorio."
+    ]
+  ],
+  [
+    "validation-success",
+    [
+      "ValidationMessage",
+      {
+        "tone": "success"
+      },
+      "Guardado."
+    ]
+  ],
+  [
+    "alert-notice",
+    [
+      "InlineAlert",
+      {
+        "tone": "info",
+        "title": "Recordatorio:"
+      },
+      "Dos proveedores no han respondido."
+    ]
+  ],
+  [
+    "alert-contextual",
+    [
+      "InlineAlert",
+      {
+        "prominence": "contextual",
+        "tone": "ai",
+        "title": "Campos propuestos por IA"
+      },
+      "Revisa y confirma los valores extraídos."
+    ]
+  ],
+  [
+    "alert-blocking",
+    [
+      "InlineAlert",
+      {
+        "prominence": "blocking",
+        "tone": "error",
+        "title": "No se pudo enviar",
+        "resolution": "Verifica la conexión de correo."
+      },
+      "El servidor rechazó la autenticación."
+    ]
+  ],
+  [
+    "toast",
+    [
+      "Toast",
+      {
+        "title": "Solicitud enviada"
+      },
+      "5 proveedores notificados."
+    ]
+  ],
+  [
+    "toast-error",
+    [
+      "Toast",
+      {
+        "tone": "error",
+        "title": "Error al guardar"
+      }
+    ]
+  ],
+  [
+    "tooltip",
+    [
+      "Tooltip|TooltipBubble",
+      {
+        "shortcut": "⌘K"
+      },
+      "Buscar"
+    ]
+  ],
+  [
+    "popover",
+    [
+      "Popover|PopoverPanel",
+      {
+        "title": "Plazo de respuesta"
+      },
+      "Los proveedores podrán responder hasta la fecha límite."
+    ]
+  ],
+  [
+    "spinner",
+    [
+      "Spinner",
+      {
+        "showLabel": true,
+        "label": "Cargando"
+      }
+    ]
+  ],
+  [
+    "skeleton",
+    [
+      "Skeleton",
+      {
+        "lines": 3,
+        "width": 240
+      }
+    ]
+  ],
+  [
+    "empty-state",
+    [
+      "EmptyState",
+      {
+        "title": "Sin cotizaciones"
+      },
+      "Las respuestas aparecerán aquí."
+    ]
+  ],
+  [
+    "empty-state-sm",
+    [
+      "EmptyState",
+      {
+        "title": "Sin archivos",
+        "size": "sm",
+        "align": "start",
+        "icon": "paperclip"
+      }
+    ]
+  ],
+  [
+    "divider-label",
+    [
+      "Divider",
+      {
+        "label": "o"
+      }
+    ]
+  ],
+  [
+    "avatar",
+    [
+      "Avatar",
+      {
+        "name": "Ana Ruiz"
+      }
+    ]
+  ],
+  [
+    "avatar-org",
+    [
+      "Avatar",
+      {
+        "name": "Empaques del Norte",
+        "kind": "organization",
+        "size": 40
+      }
+    ]
+  ],
+  [
+    "kbd",
+    [
+      "Kbd",
+      {
+        "keys": [
+          "⌘",
+          "K"
+        ]
+      }
+    ]
+  ],
+  [
+    "tabs",
+    [
+      "Tabs",
+      {
+        "label": "Secciones",
+        "value": "resumen",
+        "items": [
+          {
+            "value": "resumen",
+            "label": "Resumen"
+          },
+          {
+            "value": "prov",
+            "label": "Proveedores",
+            "count": 5
+          },
+          {
+            "value": "docs",
+            "label": "Documentos"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "tabs-secondary",
+    [
+      "Tabs",
+      {
+        "variant": "secondary",
+        "value": "Todas",
+        "items": [
+          "Todas",
+          "Recibidas",
+          "Pendientes"
+        ]
+      }
+    ]
+  ],
+  [
+    "sidebar",
+    [
+      "Sidebar",
+      {
+        "height": 600,
+        "active": "rfq",
+        "user": "Ana Ruiz",
+        "workspace": "Empaques Demo",
+        "items": [
+          {
+            "value": "home",
+            "label": "Inicio",
+            "icon": "house"
+          },
+          {
+            "value": "rfq",
+            "label": "Solicitudes",
+            "icon": "files",
+            "count": 12
+          },
+          {
+            "value": "quotes",
+            "label": "Cotizaciones",
+            "icon": "quotes"
+          },
+          {
+            "value": "suppliers",
+            "label": "Proveedores",
+            "icon": "users-three"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "sidebar-collapsed",
+    [
+      "Sidebar",
+      {
+        "height": 600,
+        "collapsed": true,
+        "active": "rfq",
+        "user": "Ana Ruiz",
+        "items": [
+          {
+            "value": "home",
+            "label": "Inicio",
+            "icon": "house"
+          },
+          {
+            "value": "rfq",
+            "label": "Solicitudes",
+            "icon": "files"
+          },
+          {
+            "value": "quotes",
+            "label": "Cotizaciones",
+            "icon": "quotes"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "section-header",
+    [
+      "SectionHeader",
+      {
+        "title": "Resumen de la solicitud",
+        "description": "Hechos clave de la RFQ.",
+        "meta": "Actualizado hoy",
+        "divider": true
+      }
+    ]
+  ],
+  [
+    "info-group",
+    [
+      "InfoGroup",
+      {
+        "items": [
+          {
+            "label": "Proveedores",
+            "value": "5",
+            "detail": "3 respondieron"
+          },
+          {
+            "label": "Cantidad",
+            "value": "12.000 uds"
+          },
+          {
+            "label": "Incoterm",
+            "value": "DAP"
+          },
+          {
+            "label": "Presupuesto",
+            "value": null
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "kv-group",
+    [
+      "KeyValueGroup",
+      {
+        "items": [
+          {
+            "label": "Material",
+            "value": "Cartón corrugado"
+          },
+          {
+            "label": "Dimensiones",
+            "value": "40 × 30 × 25 cm"
+          },
+          {
+            "label": "Notas",
+            "value": "Entrega en dos lotes.",
+            "span": true,
+            "long": true
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "metric",
+    [
+      "Metric",
+      {
+        "label": "Respuestas",
+        "value": "3",
+        "unit": "de 5",
+        "detail": "2 pendientes"
+      }
+    ]
+  ],
+  [
+    "metric-hero",
+    [
+      "Metric",
+      {
+        "label": "Ahorro potencial",
+        "value": "14.200",
+        "unit": "MXN",
+        "size": "hero"
+      }
+    ]
+  ],
+  [
+    "context-panel",
+    [
+      "ContextPanel",
+      {
+        "title": "Contexto",
+        "icon": "info"
+      },
+      "RFQ-0318 enviada el 21 oct."
+    ]
+  ],
+  [
+    "detail-panel",
+    [
+      "DetailPanel",
+      {
+        "context": "Cotización",
+        "title": "Empaques del Norte",
+        "meta": "Recibida 28 oct"
+      },
+      "Oferta por 12.000 cajas con entrega DAP."
+    ]
+  ],
+  [
+    "expandable-open",
+    [
+      "Expandable",
+      {
+        "title": "Condiciones comerciales",
+        "meta": "3 campos",
+        "defaultOpen": true
+      },
+      "Pago a 30 días."
+    ]
+  ],
+  [
+    "expandable-closed",
+    [
+      "Expandable",
+      {
+        "title": "Historial"
+      },
+      "Solicitud creada."
+    ]
+  ],
+  [
+    "empty-section",
+    [
+      "EmptySection",
+      {
+        "title": "Sin documentos",
+        "text": "Adjunta planos o especificaciones."
+      }
+    ]
+  ],
+  [
+    "dialog",
+    [
+      "Dialog",
+      {
+        "inline": true,
+        "title": "Renombrar solicitud",
+        "description": "El nombre es visible para los proveedores."
+      },
+      "Contenido del diálogo."
+    ]
+  ],
+  [
+    "confirm",
+    [
+      "ConfirmDialog",
+      {
+        "inline": true,
+        "tone": "destructive",
+        "title": "¿Eliminar la solicitud?",
+        "description": "No se puede deshacer.",
+        "details": [
+          {
+            "label": "Solicitud",
+            "value": "RFQ-0318"
+          }
+        ],
+        "confirmLabel": "Eliminar",
+        "cancelLabel": "Cancelar"
+      }
+    ]
+  ],
+  [
+    "cell-identity",
+    [
+      "TableCell",
+      {
+        "type": "identity",
+        "value": "Empaques del Norte",
+        "secondary": "PRV-0056"
+      }
+    ]
+  ],
+  [
+    "cell-money",
+    [
+      "TableCell",
+      {
+        "type": "money",
+        "value": 184250.5,
+        "currency": "MXN",
+        "unit": "ud"
+      }
+    ]
+  ],
+  [
+    "cell-number",
+    [
+      "TableCell",
+      {
+        "type": "number",
+        "value": 12000,
+        "unit": "uds"
+      }
+    ]
+  ],
+  [
+    "cell-date-overdue",
+    [
+      "TableCell",
+      {
+        "type": "date",
+        "value": "2026-10-27",
+        "tone": "overdue",
+        "note": "Hace 2 días"
+      }
+    ]
+  ],
+  [
+    "cell-status",
+    [
+      "TableCell",
+      {
+        "type": "status",
+        "value": "Recibida",
+        "tone": "success"
+      }
+    ]
+  ],
+  [
+    "cell-missing",
+    [
+      "TableCell",
+      {
+        "type": "money",
+        "value": null,
+        "reason": "Sin cotización"
+      }
+    ]
+  ],
+  [
+    "toolbar",
+    [
+      "TableToolbar",
+      {
+        "title": "Cotizaciones",
+        "count": 24,
+        "context": "RFQ-0318"
+      }
+    ]
+  ],
+  [
+    "toolbar-selected",
+    [
+      "TableToolbar",
+      {
+        "selectedCount": 3,
+        "onClearSelection": true
+      }
+    ]
+  ],
+  [
+    "pagination",
+    [
+      "TablePagination",
+      {
+        "page": 1,
+        "pageSize": 25,
+        "total": 248
+      }
+    ]
+  ],
+  [
+    "datatable",
+    [
+      "DataTable",
+      {
+        "rowKey": "id",
+        "selectable": true,
+        "defaultSelected": [
+          "b"
+        ],
+        "columns": [
+          {
+            "key": "name",
+            "header": "Proveedor",
+            "type": "identity"
+          },
+          {
+            "key": "total",
+            "header": "Total",
+            "type": "money",
+            "sortable": true
+          },
+          {
+            "key": "status",
+            "header": "Estado",
+            "type": "status"
+          }
+        ],
+        "rows": [
+          {
+            "id": "a",
+            "name": "Empaques del Norte",
+            "total": 184250.5,
+            "status": "Recibida"
+          },
+          {
+            "id": "b",
+            "name": "Cartonera Andina",
+            "total": 176900,
+            "status": "Pendiente"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "datatable-empty",
+    [
+      "DataTable",
+      {
+        "state": "empty",
+        "columns": [
+          {
+            "key": "name",
+            "header": "Proveedor",
+            "type": "identity"
+          },
+          {
+            "key": "total",
+            "header": "Total",
+            "type": "money"
+          }
+        ],
+        "rows": []
+      }
+    ]
+  ],
+  [
+    "rfq-header",
+    [
+      "RfqHeader",
+      {
+        "title": "Caja corrugada 40×30 doble pared",
+        "reference": "RFQ-0318",
+        "status": "quotes",
+        "created": "21 oct 2026"
+      }
+    ]
+  ],
+  [
+    "rfq-header-draft",
+    [
+      "RfqHeader",
+      {
+        "title": "Etiquetas adhesivas",
+        "status": "draft"
+      }
+    ]
+  ],
+  [
+    "rfq-lifecycle",
+    [
+      "RfqLifecycle",
+      {
+        "current": "quotes"
+      }
+    ]
+  ],
+  [
+    "rfq-lifecycle-vertical",
+    [
+      "RfqLifecycle",
+      {
+        "current": "sent",
+        "layout": "vertical"
+      }
+    ]
+  ],
+  [
+    "rfq-summary",
+    [
+      "RfqSummary",
+      {
+        "quantity": "12.000",
+        "unit": "uds",
+        "deadline": "4 nov 2026",
+        "deadlineDetail": "En 6 días",
+        "currency": "MXN",
+        "suppliersResponded": 3,
+        "suppliersTotal": 5,
+        "leading": {
+          "price": "14,20 MXN / ud",
+          "supplier": "Empaques del Norte"
+        }
+      }
+    ]
+  ],
+  [
+    "rfq-summary-overdue",
+    [
+      "RfqSummary",
+      {
+        "quantity": "500",
+        "unit": "kg",
+        "deadline": "20 oct 2026",
+        "overdue": true,
+        "suppliersTotal": 0
+      }
+    ]
+  ],
+  [
+    "rfq-tracker",
+    [
+      "ResponseTracker",
+      {
+        "responded": 3,
+        "total": 5
+      }
+    ]
+  ],
+  [
+    "rfq-tracker-continuous",
+    [
+      "ResponseTracker",
+      {
+        "responded": 9,
+        "total": 20
+      }
+    ]
+  ],
+  [
+    "rfq-supplier-row",
+    [
+      "SupplierRow",
+      {
+        "name": "Empaques del Norte",
+        "contact": "ventas@ejemplo.test",
+        "status": "responded",
+        "activity": "Respondió hace 2 h",
+        "price": "14,20 MXN",
+        "priceDetail": "por unidad",
+        "onClick": true
+      }
+    ]
+  ],
+  [
+    "rfq-supplier-row-question",
+    [
+      "SupplierRow",
+      {
+        "name": "Cartonera Andina",
+        "status": "question",
+        "activity": "Ayer"
+      }
+    ]
+  ],
+  [
+    "rfq-supplier-header",
+    [
+      "SupplierRowHeader",
+      {}
+    ]
+  ],
+  [
+    "rfq-question-open",
+    [
+      "SupplierQuestion",
+      {
+        "sender": "Cartonera Andina",
+        "channel": "Correo",
+        "received": "Ayer, 14:20",
+        "question": "¿La entrega puede ser en dos lotes?",
+        "context": "Sobre: condiciones de entrega",
+        "onRespond": true
+      }
+    ]
+  ],
+  [
+    "rfq-question-answered",
+    [
+      "SupplierQuestion",
+      {
+        "sender": "Empaques del Norte",
+        "question": "¿Aceptan cartón reciclado?",
+        "state": "answered",
+        "answer": "Sí, siempre que cumpla ECT 32.",
+        "answeredBy": "Respondida por Ana Ruiz"
+      }
+    ]
+  ]
 ]
