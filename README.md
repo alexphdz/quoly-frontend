@@ -1,58 +1,49 @@
 # Quoly
 
-**El espacio de trabajo entre pedir cotizaciones y decidir.**
+## De respuestas desordenadas a una decisión que puedes defender.
 
-Quoly ayuda a un comprador a cotizar con los proveedores que ya conoce, y a convertir respuestas desordenadas en una comparación que puede defender.
+Pides cotizaciones y te llega el caos: correos, PDFs, Excels, fichas técnicas, hasta fotos de listas de precios. Unas traen precio pero no tiempo de entrega. Otras, una pregunta en vez de una oferta. Cada proveedor con su propio formato y su propia moneda.
 
-Esta es la interfaz de Quoly: el lado del comprador. Los proveedores nunca entran aquí; responden por correo, como siempre.
+Juntar todo eso a mano, en una hoja de cálculo, es lento y frágil.
 
-- Producción: `https://quoly.app`
-- Staging: `https://staging.quoly.app`
+**Quoly lo ordena por ti —  y la decisión sigue siendo tuya.**
 
 ---
 
-## El problema
+### Pide. Deja que respondan como siempre. Compara. Decide.
 
-Las cotizaciones casi nunca llegan listas para comparar. Llegan como correos, PDFs, hojas de Excel, documentos de Word, fichas técnicas y hasta fotos de listas de precios. Unas traen precio pero no tiempo de entrega; otras traen una pregunta en vez de una oferta; cada proveedor usa su propio formato y su propia moneda.
+Tus proveedores no cambian nada: siguen contestando por correo, sin cuentas ni portales que aprender. Quoly lee cada respuesta, saca lo que importa y lo pone todo en una misma mesa para que compares de verdad.
 
-Juntar todo eso a mano, en una hoja de cálculo, es lento y frágil. Quoly lo ordena por ti.
+---
 
-## Cómo funciona
+## Lo que Quoly hace por ti
 
-```
-Creas la solicitud  →  Eliges proveedores y la envías  →  Los proveedores responden por correo
-→  Quoly lee las respuestas  →  Tú revisas  →  Se acumulan las cotizaciones
-→  Comparas  →  Decides (adjudicas)
-```
+**Lee el caos.** Correos y archivos —PDF, Excel, Word, fichas, imágenes— leídos de una sola pasada. De texto suelto a datos claros.
 
-Una misma solicitud puede tener varios proveedores en etapas distintas al mismo tiempo: uno ya cotizó, otro sigue en silencio, otro está esperando que le respondas algo.
+**Estructura cada oferta.** Precio, escalones por cantidad, MOQ, tiempos de entrega, validez y condiciones de pago. Lo que el proveedor no dijo, se queda visible como faltante. Nada inventado.
 
-## Qué puedes hacer
+**Guarda la evidencia.** Cada dato muestra las palabras originales del proveedor. Un número nunca pierde su fuente.
 
-- **Crear una solicitud** comercial corta: qué compras, cuánto y en qué unidad, más lo que quieras agregar (Incoterm y lugar, fecha deseada, requisitos técnicos, un archivo de referencia).
-- **Elegir proveedores** de tu directorio privado o solo para esa solicitud, y enviarles la solicitud desde tu propio correo.
-- **Leer lo que llegó:** Quoly extrae de cada respuesta la cotización (precio, escalones por cantidad, MOQ, tiempos de entrega, validez, pago), la evidencia técnica y las preguntas del proveedor, siempre con las palabras originales a la vista. Tú revisas y corriges lo que haga falta.
-- **Responder las preguntas** del proveedor: Quoly te propone un borrador que puedes usar, editar o reescribir. Nada se envía solo.
-- **Comparar** a los proveedores lado a lado, con un recomendado y con lo que todavía falta siempre visible, y **adjudicar** cuando tú decides.
-- **Exportar la decisión a PDF**, con las cifras y tu razón, para tu expediente o para compartir.
+**Te destraba los pendientes.** Cuando un proveedor pregunta algo, Quoly te propone un borrador de respuesta. Lo usas, lo editas o escribes el tuyo. Nada se envía solo.
 
-## Características
+**Compara de verdad.** Todos los proveedores lado a lado, en las mismas unidades, con un recomendado y con alertas útiles. Lo que falta no se esconde.
 
-- Lectura con IA de correos y archivos (PDF, Excel, Word, fichas e imágenes) en una sola pasada.
-- Cotizaciones con escalones por cantidad, MOQ, tiempos de entrega, validez y términos de pago.
-- Comparación comercial y técnica, con proveedor recomendado y alertas (por ejemplo, cuando un MOQ supera la cantidad pedida).
-- Directorio privado de proveedores con contactos y etiquetas.
-- Seguimiento por proveedor: cada uno avanza por su propia etapa.
-- Disponible en **Español e Inglés**, con modo **claro y oscuro**.
+**Deja constancia.** Registras a quién le adjudicas y por qué, y lo exportas a PDF para tu expediente o para compartir.
 
-## Lo que hace la inteligencia artificial (y lo que no)
+---
 
-La IA reduce el trabajo manual: lee respuestas desordenadas, propone la estructura comercial, saca la evidencia técnica, resume cada oferta y redacta el análisis de la comparación.
+## La IA trabaja. Tú decides.
 
-Lo que **no** hace: no responde ni adjudica por su cuenta, no inventa datos que el proveedor no dio, no rellena huecos para que una cotización incompleta parezca completa, y no pone un puntaje mágico. La IA propone; tú decides.
+Quoly te quita el trabajo manual: leer, ordenar, resumir, comparar.
 
-## Pensado para
+Lo que **nunca** hace: responder o adjudicar por su cuenta, inventar datos, rellenar huecos para aparentar una oferta completa, o inventarse un puntaje. **La IA propone; tú decides.**
 
-Compradores, compras, sourcing y pequeñas empresas cuyo proceso todavía corre por correos, archivos y hojas de cálculo.
+---
 
-Los proveedores no necesitan cuenta ni aprender un portal. Quoly organiza el lado del comprador; ellos siguen respondiendo por correo.
+## Para quién
+
+Para quien compra y todavía vive entre correos, archivos y hojas de cálculo: compras, sourcing, operaciones, negocios que cotizan en serio.
+
+En **Español e Inglés**. Modo **claro y oscuro**.
+
+**Convierte el caos de cotizaciones en una decisión que puedes defender.**
