@@ -1,0 +1,50 @@
+/* Quoly 2.0 · Sistema tipográfico — Outfit (display) + Inter (texto). Documentación: guidelines/typography-system.md */
+:root{
+/* Familias */
+--font-display:"Outfit",ui-sans-serif,system-ui,sans-serif;
+--font-text:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+/* Pesos — 700 no forma parte del sistema */
+--font-weight-regular:400;/* @kind font */--font-weight-medium:500;/* @kind font */--font-weight-semibold:600;/* @kind font */
+/* Escala de referencia (px → rem, base 16) */
+--font-size-11:0.6875rem;--font-size-12:0.75rem;--font-size-13:0.8125rem;--font-size-14:0.875rem;--font-size-16:1rem;--font-size-18:1.125rem;--font-size-20:1.25rem;--font-size-24:1.5rem;--font-size-28:1.75rem;--font-size-32:2rem;--font-size-40:2.5rem;--font-size-48:3rem;--font-size-60:3.75rem;
+/* OpenType */
+--font-features-text:"kern" 1,"calt" 1;
+--font-features-numeric:"tnum" 1,"kern" 1;
+--font-features-id:"tnum" 1,"ss02" 1,"case" 1;
+--font-features-figure:"tnum" 1;
+/* Medidas de línea */
+--measure-prose:68ch;--measure-narrow:48ch;--measure-wide:84ch;
+/* Roles */
+--type-display-xl-family:var(--font-display);--type-display-xl-size:clamp(2.5rem, 1.75rem + 2.5vw, 3.75rem);/* @kind other */--type-display-xl-weight:400;--type-display-xl-line-height:1.08;--type-display-xl-tracking:-0.025em;--type-display-xl:400 var(--type-display-xl-size)/1.08 var(--font-display);
+--type-display-lg-family:var(--font-display);--type-display-lg-size:clamp(2.25rem, 1.8rem + 1.5vw, 3rem);/* @kind other */--type-display-lg-weight:400;--type-display-lg-line-height:1.12;--type-display-lg-tracking:-0.022em;--type-display-lg:400 var(--type-display-lg-size)/1.12 var(--font-display);
+--type-display-md-family:var(--font-display);--type-display-md-size:clamp(2rem, 1.7rem + 1vw, 2.5rem);/* @kind other */--type-display-md-weight:400;--type-display-md-line-height:1.15;--type-display-md-tracking:-0.02em;--type-display-md:400 var(--type-display-md-size)/1.15 var(--font-display);
+--type-heading-xl-family:var(--font-display);--type-heading-xl-size:clamp(1.75rem, 1.6rem + 0.5vw, 2rem);/* @kind other */--type-heading-xl-weight:500;--type-heading-xl-line-height:1.2;--type-heading-xl-tracking:-0.016em;--type-heading-xl:500 var(--type-heading-xl-size)/1.2 var(--font-display);
+--type-heading-lg-family:var(--font-display);--type-heading-lg-size:clamp(1.5rem, 1.4rem + 0.35vw, 1.75rem);/* @kind other */--type-heading-lg-weight:500;--type-heading-lg-line-height:1.2;--type-heading-lg-tracking:-0.014em;--type-heading-lg:500 var(--type-heading-lg-size)/1.2 var(--font-display);
+--type-heading-md-family:var(--font-display);--type-heading-md-size:clamp(1.375rem, 1.33rem + 0.15vw, 1.5rem);/* @kind other */--type-heading-md-weight:500;--type-heading-md-line-height:1.25;--type-heading-md-tracking:-0.012em;--type-heading-md:500 var(--type-heading-md-size)/1.25 var(--font-display);
+--type-heading-sm-family:var(--font-display);--type-heading-sm-size:1.25rem;--type-heading-sm-weight:500;--type-heading-sm-line-height:1.3;--type-heading-sm-tracking:-0.008em;--type-heading-sm:500 var(--type-heading-sm-size)/1.3 var(--font-display);
+--type-title-lg-family:var(--font-display);--type-title-lg-size:1.125rem;--type-title-lg-weight:500;--type-title-lg-line-height:1.35;--type-title-lg-tracking:-0.005em;--type-title-lg:500 var(--type-title-lg-size)/1.35 var(--font-display);
+--type-title-sm-family:var(--font-display);--type-title-sm-size:1rem;--type-title-sm-weight:500;--type-title-sm-line-height:1.4;--type-title-sm-tracking:-0.002em;--type-title-sm:500 var(--type-title-sm-size)/1.4 var(--font-display);
+--type-body-lg-family:var(--font-text);--type-body-lg-size:1rem;--type-body-lg-weight:400;--type-body-lg-line-height:1.6;--type-body-lg-tracking:0;--type-body-lg:400 var(--type-body-lg-size)/1.6 var(--font-text);
+--type-body-md-family:var(--font-text);--type-body-md-size:0.875rem;--type-body-md-weight:400;--type-body-md-line-height:1.5;--type-body-md-tracking:0;--type-body-md:400 var(--type-body-md-size)/1.5 var(--font-text);
+--type-body-sm-family:var(--font-text);--type-body-sm-size:0.8125rem;--type-body-sm-weight:400;--type-body-sm-line-height:1.5;--type-body-sm-tracking:0;--type-body-sm:400 var(--type-body-sm-size)/1.5 var(--font-text);
+--type-label-lg-family:var(--font-text);--type-label-lg-size:0.875rem;--type-label-lg-weight:500;--type-label-lg-line-height:1.4;--type-label-lg-tracking:0;--type-label-lg:500 var(--type-label-lg-size)/1.4 var(--font-text);
+--type-label-md-family:var(--font-text);--type-label-md-size:0.8125rem;--type-label-md-weight:500;--type-label-md-line-height:1.4;--type-label-md-tracking:0;--type-label-md:500 var(--type-label-md-size)/1.4 var(--font-text);
+--type-label-sm-family:var(--font-text);--type-label-sm-size:0.75rem;--type-label-sm-weight:500;--type-label-sm-line-height:1.4;--type-label-sm-tracking:0.005em;--type-label-sm:500 var(--type-label-sm-size)/1.4 var(--font-text);
+--type-caption-family:var(--font-text);--type-caption-size:0.75rem;--type-caption-weight:400;--type-caption-line-height:1.45;--type-caption-tracking:0.005em;--type-caption:400 var(--type-caption-size)/1.45 var(--font-text);
+--type-micro-family:var(--font-text);--type-micro-size:0.6875rem;--type-micro-weight:500;--type-micro-line-height:1.4;--type-micro-tracking:0.01em;--type-micro:500 var(--type-micro-size)/1.4 var(--font-text);
+--type-figure-xl-family:var(--font-display);--type-figure-xl-size:clamp(2rem, 1.7rem + 1vw, 2.5rem);/* @kind other */--type-figure-xl-weight:400;--type-figure-xl-line-height:1.1;--type-figure-xl-tracking:-0.02em;--type-figure-xl:400 var(--type-figure-xl-size)/1.1 var(--font-display);
+--type-figure-lg-family:var(--font-display);--type-figure-lg-size:clamp(1.75rem, 1.6rem + 0.5vw, 2rem);/* @kind other */--type-figure-lg-weight:400;--type-figure-lg-line-height:1.15;--type-figure-lg-tracking:-0.016em;--type-figure-lg:400 var(--type-figure-lg-size)/1.15 var(--font-display);
+--type-figure-md-family:var(--font-display);--type-figure-md-size:1.5rem;--type-figure-md-weight:500;--type-figure-md-line-height:1.2;--type-figure-md-tracking:-0.01em;--type-figure-md:500 var(--type-figure-md-size)/1.2 var(--font-display);
+--type-figure-sm-family:var(--font-display);--type-figure-sm-size:1.25rem;--type-figure-sm-weight:500;--type-figure-sm-line-height:1.25;--type-figure-sm-tracking:-0.006em;--type-figure-sm:500 var(--type-figure-sm-size)/1.25 var(--font-display);
+--type-data-lg-family:var(--font-text);--type-data-lg-size:1rem;--type-data-lg-weight:500;--type-data-lg-line-height:1.4;--type-data-lg-tracking:0;--type-data-lg:500 var(--type-data-lg-size)/1.4 var(--font-text);
+--type-data-md-family:var(--font-text);--type-data-md-size:0.875rem;--type-data-md-weight:400;--type-data-md-line-height:1.4;--type-data-md-tracking:0;--type-data-md:400 var(--type-data-md-size)/1.4 var(--font-text);
+--type-data-md-strong-family:var(--font-text);--type-data-md-strong-size:0.875rem;--type-data-md-strong-weight:500;--type-data-md-strong-line-height:1.4;--type-data-md-strong-tracking:0;--type-data-md-strong:500 var(--type-data-md-strong-size)/1.4 var(--font-text);
+--type-data-sm-family:var(--font-text);--type-data-sm-size:0.8125rem;--type-data-sm-weight:400;--type-data-sm-line-height:1.4;--type-data-sm-tracking:0;--type-data-sm:400 var(--type-data-sm-size)/1.4 var(--font-text);
+--type-id-md-family:var(--font-text);--type-id-md-size:0.875rem;--type-id-md-weight:500;--type-id-md-line-height:1.4;--type-id-md-tracking:0.01em;--type-id-md:500 var(--type-id-md-size)/1.4 var(--font-text);
+--type-id-sm-family:var(--font-text);--type-id-sm-size:0.8125rem;--type-id-sm-weight:500;--type-id-sm-line-height:1.4;--type-id-sm-tracking:0.01em;--type-id-sm:500 var(--type-id-sm-size)/1.4 var(--font-text);
+--type-evidence-family:var(--font-text);--type-evidence-size:0.875rem;--type-evidence-weight:400;--type-evidence-line-height:1.6;--type-evidence-tracking:0;--type-evidence:italic 400 var(--type-evidence-size)/1.6 var(--font-text);
+--type-original-family:var(--font-text);--type-original-size:0.875rem;--type-original-weight:400;--type-original-line-height:1.6;--type-original-tracking:0;--type-original:400 var(--type-original-size)/1.6 var(--font-text);
+/* Densidad de tablas (comfortable por defecto) */
+--type-table-header:var(--type-label-md);--type-table-cell:var(--type-data-md);--type-table-cell-strong:var(--type-data-md-strong);--type-table-secondary:var(--type-data-sm);--type-table-id:var(--type-id-md);
+}
+[data-density="compact"]{--type-table-header:500 var(--font-size-12)/1.35 var(--font-text);--type-table-cell:400 var(--font-size-13)/1.35 var(--font-text);--type-table-cell-strong:500 var(--font-size-13)/1.35 var(--font-text);--type-table-secondary:400 var(--font-size-12)/1.35 var(--font-text);--type-table-id:500 var(--font-size-13)/1.35 var(--font-text)}

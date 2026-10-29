@@ -1,0 +1,17 @@
+// Quoly 2.0 Design System — punto de entrada de estilos.
+// Orden: fuentes → primitivas/roles → fundamentos → alias de componente → base.
+@use "tokens/fonts";
+@use "tokens/colors";
+@use "tokens/typography";
+@use "tokens/spacing";
+@use "tokens/motion";
+@use "tokens/icons";
+@use "tokens/navigation";
+@use "tokens/table";
+@use "tokens/structure";
+@use "tokens/rfq";
+@use "tokens/intelligence";
+@use "tokens/comparison";
+@use "tokens/decision";
+@use "tokens/charts";
+@use "tokens/base";

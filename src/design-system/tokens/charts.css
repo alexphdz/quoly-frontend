@@ -1,0 +1,12 @@
+/* Quoly 2.0 · Gráficas (Fase 06A) — alias sobre Colorfield y neutrales aprobados. Sin colores nuevos. Doc: guidelines/charts.md */
+:root,[data-theme="light"],[data-theme="dark"]{
+--chart-violet:var(--q-cf-violet-500);/* @kind color */--chart-coral:var(--q-cf-coral-400);/* @kind color */--chart-yellow:var(--q-cf-yellow-300);/* @kind color */--chart-mint:var(--q-cf-mint-400);/* @kind color */--chart-blue:var(--q-cf-blue-500);/* @kind color */--chart-pink:var(--q-cf-pink-400);/* @kind color */--chart-olive:var(--q-cf-olive-400);/* @kind color */--chart-teal:var(--q-cf-teal-400);/* @kind color */
+--chart-ease:cubic-bezier(0.22,1,0.36,1);/* @kind other */--chart-dur-hover:140ms;/* @kind other */--chart-dur-tip:120ms;/* @kind other */--chart-dur-bar:360ms;/* @kind other */--chart-dur-line:420ms;/* @kind other */--chart-dur-update:240ms;/* @kind other */--chart-dur-guide:100ms;/* @kind other */
+--chart-grid:var(--color-divider);/* @kind color */--chart-baseline:var(--color-border-strong);/* @kind color */--chart-axis-text:var(--color-text-secondary);/* @kind color */--chart-band:var(--color-surface-hover);/* @kind color */--chart-placeholder:var(--color-surface-elevated);/* @kind color */--chart-guide:var(--color-border-strong);/* @kind color */
+--chart-tip-bg:var(--elevation-2-bg);/* @kind color */--chart-tip-border:var(--elevation-2-border);/* @kind color */--chart-tip-shadow:var(--elevation-2);/* @kind shadow */}
+:root,[data-theme="light"]{--chart-area-opacity:0.11;/* @kind other */--chart-rest-opacity:0.92;/* @kind other */--chart-dim-opacity:0.42;/* @kind other */}
+[data-theme="dark"]{--chart-area-opacity:0.14;/* @kind other */--chart-rest-opacity:0.9;/* @kind other */--chart-dim-opacity:0.38;/* @kind other */}
+@keyframes q-chart-tip{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes q-chart-pulse{from{opacity:1}to{opacity:.45}}
+@media (prefers-reduced-motion:reduce){:root,[data-theme]{--chart-dur-hover:0ms;/* @kind other */--chart-dur-tip:0ms;/* @kind other */--chart-dur-bar:0ms;/* @kind other */--chart-dur-line:0ms;/* @kind other */--chart-dur-update:0ms;/* @kind other */--chart-dur-guide:0ms;/* @kind other */}}
+@media (prefers-reduced-motion:reduce){[aria-roledescription] *,[role="img"] line{transition-duration:0ms!important;transition-delay:0ms!important}}

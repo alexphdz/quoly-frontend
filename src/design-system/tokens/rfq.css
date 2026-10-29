@@ -1,0 +1,10 @@
+/* Quoly 2.0 · RFQ & supplier workflow components (Fase 05C.1) — alias sobre tokens aprobados. Sin colores nuevos. Doc: guidelines/rfq-workflow-components.md */
+:root,[data-theme="light"],[data-theme="dark"]{
+--rfq-progress-done:var(--color-text-primary);/* @kind color */--rfq-progress-pending:var(--color-border);/* @kind color */
+--rfq-stage-current:var(--color-brand);/* @kind color */--rfq-stage-done:var(--color-status-success-text);/* @kind color */--rfq-stage-future:var(--color-text-secondary);/* @kind color */--rfq-stage-rule:var(--color-border);/* @kind color */
+--rfq-row-hover:var(--table-row-hover);/* @kind color */
+}
+:root{
+--rfq-ease:cubic-bezier(0.22,1,0.36,1);/* @kind other */--rfq-dur-stage-line:200ms;/* @kind other */--rfq-dur-stage-icon:160ms;/* @kind other */--rfq-dur-progress:280ms;/* @kind other */--rfq-dur-hover:140ms;/* @kind other */
+}
+@media (prefers-reduced-motion:reduce){:root{--rfq-dur-stage-line:0ms;/* @kind other */--rfq-dur-stage-icon:0ms;/* @kind other */--rfq-dur-progress:0ms;/* @kind other */--rfq-dur-hover:0ms;/* @kind other */}}
