@@ -2102,5 +2102,322 @@
         "demo": true
       }
     ]
+  ],
+  [
+    "dec-indicator-selected",
+    [
+      "SelectionIndicator",
+      {
+        "state": "selected"
+      }
+    ]
+  ],
+  [
+    "dec-indicator-pending",
+    [
+      "SelectionIndicator",
+      {
+        "state": "pending"
+      }
+    ]
+  ],
+  [
+    "dec-indicator-recorded",
+    [
+      "SelectionIndicator",
+      {
+        "state": "recorded"
+      }
+    ]
+  ],
+  [
+    "dec-candidate",
+    [
+      "DecisionCandidate",
+      {
+        "name": "Empaques del Norte",
+        "reference": "PRV-0056 · COT-1182",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "original": "14,20 MXN",
+        "facts": [
+          {
+            "label": "MOQ",
+            "value": "5.000 uds"
+          },
+          {
+            "label": "Plazo",
+            "value": "15 días"
+          },
+          {
+            "label": "Incoterm",
+            "value": "DAP"
+          },
+          {
+            "label": "Pago",
+            "value": null
+          }
+        ],
+        "onSelect": true,
+        "onViewQuote": true
+      }
+    ]
+  ],
+  [
+    "dec-candidate-selected",
+    [
+      "DecisionCandidate",
+      {
+        "name": "Cartonera Andina",
+        "status": "review",
+        "price": null,
+        "priceReason": "Unidad distinta",
+        "facts": [
+          {
+            "label": "MOQ",
+            "value": "5.000 uds"
+          },
+          {
+            "label": "Plazo",
+            "value": "15 días"
+          }
+        ],
+        "selection": "pending",
+        "onChangeSelection": true
+      }
+    ]
+  ],
+  [
+    "dec-summary",
+    [
+      "DecisionSummary",
+      {
+        "supplier": "Empaques del Norte",
+        "reference": "PRV-0056",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "original": "14,20 MXN",
+        "facts": [
+          {
+            "label": "MOQ",
+            "value": "5.000 uds"
+          },
+          {
+            "label": "Plazo",
+            "value": "15 días"
+          },
+          {
+            "label": "Incoterm",
+            "value": "DAP"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "dec-rationale",
+    [
+      "DecisionRationale",
+      {
+        "maxLength": 500,
+        "context": [
+          {
+            "label": "Precio",
+            "value": "14,20 MXN"
+          },
+          {
+            "label": "Plazo",
+            "value": "15 días"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "dec-row-header",
+    [
+      "DecisionRowHeader",
+      {}
+    ]
+  ],
+  [
+    "dec-row",
+    [
+      "DecisionRow",
+      {
+        "supplier": "Empaques del Norte",
+        "quotation": "COT-1182",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "moq": "5.000",
+        "leadTime": "15 d",
+        "incoterm": "DAP",
+        "onSelect": true
+      }
+    ]
+  ],
+  [
+    "dec-row-selected",
+    [
+      "DecisionRow",
+      {
+        "state": "selected",
+        "supplier": "Empaques del Norte",
+        "quotation": "COT-1182",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "moq": "5.000",
+        "leadTime": "15 d",
+        "incoterm": "DAP",
+        "onChange": true
+      }
+    ]
+  ],
+  [
+    "dec-row-awarded",
+    [
+      "DecisionRow",
+      {
+        "state": "awarded",
+        "supplier": "Empaques del Norte",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "moq": "5.000",
+        "leadTime": null,
+        "incoterm": "DAP",
+        "recordedAt": "28 oct 2026"
+      }
+    ]
+  ],
+  [
+    "dec-confirm",
+    [
+      "AwardConfirmation",
+      {
+        "inline": true,
+        "supplier": "Empaques del Norte",
+        "reference": "PRV-0056",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "original": "14,20 MXN",
+        "context": [
+          "MOQ 5.000 uds",
+          "15 días",
+          "DAP"
+        ]
+      }
+    ]
+  ],
+  [
+    "dec-confirm-error",
+    [
+      "AwardConfirmation",
+      {
+        "inline": true,
+        "supplier": "Empaques del Norte",
+        "price": null,
+        "initialError": "No se pudo registrar la adjudicación. No se guardó ningún cambio; puedes volver a intentarlo."
+      }
+    ]
+  ],
+  [
+    "dec-record",
+    [
+      "AwardRecord",
+      {
+        "supplier": "Empaques del Norte",
+        "rfq": "RFQ-0318",
+        "quotation": "COT-1182",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "facts": [
+          {
+            "label": "MOQ",
+            "value": "5.000 uds"
+          },
+          {
+            "label": "Plazo",
+            "value": "15 días"
+          },
+          {
+            "label": "Incoterm",
+            "value": "DAP"
+          }
+        ],
+        "summary": "12.000 cajas de cartón corrugado doble pared.",
+        "recordedBy": "Ana Ruiz",
+        "recordedAt": "28 oct 2026, 16:05",
+        "date": "28 oct 2026",
+        "rationale": "Mejor plazo de entrega y condiciones DAP.",
+        "onViewQuote": true
+      }
+    ]
+  ],
+  [
+    "dec-record-selected",
+    [
+      "AwardRecord",
+      {
+        "state": "selected",
+        "supplier": "Cartonera Andina",
+        "priceText": "No comparable"
+      }
+    ]
+  ],
+  [
+    "dec-timeline",
+    [
+      "DecisionTimeline",
+      {
+        "events": [
+          {
+            "date": "28 oct",
+            "time": "16:05",
+            "title": "Adjudicación registrada",
+            "actor": "Ana Ruiz",
+            "description": "Empaques del Norte · 14,20 MXN / caja",
+            "reference": "COT-1182"
+          },
+          {
+            "date": "27 oct",
+            "time": "11:30",
+            "title": "Proveedor seleccionado",
+            "actor": "Ana Ruiz"
+          },
+          {
+            "date": "21 oct",
+            "title": "Solicitud enviada"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "dec-timeline-empty",
+    [
+      "DecisionTimeline",
+      {}
+    ]
   ]
 ]

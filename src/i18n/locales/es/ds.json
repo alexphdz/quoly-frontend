@@ -82,6 +82,75 @@
     "formatMonthFirst": "mm/dd/aaaa",
     "openCalendar": "Abrir calendario"
   },
+  "dec": {
+    "base": "Base: {{value}}",
+    "changeSelection": "Cambiar selección",
+    "confirm": {
+      "description": "Se guardará la selección realizada por el comprador y sus datos comerciales asociados.",
+      "eyebrow": "Confirmar adjudicación",
+      "failed": "No se pudo registrar la adjudicación. No se guardó ningún cambio; puedes volver a intentarlo.",
+      "priceNotComparable": "Precio no comparable",
+      "record": "Registrar adjudicación",
+      "recording": "Registrando…",
+      "title": "¿Registrar esta adjudicación?"
+    },
+    "indicator": {
+      "pending": "Seleccionado para adjudicación",
+      "recorded": "Adjudicado",
+      "selected": "Seleccionado"
+    },
+    "notProvided": "— No indicado",
+    "original": "Original: {{value}}",
+    "rationale": {
+      "context": "Datos de la cotización · referencia, no forman parte del motivo",
+      "description": "Registra los factores comerciales que consideraste para tomar esta decisión.",
+      "field": "Explicación del comprador",
+      "note": "Texto escrito por el comprador. Quoly no lo genera ni lo completa.",
+      "optional": "Opcional",
+      "title": "Motivo de la selección"
+    },
+    "record": {
+      "ariaRecorded": "Adjudicación registrada: {{supplier}}",
+      "ariaSelected": "Seleccionado para adjudicación: {{supplier}}",
+      "notYet": "Adjudicación aún no registrada",
+      "price": "Precio adjudicado",
+      "rationale": "Motivo registrado",
+      "recorded": "Adjudicación registrada",
+      "recordedBy": "Registrado por {{name}}",
+      "recordedSub": "Decisión final registrada por el comprador",
+      "selected": "Seleccionado para adjudicación",
+      "selectedSub": "Pendiente de confirmar por el comprador"
+    },
+    "row": {
+      "ariaAwarded": "{{supplier}}, adjudicado",
+      "ariaSelected": "{{supplier}}, candidato a adjudicación, pendiente de confirmar",
+      "candidate": "Candidato a adjudicación",
+      "change": "Cambiar",
+      "confirm": "Confirmar adjudicación",
+      "finalRecord": "Registro final",
+      "incoterm": "Incoterm",
+      "leadTime": "Lead time",
+      "moq": "MOQ",
+      "pending": "Pendiente de confirmar",
+      "recordedAt": "Registrado · {{date}}",
+      "select": "Seleccionar",
+      "supplier": "Proveedor",
+      "unitPrice": "Precio unitario",
+      "viewRecord": "Ver registro"
+    },
+    "selectSupplier": "Seleccionar proveedor",
+    "summary": {
+      "label": "Resumen de la decisión",
+      "referencePrice": "Precio de referencia",
+      "selected": "Proveedor seleccionado"
+    },
+    "timeline": {
+      "emptyText": "Cuando el comprador seleccione un proveedor o registre una adjudicación, el evento aparecerá aquí.",
+      "emptyTitle": "Sin decisiones registradas",
+      "label": "Historial de la decisión"
+    },
+    "viewQuote": "Ver cotización"
+  },
   "field": {
     "optional": "opcional",
     "readOnly": "Solo lectura"

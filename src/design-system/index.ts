@@ -115,3 +115,14 @@ export {
 } from './components/comparison/ComparisonMatrix'
 export { ComparisonFocus, type ComparisonFocusProps } from './components/comparison/ComparisonFocus'
 export { CmpStatus, type ReviewStatus, type ExceptionTone } from './components/comparison/shared'
+
+// 05C.4 · Decision & award
+export { SelectionIndicator, type SelectionIndicatorProps, type SelectionState } from './components/decision/SelectionIndicator'
+export { DecisionCandidate, type DecisionCandidateProps } from './components/decision/DecisionCandidate'
+export { DecisionSummary, type DecisionSummaryProps } from './components/decision/DecisionSummary'
+export { DecisionRationale, type DecisionRationaleProps } from './components/decision/DecisionRationale'
+export { DecisionRow, DecisionRowHeader, type DecisionRowProps, type DecisionRowState } from './components/decision/DecisionRow'
+export { AwardConfirmation, type AwardConfirmationProps } from './components/decision/AwardConfirmation'
+export { AwardRecord, type AwardRecordProps } from './components/decision/AwardRecord'
+export { DecisionTimeline, type DecisionTimelineProps, type DecisionEvent } from './components/decision/DecisionTimeline'
+export { type DecisionPrice, type DecisionFact } from './components/decision/shared'

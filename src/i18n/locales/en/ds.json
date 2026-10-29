@@ -82,6 +82,75 @@
     "formatMonthFirst": "mm/dd/yyyy",
     "openCalendar": "Open calendar"
   },
+  "dec": {
+    "base": "Base: {{value}}",
+    "changeSelection": "Change selection",
+    "confirm": {
+      "description": "The buyer’s selection and its commercial data will be saved.",
+      "eyebrow": "Confirm award",
+      "failed": "The award could not be recorded. Nothing was saved; you can try again.",
+      "priceNotComparable": "Price not comparable",
+      "record": "Record award",
+      "recording": "Recording…",
+      "title": "Record this award?"
+    },
+    "indicator": {
+      "pending": "Selected for award",
+      "recorded": "Awarded",
+      "selected": "Selected"
+    },
+    "notProvided": "— Not provided",
+    "original": "Original: {{value}}",
+    "rationale": {
+      "context": "Quote data · for reference, not part of the reason",
+      "description": "Record the commercial factors you considered to make this decision.",
+      "field": "Buyer explanation",
+      "note": "Written by the buyer. Quoly neither generates nor completes it.",
+      "optional": "Optional",
+      "title": "Reason for the selection"
+    },
+    "record": {
+      "ariaRecorded": "Award recorded: {{supplier}}",
+      "ariaSelected": "Selected for award: {{supplier}}",
+      "notYet": "Award not recorded yet",
+      "price": "Awarded price",
+      "rationale": "Recorded reason",
+      "recorded": "Award recorded",
+      "recordedBy": "Recorded by {{name}}",
+      "recordedSub": "Final decision recorded by the buyer",
+      "selected": "Selected for award",
+      "selectedSub": "Pending buyer confirmation"
+    },
+    "row": {
+      "ariaAwarded": "{{supplier}}, awarded",
+      "ariaSelected": "{{supplier}}, award candidate, pending confirmation",
+      "candidate": "Award candidate",
+      "change": "Change",
+      "confirm": "Confirm award",
+      "finalRecord": "Final record",
+      "incoterm": "Incoterm",
+      "leadTime": "Lead time",
+      "moq": "MOQ",
+      "pending": "Pending confirmation",
+      "recordedAt": "Recorded · {{date}}",
+      "select": "Select",
+      "supplier": "Supplier",
+      "unitPrice": "Unit price",
+      "viewRecord": "View record"
+    },
+    "selectSupplier": "Select supplier",
+    "summary": {
+      "label": "Decision summary",
+      "referencePrice": "Reference price",
+      "selected": "Selected supplier"
+    },
+    "timeline": {
+      "emptyText": "When the buyer selects a supplier or records an award, the event will appear here.",
+      "emptyTitle": "No decisions recorded",
+      "label": "Decision history"
+    },
+    "viewQuote": "View quote"
+  },
   "field": {
     "optional": "optional",
     "readOnly": "Read only"

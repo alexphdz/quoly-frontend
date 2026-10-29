@@ -65,9 +65,9 @@ import { Button, DataTable, StatusBadge } from '../design-system'
 - **05C.1 · Solicitudes y proveedores:** RfqHeader, RfqLifecycle, RfqSummary, ResponseTracker, SupplierRow (+ SupplierRowHeader), SupplierQuestion
 - **05C.2 · Quote Intelligence:** ExtractionSummary, ExtractedField, EvidenceReference/EvidencePanel, FieldReviewEditor, ExtractionCompleteness, ReviewWorkspace
 - **05C.3 · Comparación:** ComparisonOverview, SupplierComparisonHeader, ComparisonMatrix, ComparisonFocus, PriceDifference, CommercialException (+ Detail), ComparisonEvidenceLink
+- **05C.4 · Decisión:** SelectionIndicator, DecisionCandidate, DecisionSummary, DecisionRationale, DecisionRow (+ header), AwardConfirmation, AwardRecord, DecisionTimeline
 
 **Pendiente.** Componentes de dominio restantes, siguiendo sus guidelines:
-- Decision (`decision-award.md`)
 - Charts (`charts.md`)
 - Compositions (`compositions.md`)
 - Forms (`form-extensions.md`)

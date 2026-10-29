@@ -11,6 +11,7 @@ import {
   RfqHeader, RfqLifecycle, RfqSummary, ResponseTracker, SupplierRow, SupplierRowHeader, SupplierQuestion,
   ReviewWorkspace, ExtractionSummary, EvidenceReference, type ReviewField,
   ComparisonOverview, ComparisonFocus, type ComparisonGroup, type ComparisonSupplier,
+  DecisionRow, DecisionRowHeader, DecisionCandidate, DecisionSummary, DecisionRationale, AwardConfirmation, AwardRecord, DecisionTimeline,
 } from '..'
 import './showcase.scss'
 
@@ -79,6 +80,8 @@ export default function DesignSystemShowcase() {
   const [search, setSearch] = useState('')
   const [overlay, setOverlay] = useState<null | 'dialog' | 'confirm' | 'sheet' | 'drawer' | 'bottom' | 'nav'>(null)
   const close = () => setOverlay(null)
+  const [decision, setDecision] = useState<'default' | 'selected' | 'awarded'>('default')
+  const [awardOpen, setAwardOpen] = useState(false)
 
   const columns: DataTableColumn<QuoteRow>[] = [
     { key: 'supplier', header: 'Proveedor', type: 'identity', sortable: true, minWidth: 220, render: (r) => <TableCell type="identity" value={r.supplier} secondary={r.ref} /> },
@@ -458,6 +461,44 @@ export default function DesignSystemShowcase() {
             <ComparisonOverview reference="RFQ-0318" product="Caja corrugada 40×30 (ficticio)" received={3} comparable={2} review={1} />
             <ComparisonFocus demo suppliers={CMP_SUPPLIERS} groups={CMP_GROUPS} requested="12.000 cajas · DAP Monterrey" sources={{ a: QI_SOURCE }} />
           </div>
+        </ContentSection>
+        <ContentSection title="05C.4 · Decisión y adjudicación">
+          <div className="ds-sc-stack">
+            <div>
+              <DecisionRowHeader />
+              <DecisionRow
+                state={decision}
+                supplier="Empaques del Norte (ficticio)"
+                quotation="COT-1182"
+                price={{ amount: 14.2, currency: 'MXN' }}
+                moq="5.000"
+                leadTime="15 d"
+                incoterm="DAP"
+                recordedAt="28 oct 2026"
+                onSelect={() => setDecision('selected')}
+                onChange={() => setDecision('default')}
+                onConfirm={() => setAwardOpen(true)}
+                onView={() => setDecision('default')}
+              />
+              <DecisionRow supplier="Cartonera Andina (ficticio)" quotation="COT-1190" price={{ amount: 15.8, currency: 'MXN' }} moq="10.000" leadTime="20 d" incoterm="FOB" onSelect={() => undefined} />
+            </div>
+            <DecisionCandidate name="Corrugados Delta (ficticio)" reference="PRV-0142" status="pending" price={null} priceReason="Unidad distinta (lote de 100)" facts={[{ label: 'MOQ', value: '100 lotes' }, { label: 'Plazo', value: '12 días' }]} onSelect={() => undefined} onViewQuote={() => undefined} />
+            <DecisionSummary supplier="Empaques del Norte (ficticio)" reference="PRV-0056" price={{ amount: 14.2, currency: 'MXN', unit: '/ caja' }} original="14,20 MXN" facts={[{ label: 'MOQ', value: '5.000 uds' }, { label: 'Plazo', value: '15 días' }, { label: 'Incoterm', value: 'DAP' }]} />
+            <DecisionRationale maxLength={500} />
+            <AwardRecord supplier="Empaques del Norte (ficticio)" rfq="RFQ-0318" quotation="COT-1182" price={{ amount: 14.2, currency: 'MXN', unit: '/ caja' }} facts={[{ label: 'MOQ', value: '5.000 uds' }, { label: 'Plazo', value: '15 días' }, { label: 'Incoterm', value: 'DAP' }]} recordedBy="Ana Ruiz" recordedAt="28 oct 2026, 16:05" date="28 oct 2026" rationale="Mejor plazo de entrega y condiciones DAP." onViewQuote={() => undefined} />
+            <DecisionTimeline events={[{ date: '28 oct', time: '16:05', title: 'Adjudicación registrada', actor: 'Ana Ruiz' }, { date: '27 oct', time: '11:30', title: 'Proveedor seleccionado', actor: 'Ana Ruiz' }, { date: '21 oct', title: 'Solicitud enviada' }]} />
+          </div>
+          <AwardConfirmation
+            open={awardOpen}
+            onCancel={() => setAwardOpen(false)}
+            onConfirm={() => new Promise((resolve) => setTimeout(resolve, 900)).then(() => {
+              setAwardOpen(false)
+              setDecision('awarded')
+            })}
+            supplier="Empaques del Norte (ficticio)"
+            reference="PRV-0056"
+            price={{ amount: 14.2, currency: 'MXN', unit: '/ caja' }}
+          />
         </ContentSection>
       </main>
 
