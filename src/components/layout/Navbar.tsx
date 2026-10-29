@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { IconButton, MenuItem, MenuSeparator, MobileNavDrawer, QuolyMark, Sidebar, type NavItem } from '../../design-system'
 import CommandPalette, { useCommandPalette } from './CommandPalette'
+import type { ShellLayout } from './useShellLayout'
 import { useAuth } from '../../hooks/useAuth'
 import { useRFQs } from '../../hooks/useRFQs'
 import { useAllQuotes } from '../../hooks/useQuotes'
@@ -24,8 +25,6 @@ function activeFor(pathname: string) {
   if (pathname.startsWith('/suppliers')) return 'suppliers'
   return undefined
 }
-
-export type ShellLayout = 'mobile' | 'tablet' | 'desktop'
 
 export default function Navbar({ layout, collapsed, onToggle }: { layout: ShellLayout, collapsed: boolean, onToggle: () => void }) {
   const { t } = useTranslation('common')

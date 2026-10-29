@@ -1,24 +1,10 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { Outlet } from 'react-router-dom'
-import Navbar, { type ShellLayout } from './Navbar'
+import Navbar from './Navbar'
+import { useShellLayout } from './useShellLayout'
 import { useInboundStream } from '../../hooks/useInboundStream'
 
 const COLLAPSE_KEY = 'quoly.nav.collapsed'
-
-/** Rangos del shell: mobile < 640 (barra superior + cajón) · tablet < 1200 (menú contraído) · desktop. */
-function layoutFor(w: number): ShellLayout {
-  return w < 640 ? 'mobile' : w < 1200 ? 'tablet' : 'desktop'
-}
-
-function useShellLayout() {
-  const [layout, setLayout] = useState<ShellLayout>(() => layoutFor(typeof window === 'undefined' ? 1440 : window.innerWidth))
-  useEffect(() => {
-    const onResize = () => setLayout(layoutFor(window.innerWidth))
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  }, [])
-  return layout
-}
 
 /** Preferencia explícita del usuario; null = según el ancho. */
 function readCollapsed(): boolean | null {
