@@ -1,50 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  font-family: "Geist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Colores, tipografía, radios y sombras: src/design-system/tokens (Quoly 2.0).
+     Los nombres legacy (--bg-app, --brand, --text-*, …) se resuelven en
+     src/styles/tokens-bridge.scss. Aquí solo quedan tokens de layout. */
+  font-family: var(--font-text);
   font-feature-settings: "tnum" 1;
   font-variant-numeric: tabular-nums;
-  color-scheme: light;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
-  /* Legacy/Tailwind token names — kept in lockstep with tokens-light.scss so
-     .card/.btn match .qy-card/.ds-btn on the same screen (esp. in dark mode).
-     Graphite + Ice Blue: --brand is now the graphite primary-action colour,
-     not the old SaaS blue. */
-  --bg-app: #f5f6f5;
-  --bg-auth: #f5f6f5;
-  --surface-sidebar: #ecefee;
-  --surface-card: #ffffff;
-  --surface-card-subtle: #ecefee;
-  --surface-muted: #e7eae9;
-  --border-subtle: #dde1e0;
-  --border-strong: #c6ccca;
-  --text-primary: #171a1b;
-  --text-secondary: #3d4344;
-  --text-muted: #6a6f71;
-  --brand: #262b2d;
-  --brand-hover: #15181a;
-  --brand-soft: #e7f0f3;
-  --brand-border: #bfdce4;
-  --brand-logo: #262b2d;
-  --success-bg: #edf4ef;
-  --success-text: #4f8a6d;
-  --success-border: #bfd9cb;
-  --warning-bg: #f7f1e5;
-  --warning-text: #b68a45;
-  --warning-border: #e3d3ac;
-  --error-bg: #f8ecea;
-  --error-text: #b9635b;
-  --error-border: #e6c3be;
-  --info-bg: #ebf3f5;
-  --info-text: #5f95a5;
-  --info-border: #bbd7de;
-  --shadow-xs: 0 1px 2px rgb(23 26 27 / 0.05), 0 1px 1px rgb(23 26 27 / 0.04);
-  --shadow-sm: 0 1px 2px rgb(23 26 27 / 0.06), 0 6px 16px rgb(23 26 27 / 0.08);
-  --shadow-soft: 0 16px 34px rgb(23 26 27 / 0.14);
-  --radius-control: 8px;
-  --radius-card: 8px;
-  --radius-card-lg: 12px;
-  --sidebar-width: 228px;
 
   /* Responsive system — standardized breakpoints (use these values in @media,
      custom props can't be read inside media queries):
@@ -59,47 +21,6 @@
 
   /* Page gutter — fluid: 16px on phones, up to 32px on wider screens */
   --page-gutter: clamp(16px, 4vw, 32px);
-
-  /* Fluid type scale (min .. max across the sm→lg range) */
-  --fs-display: clamp(24px, 5vw, 32px);
-  --fs-title: clamp(20px, 3.4vw, 24px);
-  --fs-heading: clamp(17px, 2.4vw, 20px);
-}
-
-[data-theme='dark'] {
-  color-scheme: dark;
-  /* Mirrors tokens-dark.scss — graphite system, Ice Blue primary action. */
-  --bg-app: #171c1d;
-  --bg-auth: #101415;
-  --surface-sidebar: #101415;
-  --surface-card: #171c1d;
-  --surface-card-subtle: #1e2425;
-  --surface-muted: #252c2d;
-  --border-subtle: #303738;
-  --border-strong: #414a4b;
-  --text-primary: #eef1f0;
-  --text-secondary: #c7cecf;
-  --text-muted: #a8b0b1;
-  --brand: #8fc7d7;
-  --brand-hover: #a7d3de;
-  --brand-soft: #1e2e33;
-  --brand-border: #2e4a52;
-  --brand-logo: #a7d3de;
-  --success-bg: #18251f;
-  --success-text: #78b596;
-  --success-border: #2f4c3c;
-  --warning-bg: #282218;
-  --warning-text: #d2a85f;
-  --warning-border: #4c3f21;
-  --error-bg: #2a1d1c;
-  --error-text: #d7837b;
-  --error-border: #5a3330;
-  --info-bg: #182428;
-  --info-text: #86bdcd;
-  --info-border: #2f4a52;
-  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.38), 0 1px 1px rgb(0 0 0 / 0.30);
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.38), 0 8px 18px rgb(0 0 0 / 0.42);
-  --shadow-soft: 0 18px 40px rgb(0 0 0 / 0.54);
 }
 
 * {
@@ -157,7 +78,7 @@ a {
 }
 
 .qy-heading {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 500;
   letter-spacing: -0.02em;
 }
@@ -460,7 +381,7 @@ a {
   color: var(--text-secondary);
   display: inline-grid;
   place-items: center;
-  box-shadow: 0 1px 2px rgb(15 23 42 / .16);
+  box-shadow: var(--elevation-1);
   transform: translateX(0);
   transition: transform .16s ease, color .16s ease;
 }
@@ -793,7 +714,7 @@ textarea.input {
 .segmented button.active {
   background: var(--surface-card);
   color: var(--text-primary);
-  box-shadow: 0 1px 2px rgb(15 23 42 / .08);
+  box-shadow: var(--elevation-1);
 }
 
 .tabs {
@@ -907,7 +828,7 @@ textarea.input {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgb(15 23 42 / .42);
+  background: var(--color-scrim);
   display: grid;
   place-items: center;
   padding: 18px;
