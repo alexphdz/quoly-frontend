@@ -21,7 +21,8 @@ src/design-system/
 Para importar componentes:
 
 ```tsx
-import { Button, DataTable, StatusBadge } from '@/design-system' // o la ruta relativa a src/design-system
+// ruta relativa a src/design-system (no hay alias de importación)
+import { Button, DataTable, StatusBadge } from '../design-system'
 ```
 
 ## Fundamentos
