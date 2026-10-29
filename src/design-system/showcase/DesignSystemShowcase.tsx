@@ -14,6 +14,8 @@ import {
   DecisionRow, DecisionRowHeader, DecisionCandidate, DecisionSummary, DecisionRationale, AwardConfirmation, AwardRecord, DecisionTimeline,
   ChartHeader, BarChart, HBarChart, LineChart, DonutChart, DistributionChart, DotPlot, ChartState, ChartNote, ChartDataTable,
   CompactDonut, SegmentedDistribution, RadialGauge, CompactBars,
+  OverviewStrip, MetricChart, InsightSection, ProgressComposition, ComparativeAnalytics,
+  FormSectionNavigator, IncotermExplorer, DocumentDropzone,
 } from '..'
 import './showcase.scss'
 
@@ -103,6 +105,8 @@ export default function DesignSystemShowcase() {
   const [overlay, setOverlay] = useState<null | 'dialog' | 'confirm' | 'sheet' | 'drawer' | 'bottom' | 'nav'>(null)
   const close = () => setOverlay(null)
   const [decision, setDecision] = useState<'default' | 'selected' | 'awarded'>('default')
+  const [formSection, setFormSection] = useState('producto')
+  const [dropFile, setDropFile] = useState<{ name: string, size?: number } | null>(null)
   const [awardOpen, setAwardOpen] = useState(false)
 
   const columns: DataTableColumn<QuoteRow>[] = [
@@ -560,6 +564,79 @@ export default function DesignSystemShowcase() {
               <ChartState state="loading" shape="line" height={160} />
               <ChartState state="noresults" onClear={() => undefined} narrow />
             </div>
+          </div>
+        </ContentSection>
+
+        <ContentSection title="06B · Composiciones" description="Combinan las gráficas 06A sin modificarlas. Sin rankings; disponible ≠ confirmado.">
+          <div className="ds-sc-stack">
+            <OverviewStrip
+              metric={{ label: 'Cotizaciones recibidas', value: '12', unit: 'de 15 solicitadas', detail: '3 proveedores sin respuesta' }}
+              distribution={{ unit: 'USD', categories: [{ label: 'Confirmadas', value: 48200, color: 'mint' }, { label: 'Por revisar', value: 31750, color: 'violet' }, { label: 'Faltante', value: 9800, color: 'yellow' }] }}
+              gauge={{ value: 9, total: 12, caption: '9 de 12 revisadas' }}
+            />
+            <MetricChart
+              heading="Respuestas por mes"
+              description="Solicitudes con al menos una cotización."
+              value="74"
+              unit="respuestas"
+              comparison="De 101 solicitudes enviadas"
+              chart={<BarChart data={CH_MONTHS.map((m, i) => ({ ...m, value: CH_RESP[i] }))} height={220} ariaLabel="Respuestas por mes" />}
+            />
+            <InsightSection
+              context="Precio unitario"
+              heading="Rango de precios"
+              statement="Las cuatro cotizaciones comparables están entre 7.40 y 8.62 USD por unidad."
+              meta="Un proveedor no es comparable: cotizó por lote."
+              points={[{ label: 'Mínimo', value: '7.40', unit: 'USD' }, { label: 'Máximo', value: '8.62', unit: 'USD' }, { label: 'Comparables', value: '4' }]}
+              chart={<DotPlot rows={CH_PRICES} unit="USD" valueLabel="Precio unitario" ariaLabel="Precio unitario por proveedor" />}
+            />
+            <ProgressComposition
+              title="Cotizaciones procesadas"
+              value={9}
+              total={12}
+              unit="cotizaciones"
+              statement="Disponible no significa confirmado."
+              gauge={{ value: 9, total: 12 }}
+              groups={[
+                { label: 'Disponibilidad', items: [{ label: 'Con precio', value: 7, kind: 'confirmed' }, { label: 'Por revisar', value: 3, kind: 'pending' }, { label: 'Sin dato', value: 2, kind: 'missing' }] },
+                { label: 'Revisión humana', items: [{ label: 'Confirmadas', value: 5, kind: 'confirmed' }, { label: 'Pendientes', value: 4, kind: 'pending' }] },
+              ]}
+            />
+            <ComparativeAnalytics
+              title="Precio y tiempo de respuesta"
+              description="Escala común; la posición no indica preferencia."
+              views={[
+                {
+                  value: 'precio',
+                  label: 'Precio',
+                  chart: <HBarChart rows={CH_PRICES} unit="USD" decimals={2} color="blue" ariaLabel="Precio unitario" />,
+                  facts: [{ label: 'Rango', value: '7.40–8.62', unit: 'USD' }, { label: 'Comparables', value: '4 de 5' }],
+                  note: 'Termos del Bajío cotizó por lote.',
+                },
+                { value: 'tiempo', label: 'Tiempo', chart: <DistributionChart values={CH_LEAD} unit="días" ariaLabel="Tiempo de entrega" /> },
+              ]}
+            />
+          </div>
+        </ContentSection>
+
+        <ContentSection title="07 · Formularios" description="Navegación por anclas, Incoterm opcional y documento de especificaciones. No validan ni envían.">
+          <div className="ds-sc-stack">
+            <FormSectionNavigator
+              active={formSection}
+              onNavigate={setFormSection}
+              sections={[
+                { id: 'producto', title: 'Producto', description: 'Especificaciones', icon: 'package' },
+                { id: 'entrega', title: 'Entrega', description: 'Incoterm y lugar', icon: 'truck' },
+                { id: 'requisitos', title: 'Requisitos', description: 'Documento opcional', icon: 'file-text' },
+              ]}
+            />
+            <IncotermExplorer />
+            <DocumentDropzone
+              accept=".pdf,.xlsx,.docx"
+              file={dropFile}
+              onSelect={(f) => { const one = Array.isArray(f) ? f[0] : f; setDropFile({ name: one.name, size: one.size }) }}
+              onRemove={() => setDropFile(null)}
+            />
           </div>
         </ContentSection>
       </main>

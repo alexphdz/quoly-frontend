@@ -3208,5 +3208,290 @@
         ]
       }
     ]
+  ],
+  [
+    "cp-strip",
+    [
+      "OverviewStrip",
+      {
+        "metric": {
+          "label": "Cotizaciones recibidas",
+          "value": "12",
+          "unit": "de 15 solicitadas",
+          "detail": "3 proveedores sin respuesta"
+        },
+        "distribution": {
+          "unit": "USD",
+          "categories": [
+            {
+              "label": "Confirmadas",
+              "value": 48200,
+              "color": "mint"
+            },
+            {
+              "label": "Por revisar",
+              "value": 31750,
+              "color": "violet"
+            },
+            {
+              "label": "Faltante",
+              "value": 9800,
+              "color": "yellow"
+            }
+          ]
+        },
+        "gauge": {
+          "value": 9,
+          "total": 12,
+          "caption": "9 de 12 revisadas"
+        }
+      }
+    ]
+  ],
+  [
+    "cp-metric",
+    [
+      "MetricChart",
+      {
+        "heading": "Tiempo de respuesta",
+        "description": "Mediana de días hasta la primera cotización.",
+        "value": "3,5",
+        "unit": "días",
+        "comparison": "Rango 1,5–6 días",
+        "chart": "[gráfica]"
+      }
+    ]
+  ],
+  [
+    "cp-metric-contrast",
+    [
+      "MetricChart",
+      {
+        "treatment": "contrasting",
+        "heading": "Tiempo de respuesta",
+        "value": "3,5",
+        "unit": "días",
+        "chart": "[gráfica]"
+      }
+    ]
+  ],
+  [
+    "cp-insight",
+    [
+      "InsightSection",
+      {
+        "context": "Precio unitario",
+        "heading": "Rango de precios",
+        "statement": "Las cuatro cotizaciones comparables están entre 7,40 y 8,62 USD por unidad.",
+        "meta": "Un proveedor no es comparable: cotizó por lote.",
+        "points": [
+          {
+            "label": "Mínimo",
+            "value": "7,40",
+            "unit": "USD"
+          },
+          {
+            "label": "Máximo",
+            "value": "8,62",
+            "unit": "USD"
+          },
+          {
+            "label": "Comparables",
+            "value": "4"
+          }
+        ],
+        "chart": "[gráfica]"
+      }
+    ]
+  ],
+  [
+    "cp-progress",
+    [
+      "ProgressComposition",
+      {
+        "title": "Cotizaciones procesadas",
+        "value": 9,
+        "total": 12,
+        "unit": "cotizaciones",
+        "statement": "Disponible no significa confirmado.",
+        "groups": [
+          {
+            "label": "Disponibilidad",
+            "items": [
+              {
+                "label": "Con precio",
+                "value": 7,
+                "kind": "confirmed"
+              },
+              {
+                "label": "Por revisar",
+                "value": 3,
+                "kind": "pending"
+              },
+              {
+                "label": "Sin dato",
+                "value": 2,
+                "kind": "missing"
+              }
+            ]
+          },
+          {
+            "label": "Revisión humana",
+            "items": [
+              {
+                "label": "Confirmadas",
+                "value": 5,
+                "kind": "confirmed"
+              },
+              {
+                "label": "Pendientes",
+                "value": 4,
+                "kind": "pending"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "cp-analytics",
+    [
+      "ComparativeAnalytics",
+      {
+        "title": "Precio unitario por proveedor",
+        "description": "Escala común; la posición no indica preferencia.",
+        "views": [
+          {
+            "value": "precio",
+            "label": "Precio",
+            "chart": "[gráfica]",
+            "facts": [
+              {
+                "label": "Rango",
+                "value": "7,40–8,62",
+                "unit": "USD"
+              },
+              {
+                "label": "Diferencia",
+                "value": "1,22",
+                "unit": "USD",
+                "detail": "entre extremos"
+              },
+              {
+                "label": "Comparables",
+                "value": "4 de 5"
+              }
+            ],
+            "note": "Termos del Bajío cotizó por lote."
+          },
+          {
+            "value": "entrega",
+            "label": "Entrega",
+            "chart": "[gráfica]"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "fm-nav",
+    [
+      "FormSectionNavigator",
+      {
+        "sections": [
+          {
+            "id": "producto",
+            "title": "Producto",
+            "description": "Especificaciones",
+            "icon": "package"
+          },
+          {
+            "id": "entrega",
+            "title": "Entrega",
+            "description": "Incoterm y lugar",
+            "icon": "truck"
+          },
+          {
+            "id": "requisitos",
+            "title": "Requisitos",
+            "description": "Documento opcional",
+            "icon": "file-text"
+          }
+        ],
+        "active": "entrega"
+      }
+    ]
+  ],
+  [
+    "fm-incoterm",
+    [
+      "IncotermExplorer",
+      {}
+    ]
+  ],
+  [
+    "fm-incoterm-open",
+    [
+      "IncotermExplorer",
+      {
+        "defaultExpanded": true,
+        "defaultValue": null
+      }
+    ]
+  ],
+  [
+    "fm-incoterm-selected",
+    [
+      "IncotermExplorer",
+      {
+        "defaultValue": "FOB",
+        "defaultPlace": "Puerto de Manzanillo"
+      }
+    ]
+  ],
+  [
+    "fm-drop",
+    [
+      "DocumentDropzone",
+      {}
+    ]
+  ],
+  [
+    "fm-drop-error",
+    [
+      "DocumentDropzone",
+      {
+        "error": "El archivo supera el límite de 20 MB."
+      }
+    ]
+  ],
+  [
+    "fm-drop-file",
+    [
+      "DocumentDropzone",
+      {
+        "file": {
+          "name": "especificaciones-caja.pdf",
+          "size": 284000
+        },
+        "onRemove": true
+      }
+    ]
+  ],
+  [
+    "fm-drop-upload",
+    [
+      "DocumentDropzone",
+      {
+        "file": {
+          "name": "especificaciones-caja.pdf",
+          "size": 284000
+        },
+        "upload": {
+          "progress": 42
+        }
+      }
+    ]
   ]
 ]

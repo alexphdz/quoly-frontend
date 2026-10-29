@@ -134,6 +134,11 @@
     },
     "viewSource": "Ver fuente"
   },
+  "comp": {
+    "countOf": "{{value}} de {{total}}",
+    "ofTotal": "de {{total}} {{unit}}",
+    "view": "Vista"
+  },
   "confirm": {
     "cancel": "Cancelar",
     "confirm": "Confirmar"
@@ -219,6 +224,66 @@
   "field": {
     "optional": "opcional",
     "readOnly": "Solo lectura"
+  },
+  "form": {
+    "drop": {
+      "button": "Seleccionar archivo",
+      "description": "O selecciónalo desde tu equipo.",
+      "label": "Archivo de especificaciones",
+      "release": "Suelta el archivo para adjuntarlo",
+      "remove": "Quitar {{name}}",
+      "selected": "Archivo seleccionado: {{name}}",
+      "title": "Arrastra un archivo aquí",
+      "uploading": "Subiendo",
+      "uploadingFile": "Subiendo archivo…",
+      "uploadingName": "Subiendo {{name}}"
+    },
+    "incoterm": {
+      "change": "Cambiar",
+      "desc": {
+        "CFR": "Costo y flete",
+        "CIF": "Costo, seguro y flete",
+        "CIP": "Transporte y seguro",
+        "CPT": "Transporte pagado",
+        "DAP": "Entrega en destino",
+        "DDP": "Derechos pagados",
+        "DPU": "Entregado y descargado",
+        "EXW": "En fábrica",
+        "FAS": "Junto al buque",
+        "FCA": "Entrega al transportista",
+        "FOB": "A bordo del buque"
+      },
+      "description": "Define cómo y dónde se entregará el producto.",
+      "group": "Incoterms 2020",
+      "hint": {
+        "CFR": "Ej. Puerto de Valencia",
+        "CIF": "Ej. Puerto de Valencia",
+        "CIP": "Ej. Ciudad de México",
+        "CPT": "Ej. Ciudad de México",
+        "DAP": "Ej. Ciudad de México",
+        "DDP": "Ej. Almacén del comprador, Guadalajara",
+        "DPU": "Ej. Almacén del comprador, Guadalajara",
+        "EXW": "Ej. Planta del proveedor, Querétaro",
+        "FAS": "Ej. Puerto de Manzanillo",
+        "FCA": "Ej. Centro de distribución del proveedor, Monterrey",
+        "FOB": "Ej. Puerto de Manzanillo"
+      },
+      "mode": {
+        "any": "Cualquier modo",
+        "sea": "Marítimo / vías navegables"
+      },
+      "place": {
+        "delivery": "Lugar de entrega",
+        "destination": "Lugar de destino",
+        "destinationPort": "Puerto de destino",
+        "loadingPort": "Puerto de embarque"
+      },
+      "remove": "Quitar",
+      "title": "Agregar Incoterm"
+    },
+    "nav": {
+      "label": "Secciones del formulario"
+    }
   },
   "nav": {
     "account": "Cuenta y workspace: {{summary}}",

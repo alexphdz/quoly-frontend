@@ -1,0 +1,394 @@
+// 06B · Composiciones analíticas. Combinan las gráficas 06A sin modificarlas; sin tokens nuevos.
+
+@mixin num($size, $lh, $weight: 500) {
+  font-family: var(--font-display);
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $lh;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+// ---- Tratamientos de superficie ----
+.q-comp {
+  box-sizing: border-box;
+  width: 100%;
+  background: transparent;
+
+  &.is-unified {
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider);
+    border-radius: 12px;
+    padding: 24px;
+
+    &.is-mobile { padding: 16px; }
+  }
+
+  &.is-contrasting {
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+}
+
+// ---- Texto ----
+.q-comp-eyebrow {
+  margin-bottom: 8px;
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.q-comp-label {
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--color-text-secondary);
+}
+
+.q-comp-meta {
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 17px;
+  color: var(--color-text-secondary);
+
+  &.is-strong { font-weight: 500; }
+  &.is-11 { font-size: 11px; }
+  &.is-tight { line-height: 15px; }
+}
+
+.q-comp-h18 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--color-text-primary);
+}
+
+.q-comp-h20 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+}
+
+.q-comp-title-sm {
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--color-text-primary);
+}
+
+.q-comp-unit {
+  font-family: var(--font-text);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--color-text-secondary);
+}
+
+.q-comp-num {
+  &.is-24 { @include num(24px, 28px); }
+  &.is-32 { @include num(32px, 35px); }
+  &.is-36 { @include num(36px, 40px); }
+  &.is-44 { @include num(44px, 46px, 400); }
+}
+
+.q-comp-tnum { font-variant-numeric: tabular-nums; }
+
+.q-comp-figure {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+
+  &.is-gap-8 { gap: 8px; }
+}
+
+// Tile 06A sin cromo dentro de una composición
+.q-chart-tile.is-bare {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+
+  &.is-inline { flex: 0 0 auto; }
+}
+
+// ---- A · OverviewStrip ----
+.q-comp-strip-grid {
+  display: grid;
+  grid-template-columns: 3fr 5fr 4fr;
+  gap: 20px;
+  min-height: 184px;
+
+  .is-tablet & { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .is-mobile & { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+}
+
+.q-comp-strip-metric {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  .q-comp-figure { margin-top: auto; }
+  .is-mobile & .q-comp-figure { margin-top: 12px; }
+  .is-tablet & { grid-area: 1 / 1; }
+}
+
+.q-comp-strip-detail { margin-top: 6px; }
+
+.q-comp-strip-r2,
+.q-comp-strip-r3 {
+  display: flex;
+  min-width: 0;
+}
+
+.is-tablet .q-comp-strip-r2 { grid-area: 2 / 1 / 3 / 3; }
+.is-tablet .q-comp-strip-r3 { grid-area: 1 / 2; }
+
+// Divisores internos (unified)
+.q-comp-strip:not(.is-open) {
+  &.is-desktop .q-comp-strip-r2,
+  &.is-desktop .q-comp-strip-r3,
+  &.is-tablet .q-comp-strip-r3 {
+    border-left: 1px solid var(--color-divider);
+    padding-left: 20px;
+  }
+
+  &.is-tablet .q-comp-strip-r2,
+  &.is-mobile .q-comp-strip-r2,
+  &.is-mobile .q-comp-strip-r3 {
+    border-top: 1px solid var(--color-divider);
+    padding-top: 20px;
+  }
+}
+
+// ---- B · MetricChart ----
+.q-comp-metric {
+  display: grid;
+  grid-template-columns: 35fr 65fr;
+  gap: 20px 32px;
+
+  &.is-mobile { grid-template-columns: minmax(0, 1fr); }
+  &.is-contrasting { column-gap: 0; }
+}
+
+.q-comp-metric-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  .is-contrasting > & { padding: 24px; background: var(--surface-context); }
+}
+
+.q-comp-metric-desc { margin: 6px 0 0; max-width: 320px; text-wrap: pretty; }
+
+.q-comp-metric-value {
+  display: grid;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 24px;
+
+  .is-mobile & { margin-top: 16px; padding-top: 0; }
+}
+
+.q-comp-metric-chart {
+  display: grid;
+  gap: 12px;
+  align-content: end;
+  min-width: 0;
+
+  .is-contrasting > & { padding: 24px; }
+}
+
+// ---- E · InsightSection ----
+.q-comp-insight {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px 32px;
+
+  &.is-desktop { grid-template-columns: 5fr 7fr; }
+}
+
+.q-comp-insight-main { display: flex; flex-direction: column; min-width: 0; }
+
+.q-comp-statement {
+  max-width: 560px;
+  margin: 16px 0 0;
+  font-family: var(--font-text);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 23px;
+  color: var(--color-text-primary);
+  text-wrap: pretty;
+}
+
+.q-comp-insight-meta { margin: 10px 0 0; max-width: 560px; }
+
+.q-comp-points {
+  display: grid;
+  gap: 20px;
+  margin: 20px 0 0;
+  padding-top: 20px;
+
+  .is-desktop & { margin-top: auto; }
+
+  dd { margin: 0; display: flex; align-items: baseline; gap: 5px; }
+}
+
+.q-comp-point { display: grid; gap: 4px; padding-top: 12px; border-top: 1px solid var(--color-divider); }
+
+.q-comp-insight-chart { display: grid; gap: 12px; align-content: start; min-width: 0; }
+
+// ---- D · ProgressComposition ----
+.q-comp-progress {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+
+  &.is-tablet { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  &.is-mobile { grid-template-columns: minmax(0, 1fr); }
+  &:not(.is-contrasting) { gap: 20px 32px; }
+}
+
+.q-comp-progress-count {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  min-width: 0;
+
+  .is-desktop > & { flex-direction: row; align-items: center; }
+  .is-contrasting > & { padding: 24px; background: var(--surface-context); }
+  .is-contrasting.is-mobile > & { padding: 16px; }
+}
+
+.q-comp-progress-head { display: grid; gap: 6px; min-width: 0; }
+.q-comp-progress-figure { margin-top: 6px; flex-wrap: nowrap; }
+.q-comp-progress-statement { margin: 0; max-width: 260px; text-wrap: pretty; }
+
+.q-comp-progress-groups {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px 32px;
+  align-content: center;
+  min-width: 0;
+
+  .is-contrasting > & { padding: 24px; }
+  .is-contrasting.is-mobile > & { padding: 16px; }
+}
+
+.q-comp-progress-group { display: grid; gap: 10px; align-content: start; }
+.q-comp-progress-glabel { display: flex; justify-content: space-between; gap: 12px; }
+
+.q-comp-progress-bar {
+  display: flex;
+  gap: 2px;
+  height: 6px;
+
+  > span {
+    border-radius: 2px;
+    opacity: 0.9;
+
+    &.is-confirmed { background: var(--color-status-success-text); }
+    &.is-pending { background: var(--color-status-ai-text); }
+    &.is-missing { background: var(--color-surface-elevated); opacity: 1; }
+  }
+}
+
+.q-comp-progress-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-text);
+    font-size: 12px;
+    line-height: 17px;
+    color: var(--color-text-primary);
+  }
+}
+
+.q-comp-progress-marker {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.is-confirmed { background: var(--color-status-success-text); }
+  &.is-pending { background: var(--color-status-ai-text); }
+  &.is-missing { box-shadow: inset 0 0 0 1.5px var(--color-text-secondary); }
+}
+
+.q-comp-progress-item-label { flex: 1 1 auto; }
+.q-comp-progress-item-value { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+// ---- C · ComparativeAnalytics ----
+.q-comp-analytics { display: grid; }
+
+.q-comp-analytics-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px 24px;
+  min-height: 48px;
+  margin-bottom: 20px;
+}
+
+.q-comp-analytics-titles { display: grid; gap: 4px; min-width: 0; flex: 1 1 280px; }
+.q-comp-analytics-desc { margin: 0; max-width: 560px; }
+.q-comp-analytics-view { display: grid; }
+
+.q-comp-analytics-chart {
+  min-height: 240px;
+
+  .is-mobile & { min-height: 0; }
+}
+
+.q-comp-facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px 20px;
+  min-height: 52px;
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-divider);
+
+  dd { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px; }
+}
+
+.q-comp-fact { display: grid; gap: 4px; align-content: start; min-width: 0; }
+
+.q-comp-fact-value {
+  font-family: var(--font-text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.q-comp-analytics-note { margin: 12px 0 0; max-width: 620px; }
+
+.q-comp-analytics-breakdown { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-divider); }

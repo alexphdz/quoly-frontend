@@ -49,6 +49,11 @@ export type ComparisonRow = {
 export type ComparisonGroup = { key: string, title: string, rows: ComparisonRow[] }
 export type ComparisonSupplier = Omit<SupplierComparisonHeaderProps, 'selected' | 'onSelect' | 'className' | 'style'> & { key: string }
 
+/* `key` es identidad de React, no prop del encabezado: no se propaga con spread. */
+function supplierProps({ key: _key, ...rest }: ComparisonSupplier) {
+  return rest
+}
+
 export type ComparisonMatrixProps = {
   suppliers: ComparisonSupplier[]
   groups: ComparisonGroup[]
@@ -300,7 +305,7 @@ export function ComparisonMatrix({
             )}
             {columns.map((s, i) => (
               <div role="columnheader" key={s.key} className={cx('q-cmp-colhead', (!mobile || i > 0) && 'has-rule')}>
-                <SupplierComparisonHeader {...s} selected={selected === s.key} onSelect={() => pick(s.key)} />
+                <SupplierComparisonHeader {...supplierProps(s)} selected={selected === s.key} onSelect={() => pick(s.key)} />
               </div>
             ))}
           </div>

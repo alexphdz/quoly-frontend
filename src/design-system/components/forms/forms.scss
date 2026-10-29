@@ -1,0 +1,338 @@
+// 07 · Extensiones de formulario. Reutilizan 05A; sin tokens nuevos.
+@use '../shared' as *;
+
+$q-form-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+@mixin form-focus {
+  outline: none;
+
+  &:focus-visible { box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-focus-ring); }
+}
+
+@mixin text-14 { font-family: var(--font-text); font-size: 14px; font-weight: 600; line-height: 20px; }
+@mixin text-12 { font-family: var(--font-text); font-size: 12px; line-height: 17px; color: var(--color-text-secondary); }
+
+// ---- 07.1 FormSectionNavigator ----
+.q-form-nav { width: 100%; max-width: 780px; }
+
+.q-form-nav-scroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+
+.q-form-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 18px;
+  min-width: min-content;
+}
+
+.q-form-nav-connector { flex: 0 1 40px; min-width: 12px; align-self: center; height: 1px; background: var(--color-border); }
+.q-form-nav-item { flex: 1 0 auto; display: flex; }
+
+.q-form-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 68px;
+  box-sizing: border-box;
+  padding: 0 4px;
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  @include form-focus;
+}
+
+.q-form-nav-icon,
+.q-form-nav-num,
+.q-form-nav-title {
+  color: var(--color-text-secondary);
+  transition: color 160ms ease-out;
+}
+
+.q-form-nav-icon { display: flex; }
+
+.q-form-nav-link:hover:not(.is-active),
+.q-form-nav-link.is-hover:not(.is-active) {
+  .q-form-nav-icon,
+  .q-form-nav-num,
+  .q-form-nav-title { color: var(--color-text-primary); }
+}
+
+.q-form-nav-link.is-active {
+  .q-form-nav-icon { color: var(--color-brand); }
+  .q-form-nav-num,
+  .q-form-nav-title { color: var(--color-text-primary); }
+}
+
+.q-form-nav-text { display: grid; gap: 2px; }
+.q-form-nav-row { display: flex; align-items: baseline; gap: 6px; }
+
+.q-form-nav-num {
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.q-form-nav-title {
+  position: relative;
+  font-family: var(--font-text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.q-form-nav-underline {
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 24px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 140ms ease-in;
+
+  .is-active & { transform: scaleX(1); transition: transform 200ms $q-form-ease; }
+}
+
+.q-form-nav-desc {
+  margin-top: 2px;
+  font-family: var(--font-text);
+  font-size: 11px;
+  line-height: 15px;
+  color: var(--color-text-secondary);
+}
+
+// ---- 07.2 IncotermExplorer ----
+.q-incoterm {
+  width: 100%;
+  max-width: 780px;
+  display: grid;
+  gap: 12px;
+
+  &.is-open { gap: 8px; }
+}
+
+.q-incoterm-trigger,
+.q-incoterm-summary {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  transition: border-color 140ms ease-out;
+}
+
+.q-incoterm-trigger {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 76px;
+  padding: 16px 20px;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  @include form-focus;
+
+  &:hover,
+  &.is-hover { border-color: var(--color-border-strong); }
+}
+
+.q-incoterm-trigger-icon {
+  display: flex;
+  color: var(--color-text-secondary);
+  transition: color 140ms ease-out;
+
+  .q-incoterm-trigger:hover &,
+  .q-incoterm-trigger.is-hover &,
+  .is-open & { color: var(--color-text-primary); }
+}
+
+.q-incoterm-text {
+  display: grid;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+
+  &.is-summary { flex: 1 1 220px; }
+}
+
+.q-incoterm-title { @include text-14; }
+.q-incoterm-desc { @include text-12; }
+
+.q-incoterm-caret {
+  display: flex;
+  color: var(--color-text-secondary);
+  transition: transform 180ms $q-form-ease;
+
+  .is-open & { transform: rotate(180deg); }
+}
+
+.q-incoterm-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  min-height: 64px;
+  padding: 16px;
+}
+
+.q-incoterm-summary-icon { display: flex; color: var(--color-brand); }
+.q-incoterm-summary-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+
+.q-incoterm-fullname {
+  font-family: var(--font-text);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--color-text-primary);
+}
+
+.q-incoterm-actions { display: flex; gap: 20px; }
+
+.q-incoterm-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 220ms $q-form-ease, opacity 220ms $q-form-ease;
+
+  .is-open > & { grid-template-rows: 1fr; opacity: 1; }
+}
+
+.q-incoterm-clip { overflow: hidden; min-height: 0; }
+
+.q-incoterm-grid {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--color-divider);
+  background: var(--surface-context);
+}
+
+.q-incoterm-tile {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 80px;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 140ms ease-out, background-color 160ms ease-out;
+  @include form-focus;
+
+  &:hover:not(.is-selected),
+  &.is-hover:not(.is-selected) { border-color: var(--color-border-strong); background: var(--color-surface-hover); }
+
+  &.is-selected { border-color: var(--color-brand); background: var(--color-surface-selected); }
+}
+
+.q-incoterm-tile-icon {
+  display: flex;
+  color: var(--color-text-secondary);
+  transition: color 160ms ease-out;
+
+  .q-incoterm-tile:hover &,
+  .q-incoterm-tile.is-hover & { color: var(--color-text-primary); }
+  .q-incoterm-tile.is-selected & { color: var(--color-brand); }
+}
+
+.q-incoterm-tile-code {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  color: var(--color-text-primary);
+}
+
+.q-incoterm-tile-desc { font-family: var(--font-text); font-size: 11px; line-height: 15px; color: var(--color-text-secondary); }
+
+.q-incoterm-tile-check { position: absolute; top: 10px; right: 10px; display: flex; color: var(--color-brand); }
+
+// ---- 07.3 DocumentDropzone ----
+.q-drop { width: 100%; max-width: 780px; display: grid; gap: 8px; }
+
+.q-drop-zone {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 104px;
+  padding: 20px;
+  border: 1px dashed var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  transition: border-color 160ms ease-out, background-color 160ms ease-out;
+
+  &.is-narrow { flex-direction: column; align-items: flex-start; }
+
+  &:hover:not(.is-disabled),
+  &.is-hover:not(.is-disabled) { border-color: var(--color-border-strong); background: var(--color-surface-hover); }
+
+  &.is-error { border-color: var(--color-status-error-text); }
+  &.is-drag { border-color: var(--color-brand); background: var(--color-surface-selected); }
+  &.is-disabled { opacity: 0.55; }
+}
+
+.q-drop-icon {
+  display: flex;
+  color: var(--color-text-secondary);
+  transition: color 160ms ease-out;
+
+  .q-drop-zone:hover:not(.is-disabled) &,
+  .q-drop-zone.is-hover & { color: var(--color-text-primary); }
+  .q-drop-zone.is-drag & { color: var(--color-brand); }
+}
+
+.q-drop-text { display: grid; gap: 2px; flex: 1 1 auto; min-width: 0; }
+.q-drop-title { @include text-14; }
+.q-drop-desc { @include text-12; }
+
+.q-drop-file {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 72px;
+  padding: 16px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+}
+
+.q-drop-file-icon { display: flex; color: var(--color-text-primary); }
+
+.q-drop-file-body {
+  display: grid;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+
+  &.is-uploading { gap: 8px; }
+}
+
+.q-drop-file-name {
+  @include text-14;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.q-drop-file-size { @include text-12; font-variant-numeric: tabular-nums; }

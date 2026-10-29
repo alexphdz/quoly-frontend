@@ -141,3 +141,16 @@ export {
   type CompactDonutProps, type CompactSegment, type SegmentedDistributionProps, type RadialGaugeProps, type CompactBarsProps,
 } from './components/charts/CompactCharts'
 export { SERIES, chartColor, niceTicks, niceRange, sharePct, type SeriesColor } from './components/charts/shared'
+
+// 06B · Analytical compositions
+export { OverviewStrip, type OverviewStripProps } from './components/compositions/OverviewStrip'
+export { MetricChart, type MetricChartProps } from './components/compositions/MetricChart'
+export { InsightSection, type InsightSectionProps, type InsightPoint } from './components/compositions/InsightSection'
+export { ProgressComposition, type ProgressCompositionProps, type ProgressItem, type ProgressGroup } from './components/compositions/ProgressComposition'
+export { ComparativeAnalytics, type ComparativeAnalyticsProps, type ComparativeView, type ComparativeFact } from './components/compositions/ComparativeAnalytics'
+export { type SurfaceTreatment } from './components/compositions/shared'
+
+// 07 · Form experience extensions
+export { FormSectionNavigator, useActiveSection, type FormSectionNavigatorProps, type FormSection } from './components/forms/FormSectionNavigator'
+export { IncotermExplorer, INCOTERMS, type IncotermExplorerProps, type IncotermOption, type IncotermPlace } from './components/forms/IncotermExplorer'
+export { DocumentDropzone, fileIcon, useFileSize, type DocumentDropzoneProps } from './components/forms/DocumentDropzone'
