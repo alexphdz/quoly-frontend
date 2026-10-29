@@ -1,0 +1,48 @@
+{
+  "actions": {
+    "close": "Cerrar",
+    "moreOptions": "Más opciones"
+  },
+  "alert": {
+    "dismiss": "Cerrar aviso",
+    "howToResolve": "Cómo resolverlo"
+  },
+  "breadcrumbs": {
+    "label": "Ruta de navegación"
+  },
+  "chip": {
+    "remove": "Quitar {{label}}"
+  },
+  "currency": {
+    "amount": "Importe",
+    "currency": "Moneda"
+  },
+  "date": {
+    "formatDayFirst": "dd/mm/aaaa",
+    "formatMonthFirst": "mm/dd/aaaa",
+    "openCalendar": "Abrir calendario"
+  },
+  "field": {
+    "optional": "opcional",
+    "readOnly": "Solo lectura"
+  },
+  "nav": {
+    "account": "Cuenta y workspace: {{summary}}",
+    "close": "Cerrar navegación",
+    "collapse": "Contraer navegación",
+    "expand": "Expandir navegación",
+    "label": "Navegación",
+    "primary": "Principal",
+    "search": "Buscar",
+    "settings": "Configuración"
+  },
+  "search": {
+    "clear": "Borrar búsqueda"
+  },
+  "select": {
+    "placeholder": "Seleccionar"
+  },
+  "status": {
+    "loading": "Cargando"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "actions": {
+    "close": "Close",
+    "moreOptions": "More options"
+  },
+  "alert": {
+    "dismiss": "Dismiss notice",
+    "howToResolve": "How to resolve it"
+  },
+  "breadcrumbs": {
+    "label": "Breadcrumb"
+  },
+  "chip": {
+    "remove": "Remove {{label}}"
+  },
+  "currency": {
+    "amount": "Amount",
+    "currency": "Currency"
+  },
+  "date": {
+    "formatDayFirst": "dd/mm/yyyy",
+    "formatMonthFirst": "mm/dd/yyyy",
+    "openCalendar": "Open calendar"
+  },
+  "field": {
+    "optional": "optional",
+    "readOnly": "Read only"
+  },
+  "nav": {
+    "account": "Account and workspace: {{summary}}",
+    "close": "Close navigation",
+    "collapse": "Collapse navigation",
+    "expand": "Expand navigation",
+    "label": "Navigation",
+    "primary": "Primary",
+    "search": "Search",
+    "settings": "Settings"
+  },
+  "search": {
+    "clear": "Clear search"
+  },
+  "select": {
+    "placeholder": "Select"
+  },
+  "status": {
+    "loading": "Loading"
+  }
+}
