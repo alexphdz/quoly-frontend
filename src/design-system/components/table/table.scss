@@ -230,6 +230,7 @@
 
 .q-table-actions-secondary {
   display: flex;
+  flex-shrink: 0;
   gap: 2px;
   opacity: 0;
   transition: opacity var(--table-dur-actions) ease-out;
@@ -243,7 +244,9 @@
 
 .q-table-actions-primary {
   display: flex;
+  flex-shrink: 0;
   margin-left: 8px;
+  white-space: nowrap;
 }
 
 // Selección
@@ -713,3 +716,6 @@
 
   .q-table-pagination-text { margin-right: 4px; }
 }
+
+// Campos dentro del toolbar: ancho útil por defecto (el input es flexible).
+.q-table-toolbar-group > .q-field { width: 240px; }
