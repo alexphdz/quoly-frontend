@@ -95,6 +95,8 @@
   display: inline-flex;
   gap: 1px;
 
+  .q-btn-label { padding: 0; }
+
   &.is-secondary { gap: 0; }
 
   .q-btn { position: relative; }
@@ -125,6 +127,8 @@
     display: inline-flex;
     flex-wrap: nowrap;
     gap: 0;
+
+    .q-btn-label { padding: 0; }
 
     .q-btn {
       position: relative;

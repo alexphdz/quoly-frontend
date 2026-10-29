@@ -195,6 +195,7 @@
 
 .q-control-kbd {
   display: inline-flex;
+  box-sizing: content-box;
   align-items: center;
   justify-content: center;
   min-width: 20px;

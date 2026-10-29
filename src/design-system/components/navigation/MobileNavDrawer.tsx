@@ -42,20 +42,16 @@ export function MobileNavDrawer({
             </Dialog.Close>
           </div>
           <div className="q-nav-gap is-sm" />
-          {onSearch && (
-            <>
-              <SidebarItem
-                variant="drawer"
-                icon="magnifying-glass"
-                label={t('nav.search')}
-                onClick={() => {
-                  close()
-                  onSearch()
-                }}
-              />
-              <div className="q-nav-gap is-sm" />
-            </>
-          )}
+          <SidebarItem
+            variant="drawer"
+            icon="magnifying-glass"
+            label={t('nav.search')}
+            onClick={() => {
+              close()
+              onSearch?.()
+            }}
+          />
+          <div className="q-nav-gap is-sm" />
           <nav aria-label={t('nav.primary')} className="q-nav-list is-scroll">
             {items.map((it) => (
               <SidebarItem

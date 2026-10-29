@@ -109,20 +109,16 @@ export function Sidebar({
             </div>
           )}
       <div className="q-nav-gap" />
-      {onSearch && (
-        <>
-          <SidebarItem
-            icon="magnifying-glass"
-            label={t('nav.search')}
-            tooltip={`${t('nav.search')} (${searchShortcut})`}
-            shortcut={searchShortcut}
-            keyShortcuts="Meta+K Control+K"
-            collapsed={collapsed}
-            onClick={onSearch}
-          />
-          <div className="q-nav-gap" />
-        </>
-      )}
+      <SidebarItem
+        icon="magnifying-glass"
+        label={t('nav.search')}
+        tooltip={`${t('nav.search')} (${searchShortcut})`}
+        shortcut={searchShortcut}
+        keyShortcuts="Meta+K Control+K"
+        collapsed={collapsed}
+        onClick={onSearch}
+      />
+      <div className="q-nav-gap" />
       <nav aria-label={t('nav.primary')} className="q-nav-list">
         {items.map((it) => (
           <SidebarItem

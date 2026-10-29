@@ -253,6 +253,13 @@
 .q-table-select-cell {
   width: 44px;
   padding: 0;
+
+  .q-table-head-row > & {
+    height: var(--table-header-h);
+    border-bottom: 1px solid var(--table-header-divider);
+  }
+
+  .is-compact .q-table-head-row > & { height: var(--table-header-h-compact); }
 }
 
 .q-table-select {

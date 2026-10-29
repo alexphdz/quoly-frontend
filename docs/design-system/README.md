@@ -99,3 +99,9 @@ npm run dev
 ```
 
 Abrir `http://localhost:5173/_ds`. La ruta solo existe en desarrollo e incluye todas las familias con sus estados, y un selector de tema claro/oscuro.
+
+## Paridad con la referencia
+
+`/_ds/parity` (solo desarrollo) renderiza los casos de `src/design-system/showcase/parity-cases.json`. El mismo JSON se puede renderizar con el bundle del zip de Claude Design para comparar medidas y estilos computados caso por caso.
+
+**Nota:** las fichas `*.card.html` del zip aplican la fuente base al `<html>`, y eso deja `rem` = 14px (todo ~12,5% más chico que la especificación). La app sigue la especificación: `rem` = 16px y body 14px.

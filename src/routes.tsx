@@ -42,8 +42,12 @@ if (
 
 // Catálogo del design system: solo en desarrollo (no llega al build de producción).
 const DesignSystemShowcase = import.meta.env.DEV ? lazy(() => import('./design-system/showcase/DesignSystemShowcase')) : null
-const devRoutes: RouteObject[] = DesignSystemShowcase
-  ? [{ path: '/_ds', element: <Suspense fallback={null}><DesignSystemShowcase /></Suspense> }]
+const DesignSystemParity = import.meta.env.DEV ? lazy(() => import('./design-system/showcase/Parity')) : null
+const devRoutes: RouteObject[] = DesignSystemShowcase && DesignSystemParity
+  ? [
+      { path: '/_ds', element: <Suspense fallback={null}><DesignSystemShowcase /></Suspense> },
+      { path: '/_ds/parity', element: <Suspense fallback={null}><DesignSystemParity /></Suspense> },
+    ]
   : []
 
 export const router = createBrowserRouter([
