@@ -4,7 +4,7 @@
 
 Quoly ayuda a un comprador a cotizar con los proveedores que ya conoce, y a convertir respuestas desordenadas en una comparación que puede defender.
 
-Esta es la interfaz web de Quoly: el lado del comprador. Los proveedores nunca entran aquí; responden por correo, como siempre.
+Esta es la interfaz de Quoly: el lado del comprador. Los proveedores nunca entran aquí; responden por correo, como siempre.
 
 - Producción: `https://quoly.app`
 - Staging: `https://staging.quoly.app`
@@ -29,11 +29,21 @@ Una misma solicitud puede tener varios proveedores en etapas distintas al mismo 
 
 ## Qué puedes hacer
 
-- **Crear una solicitud** comercial corta: qué compras, cuánto, en qué unidad, y lo que quieras agregar (Incoterm y lugar, fecha deseada, requisitos técnicos, un archivo de referencia).
+- **Crear una solicitud** comercial corta: qué compras, cuánto y en qué unidad, más lo que quieras agregar (Incoterm y lugar, fecha deseada, requisitos técnicos, un archivo de referencia).
 - **Elegir proveedores** de tu directorio privado o solo para esa solicitud, y enviarles la solicitud desde tu propio correo.
-- **Leer lo que llegó:** Quoly extrae de cada respuesta la cotización (precio, escalones, MOQ, tiempos de entrega, validez, pago), la evidencia técnica y las preguntas del proveedor, siempre con las palabras originales a la vista. Tú revisas y corriges lo que haga falta.
+- **Leer lo que llegó:** Quoly extrae de cada respuesta la cotización (precio, escalones por cantidad, MOQ, tiempos de entrega, validez, pago), la evidencia técnica y las preguntas del proveedor, siempre con las palabras originales a la vista. Tú revisas y corriges lo que haga falta.
 - **Responder las preguntas** del proveedor: Quoly te propone un borrador que puedes usar, editar o reescribir. Nada se envía solo.
-- **Comparar** a los proveedores lado a lado, con un recomendado y lo que todavía falta visible, y **adjudicar** cuando tú decides. Puedes exportar la decisión a PDF.
+- **Comparar** a los proveedores lado a lado, con un recomendado y con lo que todavía falta siempre visible, y **adjudicar** cuando tú decides.
+- **Exportar la decisión a PDF**, con las cifras y tu razón, para tu expediente o para compartir.
+
+## Características
+
+- Lectura con IA de correos y archivos (PDF, Excel, Word, fichas e imágenes) en una sola pasada.
+- Cotizaciones con escalones por cantidad, MOQ, tiempos de entrega, validez y términos de pago.
+- Comparación comercial y técnica, con proveedor recomendado y alertas (por ejemplo, cuando un MOQ supera la cantidad pedida).
+- Directorio privado de proveedores con contactos y etiquetas.
+- Seguimiento por proveedor: cada uno avanza por su propia etapa.
+- Disponible en **Español e Inglés**, con modo **claro y oscuro**.
 
 ## Lo que hace la inteligencia artificial (y lo que no)
 
@@ -43,25 +53,6 @@ Lo que **no** hace: no responde ni adjudica por su cuenta, no inventa datos que 
 
 ## Pensado para
 
-Compradores, compras, sourcing y pequeñas empresas cuyo proceso todavía corre por correos, archivos y hojas de cálculo. Disponible en **Español e Inglés**, con modo **claro y oscuro**.
+Compradores, compras, sourcing y pequeñas empresas cuyo proceso todavía corre por correos, archivos y hojas de cálculo.
 
 Los proveedores no necesitan cuenta ni aprender un portal. Quoly organiza el lado del comprador; ellos siguen respondiendo por correo.
-
----
-
-## Desarrollo
-
-Aplicación web hecha con React, TypeScript y Vite. Consume la API del backend (FastAPI); aquí vive solo la interfaz.
-
-```bash
-npm install
-cp .env.example .env     # ajusta VITE_API_BASE_URL (la URL de la API)
-npm run dev              # http://localhost:5173
-```
-
-Scripts útiles: `npm run build` (build de producción), `npm run lint`, `npm run test:e2e` (Playwright). El despliegue es en Vercel (`qa` → staging, `main` → producción).
-
-Para más detalle hay documentación aparte:
-
-- `docs/GUIA_USUARIO.md` — guía de usuario, pantalla por pantalla.
-- `docs/QUOLY_DESIGN_SYSTEM.md` — el sistema visual (color, tipografía, componentes).
