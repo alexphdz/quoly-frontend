@@ -13,6 +13,10 @@
   "chip": {
     "remove": "Quitar {{label}}"
   },
+  "confirm": {
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
+  },
   "currency": {
     "amount": "Importe",
     "currency": "Moneda"
@@ -44,5 +48,43 @@
   },
   "status": {
     "loading": "Cargando"
+  },
+  "table": {
+    "actions": "Acciones",
+    "ascending": ", ascendente",
+    "clearSelection": "Deseleccionar",
+    "descending": ", descendente",
+    "empty": {
+      "label": "Sin registros",
+      "title": "Todavía no hay registros"
+    },
+    "error": {
+      "failedAgain": "El intento de las {{time}} tampoco se completó. Los datos siguen sin estar disponibles.",
+      "label": "Datos no disponibles",
+      "retry": "Reintentar carga",
+      "retrying": "Reintentando…",
+      "text": "La conexión se interrumpió. Los filtros y criterios de búsqueda se han conservado.",
+      "title": "No se pudieron cargar los datos"
+    },
+    "nextPage": "Página siguiente",
+    "noResults": {
+      "clear": "Limpiar búsqueda",
+      "label": "Sin coincidencias",
+      "text": "Prueba con otro término o elimina los filtros activos.",
+      "title": "Sin resultados"
+    },
+    "notComparable": "No comparable",
+    "notProvided": "No indicado",
+    "of": "de",
+    "pageOf": "Página {{page}} de {{pages}}",
+    "pagination": "Paginación",
+    "previousPage": "Página anterior",
+    "results": "resultados",
+    "rowsPerPage": "Filas por página",
+    "selectAll": "Seleccionar todas las filas",
+    "selectRow": "Seleccionar {{label}}",
+    "selected_one": "{{count}} seleccionado",
+    "selected_other": "{{count}} seleccionados",
+    "selectionActions": "Acciones de selección"
   }
 }

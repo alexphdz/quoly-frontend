@@ -61,3 +61,26 @@ export { Sidebar, NavAccount, type SidebarProps, type NavItem, type NavAccountPr
 export { SidebarItem, type SidebarItemProps } from './components/navigation/SidebarItem'
 export { MobileNavDrawer, type MobileNavDrawerProps } from './components/navigation/MobileNavDrawer'
 export { QuolyMark } from './components/navigation/QuolyMark'
+
+// 05B.1 · table
+export { DataTable, type DataTableProps, type DataTableColumn, type DataTableSort } from './components/table/DataTable'
+export { TableCell, type TableCellProps, type TableCellType } from './components/table/TableCell'
+export { TableToolbar, type TableToolbarProps } from './components/table/TableToolbar'
+export { TablePagination, type TablePaginationProps } from './components/table/TablePagination'
+export { RecoveryState, EmptyRegion, NoResultsRegion, type RecoveryStateProps, type EmptyRegionProps, type NoResultsRegionProps } from './components/table/TableStates'
+
+// 05B.2 · structure
+export { SectionHeader, type SectionHeaderProps, type HeadingLevel } from './components/structure/SectionHeader'
+export { ContentSection, type ContentSectionProps } from './components/structure/ContentSection'
+export { InfoGroup, type InfoGroupProps, type InfoItem } from './components/structure/InfoGroup'
+export { KeyValueGroup, type KeyValueGroupProps, type KeyValueItem } from './components/structure/KeyValueGroup'
+export { Metric, MetricGroup, type MetricProps, type MetricGroupProps } from './components/structure/Metric'
+export { ContextPanel, PanelSection, type ContextPanelProps } from './components/structure/ContextPanel'
+export { DetailPanel, type DetailPanelProps } from './components/structure/DetailPanel'
+export { Expandable, type ExpandableProps } from './components/structure/Expandable'
+export { EmptySection, type EmptySectionProps } from './components/structure/EmptySection'
+export { MissingValue } from './components/structure/shared'
+export { Dialog, type DialogProps, type DialogSize } from './components/structure/Dialog'
+export { ConfirmDialog, type ConfirmDialogProps } from './components/structure/ConfirmDialog'
+export { SideSheet, type SideSheetProps } from './components/structure/SideSheet'
+export { Drawer, type DrawerProps } from './components/structure/Drawer'

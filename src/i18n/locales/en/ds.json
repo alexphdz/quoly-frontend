@@ -13,6 +13,10 @@
   "chip": {
     "remove": "Remove {{label}}"
   },
+  "confirm": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
   "currency": {
     "amount": "Amount",
     "currency": "Currency"
@@ -44,5 +48,43 @@
   },
   "status": {
     "loading": "Loading"
+  },
+  "table": {
+    "actions": "Actions",
+    "ascending": ", ascending",
+    "clearSelection": "Clear selection",
+    "descending": ", descending",
+    "empty": {
+      "label": "No records",
+      "title": "No records yet"
+    },
+    "error": {
+      "failedAgain": "The {{time}} attempt did not complete either. The data is still unavailable.",
+      "label": "Data unavailable",
+      "retry": "Retry loading",
+      "retrying": "Retrying…",
+      "text": "The connection was interrupted. Your filters and search criteria were kept.",
+      "title": "The data could not be loaded"
+    },
+    "nextPage": "Next page",
+    "noResults": {
+      "clear": "Clear search",
+      "label": "No matches",
+      "text": "Try another term or remove the active filters.",
+      "title": "No results"
+    },
+    "notComparable": "Not comparable",
+    "notProvided": "Not provided",
+    "of": "of",
+    "pageOf": "Page {{page}} of {{pages}}",
+    "pagination": "Pagination",
+    "previousPage": "Previous page",
+    "results": "results",
+    "rowsPerPage": "Rows per page",
+    "selectAll": "Select all rows",
+    "selectRow": "Select {{label}}",
+    "selected_one": "{{count}} selected",
+    "selected_other": "{{count}} selected",
+    "selectionActions": "Selection actions"
   }
 }

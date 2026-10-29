@@ -1,4 +1,4 @@
-// Estilos de componentes Quoly 2.0 (05A foundational + 05B estructura).
+// Estilos de componentes Quoly 2.0 (05A foundational + 05B tabla y estructura).
 @use 'floating';
 @use 'actions/actions';
 @use 'inputs/inputs';
@@ -7,5 +7,7 @@
 @use 'feedback/feedback';
 @use 'auxiliary/auxiliary';
 @use 'navigation/navigation';
+@use 'table/table';
+@use 'structure/structure';
 
 .q-icon { flex: none; }
