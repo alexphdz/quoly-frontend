@@ -24,7 +24,7 @@ import ComparisonPreview from '../comparison/ComparisonPreview'
 import QuoteList from '../quotes/QuoteList'
 import QuoteUploadForm from '../quotes/QuoteUploadForm'
 import SupplierQuestions from './SupplierQuestions'
-import { useRelativeDays } from '../rfq/RequestsLedgerTable'
+import { useRelativeDays } from '../../lib/requestNav'
 
 type DetailTab = 'overview' | 'suppliers' | 'replies' | 'quotations' | 'comparison'
 const TABS: DetailTab[] = ['overview', 'suppliers', 'replies', 'quotations', 'comparison']

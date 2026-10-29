@@ -1048,5 +1048,73 @@
       "partialTitle": "No pudimos cargar las cotizaciones y preguntas.",
       "partialText": "El resto del inicio está actualizado. Puedes intentarlo de nuevo."
     }
+  },
+  "solicitudes": {
+    "title": "Solicitudes",
+    "lead": "Consulta tus solicitudes y revisa cuáles necesitan atención.",
+    "create": "Crear solicitud",
+    "summary": {
+      "total_one": "solicitud",
+      "total_other": "solicitudes",
+      "attention_one": "requiere atención",
+      "attention_other": "requieren atención",
+      "showing_one": "Se muestra {{count}} de {{total}}",
+      "showing_other": "Se muestran {{count}} de {{total}}"
+    },
+    "search": "Buscar por producto o referencia",
+    "searchLabel": "Buscar solicitudes",
+    "filterLabel": "Filtrar por estado",
+    "filters": {
+      "all": "Todas",
+      "draft": "Borrador",
+      "open": "Abierta",
+      "closed": "Cerrada",
+      "attention": "Requieren atención"
+    },
+    "status": {
+      "draft": "Borrador",
+      "open": "Abierta",
+      "closed": "Cerrada"
+    },
+    "columns": {
+      "request": "Solicitud",
+      "status": "Estado",
+      "quantity": "Cantidad",
+      "quotes": "Cotizaciones",
+      "attention": "Atención",
+      "actions": "Acciones"
+    },
+    "inComparison": "en comparación",
+    "attention": {
+      "required": "Requiere atención",
+      "waiting_one": "{{count}} proveedor espera respuesta",
+      "waiting_other": "{{count}} proveedores esperan respuesta",
+      "none": "Sin pendientes"
+    },
+    "compare": "Ver comparación",
+    "compareAria": "Ver comparación de {{name}}",
+    "openAria": "Abrir {{name}}",
+    "openStatusAria": "Abrir {{name}}, {{status}}",
+    "empty": {
+      "label": "Sin solicitudes",
+      "title": "Todavía no tienes solicitudes",
+      "text": "Crea una solicitud para comenzar a cotizar con tus proveedores."
+    },
+    "noResults": {
+      "label": "Sin coincidencias",
+      "searchTitle": "No encontramos solicitudes",
+      "searchText": "Prueba con otro nombre o referencia.",
+      "clearSearch": "Limpiar búsqueda",
+      "filterTitle": "No hay solicitudes con estos filtros",
+      "filterText": "Prueba con otro estado o quita los filtros.",
+      "clearFilters": "Quitar filtros"
+    },
+    "error": {
+      "label": "Datos no disponibles",
+      "title": "No pudimos cargar tus solicitudes.",
+      "text": "Se interrumpió la conexión. Tu búsqueda y tus filtros se conservan. Puedes intentarlo de nuevo.",
+      "retry": "Reintentar",
+      "retrying": "Reintentando…"
+    }
   }
 }

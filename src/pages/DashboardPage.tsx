@@ -246,7 +246,7 @@ export default function DashboardPage() {
                     </ul>
                   )}
                   <div className="hm-more">
-                    <TextButton size="sm" iconEnd="caret-right" className="hm-more-btn" onClick={() => navigate('/requests')}>{t('inicio.attention.viewRequests')}</TextButton>
+                    <TextButton size="sm" iconEnd="caret-right" className="hm-more-btn" onClick={() => navigate('/requests?attention=1')}>{t('inicio.attention.viewRequests')}</TextButton>
                   </div>
                 </div>
               </div>

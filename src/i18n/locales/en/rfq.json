@@ -1048,5 +1048,73 @@
       "partialTitle": "We couldn't load quotes and questions.",
       "partialText": "The rest of your home is up to date. You can try again."
     }
+  },
+  "solicitudes": {
+    "title": "Requests",
+    "lead": "Look through your requests and see which ones need attention.",
+    "create": "Create request",
+    "summary": {
+      "total_one": "request",
+      "total_other": "requests",
+      "attention_one": "needs attention",
+      "attention_other": "need attention",
+      "showing_one": "Showing {{count}} of {{total}}",
+      "showing_other": "Showing {{count}} of {{total}}"
+    },
+    "search": "Search by product or reference",
+    "searchLabel": "Search requests",
+    "filterLabel": "Filter by status",
+    "filters": {
+      "all": "All",
+      "draft": "Draft",
+      "open": "Open",
+      "closed": "Closed",
+      "attention": "Need attention"
+    },
+    "status": {
+      "draft": "Draft",
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "columns": {
+      "request": "Request",
+      "status": "Status",
+      "quantity": "Quantity",
+      "quotes": "Quotes",
+      "attention": "Attention",
+      "actions": "Actions"
+    },
+    "inComparison": "in comparison",
+    "attention": {
+      "required": "Needs attention",
+      "waiting_one": "{{count}} supplier is waiting for a reply",
+      "waiting_other": "{{count}} suppliers are waiting for a reply",
+      "none": "Nothing pending"
+    },
+    "compare": "View comparison",
+    "compareAria": "View comparison for {{name}}",
+    "openAria": "Open {{name}}",
+    "openStatusAria": "Open {{name}}, {{status}}",
+    "empty": {
+      "label": "No requests",
+      "title": "You don't have any requests yet",
+      "text": "Create a request to start getting quotes from your suppliers."
+    },
+    "noResults": {
+      "label": "No matches",
+      "searchTitle": "We couldn't find any requests",
+      "searchText": "Try another name or reference.",
+      "clearSearch": "Clear search",
+      "filterTitle": "No requests match these filters",
+      "filterText": "Try another status or remove the filters.",
+      "clearFilters": "Remove filters"
+    },
+    "error": {
+      "label": "Data unavailable",
+      "title": "We couldn't load your requests.",
+      "text": "The connection was interrupted. Your search and filters are kept. You can try again.",
+      "retry": "Retry",
+      "retrying": "Retrying…"
+    }
   }
 }
