@@ -10,6 +10,7 @@ import {
   Textarea, Toast, Tooltip, TooltipBubble, ValidationMessage, notify, type DataTableColumn, type NavItem,
   RfqHeader, RfqLifecycle, RfqSummary, ResponseTracker, SupplierRow, SupplierRowHeader, SupplierQuestion,
   ReviewWorkspace, ExtractionSummary, EvidenceReference, type ReviewField,
+  ComparisonOverview, ComparisonFocus, type ComparisonGroup, type ComparisonSupplier,
 } from '..'
 import './showcase.scss'
 
@@ -53,6 +54,9 @@ const QI_SOURCE = {
   subject: 'Cotización RFQ-0318',
   segments: ['Hola Ana,\n\nTe compartimos nuestra propuesta. ', { id: 'p1', text: 'Precio unitario: 14,20 MXN por caja' }, ', con ', { id: 'p2', text: 'entrega en 15 días hábiles' }, '.\n\nSaludos.'],
 }
+
+const CMP_SUPPLIERS: ComparisonSupplier[] = [{"key": "a", "name": "Empaques del Norte", "reference": "PRV-0056", "status": "reviewed", "currency": "MXN"}, {"key": "b", "name": "Cartonera Andina", "reference": "PRV-0087", "status": "review", "currency": "USD"}, {"key": "c", "name": "Corrugados Delta", "reference": "PRV-0142", "status": "pending", "currency": "MXN"}]
+const CMP_GROUPS: ComparisonGroup[] = [{"key": "price", "title": "Precio", "rows": [{"key": "unit", "label": "Precio unitario", "detail": "Por caja", "type": "price", "cells": {"a": {"normalized": {"amount": 14.2, "currency": "MXN", "unit": "/ caja"}, "original": "14,20 MXN", "evidence": {"source": "email", "label": "Correo", "location": "párrafo 2", "passage": "p1"}}, "b": {"normalized": {"amount": 15.8, "currency": "MXN", "unit": "/ caja"}, "original": "0,86 USD", "exception": {"tone": "ai", "text": "Tipo de cambio propuesto por IA"}}, "c": {"normalized": null, "original": "1.420 MXN por lote", "reason": "Unidad distinta (lote de 100)"}}}, {"key": "diff", "label": "Diferencia", "type": "diff", "of": "unit"}]}, {"key": "terms", "title": "Condiciones", "rows": [{"key": "moq", "label": "Cantidad mínima", "type": "qty", "cells": {"a": {"value": "5.000", "unit": "uds"}, "b": {"value": "10.000", "unit": "uds", "exception": {"tone": "warning", "text": "Supera la cantidad solicitada"}}}}, {"key": "lead", "label": "Plazo de entrega", "type": "lead", "cells": {"a": {"value": "15 días"}, "b": {"value": "20 días"}, "c": {"value": "12 días"}}}, {"key": "inc", "label": "Incoterm", "type": "incoterm", "cells": {"a": {"value": "DAP Monterrey"}, "b": {"value": "FOB Callao"}, "c": {"value": "EXW"}}}, {"key": "pay", "label": "Condiciones de pago", "type": "terms", "cells": {"a": {"value": "30 días después de entrega"}, "c": {"value": "50 % anticipo"}}}, {"key": "rev", "label": "Revisión", "type": "review", "cells": {"a": {"status": "reviewed"}, "b": {"status": "review", "detail": "2 campos por revisar"}, "c": {"status": "pending"}}}]}]
 
 const COLOR_ROLES = [
   'canvas', 'surface', 'surface-elevated', 'surface-sunken', 'surface-inverse', 'brand', 'action-primary-bg',
@@ -447,6 +451,12 @@ export default function DesignSystemShowcase() {
             <div className="ds-sc-row"><EvidenceReference {...QI_EVIDENCE} onClick={() => undefined} /><EvidenceReference {...QI_EVIDENCE} /></div>
             <ExtractionSummary status="processing" />
             <ReviewWorkspace fields={QI_FIELDS} source={QI_SOURCE} supplier="Empaques del Norte (ficticio)" meta="Recibida 28 oct" onOpenSource={() => undefined} />
+          </div>
+        </ContentSection>
+        <ContentSection title="05C.3 · Comparación de cotizaciones">
+          <div className="ds-sc-stack">
+            <ComparisonOverview reference="RFQ-0318" product="Caja corrugada 40×30 (ficticio)" received={3} comparable={2} review={1} />
+            <ComparisonFocus demo suppliers={CMP_SUPPLIERS} groups={CMP_GROUPS} requested="12.000 cajas · DAP Monterrey" sources={{ a: QI_SOURCE }} />
           </div>
         </ContentSection>
       </main>

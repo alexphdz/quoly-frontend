@@ -102,3 +102,16 @@ export { ExtractionCompleteness, type ExtractionCompletenessProps } from './comp
 export { ExtractionSummary, type ExtractionSummaryProps, type ExtractionStatus } from './components/intelligence/ExtractionSummary'
 export { ReviewWorkspace, type ReviewWorkspaceProps, type ReviewField } from './components/intelligence/ReviewWorkspace'
 export { type EvidenceSource, type FieldState } from './components/intelligence/shared'
+
+// 05C.3 · Commercial comparison
+export { ComparisonOverview, type ComparisonOverviewProps } from './components/comparison/ComparisonOverview'
+export { SupplierComparisonHeader, type SupplierComparisonHeaderProps } from './components/comparison/SupplierComparisonHeader'
+export { PriceDifference, type PriceDifferenceProps } from './components/comparison/PriceDifference'
+export { CommercialException, CommercialExceptionDetail, type CommercialExceptionProps, type CommercialExceptionDetailProps } from './components/comparison/CommercialException'
+export { ComparisonEvidenceLink, type ComparisonEvidenceLinkProps, type ComparisonEvidence } from './components/comparison/ComparisonEvidenceLink'
+export {
+  ComparisonMatrix, type ComparisonMatrixProps, type ComparisonGroup, type ComparisonRow, type ComparisonRowType, type ComparisonCell,
+  type ComparisonSupplier, type ComparisonException,
+} from './components/comparison/ComparisonMatrix'
+export { ComparisonFocus, type ComparisonFocusProps } from './components/comparison/ComparisonFocus'
+export { CmpStatus, type ReviewStatus, type ExceptionTone } from './components/comparison/shared'

@@ -13,6 +13,62 @@
   "chip": {
     "remove": "Quitar {{label}}"
   },
+  "cmp": {
+    "diff": {
+      "barLabel": "Precio relativo: {{pct}} % del mayor precio comparable",
+      "base": "Base",
+      "baseDetail": "Menor precio comparable del conjunto",
+      "noSet": "Sin conjunto de comparación: se necesita al menos otra cotización comparable.",
+      "normalized": "Precio normalizado: {{value}}",
+      "percent": "+{{pct}} % respecto al menor precio comparable"
+    },
+    "exception": {
+      "seeDetail": "ver detalle",
+      "unconfirmed": "Valor propuesto por IA, sin confirmar por el comprador"
+    },
+    "focus": {
+      "all": "Todos los grupos",
+      "label": "Grupo de atributos"
+    },
+    "matrix": {
+      "demoData": "Datos ficticios de demostración",
+      "label": "Matriz de comparación",
+      "next": "Más proveedores",
+      "previous": "Proveedores anteriores",
+      "requested": "Solicitado",
+      "scrollHint": "Desplázate horizontalmente para ver los {{count}} proveedores · la columna de atributos permanece fija",
+      "scrollable": "{{label}}, desplazable horizontalmente",
+      "showingTwo": "Mostrando 2 de {{count}} cotizaciones. Cambia los proveedores comparados con los selectores.",
+      "supplierA": "Proveedor A",
+      "supplierB": "Proveedor B"
+    },
+    "noSource": "Sin fuente asociada",
+    "notComparable": "No comparable",
+    "originalCurrency": "Moneda original · {{currency}}",
+    "overview": {
+      "comparable_one": "1 comparable",
+      "comparable_other": "{{count}} comparables",
+      "received_one": "Cotización recibida",
+      "received_other": "Cotizaciones recibidas",
+      "review_one": "1 requiere revisión",
+      "review_other": "{{count}} requieren revisión",
+      "title": "Comparación de cotizaciones"
+    },
+    "price": {
+      "noNormalized": "Sin precio normalizado",
+      "noNormalizedReason": "Sin precio normalizado para esta cotización",
+      "normalized": "Normalizado",
+      "normalizedDemo": "Normalizado · cifra de demostración",
+      "original": "Original:"
+    },
+    "sourceOf": "Fuente · {{supplier}}",
+    "status": {
+      "pending": "Sin revisar",
+      "review": "Requiere revisión",
+      "reviewed": "Revisada"
+    },
+    "viewSource": "Ver fuente"
+  },
   "confirm": {
     "cancel": "Cancelar",
     "confirm": "Confirmar"

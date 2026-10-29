@@ -13,6 +13,62 @@
   "chip": {
     "remove": "Remove {{label}}"
   },
+  "cmp": {
+    "diff": {
+      "barLabel": "Relative price: {{pct}} % of the highest comparable price",
+      "base": "Base",
+      "baseDetail": "Lowest comparable price in the set",
+      "noSet": "No comparison set: at least one more comparable quote is needed.",
+      "normalized": "Normalized price: {{value}}",
+      "percent": "+{{pct}} % over the lowest comparable price"
+    },
+    "exception": {
+      "seeDetail": "see detail",
+      "unconfirmed": "Value proposed by AI, not confirmed by the buyer"
+    },
+    "focus": {
+      "all": "All groups",
+      "label": "Attribute group"
+    },
+    "matrix": {
+      "demoData": "Fictional demo data",
+      "label": "Comparison matrix",
+      "next": "More suppliers",
+      "previous": "Previous suppliers",
+      "requested": "Requested",
+      "scrollHint": "Scroll horizontally to see all {{count}} suppliers · the attribute column stays fixed",
+      "scrollable": "{{label}}, scrolls horizontally",
+      "showingTwo": "Showing 2 of {{count}} quotes. Change the compared suppliers with the selectors.",
+      "supplierA": "Supplier A",
+      "supplierB": "Supplier B"
+    },
+    "noSource": "No linked source",
+    "notComparable": "Not comparable",
+    "originalCurrency": "Original currency · {{currency}}",
+    "overview": {
+      "comparable_one": "1 comparable",
+      "comparable_other": "{{count}} comparable",
+      "received_one": "Quote received",
+      "received_other": "Quotes received",
+      "review_one": "1 needs review",
+      "review_other": "{{count}} need review",
+      "title": "Quote comparison"
+    },
+    "price": {
+      "noNormalized": "No normalized price",
+      "noNormalizedReason": "No normalized price for this quote",
+      "normalized": "Normalized",
+      "normalizedDemo": "Normalized · demo figure",
+      "original": "Original:"
+    },
+    "sourceOf": "Source · {{supplier}}",
+    "status": {
+      "pending": "Not reviewed",
+      "review": "Needs review",
+      "reviewed": "Reviewed"
+    },
+    "viewSource": "View source"
+  },
   "confirm": {
     "cancel": "Cancel",
     "confirm": "Confirm"
