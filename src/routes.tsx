@@ -1,4 +1,5 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-dom'
 import AppLayout from './components/layout/AppLayout'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
@@ -39,7 +40,14 @@ if (
   window.history.replaceState(null, '', `/reset-password${window.location.hash}`)
 }
 
+// Catálogo del design system: solo en desarrollo (no llega al build de producción).
+const DesignSystemShowcase = import.meta.env.DEV ? lazy(() => import('./design-system/showcase/DesignSystemShowcase')) : null
+const devRoutes: RouteObject[] = DesignSystemShowcase
+  ? [{ path: '/_ds', element: <Suspense fallback={null}><DesignSystemShowcase /></Suspense> }]
+  : []
+
 export const router = createBrowserRouter([
+  ...devRoutes,
   {
     path: '/login',
     element: <PublicOnly><LoginPage /></PublicOnly>,
