@@ -27,7 +27,10 @@ export default function LoginPage() {
 
   return (
     <AuthStage>
-      <h1>{t('auth.login.title')}</h1>
+      <div className="ds-auth-heading">
+        <h1>{t('auth.login.welcomeTitle')}</h1>
+        <p>{t('auth.login.subtitle')}</p>
+      </div>
 
       <form onSubmit={handleSubmit(data => login.mutate(data))}>
         <FormField label={t('auth.login.email')} error={errors.email?.message && t(errors.email.message as 'auth.invalidEmail')}>
@@ -40,14 +43,15 @@ export default function LoginPage() {
           />
         </FormField>
 
-        <FormField label={t('auth.login.password')} error={errors.password?.message && t(errors.password.message as 'auth.passwordMin')}>
-          <div className="ds-auth-pass">
+        <div className="ds-auth-password-group">
+          <FormField label={t('auth.login.password')} error={errors.password?.message && t(errors.password.message as 'auth.passwordMin')}>
+            <div className="ds-auth-pass">
             <input
               type={showPassword ? 'text' : 'password'}
               autoComplete="current-password"
               {...register('password')}
               className="input"
-              placeholder="••••••••••••"
+              placeholder={t('auth.login.passwordPlaceholder')}
             />
             <button
               type="button"
@@ -58,16 +62,16 @@ export default function LoginPage() {
             >
               <Icon name={showPassword ? 'visibility_off' : 'visibility'} size={16} />
             </button>
-          </div>
-        </FormField>
+            </div>
+          </FormField>
+          <p className="ds-auth-forgot">
+            <Link to="/forgot-password" className="ds-link">{t('auth.login.forgotPassword')}</Link>
+          </p>
+        </div>
 
         {login.error && (
           <FormFeedback>{authErrorMessage(login.error, t)}</FormFeedback>
         )}
-
-        <p className="ds-auth-forgot">
-          <Link to="/forgot-password" className="ds-link">{t('auth.login.forgotPassword')}</Link>
-        </p>
 
         <button type="submit" className="ds-btn ds-btn-primary" disabled={login.isPending}>
           {login.isPending ? t('auth.login.submitting') : t('auth.login.submit')}

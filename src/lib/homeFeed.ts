@@ -22,7 +22,7 @@ export type HomeEvent = {
   missing?: number
 }
 
-const askTo = (rfqId: string) => `/rfqs/${rfqId}?tab=overview#needs-answer`
+const askTo = (rfqId: string) => `/rfqs/${rfqId}?tab=replies#needs-answer`
 
 /** Cotizaciones pendientes de revisión, más recientes primero. */
 export function quotesToReview(quotes: QuoteOverviewItem[]): HomeQuoteItem[] {

@@ -88,5 +88,55 @@
     "review": "Revisar →",
     "compare": "Comparar →",
     "viewAll": "Ver todas ({{count}})"
+  },
+  "v2": {
+    "lead": "Todas las cotizaciones de tus solicitudes, en un solo lugar. Encuentra las que necesitan revisión sin abrir cada solicitud.",
+    "total_one": "cotización",
+    "total_other": "cotizaciones",
+    "toReview_one": "por revisar",
+    "toReview_other": "por revisar",
+    "showing_one": "Se muestra {{count}} de {{total}}",
+    "showing_other": "Se muestran {{count}} de {{total}}",
+    "search": "Buscar por proveedor o solicitud",
+    "requestFilter": "Solicitud",
+    "allRequests": "Todas las solicitudes",
+    "all": "Todas",
+    "review": {
+      "review": "Por revisar",
+      "confirmed": "Confirmada",
+      "partial": "Parcial · sin precio",
+      "rejected": "Rechazada"
+    },
+    "columns": {
+      "supplier": "Proveedor",
+      "request": "Solicitud",
+      "price": "Precio",
+      "review": "Revisión",
+      "actions": "Acciones"
+    },
+    "received": "Recibida · {{date}}",
+    "notStated": "No indicado",
+    "viewQuote": "Ver cotización",
+    "viewRequest": "Ver solicitud",
+    "viewQuoteAria": "Ver cotización de {{name}}",
+    "viewRequestAria": "Ver solicitud {{name}}",
+    "emptyLabel": "Sin cotizaciones",
+    "emptyText": "Cuando un proveedor responda a una solicitud, su cotización aparecerá aquí.",
+    "noResultsLabel": "Sin coincidencias",
+    "noSearchTitle": "No encontramos cotizaciones",
+    "noSearchText": "Prueba con otro proveedor o solicitud.",
+    "clearSearch": "Limpiar búsqueda",
+    "noFilterTitle": "No hay cotizaciones con estos filtros",
+    "noFilterText": "Prueba con otra solicitud o estado de revisión.",
+    "errorLabel": "Datos no disponibles",
+    "errorTitle": "No pudimos cargar las cotizaciones.",
+    "errorText": "Se interrumpió la conexión. Tu búsqueda y tus filtros se conservan. Puedes intentarlo de nuevo.",
+    "retry": "Reintentar",
+    "chip": {
+      "review": "Por revisar",
+      "confirmed": "Confirmada",
+      "partial": "Parcial",
+      "rejected": "Rechazada"
+    }
   }
 }

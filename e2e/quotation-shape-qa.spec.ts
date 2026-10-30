@@ -65,15 +65,14 @@ test.describe('Quotation shape QA (module 5)', () => {
     const quoteId = seedPartialQuote(rfq.id, supplier.id, 'draft')
 
     await page.goto(`/quotes/${quoteId}`)
-    await expect(page.getByRole('heading', { name: 'Quote review', exact: true })).toBeVisible({
-      timeout: 20_000,
-    })
-    await expect(page.getByText(/Partial quote — no price yet/i)).toBeVisible({ timeout: 20_000 })
-    await expect(page.getByText(/1,000 kg/)).toBeVisible()
+    // Commercial quotes open inside the request detail (Quotes tab).
+    await expect(page).toHaveURL(new RegExp(`tab=quotations&quote=${quoteId}`), { timeout: 20_000 })
+    await expect(page.getByRole('heading', { name: 'Tier Co', exact: true })).toBeVisible({ timeout: 20_000 })
+    await expect(page.getByText(/without a price/i)).toBeVisible({ timeout: 20_000 })
     const confirmResp = page.waitForResponse(
       (r) => r.url().includes(`/quotes/${quoteId}/confirm`) && r.status() === 200,
     )
-    await page.getByRole('button', { name: 'Add to comparison' }).click()
+    await page.getByRole('button', { name: 'Confirm quote' }).first().click()
     await confirmResp
 
     const headers = await authHeaders(page)

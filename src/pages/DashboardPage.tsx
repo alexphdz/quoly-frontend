@@ -9,6 +9,7 @@ import { useAuth } from '../hooks/useAuth'
 import { greetingFirstName } from '../lib/displayName'
 import { dayPart } from '../lib/greeting'
 import { useFormat } from '../lib/format'
+import { useRelativeTime } from '../lib/relativeTime'
 import { homeActivity, quotesToReview, statusCounts, suppliersAwaiting, upcomingDates, type HomeEvent } from '../lib/homeFeed'
 
 const ATTENTION_LIMIT = 4
@@ -31,23 +32,6 @@ function Row({ to, icon, tone, title, context, aria }: { to: string, icon: IconN
       </Link>
     </li>
   )
-}
-
-/** «Hace 25 min», «Hace 3 h», «Ayer» o la fecha corta. */
-function useRelativeTime() {
-  const { t } = useTranslation('rfq')
-  const fmt = useFormat()
-  return (iso: string) => {
-    const at = new Date(iso)
-    const mins = Math.max(0, Math.round((Date.now() - at.getTime()) / 60_000))
-    if (mins < 60) return t('inicio.time.minutes', { count: Math.max(1, mins) })
-    const today = new Date()
-    if (at.toDateString() === today.toDateString()) return t('inicio.time.hours', { count: Math.round(mins / 60) })
-    const yesterday = new Date(today)
-    yesterday.setDate(today.getDate() - 1)
-    if (at.toDateString() === yesterday.toDateString()) return t('inicio.time.yesterday')
-    return fmt.date(at, { day: 'numeric', month: 'short' })
-  }
 }
 
 function Section({ id, title, sub, className, children }: { id: string, title: string, sub?: string, className?: string, children: ReactNode }) {

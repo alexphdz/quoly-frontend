@@ -1,6 +1,8 @@
 import { useState, type ReactNode } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Icon, Skel } from '../components/ds'
-import { MicrosoftOutlookLogo } from '@phosphor-icons/react'
+import { Button, ConfirmDialog, IconButton, Select, StatusBadge, Tabs, TextButton, TextInput } from '../design-system'
+import { MicrosoftOutlookLogo, Monitor, Moon, Sun } from '@phosphor-icons/react'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -10,7 +12,7 @@ import { useAuth } from '../hooks/useAuth'
 import { getToken, post, type ApiError } from '../api/client'
 import { SUPPORTED_LOCALES, type Locale } from '../i18n'
 import { useFormat } from '../lib/format'
-import { Avatar, Dialog, FormFeedback, FormField, SelectInput, toast } from '../components/ui'
+import { Avatar, FormFeedback, toast } from '../components/ui'
 import { useTheme, type ThemePreference } from '../components/ui/theme'
 import ProfilePhotoDialog from '../components/settings/ProfilePhotoDialog'
 import { displayNameFromEmail } from '../lib/displayName'
@@ -57,8 +59,12 @@ function ProfileSection() {
     : ''
 
   return (
-    <section className="ds-form-section">
-      <h2>{t('settings.profile.title')}</h2>
+    <section className="ds-form-section st-profile-section">
+      <header className="st-profile-heading">
+        <h2>{t('settings.profile.title')}</h2>
+        <p className="ds-meta">{t('settings.profile.subtitle')}</p>
+      </header>
+      <PhotoSection />
       <dl className="st-facts">
         <div>
           <dt>{t('settings.profile.email')}</dt>
@@ -94,25 +100,20 @@ function PhotoSection() {
   }
 
   return (
-    <section className="ds-form-section" id="profile-photo">
-      <h2>{t('settings.photo.title')}</h2>
-      <div className="ds-form-fields">
+    <div className="st-profile-identity" id="profile-photo">
+      <Avatar name={user ? displayNameFromEmail(user.email) : null} src={user?.avatar_url} />
+      <div className="st-profile-identity-copy">
+        <strong>{user ? displayNameFromEmail(user.email) : '—'}</strong>
+        <span>{user?.email ?? ''}</span>
         <div className="photo-profile">
-          <Avatar name={user ? displayNameFromEmail(user.email) : null} src={user?.avatar_url} />
-          <button type="button" className="ds-btn ds-btn-secondary" disabled={!user || removeAvatar.isPending} onClick={() => setEditing(true)}>{t('settings.photo.change')}</button>
-          {user?.avatar_url && <button type="button" className="ds-btn ds-btn-quiet" disabled={removeAvatar.isPending} onClick={() => { setError(''); setConfirming(true) }}>{t('settings.photo.remove')}</button>}
+          <TextButton icon={user?.avatar_url ? 'pencil-simple' : 'upload-simple'} aria-label={t('settings.photo.change')} disabled={!user || removeAvatar.isPending} onClick={() => setEditing(true)}>{user?.avatar_url ? t('settings.photo.change') : t('settings.photo.upload')}</TextButton>
+          {user?.avatar_url && <Button variant="tertiary" size="sm" disabled={removeAvatar.isPending} onClick={() => { setError(''); setConfirming(true) }}>{t('settings.photo.remove')}</Button>}
         </div>
       </div>
       {editing && <ProfilePhotoDialog onClose={() => setEditing(false)} />}
-      <Dialog open={confirming} onClose={() => { if (!removeAvatar.isPending) setConfirming(false) }} title={t('settings.photo.removeTitle')}>
-        <p className="ds-meta">{t('settings.photo.removeHelp')}</p>
-        {error && <FormFeedback>{error}</FormFeedback>}
-        <div className="photo-actions">
-          <button type="button" className="ds-btn ds-btn-secondary" disabled={removeAvatar.isPending} onClick={() => setConfirming(false)}>{t('actions.cancel')}</button>
-          <button type="button" className="ds-btn ds-btn-primary" disabled={removeAvatar.isPending} onClick={() => void remove()}>{t('settings.photo.remove')}</button>
-        </div>
-      </Dialog>
-    </section>
+      <ConfirmDialog open={confirming} title={t('settings.photo.removeTitle')} description={t('settings.photo.removeHelp')} tone="destructive" confirmLabel={t('settings.photo.remove')} cancelLabel={t('actions.cancel')} pending={removeAvatar.isPending} onCancel={() => setConfirming(false)} onConfirm={() => void remove()} />
+      {error && <FormFeedback>{error}</FormFeedback>}
+    </div>
   )
 }
 
@@ -120,38 +121,25 @@ function AppearanceSection() {
   const { t } = useTranslation('common')
   const { preference, setTheme } = useTheme()
   const options = [
-    { id: 'light' as const, label: t('nav.light'), icon: 'sun' },
-    { id: 'dark' as const, label: t('nav.dark'), icon: 'moon' },
-    { id: 'system' as const, label: t('nav.system'), icon: 'desktop' },
+    { value: 'light' as const, label: t('nav.light'), Icon: Sun },
+    { value: 'dark' as const, label: t('nav.dark'), Icon: Moon },
+    { value: 'system' as const, label: t('nav.system'), Icon: Monitor },
   ]
 
   return (
-    <section className="ds-form-section">
-      <h2>{t('settings.appearance.title')}</h2>
-      <div className="ds-form-fields">
-        <div className="ds-segmented st-theme" role="group" aria-label={t('settings.appearance.title')}>
-          {options.map(option => (
-            <button
-              key={option.id}
-              type="button"
-              aria-label={option.label}
-              title={option.label}
-              aria-pressed={preference === option.id}
-              onClick={() => setTheme(option.id as ThemePreference)}
-            >
-              <Icon name={option.icon} size={18} />
-              <span className="sr-only">{option.label}</span>
-            </button>
-          ))}
-        </div>
+    <div className="st-preference-row">
+      <div className="st-preference-copy"><strong>{t('settings.appearance.title')}</strong><span>{t('settings.appearance.description')}</span></div>
+      <div className="st-theme-control" role="radiogroup" aria-label={t('settings.appearance.groupLabel')}>
+        {options.map(({ value, label, Icon: ThemeIcon }) => <button key={value} type="button" role="radio" aria-checked={preference === value} aria-label={label} title={label} className={`q-segment${preference === value ? ' is-active' : ''}`} onClick={() => setTheme(value as ThemePreference)}><ThemeIcon size={18} weight="regular" aria-hidden /></button>)}
       </div>
-    </section>
+    </div>
   )
 }
 
 function SecuritySection() {
   const { t } = useTranslation('common')
   const { changePassword } = useAuth()
+  const [visible, setVisible] = useState({ current: false, next: false, confirm: false })
   const { register, handleSubmit, reset, formState: { errors } } = useForm<PasswordForm>({
     resolver: zodResolver(passwordSchema),
   })
@@ -169,18 +157,12 @@ function SecuritySection() {
   }
 
   return (
-    <section className="ds-form-section">
-      <h2>{t('settings.security.title')}</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="ds-form-fields">
-        <FormField label={t('settings.security.currentPassword')} error={errors.current_password?.message && t(errors.current_password.message as 'settings.security.enterCurrent')}>
-          <input type="password" {...register('current_password')} className="input" autoComplete="current-password" />
-        </FormField>
-        <FormField label={t('settings.security.newPassword')} error={errors.new_password?.message && t(errors.new_password.message as 'auth.passwordMin')}>
-          <input type="password" {...register('new_password')} className="input" autoComplete="new-password" />
-        </FormField>
-        <FormField label={t('settings.security.confirmPassword')} error={errors.confirm_password?.message && t(errors.confirm_password.message as 'settings.security.confirmNew')}>
-          <input type="password" {...register('confirm_password')} className="input" autoComplete="new-password" />
-        </FormField>
+    <section className="st-settings-section">
+      <header className="st-settings-heading"><h2>{t('settings.security.title')}</h2><p>{t('settings.security.subtitle')}</p></header>
+      <form onSubmit={handleSubmit(onSubmit)} className="st-security-form">
+        <div className="st-password-input"><TextInput type={visible.current ? 'text' : 'password'} {...register('current_password')} label={t('settings.security.currentPassword')} optionalLabel="" autoComplete="current-password" status={errors.current_password ? 'error' : undefined} message={errors.current_password?.message ? t(errors.current_password.message as 'settings.security.enterCurrent') : undefined} /><IconButton type="button" icon={visible.current ? 'eye-slash' : 'eye'} label={t(visible.current ? 'settings.security.hidePassword' : 'settings.security.showPassword')} size="sm" variant="tertiary" onClick={() => setVisible(value => ({ ...value, current: !value.current }))} /></div>
+        <div className="st-password-input"><TextInput type={visible.next ? 'text' : 'password'} {...register('new_password')} label={t('settings.security.newPassword')} optionalLabel="" autoComplete="new-password" status={errors.new_password ? 'error' : undefined} message={errors.new_password?.message ? t(errors.new_password.message as 'auth.passwordMin') : undefined} /><IconButton type="button" icon={visible.next ? 'eye-slash' : 'eye'} label={t(visible.next ? 'settings.security.hidePassword' : 'settings.security.showPassword')} size="sm" variant="tertiary" onClick={() => setVisible(value => ({ ...value, next: !value.next }))} /></div>
+        <div className="st-password-input"><TextInput type={visible.confirm ? 'text' : 'password'} {...register('confirm_password')} label={t('settings.security.confirmPassword')} optionalLabel="" autoComplete="new-password" status={errors.confirm_password ? 'error' : undefined} message={errors.confirm_password?.message ? t(errors.confirm_password.message as 'settings.security.confirmNew') : undefined} /><IconButton type="button" icon={visible.confirm ? 'eye-slash' : 'eye'} label={t(visible.confirm ? 'settings.security.hidePassword' : 'settings.security.showPassword')} size="sm" variant="tertiary" onClick={() => setVisible(value => ({ ...value, confirm: !value.confirm }))} /></div>
 
         {changePassword.error && (
           <FormFeedback>
@@ -191,9 +173,7 @@ function SecuritySection() {
         )}
 
         <div>
-          <button type="submit" className="ds-btn ds-btn-primary" disabled={changePassword.isPending}>
-            {changePassword.isPending ? t('settings.security.updating') : t('settings.security.update')}
-          </button>
+          <Button type="submit" variant="primary" loading={changePassword.isPending}>{changePassword.isPending ? t('settings.security.updating') : t('settings.security.update')}</Button>
         </div>
       </form>
     </section>
@@ -216,34 +196,23 @@ function PreferencesSection() {
   }
 
   return (
-    <section className="ds-form-section">
-      <h2>{t('language.label')}</h2>
-      <div className="ds-form-fields">
-        <FormField label={t('language.label')}>
-          <SelectInput
-            value={i18n.resolvedLanguage}
-            onChange={event => changeLanguage(event.target.value as Locale)}
-          >
-            {SUPPORTED_LOCALES.map(locale => (
-              <option key={locale} value={locale}>
-                {t(`language.${locale}`)}
-              </option>
-            ))}
-          </SelectInput>
-        </FormField>
-        <FormField label={t('settings.preferences.emailLanguage')} helper={t('settings.preferences.emailLanguageHelper')}>
-          <SelectInput
+    <section className="st-settings-section">
+      <header className="st-settings-heading"><h2>{t('settings.preferences.title')}</h2><p>{t('settings.preferences.subtitle')}</p></header>
+      <div className="st-preference-list">
+        <AppearanceSection />
+        <div className="st-preference-row"><div className="st-preference-copy"><strong>{t('settings.preferences.interfaceLanguage')}</strong><span>{t('settings.preferences.interfaceLanguageHelper')}</span></div>
+          <div className="st-preference-select"><Select aria-label={t('settings.preferences.interfaceLanguage')} value={i18n.resolvedLanguage}
+            onChange={event => changeLanguage(event.target.value as Locale)} options={SUPPORTED_LOCALES.map(locale => ({ value: locale, label: t(`language.${locale}`) }))}
+          /></div>
+        </div>
+        <div className="st-preference-row"><div className="st-preference-copy"><strong>{t('settings.preferences.emailLanguage')}</strong><span>{t('settings.preferences.emailLanguageHelper')}</span></div>
+          <div className="st-preference-select"><Select aria-label={t('settings.preferences.emailLanguage')}
             value={user?.default_email_locale ?? 'en'}
             onChange={event => changeEmailLocale(event.target.value as Locale)}
             disabled={updateProfile.isPending}
-          >
-            {SUPPORTED_LOCALES.map(locale => (
-              <option key={locale} value={locale}>
-                {t(`language.${locale}`)}
-              </option>
-            ))}
-          </SelectInput>
-        </FormField>
+            options={SUPPORTED_LOCALES.map(locale => ({ value: locale, label: t(`language.${locale}`) }))}
+          /></div>
+        </div>
         {updateProfile.error && (
           <FormFeedback>{t('settings.preferences.saveError')}</FormFeedback>
         )}
@@ -272,9 +241,7 @@ function IntegrationRow({
       <div className="st-integration-copy">
         <div className="st-integration-name">
           <strong>{name}</strong>
-          <span className={connected ? 'ds-pill ds-pill-success' : 'ds-pill ds-pill-muted'}>
-            {connected ? t('settings.integrations.connected') : t('settings.integrations.notConnected')}
-          </span>
+          <StatusBadge tone={connected ? 'success' : 'neutral'}>{connected ? t('settings.integrations.connected') : t('settings.integrations.notConnected')}</StatusBadge>
         </div>
         {description ? <p className="ds-meta">{description}</p> : null}
       </div>
@@ -302,15 +269,15 @@ function MailboxAction({
   if (loading) return <Skel w="6.5rem" h={36} r={6} />
   if (connected) {
     return (
-      <button type="button" className="ds-btn ds-btn-quiet" onClick={onDisconnect} disabled={disconnectPending}>
+      <Button type="button" variant="secondary" onClick={onDisconnect} disabled={disconnectPending} loading={disconnectPending}>
         {disconnectPending ? t('settings.integrations.disconnecting') : t('settings.integrations.disconnect')}
-      </button>
+      </Button>
     )
   }
   return (
-    <button type="button" className="ds-btn ds-btn-primary" onClick={onConnect} disabled={connectPending}>
+    <Button type="button" variant="primary" onClick={onConnect} disabled={connectPending} loading={connectPending}>
       {connectPending ? t('settings.integrations.connecting') : t('settings.integrations.connect')}
-    </button>
+    </Button>
   )
 }
 
@@ -328,9 +295,9 @@ function IntegrationsSection() {
   const outlookConnected = !!user?.outlook_connected
 
   return (
-    <section id="integrations" className="ds-form-section">
-      <h2>{t('settings.integrations.title')}</h2>
-      <div className="ds-form-fields">
+    <section id="integrations" className="st-settings-section st-integrations-section">
+      <header className="st-settings-heading"><h2>{t('settings.integrations.title')}</h2><p>{t('settings.integrations.subtitle')}</p></header>
+      <div>
         <div className="st-integrations">
           <IntegrationRow
             mark={<GmailIcon size={28} />}
@@ -365,6 +332,7 @@ function IntegrationsSection() {
             )}
           />
         </div>
+        <p className="st-integration-note">{t('settings.integrations.note')}</p>
       </div>
     </section>
   )
@@ -407,17 +375,34 @@ function DemoDataSection() {
 
 export default function SettingsPage() {
   const { t } = useTranslation('common')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const section = searchParams.get('seccion') ?? searchParams.get('section')
+  const current = section === 'seguridad' || section === 'security'
+    ? 'security'
+    : section === 'preferencias' || section === 'preferences'
+      ? 'preferences'
+      : section === 'correo' || section === 'email'
+        ? 'email'
+        : 'profile'
+  const tabs = [
+    { value: 'profile', label: t('settings.profile.title') },
+    { value: 'security', label: t('settings.security.title') },
+    { value: 'preferences', label: t('settings.preferences.title') },
+    { value: 'email', label: t('settings.integrations.title') },
+  ]
   return (
     <div className="ds-page st-page">
       <header className="st-head">
         <h1 className="ds-detail-title">{t('settings.title')}</h1>
+        <p className="ds-meta">{t('settings.subtitle')}</p>
       </header>
-      <ProfileSection />
-      <PhotoSection />
-      <AppearanceSection />
-      <PreferencesSection />
-      <SecuritySection />
-      <IntegrationsSection />
+      <Tabs label={t('settings.title')} variant="secondary" items={tabs.map(item => ({ ...item, icon: item.value === 'profile' ? 'user-circle' : item.value === 'security' ? 'lock-simple' : item.value === 'preferences' ? 'gear-six' : 'envelope-simple' }))} value={current} onChange={value => setSearchParams(value === 'profile' ? {} : { seccion: value === 'security' ? 'seguridad' : value === 'preferences' ? 'preferencias' : 'correo' }, { replace: true })} />
+      <div className="st-panel" role="tabpanel">
+        {current === 'profile' && <ProfileSection />}
+        {current === 'security' && <SecuritySection />}
+        {current === 'preferences' && <PreferencesSection />}
+        {current === 'email' && <IntegrationsSection />}
+      </div>
       {import.meta.env.DEV && <DemoDataSection />}
     </div>
   )

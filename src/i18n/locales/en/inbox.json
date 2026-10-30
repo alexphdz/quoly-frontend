@@ -58,5 +58,7 @@
     "useSuggestion": "Use this suggestion",
     "dismissSuggestion": "Dismiss",
     "suggestFailed": "Couldn't generate a suggestion. Write your reply."
-  }
+  },
+  "original": "Original message",
+  "documents": "Documents"
 }
