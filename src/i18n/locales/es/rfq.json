@@ -1234,5 +1234,116 @@
       "create": "Crear solicitud",
       "saveChanges": "Guardar cambios"
     }
+  },
+  "detalle": {
+    "editRequest": "Editar solicitud",
+    "viewComparison": "Ver comparación",
+    "tabs": {
+      "overview": "Resumen",
+      "suppliers": "Proveedores",
+      "replies": "Respuestas",
+      "quotations": "Cotizaciones",
+      "comparison": "Comparación"
+    },
+    "summary": {
+      "title": "Resumen",
+      "deadline": "Plazo de respuesta de proveedores: {{date}}.",
+      "received": "Cotizaciones recibidas",
+      "ofTotal": "{{count}} de {{total}}",
+      "invited_one": "proveedor invitado",
+      "invited_other": "proveedores invitados",
+      "trackerLabel": "Cotizaciones",
+      "toReviewOne": "{{supplier}} envió una cotización. Aún no entra en la comparación porque está por revisar.",
+      "toReviewMany": "{{count}} cotizaciones están por revisar. Aún no entran en la comparación.",
+      "reviewQuote": "Revisar cotización",
+      "asks_one": "{{count}} pregunta de proveedor necesita respuesta",
+      "asks_other": "{{count}} preguntas de proveedores necesitan respuesta",
+      "askSeparator": " pide: ",
+      "viewQuestion": "Ver pregunta",
+      "noAsks": "No hay preguntas de proveedores pendientes.",
+      "allSuppliers": "Ver todos en Proveedores",
+      "draftTitle": "Esta solicitud es un borrador",
+      "draftText": "Complétala y créala para agregar proveedores y enviarla.",
+      "noSuppliersTitle": "Todavía no hay proveedores",
+      "noSuppliersText": "Agrega proveedores desde tu directorio o solo para esta solicitud. Agregarlos no les envía nada."
+    },
+    "stage": {
+      "quote_received": "Cotización recibida",
+      "partial_response": "Respuesta parcial",
+      "buyer_action_required": "Requiere acción del comprador",
+      "awaiting_response": "Esperando respuesta",
+      "not_contacted": "No contactado",
+      "declined": "Declinó",
+      "closed": "Cerrado"
+    },
+    "stageCount": {
+      "quote_received_one": "cotización recibida",
+      "quote_received_other": "cotizaciones recibidas",
+      "partial_response_one": "respuesta parcial",
+      "partial_response_other": "respuestas parciales",
+      "buyer_action_required_one": "requiere tu respuesta",
+      "buyer_action_required_other": "requieren tu respuesta",
+      "awaiting_response_one": "esperando respuesta",
+      "awaiting_response_other": "esperando respuesta",
+      "not_contacted_one": "no contactado",
+      "not_contacted_other": "no contactados",
+      "declined_one": "declinó",
+      "declined_other": "declinaron",
+      "closed_one": "cerrado",
+      "closed_other": "cerrados"
+    },
+    "meta": {
+      "quoteToReview": "Cotización por revisar · {{when}}",
+      "quoteConfirmed": "Cotización confirmada · {{date}}",
+      "notSent": "Aún no recibe la solicitud",
+      "sent": "Solicitud enviada · {{date}}"
+    },
+    "suppliers": {
+      "lead": "Consulta quién recibió la solicitud y el estado de sus respuestas.",
+      "add": "Agregar proveedores",
+      "send": "Enviar solicitud",
+      "sendCount_one": "Enviar solicitud · {{count}}",
+      "sendCount_other": "Enviar solicitud · {{count}}",
+      "added_one": "proveedor agregado",
+      "added_other": "proveedores agregados",
+      "respondedOf": "Respondieron, de los que recibieron la solicitud",
+      "colSupplier": "Proveedor",
+      "colStage": "Etapa",
+      "reviewResponse": "Revisar respuesta",
+      "viewQuote": "Ver cotización",
+      "viewReplies": "Ver respuestas",
+      "close": "Cerrar proveedor",
+      "closeHint": "Deja de participar. La solicitud sigue abierta.",
+      "more": "Más acciones para {{name}}",
+      "emptyLabel": "Sin proveedores",
+      "addNote": "Agregarlos no les envía nada. Tú decides cuándo enviar la solicitud.",
+      "fromDirectory": "Desde el directorio",
+      "forThisRequest": "Solo para esta solicitud",
+      "confirmTitle_one": "¿Enviar la solicitud a {{count}} proveedor?",
+      "confirmTitle_other": "¿Enviar la solicitud a {{count}} proveedores?",
+      "confirmMailbox": "Se enviará desde tu buzón conectado. Al terminar pasan a «Esperando respuesta».",
+      "confirmNoMailbox": "No tienes un buzón conectado. Verás el texto de la solicitud para copiarlo y enviarlo desde tu correo.",
+      "confirmAction_one": "Enviar a {{count}} proveedor",
+      "confirmAction_other": "Enviar a {{count}} proveedores",
+      "sendFailed": "No pudimos enviar la solicitud.",
+      "retrySend": "Reintentar envío",
+      "noMailboxTitle": "No tienes un buzón conectado",
+      "noMailboxText": "Copia la solicitud y envíala desde tu correo. Copiar no envía nada ni cambia la etapa."
+    },
+    "spec": {
+      "title": "Requisitos y documentos"
+    },
+    "panel": {
+      "label": "Datos de la solicitud",
+      "title": "Datos de la solicitud",
+      "edit": "Editar",
+      "currency": "Moneda base",
+      "deadline": "Plazo de respuesta",
+      "notSet": "Sin definir",
+      "mailTitle": "Correo de respuesta",
+      "mailText": "Los proveedores pueden responder a esta dirección.",
+      "copy": "Copiar dirección",
+      "copied": "Dirección copiada"
+    }
   }
 }

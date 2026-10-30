@@ -1234,5 +1234,116 @@
       "create": "Create request",
       "saveChanges": "Save changes"
     }
+  },
+  "detalle": {
+    "editRequest": "Edit request",
+    "viewComparison": "View comparison",
+    "tabs": {
+      "overview": "Summary",
+      "suppliers": "Suppliers",
+      "replies": "Replies",
+      "quotations": "Quotes",
+      "comparison": "Comparison"
+    },
+    "summary": {
+      "title": "Summary",
+      "deadline": "Supplier response deadline: {{date}}.",
+      "received": "Quotes received",
+      "ofTotal": "{{count}} of {{total}}",
+      "invited_one": "supplier invited",
+      "invited_other": "suppliers invited",
+      "trackerLabel": "Quotes",
+      "toReviewOne": "{{supplier}} sent a quote. It isn't in the comparison yet because it's waiting for review.",
+      "toReviewMany": "{{count}} quotes are waiting for review. They aren't in the comparison yet.",
+      "reviewQuote": "Review quote",
+      "asks_one": "{{count}} supplier question needs an answer",
+      "asks_other": "{{count}} supplier questions need an answer",
+      "askSeparator": " asks: ",
+      "viewQuestion": "View question",
+      "noAsks": "No supplier questions are pending.",
+      "allSuppliers": "View all in Suppliers",
+      "draftTitle": "This request is a draft",
+      "draftText": "Complete and create it to add suppliers and send it.",
+      "noSuppliersTitle": "No suppliers yet",
+      "noSuppliersText": "Add suppliers from your directory or just for this request. Adding them doesn't send them anything."
+    },
+    "stage": {
+      "quote_received": "Quote received",
+      "partial_response": "Partial response",
+      "buyer_action_required": "Buyer action required",
+      "awaiting_response": "Awaiting response",
+      "not_contacted": "Not contacted",
+      "declined": "Declined",
+      "closed": "Closed"
+    },
+    "stageCount": {
+      "quote_received_one": "quote received",
+      "quote_received_other": "quotes received",
+      "partial_response_one": "partial response",
+      "partial_response_other": "partial responses",
+      "buyer_action_required_one": "needs your reply",
+      "buyer_action_required_other": "need your reply",
+      "awaiting_response_one": "awaiting response",
+      "awaiting_response_other": "awaiting response",
+      "not_contacted_one": "not contacted",
+      "not_contacted_other": "not contacted",
+      "declined_one": "declined",
+      "declined_other": "declined",
+      "closed_one": "closed",
+      "closed_other": "closed"
+    },
+    "meta": {
+      "quoteToReview": "Quote to review · {{when}}",
+      "quoteConfirmed": "Quote confirmed · {{date}}",
+      "notSent": "Hasn't received the request yet",
+      "sent": "Request sent · {{date}}"
+    },
+    "suppliers": {
+      "lead": "See who received the request and where their responses stand.",
+      "add": "Add suppliers",
+      "send": "Send request",
+      "sendCount_one": "Send request · {{count}}",
+      "sendCount_other": "Send request · {{count}}",
+      "added_one": "supplier added",
+      "added_other": "suppliers added",
+      "respondedOf": "Responded, of those who received the request",
+      "colSupplier": "Supplier",
+      "colStage": "Stage",
+      "reviewResponse": "Review response",
+      "viewQuote": "View quote",
+      "viewReplies": "View replies",
+      "close": "Close supplier",
+      "closeHint": "Stops participating. The request stays open.",
+      "more": "More actions for {{name}}",
+      "emptyLabel": "No suppliers",
+      "addNote": "Adding them doesn't send them anything. You decide when to send the request.",
+      "fromDirectory": "From the directory",
+      "forThisRequest": "Just for this request",
+      "confirmTitle_one": "Send the request to {{count}} supplier?",
+      "confirmTitle_other": "Send the request to {{count}} suppliers?",
+      "confirmMailbox": "It will be sent from your connected mailbox. Afterwards they move to “Awaiting response”.",
+      "confirmNoMailbox": "You don't have a connected mailbox. You'll see the request text to copy and send from your email.",
+      "confirmAction_one": "Send to {{count}} supplier",
+      "confirmAction_other": "Send to {{count}} suppliers",
+      "sendFailed": "We couldn't send the request.",
+      "retrySend": "Retry send",
+      "noMailboxTitle": "You don't have a connected mailbox",
+      "noMailboxText": "Copy the request and send it from your email. Copying doesn't send anything or change the stage."
+    },
+    "spec": {
+      "title": "Requirements and documents"
+    },
+    "panel": {
+      "label": "Request details",
+      "title": "Request details",
+      "edit": "Edit",
+      "currency": "Base currency",
+      "deadline": "Response deadline",
+      "notSet": "Not set",
+      "mailTitle": "Reply email",
+      "mailText": "Suppliers can reply to this address.",
+      "copy": "Copy address",
+      "copied": "Address copied"
+    }
   }
 }

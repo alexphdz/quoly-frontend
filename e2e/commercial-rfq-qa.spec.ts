@@ -21,7 +21,7 @@ test.describe('Commercial RFQ QA (module 1)', () => {
     await expect(page).toHaveURL(/\/rfqs\/[a-f0-9-]+/, { timeout: 20_000 })
     await expect(page.getByRole('heading', { name: product })).toBeVisible()
 
-    await page.getByRole('link', { name: 'Continue draft' }).click()
+    await page.getByRole('button', { name: 'Edit request' }).click()
     await expect(page.getByRole('heading', { name: 'Edit request' })).toBeVisible()
     await page.locator('input[name="quantity"]').fill('1500')
     await page.getByRole('button', { name: 'Create request' }).click()
