@@ -63,7 +63,7 @@ export default function RFQDetailPage() {
   const draftQuotes = quotes?.filter(q => q.status === 'draft').length ?? 0
   const progress = suppliers.length ? (confirmedQuotes / suppliers.length) * 100 : 0
   const attentionMessages = inbound?.filter(message => message.status === 'unmatched' || message.status === 'error').length ?? 0
-  const unreadMessages = id ? unread?.by_rfq[id] ?? 0 : 0
+  const unreadMessages = id ? unread?.by_rfq?.[id] ?? 0 : 0
   // Show the comparison preview as soon as there is a confirmed quote; runners-up and spread only appear with 2+.
   const comparisonLocale = i18n.resolvedLanguage === 'es' ? 'es' : 'en'
   const { data: comparison } = useComparison(id!, comparisonLocale, confirmedQuotes >= 1)

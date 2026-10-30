@@ -182,3 +182,16 @@
 }
 
 .rq2-card-cmp { display: flex; align-items: center; min-height: 44px; margin-top: -6px; white-space: nowrap; }
+
+// ---- 08 · Cotizaciones (reutiliza la estructura rq2 de Solicitudes) ----
+.qt2-toolbar { align-items: flex-end; }
+.qt2-request-filter { width: 260px; max-width: 100%; .is-mobile & { width: 100%; } }
+.qt2-chips { flex-wrap: wrap; }
+.qt2-review-count { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--color-status-ai-text); }
+.qt2-request { display: grid; gap: 4px; min-width: 0; }
+.qt2-request-name { font-size: 14px; font-weight: 500; line-height: 20px; color: var(--color-text-primary); }
+.qt2-price { display: inline-flex; align-items: baseline; gap: 4px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.qt2-cur { font-size: 11px; font-weight: 500; line-height: 16px; color: var(--color-text-secondary); }
+.qt2-amount { font-size: 17px; font-weight: 600; line-height: 22px; color: var(--color-text-primary); }
+.qt2-unit { font-size: 12px; line-height: 16px; color: var(--color-text-secondary); }
+.qt2-missing { font-size: 13px; line-height: 18px; color: var(--color-data-missing-text, var(--color-text-secondary)); }

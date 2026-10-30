@@ -14,6 +14,7 @@
     "select": "Seleccionar",
     "refresh": "Actualizar",
     "retry": "Reintentar",
+    "clearSearch": "Borrar búsqueda",
     "showMore": "Ver más",
     "showLess": "Ver menos"
   },
@@ -130,15 +131,30 @@
     "brand": "Quoly"
   },
   "auth": {
+    "editorial": {
+      "eyebrow": "Espacio de compras",
+      "title": "Compras más claras. Mejores decisiones.",
+      "body": "Organiza solicitudes, revisa cotizaciones y compara proveedores en un solo lugar.",
+      "footnote": "Datos ilustrativos",
+      "examples": {
+        "andina": "Andina Supply",
+        "delta": "Delta Insumos",
+        "norte": "Norte Global",
+        "prisma": "Prisma Co."
+      }
+    },
     "connectError": "No se pudo conectar con el servidor. Revisa la conexión e inténtalo de nuevo.",
     "invalidEmail": "Ingresa un correo electrónico válido",
     "invalidWorkEmail": "Ingresa un correo electrónico corporativo válido",
     "passwordMin": "La contraseña debe tener al menos 6 caracteres",
     "login": {
       "title": "Iniciar sesión",
+      "welcomeTitle": "Bienvenido de nuevo",
+      "subtitle": "Ingresa a tu cuenta para continuar.",
       "email": "Correo electrónico",
-      "emailPlaceholder": "alex@empresa.com",
+      "emailPlaceholder": "tu@empresa.com",
       "password": "Contraseña",
+      "passwordPlaceholder": "Ingresa tu contraseña",
       "showPassword": "Mostrar contraseña",
       "hidePassword": "Ocultar contraseña",
       "submit": "Iniciar sesión",
@@ -149,6 +165,7 @@
     },
     "register": {
       "title": "Crear cuenta",
+      "subtitle": "Empieza a organizar tus solicitudes y cotizaciones en Quoly.",
       "email": "Correo corporativo",
       "emailPlaceholder": "nombre@empresa.com",
       "password": "Contraseña",
@@ -167,7 +184,7 @@
       }
     },
     "forgot": {
-      "title": "Restablecer contraseña",
+      "title": "Recupera tu contraseña",
       "subtitle": "Ingresa tu correo y te enviaremos un enlace para crear una nueva contraseña.",
       "email": "Correo electrónico",
       "submit": "Enviar enlace",
@@ -193,13 +210,17 @@
   },
   "settings": {
     "title": "Configuración",
+    "subtitle": "Administra tu cuenta y personaliza tu experiencia en Quoly.",
     "profile": {
-      "title": "Perfil",
+      "title": "Mi perfil",
+      "subtitle": "Esta información identifica tu cuenta.",
       "email": "Correo electrónico",
       "memberSince": "Miembro desde"
     },
     "appearance": {
       "title": "Apariencia",
+      "description": "Elige cómo se ve Quoly en este dispositivo.",
+      "groupLabel": "Modo de apariencia",
       "light": "Modo claro",
       "dark": "Modo oscuro",
       "switchToLight": "Cambiar a claro",
@@ -207,6 +228,9 @@
     },
     "security": {
       "title": "Seguridad",
+      "subtitle": "Actualiza tu contraseña cuando lo necesites.",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
       "currentPassword": "Contraseña actual",
       "newPassword": "Nueva contraseña",
       "confirmPassword": "Confirmar nueva contraseña",
@@ -219,13 +243,19 @@
       "mismatch": "Las contraseñas no coinciden"
     },
     "preferences": {
+      "title": "Preferencias",
+      "subtitle": "Elige cómo quieres usar Quoly.",
+      "interfaceLanguage": "Idioma de la interfaz",
+      "interfaceLanguageHelper": "Elige el idioma que se usa en Quoly.",
       "emailLanguage": "Idioma de los correos a proveedores",
-      "emailLanguageHelper": "Se usa para correos a proveedores salvo que una solicitud lo sobrescriba.",
+      "emailLanguageHelper": "Se usará en los mensajes preparados para proveedores.",
       "saved": "Preferencias guardadas",
       "saveError": "No se pudieron guardar las preferencias."
     },
     "integrations": {
-      "title": "Integraciones",
+      "title": "Correo conectado",
+      "subtitle": "Conecta tu correo para enviar solicitudes y responder desde Quoly.",
+      "note": "Conectar el buzón es opcional. Sin él, Quoly sigue funcionando: puedes enviar una solicitud copiándola y mandándola desde tu correo. Solo se admiten Gmail y Microsoft Outlook.",
       "gmail": "Gmail",
       "gmailDescription": "",
       "outlook": "Outlook",
@@ -249,6 +279,7 @@
     "photo": {
       "title": "Foto de perfil",
       "change": "Cambiar foto",
+      "upload": "Subir foto",
       "remove": "Quitar foto",
       "dialogTitle": "Recortar foto de perfil",
       "choose": "Elegir imagen",
@@ -278,14 +309,29 @@
     },
     "directory": {
       "title": "Proveedores",
+      "subtitle": "Organiza tus proveedores y mantén sus contactos a la mano.",
       "addSupplier": "Agregar proveedor",
+      "activeCount": "proveedores activos",
+      "archivedCount": "archivados",
+      "showing": "Mostrando {{count}}",
+      "requestsUnavailable": "Solicitudes relacionadas no disponibles",
+      "openSupplier": "Abrir proveedor {{name}}",
+      "viewSupplier": "Ver proveedor",
+      "noResults": "No hay proveedores que coincidan",
+      "loadError": "No se pudo cargar el directorio",
+      "loadErrorText": "Revisa tu conexión e inténtalo de nuevo.",
+      "formDescription": "Los datos son privados de tu directorio de proveedores.",
       "count_one": "{{count}} proveedor",
       "count_other": "{{count}} proveedores",
+      "requestCount_one": "{{count}} solicitud",
+      "requestCount_other": "{{count}} solicitudes",
       "searchPlaceholder": "Empresa o contacto",
+      "searchSupplier": "Buscar proveedor",
       "tabs": {
         "active": "Activos",
         "archived": "Archivados"
       },
+      "status": { "all": "Todos", "active": "Activos", "archived": "Archivados" },
       "columns": {
         "company": "Empresa",
         "contact": "Contacto principal",
@@ -302,6 +348,7 @@
       "restore": "Restaurar",
       "showArchived": "Mostrar archivados",
       "filters": {
+        "status": "Filtrar por estado",
         "tag": "Etiqueta",
         "location": "Ubicación",
         "allTags": "Todas las etiquetas",
@@ -315,6 +362,8 @@
       "emptyTitle": "Aún no hay proveedores",
       "emptyDescription": "",
       "locationNotSet": "Ubicación no definida",
+      "moreTags_one": "+{{count}} etiqueta",
+      "moreTags_other": "+{{count}} etiquetas",
       "contacts_one": "{{count}} contacto",
       "contacts_other": "{{count}} contactos",
       "addedManually": "Agregado manualmente",
@@ -337,11 +386,20 @@
       "inDirectorySince": "En el directorio desde {{date}}",
       "archivedToast": "Proveedor archivado",
       "restoredToast": "Proveedor restaurado",
+      "saveError": "No se pudieron guardar los cambios del proveedor.",
       "primaryUpdated": "Contacto principal actualizado",
       "contactRemoved": "Contacto eliminado",
       "removeContactError": "No se pudo eliminar el contacto.",
       "company": "Empresa",
       "primaryContact": "Contacto principal",
+      "primaryEmail": "Correo principal",
+      "noTags": "Sin etiquetas",
+      "editDescription": "Actualiza la información privada de este proveedor.",
+      "contactFormDescription": "Agrega una persona de contacto a tu directorio privado.",
+      "contactName": "Nombre del contacto",
+      "contactEmail": "Correo del contacto",
+      "jobTitle": "Puesto",
+      "inDirectorySinceLabel": "En el directorio desde",
       "notSet": "Sin definir",
       "legalName": "Razón social",
       "phone": "Teléfono",
@@ -360,6 +418,13 @@
       "contactAdded": "Contacto agregado",
       "addContactError": "No se pudo agregar el contacto.",
       "supplierData": "Datos del proveedor",
+      "relatedRequests": "Solicitudes relacionadas",
+      "relatedRequestsCount_one": "{{count}} solicitud",
+      "relatedRequestsCount_other": "{{count}} solicitudes",
+      "noRelatedRequests": "Este proveedor todavía no participa en ninguna solicitud.",
+      "relatedRequestsError": "No se pudieron cargar las solicitudes relacionadas.",
+      "relatedRequestsErrorText": "Revisa tu conexión e inténtalo de nuevo.",
+      "viewRequest": "Ver solicitud",
       "confidence": "Confianza",
       "reusableNote": ""
     },

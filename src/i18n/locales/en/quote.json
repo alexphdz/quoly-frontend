@@ -189,7 +189,16 @@
     },
     "costLines": "Line items as quoted",
     "conditions": "Offer conditions",
-    "conditionType": { "exclusion": "Excluded", "inclusion": "Included", "validity": "Validity", "payment": "Payment", "delivery": "Delivery", "quantity_break": "Quantity break", "trigger": "Trigger", "other": "Condition" },
+    "conditionType": {
+      "exclusion": "Excluded",
+      "inclusion": "Included",
+      "validity": "Validity",
+      "payment": "Payment",
+      "delivery": "Delivery",
+      "quantity_break": "Quantity break",
+      "trigger": "Trigger",
+      "other": "Condition"
+    },
     "conditionField": "Applies to {{field}}",
     "paymentMilestones": "Payment schedule",
     "paymentMilestone": "Payment milestone",
@@ -223,5 +232,61 @@
     },
     "normNeedsPrice": "Add a price to see the comparable value.",
     "attachment": "Attachment: {{name}}"
+  },
+  "v2": {
+    "sub": "Quote for {{request}} · received {{when}}",
+    "status": {
+      "draft": "Waiting for review",
+      "confirmed": "Confirmed",
+      "rejected": "Removed from comparison"
+    },
+    "viewOriginal": "View original message",
+    "aiNote_one": "Quoly read {{count}} detail. Review it before confirming.",
+    "aiNote_other": "Quoly read {{count}} details. Review them before confirming.",
+    "confirm": "Confirm quote",
+    "confirmNote": "Confirming doesn't award: the quote enters the comparison.",
+    "confirmNoPrice": "You can confirm it without a price; it won't enter the price comparison.",
+    "confirmedNoPrice": "Quote confirmed without a price: it doesn't enter the price comparison.",
+    "priceStated": "Price stated by the supplier",
+    "priceNotStated": "Not stated",
+    "per": "per {{unit}}",
+    "normalized": "Normalized price",
+    "notComparableYet": "Not comparable yet",
+    "prov": {
+      "read": "Read by Quoly · to review",
+      "confirmed": "Confirmed by you",
+      "edited": "Corrected by you",
+      "original": "Original value: {{value}}"
+    },
+    "viewSource": "View source",
+    "editData": "Edit",
+    "addData": "Add",
+    "cancel": "Cancel",
+    "saveChange": "Save change",
+    "group": {
+      "quantity": "Quantity and minimum order",
+      "delivery": "Lead time",
+      "other": "Other terms"
+    },
+    "label": {
+      "quantity_per_unit": "Pieces per unit",
+      "quantity_moq": "Minimum order (MOQ)",
+      "delivery_lead_time_days": "Lead time",
+      "delivery_point": "Delivery point",
+      "payment_terms": "Payment terms"
+    },
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days",
+    "sourceTitle": "Data source",
+    "tech": {
+      "title": "Technical review",
+      "lead": "What the supplier offered against your written requirements. Per-parameter verdicts, not a certification; the reference PDF isn't used as a criterion.",
+      "requested": "Requested",
+      "offered": "Offered",
+      "verdict": "Verdict",
+      "notInRequest": "Not in the request",
+      "unavailable": "The technical review isn't available right now. The commercial data is still visible.",
+      "empty": "Quoly found no technical parameters in this reply."
+    }
   }
 }

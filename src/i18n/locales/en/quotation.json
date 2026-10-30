@@ -88,5 +88,55 @@
     "review": "Review →",
     "compare": "Compare →",
     "viewAll": "View all ({{count}})"
+  },
+  "v2": {
+    "lead": "Every quote from your requests in one place. Find the ones that need review without opening each request.",
+    "total_one": "quote",
+    "total_other": "quotes",
+    "toReview_one": "to review",
+    "toReview_other": "to review",
+    "showing_one": "Showing {{count}} of {{total}}",
+    "showing_other": "Showing {{count}} of {{total}}",
+    "search": "Search by supplier or request",
+    "requestFilter": "Request",
+    "allRequests": "All requests",
+    "all": "All",
+    "review": {
+      "review": "To review",
+      "confirmed": "Confirmed",
+      "partial": "Partial · no price",
+      "rejected": "Rejected"
+    },
+    "columns": {
+      "supplier": "Supplier",
+      "request": "Request",
+      "price": "Price",
+      "review": "Review",
+      "actions": "Actions"
+    },
+    "received": "Received · {{date}}",
+    "notStated": "Not stated",
+    "viewQuote": "View quote",
+    "viewRequest": "View request",
+    "viewQuoteAria": "View quote from {{name}}",
+    "viewRequestAria": "View request {{name}}",
+    "emptyLabel": "No quotes",
+    "emptyText": "When a supplier replies to a request, their quote will show up here.",
+    "noResultsLabel": "No matches",
+    "noSearchTitle": "We couldn't find any quotes",
+    "noSearchText": "Try another supplier or request.",
+    "clearSearch": "Clear search",
+    "noFilterTitle": "No quotes match these filters",
+    "noFilterText": "Try another request or review state.",
+    "errorLabel": "Data unavailable",
+    "errorTitle": "We couldn't load the quotes.",
+    "errorText": "The connection was interrupted. Your search and filters are kept. You can try again.",
+    "retry": "Retry",
+    "chip": {
+      "review": "To review",
+      "confirmed": "Confirmed",
+      "partial": "Partial",
+      "rejected": "Rejected"
+    }
   }
 }

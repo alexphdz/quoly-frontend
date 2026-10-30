@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import type { SupplierContactRead } from '../../types/supplierDirectory'
-import { Icon } from '../ds'
-import { EmptyState } from '../ui'
+import { Button, EmptyState, Icon, StatusBadge, Tag } from '../../design-system'
 
 interface Props {
   contacts: SupplierContactRead[]
@@ -20,7 +19,7 @@ export default function SupplierContactList({
 }: Props) {
   const { t } = useTranslation('common')
   if (contacts.length === 0) {
-    return <EmptyState title={t('suppliers.contacts.emptyTitle')} description={t('suppliers.contacts.emptyDescription')} />
+    return <EmptyState title={t('suppliers.contacts.emptyTitle')}><p>{t('suppliers.contacts.emptyDescription')}</p></EmptyState>
   }
 
   return (
@@ -29,43 +28,24 @@ export default function SupplierContactList({
         <li key={contact.id} className="sd-contact">
           <div className="sd-contact-head">
             <span className="sd-contact-name">{contact.name}</span>
-            {contact.is_primary && <span className="ds-pill">{t('suppliers.contacts.primary')}</span>}
-            {contact.source !== 'manual' && <span className="ds-pill ds-pill-muted">{contact.source}</span>}
+            {contact.is_primary && <StatusBadge tone="success" variant="quiet">{t('suppliers.contacts.primary')}</StatusBadge>}
+            {contact.source !== 'manual' && <Tag variant="plain">{contact.source}</Tag>}
           </div>
           <ul className="sd-contact-lines">
             <li>
-              <Icon name="mail" size={14} />
+              <Icon name="envelope-simple" size={14} />
               <span>{contact.email}</span>
             </li>
-            {contact.phone && (
-              <li>
-                <Icon name="phone" size={14} />
-                <span>{contact.phone}</span>
-              </li>
-            )}
+            {contact.phone && <li><span>{contact.phone}</span></li>}
           </ul>
           {contact.job_title && <p className="sd-contact-role">{contact.job_title}</p>}
           {editable && (
             <div className="sd-contact-actions">
               {!contact.is_primary && onSetPrimary && (
-                <button
-                  type="button"
-                  className="ds-btn ds-btn-secondary"
-                  disabled={pendingContactId === contact.id}
-                  onClick={() => onSetPrimary(contact.id)}
-                >
-                  {t('suppliers.contacts.makePrimary')}
-                </button>
+                <Button size="sm" variant="secondary" disabled={pendingContactId === contact.id} onClick={() => onSetPrimary(contact.id)}>{t('suppliers.contacts.makePrimary')}</Button>
               )}
               {onDelete && contacts.length > 1 && (
-                <button
-                  type="button"
-                  className="ds-btn ds-btn-quiet"
-                  disabled={pendingContactId === contact.id}
-                  onClick={() => onDelete(contact.id)}
-                >
-                  {t('suppliers.contacts.remove')}
-                </button>
+                <Button size="sm" variant="tertiary" disabled={pendingContactId === contact.id} onClick={() => onDelete(contact.id)}>{t('suppliers.contacts.remove')}</Button>
               )}
             </div>
           )}

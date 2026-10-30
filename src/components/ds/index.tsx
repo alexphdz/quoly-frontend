@@ -8,7 +8,6 @@ import { unitPriceFractionDigits } from '../../lib/format'
 import { Icon } from './Icon'
 
 export { Icon } from './Icon'
-export { MetricCard, type MetricCardProps, type MetricTone } from './MetricCard'
 
 /** Progressive-disclosure panel: a header with an optional marker + collapsed
  *  summary, and a body revealed on toggle. Used to keep optional/secondary
@@ -469,7 +468,7 @@ export function Segmented<T extends string>({
 /** Amount with a muted currency code. `digits="unit"` uses adaptive per-unit precision. */
 export function Money({ value, currency, digits = 2, className, signed }: { value: number | null | undefined, currency?: string | null, digits?: number | 'unit', className?: string, signed?: boolean }) {
   const { i18n } = useTranslation()
-  if (value === null || value === undefined) return <span className={cn('qy-num', className)} style={{ color: 'var(--tx-3)' }}>—</span>
+  if (value === null || value === undefined) return <span className={cn('qy-num', className)} style={{ color: 'var(--tx-3)' }}>{'—'}</span>
   const places = digits === 'unit' ? unitPriceFractionDigits(value) : digits
   const formatted = new Intl.NumberFormat(i18n.resolvedLanguage === 'es' ? 'es-MX' : 'en-US', {
     minimumFractionDigits: digits === 'unit' ? 2 : places,

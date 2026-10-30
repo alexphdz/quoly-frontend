@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import type { SupplierCompanyCreate } from '../../types/supplierDirectory'
-import { FormField } from '../ui'
+import { Button, TextInput, Textarea } from '../../design-system'
 
 export type SupplierFormValues = SupplierCompanyCreate & { tagsInput?: string }
 
@@ -15,7 +15,7 @@ interface Props {
 
 function parseTagsInput(input?: string): string[] {
   if (!input?.trim()) return []
-  return input.split(',').map(t => t.trim()).filter(Boolean)
+  return input.split(',').map(tag => tag.trim()).filter(Boolean)
 }
 
 export function toSupplierCreatePayload(values: SupplierFormValues): SupplierCompanyCreate {
@@ -33,62 +33,35 @@ export function toSupplierCreatePayload(values: SupplierFormValues): SupplierCom
     material_categories: _material,
     ...rest
   } = values as SupplierFormValues & Record<string, unknown>
-  return {
-    ...rest,
-    tags: parseTagsInput(tagsInput ?? (values.tags ?? []).join(', ')),
-    packaging_categories: [],
-    material_categories: [],
-  }
+  return { ...rest, tags: parseTagsInput(tagsInput ?? (values.tags ?? []).join(', ')), packaging_categories: [], material_categories: [] }
 }
 
 export default function SupplierForm({ onSubmit, isPending, defaultValues, submitLabel, onCancel }: Props) {
   const { t } = useTranslation('common')
   const { register, handleSubmit, reset, formState: { errors } } = useForm<SupplierFormValues>({
-    defaultValues: {
-      ...defaultValues,
-      tagsInput: defaultValues?.tags?.join(', ') ?? defaultValues?.tagsInput ?? '',
-    },
+    defaultValues: { ...defaultValues, tagsInput: defaultValues?.tags?.join(', ') ?? defaultValues?.tagsInput ?? '' },
   })
+  const optional = t('field.optional')
+  const requiredError = t('suppliers.form.required')
 
   return (
-    <form
-      onSubmit={handleSubmit(values => {
-        onSubmit(toSupplierCreatePayload(values))
-        if (!defaultValues) reset()
-      })}
-      className="grid grid-cols-1 gap-4 md:grid-cols-2"
-    >
-      <FormField label={t('suppliers.form.displayName')} required error={errors.display_name ? t('suppliers.form.required') : undefined}>
-        <input {...register('display_name', { required: true })} className="input" placeholder={t('suppliers.form.displayNamePlaceholder')} />
-      </FormField>
-      <FormField label={t('suppliers.form.primaryEmail')} required error={errors.primary_email ? t('suppliers.form.required') : undefined}>
-        <input type="email" {...register('primary_email', { required: true })} className="input" placeholder={t('suppliers.form.primaryEmailPlaceholder')} />
-      </FormField>
-      <FormField label={t('suppliers.form.phone')} optional><input {...register('phone')} className="input" placeholder={t('suppliers.form.phonePlaceholder')} /></FormField>
-      <FormField label={t('suppliers.form.website')} optional><input {...register('website')} className="input" placeholder={t('suppliers.form.websitePlaceholder')} /></FormField>
-      <FormField label={t('suppliers.form.country')} optional><input {...register('country')} className="input" placeholder={t('suppliers.form.countryPlaceholder')} /></FormField>
-      <FormField label={t('suppliers.form.city')} optional><input {...register('city')} className="input" placeholder={t('suppliers.form.cityPlaceholder')} /></FormField>
-      <FormField label={t('suppliers.form.defaultPaymentTerms')} optional><input {...register('default_payment_terms')} className="input" placeholder={t('suppliers.form.defaultPaymentTermsPlaceholder')} /></FormField>
-      <FormField label={t('suppliers.form.defaultIncoterm')} optional><input {...register('default_incoterm')} className="input" placeholder={t('suppliers.form.defaultIncotermPlaceholder')} /></FormField>
-      <div className="md:col-span-2">
-        <FormField label={t('suppliers.form.tags')} optional helper={t('suppliers.form.tagsHelp')}>
-          <input {...register('tagsInput')} className="input" placeholder={t('suppliers.form.tagsPlaceholder')} />
-        </FormField>
-      </div>
-      <div className="md:col-span-2">
-        <FormField label={t('suppliers.form.notes')} optional>
-          <textarea {...register('notes')} className="input min-h-[80px]" placeholder={t('suppliers.form.notesPlaceholder')} />
-        </FormField>
-      </div>
-      <div className="md:col-span-2 flex justify-end gap-2">
-        {onCancel && (
-          <button type="button" className="ds-btn ds-btn-text" onClick={onCancel}>
-            {t('actions.cancel')}
-          </button>
-        )}
-        <button type="submit" className="ds-btn ds-btn-primary" disabled={isPending}>
-          {isPending ? t('suppliers.form.saving') : (submitLabel ?? t('suppliers.form.save'))}
-        </button>
+    <form onSubmit={handleSubmit(values => {
+      onSubmit(toSupplierCreatePayload(values))
+      if (!defaultValues) reset()
+    })} className="sup-form">
+      <TextInput {...register('display_name', { required: true })} label={t('suppliers.form.displayName')} required placeholder={t('suppliers.form.displayNamePlaceholder')} status={errors.display_name ? 'error' : undefined} message={errors.display_name ? requiredError : undefined} />
+      <TextInput {...register('primary_email', { required: true })} type="email" label={t('suppliers.form.primaryEmail')} required placeholder={t('suppliers.form.primaryEmailPlaceholder')} status={errors.primary_email ? 'error' : undefined} message={errors.primary_email ? requiredError : undefined} />
+      <TextInput {...register('phone')} label={t('suppliers.form.phone')} optionalLabel={optional} placeholder={t('suppliers.form.phonePlaceholder')} />
+      <TextInput {...register('website')} label={t('suppliers.form.website')} optionalLabel={optional} placeholder={t('suppliers.form.websitePlaceholder')} />
+      <TextInput {...register('country')} label={t('suppliers.form.country')} optionalLabel={optional} placeholder={t('suppliers.form.countryPlaceholder')} />
+      <TextInput {...register('city')} label={t('suppliers.form.city')} optionalLabel={optional} placeholder={t('suppliers.form.cityPlaceholder')} />
+      <TextInput {...register('default_payment_terms')} label={t('suppliers.form.defaultPaymentTerms')} optionalLabel={optional} placeholder={t('suppliers.form.defaultPaymentTermsPlaceholder')} />
+      <TextInput {...register('default_incoterm')} label={t('suppliers.form.defaultIncoterm')} optionalLabel={optional} placeholder={t('suppliers.form.defaultIncotermPlaceholder')} />
+      <TextInput {...register('tagsInput')} className="sup-form-wide" label={t('suppliers.form.tags')} optionalLabel={optional} description={t('suppliers.form.tagsHelp')} placeholder={t('suppliers.form.tagsPlaceholder')} />
+      <Textarea {...register('notes')} className="sup-form-wide" label={t('suppliers.form.notes')} optionalLabel={optional} rows={3} placeholder={t('suppliers.form.notesPlaceholder')} />
+      <div className="sup-form-actions">
+        {onCancel && <Button type="button" variant="secondary" onClick={onCancel}>{t('actions.cancel')}</Button>}
+        <Button type="submit" loading={isPending}>{isPending ? t('suppliers.form.saving') : submitLabel ?? t('suppliers.form.save')}</Button>
       </div>
     </form>
   )

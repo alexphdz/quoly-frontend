@@ -22,6 +22,14 @@ export function useSupplierCompany(id: string) {
   })
 }
 
+export function useSupplierRfqHistory(id: string) {
+  return useQuery({
+    queryKey: ['supplier-rfqs', id],
+    queryFn: () => supplierApi.listSupplierRfqs(id),
+    enabled: !!id,
+  })
+}
+
 export function useCreateSupplierCompany() {
   const queryClient = useQueryClient()
   return useMutation({
