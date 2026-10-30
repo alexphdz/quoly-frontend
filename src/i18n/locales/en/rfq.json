@@ -1116,5 +1116,123 @@
       "retry": "Retry",
       "retrying": "Retrying…"
     }
+  },
+  "crear": {
+    "title": "New request",
+    "intro": "Tell us what you need quoted. You can save a draft and complete the details later.",
+    "editTitle": "Edit request",
+    "editIntro": "Update the details of this request.",
+    "breadcrumb": "Breadcrumb",
+    "requiredNote": "Fields marked * are required.",
+    "optional": "(optional)",
+    "nav": {
+      "label": "Form sections"
+    },
+    "sections": {
+      "producto": {
+        "nav": "Product and quantity",
+        "desc": "Name, quantity and unit",
+        "title": "Product and quantity"
+      },
+      "entrega": {
+        "nav": "Delivery terms",
+        "desc": "Incoterm, place and date",
+        "title": "Delivery terms",
+        "lead": "Add the terms your suppliers should take into account."
+      },
+      "documentos": {
+        "nav": "Requirements and documents",
+        "desc": "Technical requirements and file",
+        "title": "Requirements and documents"
+      }
+    },
+    "fields": {
+      "product": "Product name",
+      "productPlaceholder": "E.g. 750 ml thermal cups",
+      "quantity": "Requested quantity",
+      "quantityPlaceholder": "E.g. 500",
+      "unit": "Unit of measure",
+      "unitPlaceholder": "Select unit",
+      "reference": "Internal reference",
+      "referencePlaceholder": "E.g. REF-VT-2041",
+      "shareReference": "Show this reference to suppliers",
+      "shareOn": "Suppliers will see this reference in the request.",
+      "shareOff": "Only you will see this reference.",
+      "incoterm": "Incoterm",
+      "deliveryDate": "Requested delivery date",
+      "requirements": "Technical requirements",
+      "requirementsHelp": "Describe what the product must meet. With no text and no file, the request asks for the current datasheet.",
+      "requirementsPlaceholder": "E.g. 18/8 stainless steel, double wall, BPA free.",
+      "file": "Specification file",
+      "fileHelp": "Attach a PDF datasheet or reference document if you need to."
+    },
+    "place": {
+      "none": {
+        "label": "Place",
+        "placeholder": "Choose an Incoterm first"
+      },
+      "place_of_delivery": {
+        "label": "Place of delivery",
+        "placeholder": "E.g. Supplier plant, Querétaro"
+      },
+      "place_of_destination": {
+        "label": "Place of destination",
+        "placeholder": "E.g. Mexico City"
+      },
+      "port_of_shipment": {
+        "label": "Port of shipment",
+        "placeholder": "E.g. Port of Manzanillo"
+      },
+      "port_of_destination": {
+        "label": "Port of destination",
+        "placeholder": "E.g. Port of Valencia"
+      }
+    },
+    "incoterm": {
+      "select": "Select Incoterm",
+      "count": "11 Incoterms 2020 terms",
+      "change": "Change",
+      "close": "Close",
+      "remove": "Remove Incoterm",
+      "modeAny": "Any mode of transport",
+      "modeSea": "Sea and inland waterway",
+      "group": {
+        "any": "Any mode of transport",
+        "sea": "Sea and inland waterway"
+      },
+      "short": {
+        "EXW": "The buyer collects at the seller's premises.",
+        "FCA": "The seller delivers to the buyer's carrier.",
+        "CPT": "The seller pays carriage to the destination.",
+        "CIP": "Carriage and insurance paid to the destination.",
+        "DAP": "Delivered at destination, not unloaded.",
+        "DPU": "Delivered and unloaded at destination.",
+        "DDP": "Delivered at destination with duties paid.",
+        "FAS": "Goods alongside the ship at the port of shipment.",
+        "FOB": "Goods on board the ship at the port of shipment.",
+        "CFR": "The seller pays freight to the port of destination.",
+        "CIF": "Freight and insurance paid to the port of destination."
+      }
+    },
+    "file": {
+      "title": "Drag a file here",
+      "text": "You can also select it from your computer.",
+      "release": "Drop the file to attach it",
+      "select": "Select file",
+      "saved": "Saved with the request",
+      "remove": "Remove {{name}}",
+      "note": "The file is saved with the request and can be sent to suppliers. The technical comparison uses the requirements you write above."
+    },
+    "errors": {
+      "name": "Enter the product name.",
+      "quantity": "Enter a valid quantity.",
+      "unit": "Select a unit of measure."
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "saveDraft": "Save draft",
+      "create": "Create request",
+      "saveChanges": "Save changes"
+    }
   }
 }

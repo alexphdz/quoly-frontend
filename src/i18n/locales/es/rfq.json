@@ -1116,5 +1116,123 @@
       "retry": "Reintentar",
       "retrying": "Reintentando…"
     }
+  },
+  "crear": {
+    "title": "Nueva solicitud",
+    "intro": "Indica qué necesitas cotizar. Puedes guardar un borrador y completar los detalles después.",
+    "editTitle": "Editar solicitud",
+    "editIntro": "Actualiza los datos de esta solicitud.",
+    "breadcrumb": "Ruta",
+    "requiredNote": "Los campos con * son obligatorios.",
+    "optional": "(opcional)",
+    "nav": {
+      "label": "Secciones del formulario"
+    },
+    "sections": {
+      "producto": {
+        "nav": "Producto y cantidad",
+        "desc": "Nombre, cantidad y unidad",
+        "title": "Producto y cantidad"
+      },
+      "entrega": {
+        "nav": "Condiciones de entrega",
+        "desc": "Incoterm, lugar y fecha",
+        "title": "Condiciones de entrega",
+        "lead": "Agrega las condiciones que deben considerar tus proveedores."
+      },
+      "documentos": {
+        "nav": "Requisitos y documentos",
+        "desc": "Requisitos técnicos y archivo",
+        "title": "Requisitos y documentos"
+      }
+    },
+    "fields": {
+      "product": "Nombre del producto",
+      "productPlaceholder": "Ej. Vasos térmicos de 750 ml",
+      "quantity": "Cantidad solicitada",
+      "quantityPlaceholder": "Ej. 500",
+      "unit": "Unidad de medida",
+      "unitPlaceholder": "Seleccionar unidad",
+      "reference": "Referencia interna",
+      "referencePlaceholder": "Ej. REF-VT-2041",
+      "shareReference": "Mostrar esta referencia al proveedor",
+      "shareOn": "Los proveedores verán esta referencia en la solicitud.",
+      "shareOff": "Solo tú verás esta referencia.",
+      "incoterm": "Incoterm",
+      "deliveryDate": "Fecha de entrega deseada",
+      "requirements": "Requisitos técnicos",
+      "requirementsHelp": "Describe las características que debe cumplir el producto. Sin texto y sin archivo, la solicitud pide la ficha técnica vigente.",
+      "requirementsPlaceholder": "Ej. Acero inoxidable 18/8, doble pared, libre de BPA.",
+      "file": "Archivo de especificación",
+      "fileHelp": "Adjunta una ficha o documento de referencia en PDF si lo necesitas."
+    },
+    "place": {
+      "none": {
+        "label": "Lugar",
+        "placeholder": "Primero elige un Incoterm"
+      },
+      "place_of_delivery": {
+        "label": "Lugar de entrega",
+        "placeholder": "Ej. Planta del proveedor, Querétaro"
+      },
+      "place_of_destination": {
+        "label": "Lugar de destino",
+        "placeholder": "Ej. Ciudad de México"
+      },
+      "port_of_shipment": {
+        "label": "Puerto de embarque",
+        "placeholder": "Ej. Puerto de Manzanillo"
+      },
+      "port_of_destination": {
+        "label": "Puerto de destino",
+        "placeholder": "Ej. Puerto de Valencia"
+      }
+    },
+    "incoterm": {
+      "select": "Seleccionar Incoterm",
+      "count": "11 términos Incoterms 2020",
+      "change": "Cambiar",
+      "close": "Cerrar",
+      "remove": "Quitar Incoterm",
+      "modeAny": "Cualquier modo de transporte",
+      "modeSea": "Marítimo y vías navegables",
+      "group": {
+        "any": "Cualquier modo de transporte",
+        "sea": "Marítimo y vías navegables"
+      },
+      "short": {
+        "EXW": "El comprador recoge en las instalaciones del vendedor.",
+        "FCA": "El vendedor entrega al transportista del comprador.",
+        "CPT": "El vendedor paga el transporte hasta el destino.",
+        "CIP": "Transporte y seguro pagados hasta el destino.",
+        "DAP": "Entregado en el destino, sin descargar.",
+        "DPU": "Entregado y descargado en el destino.",
+        "DDP": "Entregado en el destino con impuestos pagados.",
+        "FAS": "Mercancía al costado del buque en el puerto de embarque.",
+        "FOB": "Mercancía a bordo del buque en el puerto de embarque.",
+        "CFR": "El vendedor paga el flete hasta el puerto de destino.",
+        "CIF": "Flete y seguro pagados hasta el puerto de destino."
+      }
+    },
+    "file": {
+      "title": "Arrastra un archivo aquí",
+      "text": "También puedes seleccionarlo desde tu equipo.",
+      "release": "Suelta el archivo para adjuntarlo",
+      "select": "Seleccionar archivo",
+      "saved": "Guardado con la solicitud",
+      "remove": "Quitar {{name}}",
+      "note": "El archivo se guarda con la solicitud y puede enviarse a los proveedores. La comparación técnica usa los requisitos que escribes arriba."
+    },
+    "errors": {
+      "name": "Escribe el nombre del producto.",
+      "quantity": "Ingresa una cantidad válida.",
+      "unit": "Selecciona una unidad de medida."
+    },
+    "actions": {
+      "cancel": "Cancelar",
+      "saveDraft": "Guardar borrador",
+      "create": "Crear solicitud",
+      "saveChanges": "Guardar cambios"
+    }
   }
 }

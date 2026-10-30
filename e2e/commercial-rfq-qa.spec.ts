@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test'
-import { pickOption } from './helpers/select'
 import { e2eCredentials, gotoAuthenticated } from './helpers/auth'
 
 const skipNoCreds = () => test.skip(!e2eCredentials(), 'Set E2E_EMAIL and E2E_PASSWORD in Frontend/.env.e2e.local')
@@ -13,9 +12,9 @@ test.describe('Commercial RFQ QA (module 1)', () => {
     await gotoAuthenticated(page, '/rfqs/new')
     await expect(page.getByRole('heading', { name: 'New request' })).toBeVisible()
 
-    await page.getByPlaceholder('What you are sourcing').fill(product)
+    await page.locator('input[name="name"]').fill(product)
     await page.locator('input[name="quantity"]').fill('1200')
-    await pickOption(page, 'base_unit', 'kg')
+    await page.locator('select[name="base_unit"]').selectOption('kg')
     await page.locator('textarea[name="technical_requirements"]').fill('Food grade, assay 99.5% minimum.')
 
     await page.getByRole('button', { name: 'Save draft' }).click()

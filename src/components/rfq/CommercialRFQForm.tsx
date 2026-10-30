@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState, type DragEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useForm, type Resolver } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslation } from 'react-i18next'
@@ -7,23 +7,26 @@ import { z } from 'zod'
 import { deleteReferenceSpec } from '../../api/rfqs'
 import {
   COMMERCIAL_CURRENCIES,
+  COMMERCIAL_UNIT_GROUPS,
   DEFAULT_COMMERCIAL_CURRENCY,
   incotermByCode,
 } from '../../constants/commercial'
 import type { CommercialRFQWrite, RFQAttachment, RFQRead } from '../../types/rfq'
 import type { ApiError } from '../../api/client'
-import { FormFeedback, FormField, TextArea, TextInput } from '../ui'
-import { DateField, isoDateToLocal } from '../ui/DateField'
-import { Collapsible, Icon, Segmented } from '../ds'
-import IncotermPicker from './commercial/IncotermPicker'
-import RequestStepArt from './commercial/RequestStepArt'
-import UnitPicker from './commercial/UnitPicker'
+import { isoDateToLocal } from '../ui/DateField'
+import {
+  Button, DateInput, Field, Icon, IconButton, InlineAlert, NumberInput, SegmentedControl, Select, Switch, TextInput, Textarea,
+  type IconName,
+} from '../../design-system'
+import { useElementWidth } from '../../design-system/hooks'
+import { useShellLayout } from '../layout/useShellLayout'
+import IncotermField from './commercial/IncotermField'
 
 const schema = z
   .object({
-    name: z.string().trim().min(1, 'commercial.validation.required'),
-    quantity: z.coerce.number().int().positive('commercial.validation.quantity'),
-    base_unit: z.string().min(1, 'commercial.validation.required'),
+    name: z.string().trim().min(1, 'crear.errors.name'),
+    quantity: z.coerce.number({ message: 'crear.errors.quantity' }).int('crear.errors.quantity').positive('crear.errors.quantity'),
+    base_unit: z.string().min(1, 'crear.errors.unit'),
     internal_reference: z.string().optional(),
     share_internal_reference: z.boolean(),
     incoterm: z.string().optional(),
@@ -61,11 +64,11 @@ const schema = z
 
 type FormValues = z.infer<typeof schema>
 
-const STEPS = [
-  { key: 'product', label: 'commercial.sectionProduct' },
-  { key: 'terms', label: 'commercial.sectionTerms' },
-  { key: 'specification', label: 'commercial.sectionSpecification' },
-] as const
+const SECTIONS: { id: string, icon: IconName }[] = [
+  { id: 'producto', icon: 'clipboard-text' },
+  { id: 'entrega', icon: 'truck' },
+  { id: 'documentos', icon: 'paperclip' },
+]
 
 function referenceSpecs(attachments?: RFQAttachment[]) {
   return (attachments ?? []).filter(
@@ -89,6 +92,27 @@ function valuesFromRfq(rfq?: RFQRead): FormValues {
   }
 }
 
+/** Sección visible: la última cuyo encabezado ya pasó bajo el navegador fijo. */
+function useVisibleSection(ids: string[]) {
+  const [active, setActive] = useState(ids[0])
+  useEffect(() => {
+    const onScroll = () => {
+      let current = ids[0]
+      for (const id of ids) {
+        const el = document.getElementById(`sec-${id}`)
+        if (el && el.getBoundingClientRect().top <= 160) current = id
+      }
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) current = ids[ids.length - 1]
+      setActive(current)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  return active
+}
+
 export default function CommercialRFQForm({
   initial,
   isPending,
@@ -101,43 +125,45 @@ export default function CommercialRFQForm({
   onSubmit: (data: CommercialRFQWrite, specFiles: File[]) => void | Promise<void>
 }) {
   const { t } = useTranslation(['rfq', 'common'])
+  const navigate = useNavigate()
+  const layout = useShellLayout()
+  const mobile = layout === 'mobile'
+  const [contentRef, contentW] = useElementWidth<HTMLFormElement>(1080)
+  const wide = contentW >= 940
   const fileRef = useRef<HTMLInputElement>(null)
-  const formRef = useRef<HTMLFormElement>(null)
-  const [step, setStep] = useState(0)
   const [pendingSpecs, setPendingSpecs] = useState<File[]>([])
   const [savedSpecs, setSavedSpecs] = useState<RFQAttachment[]>(() => referenceSpecs(initial?.attachments))
   const [specError, setSpecError] = useState<string | null>(null)
   const [removingId, setRemovingId] = useState<string | null>(null)
-  const [attempted, setAttempted] = useState(false)
+  const [dragging, setDragging] = useState(false)
+  const [submitting, setSubmitting] = useState<'draft' | 'open' | null>(null)
+  const dragDepth = useRef(0)
+  const active = useVisibleSection(SECTIONS.map(s => s.id))
+  const editing = Boolean(initial)
+  const isDraft = !initial || initial.status === 'draft'
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema) as Resolver<FormValues>,
     defaultValues: valuesFromRfq(initial),
   })
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    trigger,
-    formState: { errors },
-  } = form
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = form
 
   useEffect(() => {
     setSavedSpecs(referenceSpecs(initial?.attachments))
   }, [initial?.attachments, initial?.id])
 
+  useEffect(() => {
+    if (!isPending) setSubmitting(null)
+  }, [isPending])
+
   const reference = watch('internal_reference') ?? ''
   const incoterm = watch('incoterm') ?? ''
-  const namedPlace = watch('named_place') ?? ''
   const share = watch('share_internal_reference')
   const term = incotermByCode(incoterm)
-  const placeLabel = term ? t(`commercial.placeRole.${term.role}`) : t('commercial.namedPlace')
-  const watchedUnit = watch('base_unit')
-  const watchedCurrency = watch('base_currency')
+  const unit = watch('base_unit')
+  const currency = watch('base_currency')
   const deliveryDate = watch('requested_delivery_date') ?? ''
   const replyBy = watch('response_deadline') ?? ''
-  const requirements = watch('technical_requirements') ?? ''
 
   // Date guards: nothing before today; delivery cannot precede the reply-by date.
   const startToday = new Date()
@@ -150,6 +176,7 @@ export default function CommercialRFQForm({
   }, [reference, setValue])
 
   const fieldError = (message?: string) => (message ? t(message) : undefined)
+  const status = (message?: string) => (message ? 'error' as const : undefined)
 
   const addPendingFiles = (files: FileList | null) => {
     if (!files?.length) return
@@ -185,18 +212,13 @@ export default function CommercialRFQForm({
   }
 
   const readField = (name: string, fallback: string) => {
-    const raw = formRef.current ? new FormData(formRef.current).get(name) : null
+    const raw = contentRef.current ? new FormData(contentRef.current).get(name) : null
     return typeof raw === 'string' ? raw : fallback
   }
 
-  const goToFirstError = (formErrors: Partial<Record<keyof FormValues, unknown>>) => {
-    if (formErrors.name || formErrors.quantity || formErrors.base_unit) setStep(0)
-    else if (formErrors.incoterm || formErrors.named_place) setStep(1)
-  }
-
-  const submit = (status: 'draft' | 'open') =>
+  const submit = (nextStatus: 'draft' | 'open') =>
     handleSubmit((values) => {
-      setAttempted(false)
+      setSubmitting(nextStatus)
       const name = readField('name', values.name).trim()
       const quantity = Number(readField('quantity', String(values.quantity)))
       const baseUnit = readField('base_unit', values.base_unit)
@@ -204,300 +226,301 @@ export default function CommercialRFQForm({
       const place = readField('named_place', values.named_place ?? '').trim()
       const requirementText = readField('technical_requirements', values.technical_requirements ?? '').trim()
       const ref = readField('internal_reference', values.internal_reference ?? '').trim()
-      const delivery = readField('requested_delivery_date', values.requested_delivery_date ?? '')
-      const replyBy = readField('response_deadline', values.response_deadline ?? '')
-      const currency = readField('base_currency', values.base_currency)
+      const delivery = values.requested_delivery_date ?? ''
+      const replyByValue = values.response_deadline ?? ''
+      const currencyValue = readField('base_currency', values.base_currency)
       void onSubmit(
         {
           request_kind: 'commercial',
           name,
           quantity,
           base_unit: baseUnit,
-          status,
+          status: nextStatus,
           internal_reference: ref || null,
           share_internal_reference: Boolean(ref) && values.share_internal_reference,
           incoterms: rule && place ? { rule, named_place: place } : null,
           technical_requirements: requirementText || null,
           requested_delivery_date: delivery || null,
-          response_deadline: replyBy || null,
-          base_currency: currency,
+          response_deadline: replyByValue || null,
+          base_currency: currencyValue,
         },
         pendingSpecs,
       )
-    }, (formErrors) => {
-      setAttempted(true)
-      goToFirstError(formErrors)
     })
 
-  const goNext = async () => {
-    if (step === 0) {
-      const ok = await trigger(['name', 'quantity', 'base_unit'])
-      if (!ok) return
-    }
-    setStep((current) => Math.min(2, current + 1))
+  const goSection = (id: string) => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    document.getElementById(`sec-${id}`)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+    window.setTimeout(() => document.getElementById(`h-${id}`)?.focus({ preventScroll: true }), reduce ? 0 : 280)
   }
 
-  const missingCount = Object.keys(errors).length
-  const specScenario =
-    savedSpecs.length > 0 || pendingSpecs.length > 0
-      ? 'reference_file'
-      : requirements.trim()
-        ? 'text_requirements'
-        : 'ask_datasheet'
-  const canShare = Boolean(reference.trim())
+  const onDrop = (event: DragEvent) => {
+    event.preventDefault()
+    dragDepth.current = 0
+    setDragging(false)
+    addPendingFiles(event.dataTransfer.files)
+  }
+
+  const units = COMMERCIAL_UNIT_GROUPS.flatMap(group => group.codes.map(code => ({ value: code, label: t(`commercial.units.${code}`) })))
+  const placeKey = term ? term.role : 'none'
+  const span = (desktop: number, narrow: number) => ({ gridColumn: `span ${mobile ? 12 : wide ? desktop : narrow}` })
+  const hasFiles = savedSpecs.length > 0 || pendingSpecs.length > 0
 
   return (
-    <form ref={formRef} className="cr-form" onSubmit={(event) => event.preventDefault()}>
-      {error && <FormFeedback>{error}</FormFeedback>}
-      {specError && <FormFeedback>{specError}</FormFeedback>}
-      {attempted && missingCount > 0 && (
-        <FormFeedback>{t('commercial.validation.summary', { count: missingCount })}</FormFeedback>
-      )}
-
-      <div className="cr-steps-wrap">
-        <ol className="cr-steps" aria-label={t('commercial.stepNav')}>
-          {STEPS.map((item, index) => (
-            <li key={item.key}>
-              <button
-                type="button"
-                className={`cr-step${index === step ? ' is-current' : ''}${index < step ? ' is-done' : ''}`}
-                aria-current={index === step ? 'step' : undefined}
-                onClick={() => setStep(index)}
+    <>
+      <nav aria-label={t('crear.nav.label')} className="cr2-nav">
+        <ol className="cr2-nav-list">
+          {SECTIONS.map((s, i) => (
+            <li key={s.id} className="cr2-nav-item">
+              <a
+                href={`#sec-${s.id}`}
+                aria-current={active === s.id ? 'true' : undefined}
+                className={`cr2-nav-link${active === s.id ? ' is-active' : ''}`}
+                onClick={(event) => { event.preventDefault(); goSection(s.id) }}
               >
-                <span className="cr-step-num">{index + 1}</span>
-                <span className="cr-step-label">{t(item.label)}</span>
-              </button>
+                <span className="cr2-nav-top">
+                  <span className="cr2-nav-num">{String(i + 1).padStart(2, '0')}</span>
+                  <Icon name={s.icon} size={18} />
+                  <span aria-hidden="true" className={`cr2-nav-line${i === SECTIONS.length - 1 ? ' is-last' : ''}`} />
+                </span>
+                <span className="cr2-nav-label">{t(`crear.sections.${s.id}.nav`)}</span>
+                <span className="cr2-nav-desc">{t(`crear.sections.${s.id}.desc`)}</span>
+                <span aria-hidden="true" className="cr2-nav-trace" />
+              </a>
             </li>
           ))}
         </ol>
-        <span className="cr-progress qy-num" aria-live="polite">
-          {t('commercial.stepProgress', { current: step + 1, total: 3 })}
-        </span>
-      </div>
+      </nav>
 
-      <section className="cr-panel" hidden={step !== 0}>
-        <div className="cr-panel-head">
-          <RequestStepArt step={0} />
-          <div>
-            <h2>{t('commercial.sectionProduct')}</h2>
+      <form ref={contentRef} noValidate aria-label={editing ? t('crear.editTitle') : t('crear.title')} className="cr2-form" onSubmit={(event) => event.preventDefault()}>
+        {error && <InlineAlert prominence="blocking" tone="error">{error}</InlineAlert>}
+
+        <section id="sec-producto" aria-labelledby="h-producto" className="cr2-section is-first">
+          <div className="cr2-section-head is-row">
+            <h2 id="h-producto" tabIndex={-1} className="cr2-h2">{t('crear.sections.producto.title')}</h2>
+            <span className="cr2-required-note">{t('crear.requiredNote')}</span>
           </div>
-        </div>
-        <div className="cr-fields">
-          <FormField label={t('commercial.productName')} required error={fieldError(errors.name?.message)}>
-            <TextInput placeholder={t('commercial.productNamePlaceholder')} {...register('name')} />
-          </FormField>
-          <FormField
-            label={t('commercial.quantity')}
-            required
-            error={fieldError(errors.quantity?.message ?? errors.base_unit?.message)}
-          >
-            <div className="cr-qty" data-invalid={Boolean(errors.quantity || errors.base_unit) || undefined}>
-              <input type="number" min={1} step={1} aria-label={t('commercial.quantity')} {...register('quantity')} />
-              <UnitPicker
-                value={watchedUnit}
-                onChange={(code) => setValue('base_unit', code, { shouldValidate: true })}
-                label={t('commercial.unit')}
-                error={Boolean(errors.base_unit)}
+          <div className="cr2-grid">
+            <div className="cr2-cell is-product">
+              <TextInput
+                label={t('crear.fields.product')}
+                required
+                placeholder={t('crear.fields.productPlaceholder')}
+                autoComplete="off"
+                message={fieldError(errors.name?.message)}
+                status={status(errors.name?.message)}
+                {...register('name')}
               />
             </div>
-          </FormField>
-          <div className="cr-share">
-            <FormField label={t('commercial.internalReference')} optional>
-              <TextInput placeholder={t('commercial.internalReferencePlaceholder')} {...register('internal_reference')} />
-            </FormField>
-            <button
-              type="button"
-              className="cr-share-toggle"
-              role="switch"
-              aria-checked={share}
-              disabled={!canShare}
-              onClick={() => setValue('share_internal_reference', !share)}
+            <div className="cr2-cell" style={span(5, 6)}>
+              <NumberInput
+                label={t('crear.fields.quantity')}
+                required
+                placeholder={t('crear.fields.quantityPlaceholder')}
+                message={fieldError(errors.quantity?.message)}
+                status={status(errors.quantity?.message)}
+                {...register('quantity')}
+              />
+            </div>
+            <div className="cr2-cell" style={span(4, 6)}>
+              <Select
+                label={t('crear.fields.unit')}
+                required
+                placeholder={t('crear.fields.unitPlaceholder')}
+                options={units}
+                value={unit}
+                message={fieldError(errors.base_unit?.message)}
+                status={status(errors.base_unit?.message)}
+                {...register('base_unit')}
+              />
+            </div>
+            <div className="cr2-cell is-stack" style={span(7, 8)}>
+              <TextInput
+                label={t('crear.fields.reference')}
+                placeholder={t('crear.fields.referencePlaceholder')}
+                autoComplete="off"
+                {...register('internal_reference')}
+              />
+              <Switch
+                label={t('crear.fields.shareReference')}
+                description={share ? t('crear.fields.shareOn') : t('crear.fields.shareOff')}
+                checked={share}
+                disabled={!reference.trim()}
+                onChange={(event) => setValue('share_internal_reference', event.target.checked)}
+              />
+            </div>
+          </div>
+        </section>
+
+        <section id="sec-entrega" aria-labelledby="h-entrega" className="cr2-section">
+          <div className="cr2-section-head">
+            <h2 id="h-entrega" tabIndex={-1} className="cr2-h2">{t('crear.sections.entrega.title')}</h2>
+            <p className="cr2-section-lead">{t('crear.sections.entrega.lead')}</p>
+          </div>
+          <div className="cr2-inc-field">
+            <span id="cr2-lbl-inc" className="cr2-label">
+              {t('crear.fields.incoterm')}
+              <span className="cr2-optional">{t('crear.optional')}</span>
+            </span>
+            <input type="hidden" {...register('incoterm')} />
+            <IncotermField
+              labelId="cr2-lbl-inc"
+              value={incoterm}
+              invalid={Boolean(errors.incoterm)}
+              onChange={(code) => {
+                setValue('incoterm', code, { shouldValidate: Boolean(errors.incoterm || errors.named_place) })
+                if (!code) setValue('named_place', '', { shouldValidate: Boolean(errors.named_place) })
+              }}
+            />
+            {errors.incoterm && <span role="alert" className="cr2-field-error"><Icon name="warning-circle" size={14} />{fieldError(errors.incoterm.message)}</span>}
+          </div>
+          <div className="cr2-grid">
+            <div className="cr2-cell" style={span(6, 7)}>
+              <TextInput
+                label={t(`crear.place.${placeKey}.label`)}
+                required={Boolean(term)}
+                placeholder={t(`crear.place.${placeKey}.placeholder`)}
+                autoComplete="off"
+                message={fieldError(errors.named_place?.message)}
+                status={status(errors.named_place?.message)}
+                {...register('named_place')}
+              />
+            </div>
+            <div className="cr2-cell" style={span(4, 5)}>
+              <DateInput
+                name="requested_delivery_date"
+                label={t('crear.fields.deliveryDate')}
+                value={deliveryDate}
+                minDate={deliveryMin}
+                message={fieldError(errors.requested_delivery_date?.message)}
+                status={status(errors.requested_delivery_date?.message)}
+                onChange={(next) => setValue('requested_delivery_date', next, { shouldDirty: true, shouldValidate: true })}
+              />
+            </div>
+            <div className="cr2-cell" style={span(6, 7)}>
+              <Field label={t('commercial.currency')} required description={t('commercial.currencyHelp')} message={fieldError(errors.base_currency?.message)} status={status(errors.base_currency?.message)}>
+                <input type="hidden" {...register('base_currency')} />
+                <SegmentedControl
+                  label={t('commercial.currency')}
+                  size="sm"
+                  value={currency}
+                  onChange={(value) => setValue('base_currency', value, { shouldValidate: true })}
+                  options={COMMERCIAL_CURRENCIES.map((code) => ({ value: code, label: code }))}
+                />
+              </Field>
+            </div>
+            <div className="cr2-cell" style={span(4, 5)}>
+              <DateInput
+                name="response_deadline"
+                label={t('commercial.responseDeadline')}
+                description={t('commercial.responseDeadlineHelp')}
+                value={replyBy}
+                minDate={startToday}
+                message={fieldError(errors.response_deadline?.message)}
+                status={status(errors.response_deadline?.message)}
+                onChange={(next) => setValue('response_deadline', next, { shouldDirty: true, shouldValidate: true })}
+              />
+            </div>
+          </div>
+        </section>
+
+        <section id="sec-documentos" aria-labelledby="h-documentos" className="cr2-section">
+          <h2 id="h-documentos" tabIndex={-1} className="cr2-h2">{t('crear.sections.documentos.title')}</h2>
+          <div className="cr2-docs">
+            <Textarea
+              label={t('crear.fields.requirements')}
+              description={t('crear.fields.requirementsHelp')}
+              placeholder={t('crear.fields.requirementsPlaceholder')}
+              rows={6}
+              {...register('technical_requirements')}
+            />
+            <Field
+              label={t('crear.fields.file')}
+              description={t('crear.fields.fileHelp')}
+              message={specError ?? undefined}
+              status={specError ? 'error' : undefined}
             >
-              <span className="ds-switch" aria-hidden>
-                <span />
-              </span>
-              {t('commercial.shareReference')}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section className="cr-panel" hidden={step !== 1}>
-        <div className="cr-panel-head">
-          <RequestStepArt step={1} />
-          <div>
-            <h2>{t('commercial.sectionTerms')}</h2>
-          </div>
-        </div>
-        <div className="cr-fields">
-          <FormField label={t('commercial.currency')} required helper={t('commercial.currencyHelp')} error={fieldError(errors.base_currency?.message)}>
-            <input type="hidden" {...register('base_currency')} />
-            <Segmented
-              ariaLabel={t('commercial.currency')}
-              value={watchedCurrency}
-              onChange={(value) => setValue('base_currency', value, { shouldValidate: true })}
-              options={COMMERCIAL_CURRENCIES.map((code) => ({ value: code, label: code }))}
-            />
-          </FormField>
-
-          <Collapsible
-            label={t('commercial.incoterm')}
-            optional
-            summary={incoterm ? (namedPlace ? `${incoterm} · ${namedPlace}` : incoterm) : undefined}
-          >
-            <div className="cr-fields">
-              <IncotermPicker
-                value={incoterm}
-                onChange={(code) => {
-                  setValue('incoterm', code, { shouldValidate: true })
-                  if (!code) setValue('named_place', '', { shouldValidate: true })
-                }}
-                error={Boolean(errors.incoterm)}
+              <input
+                ref={fileRef}
+                type="file"
+                accept=".pdf,application/pdf"
+                multiple
+                className="q-sr-only"
+                tabIndex={-1}
+                aria-label={t('crear.fields.file')}
+                data-testid="reference-spec-file"
+                onChange={(event) => addPendingFiles(event.target.files)}
               />
-              {errors.incoterm ? <div className="field-error">{fieldError(errors.incoterm?.message)}</div> : null}
-              {incoterm ? (
-                <FormField label={placeLabel} optional error={fieldError(errors.named_place?.message)}>
-                  <TextInput {...register('named_place')} />
-                </FormField>
-              ) : (
-                <>
-                  {t('commercial.placePrompt') ? <p className="cr-place-prompt">{t('commercial.placePrompt')}</p> : null}
-                  <input type="hidden" {...register('named_place')} />
-                </>
+              <div
+                className={`cr2-drop${dragging ? ' is-drag' : ''}${specError ? ' is-error' : ''}`}
+                onClick={() => fileRef.current?.click()}
+                onDragEnter={(event) => { event.preventDefault(); dragDepth.current += 1; setDragging(true) }}
+                onDragOver={(event) => { event.preventDefault(); event.dataTransfer.dropEffect = 'copy' }}
+                onDragLeave={() => { dragDepth.current = Math.max(0, dragDepth.current - 1); if (!dragDepth.current) setDragging(false) }}
+                onDrop={onDrop}
+              >
+                <span className="cr2-drop-icon"><Icon name="upload-simple" size={24} /></span>
+                <span className="cr2-drop-text">
+                  <span className="cr2-drop-title">{dragging ? t('crear.file.release') : t('crear.file.title')}</span>
+                  <span className="cr2-drop-desc">{t('crear.file.text')}</span>
+                </span>
+                <Button variant="secondary" size="sm" icon="paperclip" onClick={(event) => { event.stopPropagation(); fileRef.current?.click() }}>
+                  {t('crear.file.select')}
+                </Button>
+              </div>
+              {hasFiles && (
+                <ul className="cr2-files">
+                  {savedSpecs.map((spec) => (
+                    <li key={spec.id ?? spec.file_name} className="cr2-file">
+                      <span className="cr2-file-icon"><Icon name="file-pdf" size={24} /></span>
+                      <span className="cr2-file-text">
+                        {spec.file_url
+                          ? <a href={spec.file_url} target="_blank" rel="noreferrer" className="cr2-file-name" title={spec.file_name}>{spec.file_name}</a>
+                          : <span className="cr2-file-name" title={spec.file_name}>{spec.file_name}</span>}
+                        <span className="cr2-file-meta">{t('crear.file.saved')}</span>
+                      </span>
+                      {spec.id && (
+                        <IconButton
+                          icon="x"
+                          size="sm"
+                          label={t('crear.file.remove', { name: spec.file_name })}
+                          disabled={removingId === spec.id || isPending}
+                          onClick={() => void removeSaved(spec.id!)}
+                        />
+                      )}
+                    </li>
+                  ))}
+                  {pendingSpecs.map((file, index) => (
+                    <li key={`${file.name}-${index}`} className="cr2-file">
+                      <span className="cr2-file-icon"><Icon name="file-pdf" size={24} /></span>
+                      <span className="cr2-file-text">
+                        <span className="cr2-file-name" title={file.name}>{file.name}</span>
+                        <span className="cr2-file-meta">{t('commercial.specPendingUpload')}</span>
+                      </span>
+                      <IconButton icon="x" size="sm" label={t('crear.file.remove', { name: file.name })} disabled={isPending} onClick={() => removePending(index)} />
+                    </li>
+                  ))}
+                </ul>
               )}
-            </div>
-          </Collapsible>
-
-          <Collapsible
-            label={t('commercial.dates')}
-            optional
-            summary={[deliveryDate, replyBy].filter(Boolean).join(' · ') || undefined}
-          >
-            <div className="cr-dates">
-              <FormField label={t('commercial.deliveryDate')} optional error={fieldError(errors.requested_delivery_date?.message)}>
-                <DateField
-                  name="requested_delivery_date"
-                  label={t('commercial.deliveryDate')}
-                  value={deliveryDate}
-                  onChange={(next) => setValue('requested_delivery_date', next, { shouldDirty: true, shouldValidate: true })}
-                  placeholder={t('commercial.datePlaceholder')}
-                  clearLabel={t('commercial.dateClear')}
-                  minDate={deliveryMin}
-                />
-              </FormField>
-              <FormField label={t('commercial.responseDeadline')} optional helper={t('commercial.responseDeadlineHelp')} error={fieldError(errors.response_deadline?.message)}>
-                <DateField
-                  name="response_deadline"
-                  label={t('commercial.responseDeadline')}
-                  value={replyBy}
-                  onChange={(next) => setValue('response_deadline', next, { shouldDirty: true, shouldValidate: true })}
-                  placeholder={t('commercial.datePlaceholder')}
-                  clearLabel={t('commercial.dateClear')}
-                  minDate={startToday}
-                />
-              </FormField>
-            </div>
-          </Collapsible>
-        </div>
-      </section>
-
-      <section className="cr-panel" hidden={step !== 2}>
-        <div className="cr-panel-head">
-          <RequestStepArt step={2} />
-          <div>
-            <h2>{t('commercial.sectionSpecification')}</h2>
+            </Field>
+            {hasFiles && <p className="cr2-file-note">{t('crear.file.note')}</p>}
           </div>
-        </div>
-        <div className="cr-fields">
-          <FormField
-            label={t('commercial.technicalRequirements')}
-            optional
-            helper={t('commercial.technicalRequirementsHelp')}
-          >
-            <TextArea rows={5} placeholder={t('commercial.technicalRequirementsPlaceholder')} {...register('technical_requirements')} />
-          </FormField>
-          <FormField label={t('commercial.specSheet')} optional helper={t('commercial.specSheetHelp')}>
-            <input
-              ref={fileRef}
-              type="file"
-              accept=".pdf,application/pdf"
-              multiple
-              className="ds-file-input"
-              data-testid="reference-spec-file"
-              onChange={(event) => addPendingFiles(event.target.files)}
-            />
-            <button type="button" className="ds-btn ds-btn-secondary" onClick={() => fileRef.current?.click()}>
-              {t('commercial.specAddPdf')}
-            </button>
-            {(savedSpecs.length > 0 || pendingSpecs.length > 0) && (
-              <ul>
-                {savedSpecs.map((spec) => (
-                  <li key={spec.id} className="ds-file-row">
-                    {spec.file_url ? (
-                      <a href={spec.file_url} target="_blank" rel="noreferrer" className="ds-link truncate">{spec.file_name}</a>
-                    ) : (
-                      <span className="truncate">{spec.file_name}</span>
-                    )}
-                    {spec.id && (
-                      <button
-                        type="button"
-                        className="ds-btn ds-btn-text"
-                        aria-label={t('commercial.removeSpec')}
-                        disabled={removingId === spec.id || isPending}
-                        onClick={() => void removeSaved(spec.id!)}
-                      >
-                        {t('commercial.removeSpec')}
-                      </button>
-                    )}
-                  </li>
-                ))}
-                {pendingSpecs.map((file, index) => (
-                  <li key={`${file.name}-${index}`} className="ds-file-row">
-                    <span className="truncate">
-                      {file.name}
-                      <span className="ds-meta"> ({t('commercial.specPendingUpload')})</span>
-                    </span>
-                    <button
-                      type="button"
-                      className="ds-btn ds-btn-text"
-                      aria-label={t('commercial.removeSpec')}
-                      disabled={isPending}
-                      onClick={() => removePending(index)}
-                    >
-                      {t('commercial.removeSpec')}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </FormField>
-          <p className="cr-spec-note">{t(`commercial.specScenario.${specScenario}`)}</p>
-        </div>
-      </section>
+        </section>
 
-      <div className="ds-form-actions">
-        {step === 0 ? (
-          <Link to="/requests" className="ds-btn ds-btn-text">{t('commercial.back')}</Link>
-        ) : (
-          <button type="button" className="ds-btn ds-btn-text" onClick={() => setStep((current) => current - 1)}>
-            <Icon name="arrow_back" size={16} />
-            {t('commercial.previous')}
-          </button>
-        )}
-        <button type="button" className="ds-btn ds-btn-secondary" disabled={isPending} onClick={submit('draft')}>
-          {isPending ? t('commercial.saving') : t('commercial.saveDraft')}
-        </button>
-        {step < 2 ? (
-          <button type="button" className="ds-btn ds-btn-primary" onClick={() => void goNext()}>
-            {t('commercial.continue')}
-            <Icon name="arrow_forward" size={16} />
-          </button>
-        ) : (
-          <button type="button" className="ds-btn ds-btn-primary" disabled={isPending} onClick={submit('open')}>
-            {isPending ? t('commercial.saving') : t('commercial.create')}
-          </button>
-        )}
-      </div>
-    </form>
+        <footer className="cr2-actions">
+          <Button variant="tertiary" fullWidth={mobile} onClick={() => navigate('/requests')}>{t('crear.actions.cancel')}</Button>
+          <div className="cr2-actions-main">
+            {isDraft && (
+              <Button variant="secondary" fullWidth={mobile} loading={submitting === 'draft'} disabled={isPending} onClick={submit('draft')}>
+                {t('crear.actions.saveDraft')}
+              </Button>
+            )}
+            <Button fullWidth={mobile} loading={submitting === 'open'} disabled={isPending} onClick={submit('open')}>
+              {isDraft ? t('crear.actions.create') : t('crear.actions.saveChanges')}
+            </Button>
+          </div>
+        </footer>
+      </form>
+    </>
   )
 }
