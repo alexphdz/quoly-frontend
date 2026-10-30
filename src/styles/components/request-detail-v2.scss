@@ -19,6 +19,9 @@
   align-items: start;
 }
 
+.rd2-body.is-comparison { display: block; }
+.rd2-main.is-comparison { width: 100%; max-width: none; }
+
 .rd2-main {
   grid-column: span 8;
   min-width: 0;

@@ -10,9 +10,8 @@ import type { SupplierCompanyRead } from '../../types/supplierDirectory'
 import { Breadcrumbs, Button, RfqHeader, Tabs } from '../../design-system'
 import { useShellLayout } from '../layout/useShellLayout'
 import { useElementWidth } from '../../design-system/hooks'
-import { Btn, Empty, SectionCard } from '../ds'
 import InboundList from '../rfq/InboundList'
-import ComparisonPreview from '../comparison/ComparisonPreview'
+import ComparisonExperience from './ComparisonExperience'
 import SupplierQuestions from './SupplierQuestions'
 import OverviewTab from './OverviewTab'
 import SuppliersTab from './SuppliersTab'
@@ -68,7 +67,7 @@ export interface CommercialRequestDetailProps {
 }
 
 export default function CommercialRequestDetail(props: CommercialRequestDetailProps) {
-  const { rfq, quotes, comparison, decision, confirmedQuotes } = props
+  const { rfq, quotes, comparison, decision } = props
   const { t } = useTranslation('rfq')
   const navigate = useNavigate()
   const location = useLocation()
@@ -93,7 +92,7 @@ export default function CommercialRequestDetail(props: CommercialRequestDetailPr
   const action = head.key === 'draft'
     ? <Button icon="pencil-simple" onClick={() => navigate(`/rfqs/${rfq.id}/edit`)}>{t('detalle.editRequest')}</Button>
     : decision
-      ? <Button variant="secondary" icon="columns" onClick={() => navigate(`/rfqs/${rfq.id}/comparison`)}>{t('detalle.viewComparison')}</Button>
+      ? <Button variant="secondary" icon="columns" onClick={() => setTab('comparison')}>{t('detalle.viewComparison')}</Button>
       : undefined
 
   return (
@@ -118,8 +117,8 @@ export default function CommercialRequestDetail(props: CommercialRequestDetailPr
         />
       </div>
 
-      <div ref={bodyRef} className={`rd2-body${stacked ? ' is-stacked' : ''}`}>
-        <div className="rd2-main" role="tabpanel" id={`rd2-panel-${tab}`} aria-labelledby={`rd2-tab-${tab}`}>
+      <div ref={bodyRef} className={`rd2-body${stacked ? ' is-stacked' : ''}${tab === 'comparison' ? ' is-comparison' : ''}`}>
+        <div className={`rd2-main${tab === 'comparison' ? ' is-comparison' : ''}`} role="tabpanel" id={`rd2-panel-${tab}`} aria-labelledby={`rd2-tab-${tab}`}>
           {tab === 'overview' && <OverviewTab {...props} onTab={setTab} />}
           {tab === 'suppliers' && <SuppliersTab {...props} onTab={setTab} />}
           {tab === 'replies' && (
@@ -142,29 +141,9 @@ export default function CommercialRequestDetail(props: CommercialRequestDetailPr
             </div>
           )}
           {tab === 'quotations' && <QuotesTab {...props} />}
-          {tab === 'comparison' && (
-            <SectionCard
-              icon="balance"
-              title={t('detail.tabs.comparison')}
-              actions={<Btn variant="primary" size="sm" icon="balance" disabled={confirmedQuotes === 0} disabledReason={t('detail.comparisonEmptyDescription')} onClick={() => navigate(`/rfqs/${rfq.id}/comparison`)}>{t('detail.next2.compareChoose')}</Btn>}
-            >
-              {comparison && comparison.rows.length > 0 ? (
-                <ComparisonPreview
-                  rfqId={rfq.id}
-                  rows={comparison.rows}
-                  ranking={comparison.ranking}
-                  baseCurrency={comparison.base_currency}
-                  baseUnit={comparison.base_unit}
-                  rfqQuantity={rfq.quantity}
-                  decision={decision}
-                />
-              ) : (
-                <Empty icon="balance" title={t('detail.comparisonEmptyTitle')} description={t('detail.comparisonEmptyDescription')} />
-              )}
-            </SectionCard>
-          )}
+          {tab === 'comparison' && <ComparisonExperience rfq={rfq} comparison={comparison} decision={decision} openAsks={props.openAsks} />}
         </div>
-        <RequestPanel rfq={rfq} stacked={stacked} mobile={layout === 'mobile'} copied={props.copied} onCopyEmail={props.onCopyEmail} />
+        {tab !== 'comparison' && <RequestPanel rfq={rfq} stacked={stacked} mobile={layout === 'mobile'} copied={props.copied} onCopyEmail={props.onCopyEmail} />}
       </div>
     </div>
   )

@@ -44,6 +44,7 @@ export default function SupplierQuestions({
   const { t } = useTranslation('rfq')
   const open = actions.filter(action => action.status === 'open')
   const resolved = actions.filter(action => action.status === 'resolved')
+  const readOnly = rfq.status === 'decided' || rfq.status === 'closed'
   const groups = useMemo(() => {
     const map = new Map<string, BuyerActionRead[]>()
     for (const action of open) {
@@ -70,6 +71,7 @@ export default function SupplierQuestions({
           supplier={suppliers.find(s => s.id === group.supplierId)}
           quotes={quotes}
           inbound={inbound.filter(msg => msg.supplier_id === group.supplierId)}
+          readOnly={readOnly}
         />
       ))}
       {resolved.map(action => <ResolvedQuestion key={action.id} action={action} inbound={inbound} />)}
@@ -101,12 +103,14 @@ function SupplierBlock({
   supplier,
   quotes,
   inbound,
+  readOnly,
 }: {
   rfq: RFQDetail
   items: BuyerActionRead[]
   supplier?: SupplierRead
   quotes: QuoteListItem[]
   inbound: InboundMessageRead[]
+  readOnly: boolean
 }) {
   const { t } = useTranslation('rfq')
   const updateRfq = useUpdateCommercialRFQ()
@@ -133,13 +137,17 @@ function SupplierBlock({
   const fetched = useRef(false)
 
   useEffect(() => {
+    if (readOnly) {
+      setLoadingSuggestion(false)
+      return
+    }
     if (fetched.current) return
     fetched.current = true
     suggestBuyerActionReply(rfq.id, items[0].id)
       .then(res => setSuggestion(res.suggested_reply))
       .catch(() => { setSuggestionError(true); setMode('write') })
       .finally(() => setLoadingSuggestion(false))
-  }, [rfq.id, items])
+  }, [rfq.id, items, readOnly])
 
   const useSuggestion = () => {
     setDraft(suggestion ?? '')
@@ -199,14 +207,14 @@ function SupplierBlock({
     <article className="rp-q">
       <header className="rp-q-head">
         <span className="rp-q-name">{name}</span>
-        <StatusBadge tone="warning" variant="quiet" icon="chat-text">{t('respuestas.questions.open')}</StatusBadge>
+        <StatusBadge tone={readOnly ? 'neutral' : 'warning'} variant="quiet" icon={readOnly ? 'lock-simple' : 'chat-text'}>{readOnly ? t('solicitudes.status.closed') : t('respuestas.questions.open')}</StatusBadge>
         {blocking && <span className="rp-q-flag">{t('buyerActions.cantQuote')}</span>}
         <span className="rp-q-when">{compactAgo(latest, t)}</span>
       </header>
 
       {items.map(item => <p key={item.id} className="rp-q-text">{`«${item.question}»`}</p>)}
 
-      {allChips.length > 0 && (
+      {!readOnly && allChips.length > 0 && (
         <div className="rp-q-quick">
           <span className="rp-q-label">{t('respuestas.questions.quick')}</span>
           <div className="rp-q-chips" role="group" aria-label={t('buyerActions.quickAnswers')}>
@@ -217,7 +225,9 @@ function SupplierBlock({
         </div>
       )}
 
-      {loadingSuggestion
+      {readOnly
+        ? <p className="rd2-muted">{t('respuestas.questions.closedRequest')}</p>
+        : loadingSuggestion
         ? <p className="rd2-muted">{t('buyerActions.generatingSuggestion')}</p>
         : mode === 'choose' && suggestion
           ? (
@@ -244,19 +254,21 @@ function SupplierBlock({
             />
           )}
 
-      <footer className="rp-q-actions">
-        <p className="rd2-muted">{t('respuestas.questions.resolveNote')}</p>
-        <div className="rp-q-buttons">
-          <Button variant="secondary" icon="check" loading={resolve.isPending && !sending} onClick={() => void markResolved()}>
-            {t('buyerActions.resolve')}
-          </Button>
-          {mode === 'write' && (
-            <Button icon="paper-plane-tilt" loading={sending} disabled={!draft.trim()} onClick={() => void sendReply()}>
-              {t('buyerActions.sendReply')}
+      {!readOnly && (
+        <footer className="rp-q-actions">
+          <p className="rd2-muted">{t('respuestas.questions.resolveNote')}</p>
+          <div className="rp-q-buttons">
+            <Button variant="secondary" icon="check" loading={resolve.isPending && !sending} onClick={() => void markResolved()}>
+              {t('buyerActions.resolve')}
             </Button>
-          )}
-        </div>
-      </footer>
+            {mode === 'write' && (
+              <Button icon="paper-plane-tilt" loading={sending} disabled={!draft.trim()} onClick={() => void sendReply()}>
+                {t('buyerActions.sendReply')}
+              </Button>
+            )}
+          </div>
+        </footer>
+      )}
     </article>
   )
 }

@@ -1357,6 +1357,7 @@
     "questions": {
       "title": "Preguntas del proveedor",
       "open": "Abierta",
+      "closedRequest": "Esta solicitud está cerrada. Las preguntas abiertas se muestran como referencia y no se pueden responder aquí.",
       "resolved": "Resuelta",
       "quick": "Respuestas rápidas · de los datos de la solicitud",
       "suggestion": "Sugerencia de Quoly",

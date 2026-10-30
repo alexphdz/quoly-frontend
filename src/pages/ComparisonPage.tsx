@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useParams, Link, useSearchParams } from 'react-router-dom'
+import { useParams, Link, Navigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useComparison, useDecision, useCreateDecision } from '../hooks/useComparison'
 import { exportDecisionPdf } from '../api/comparisons'
@@ -21,12 +21,14 @@ import { Alert, toast } from '../components/ui'
 
 export default function ComparisonPage() {
   const { id } = useParams<{ id: string }>()
+  const location = useLocation()
   const { t, i18n } = useTranslation(['comparison', 'common'])
   const comparisonLocale = i18n.resolvedLanguage === 'es' ? 'es' : 'en'
   const { data: comparison, isLoading, error } = useComparison(id!, comparisonLocale)
   const { data: rfq } = useRFQ(id!)
   const { data: decision } = useDecision(id!)
 
+  if (rfq?.request_kind === 'commercial') return <Navigate to={`/rfqs/${id}?tab=comparison${location.search}`} replace />
   if (isLoading) return <ComparisonSkeleton />
 
   if (error) {

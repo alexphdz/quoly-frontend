@@ -6,8 +6,6 @@
 @use "components/pill";
 @use "components/stage-bar";
 @use "components/table";
-@use "components/tabs";
-@use "components/kpi";
 @use "components/journey";
 @use "components/ask-row";
 @use "components/comparison";
@@ -27,5 +25,6 @@
 @use "components/request-form";
 @use "components/request-detail-v2";
 @use "components/settings";
+@use "components/comparison-experience";
 
 @use "components/original-document";

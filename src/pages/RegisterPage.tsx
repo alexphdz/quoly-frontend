@@ -63,7 +63,10 @@ export default function RegisterPage() {
 
   return (
     <AuthStage>
-      <h1>{t('auth.register.title')}</h1>
+      <div className="ds-auth-heading">
+        <h1>{t('auth.register.title')}</h1>
+        <p>{t('auth.register.subtitle')}</p>
+      </div>
 
       <form
         onSubmit={handleSubmit(data => {

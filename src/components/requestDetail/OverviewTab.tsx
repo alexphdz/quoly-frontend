@@ -145,7 +145,7 @@ export default function OverviewTab(props: CommercialRequestDetailProps & { onTa
           </div>
           <div>
             <dt>{t('commercial.specSheet')}</dt>
-            <dd><ReferenceSpecManager rfqId={rfq.id} attachments={rfq.attachments} readOnly={rfq.status === 'closed'} /></dd>
+            <dd><ReferenceSpecManager rfqId={rfq.id} attachments={rfq.attachments} readOnly={rfq.status === 'decided' || rfq.status === 'closed'} /></dd>
           </div>
         </dl>
       </section>

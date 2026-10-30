@@ -1357,6 +1357,7 @@
     "questions": {
       "title": "Supplier questions",
       "open": "Open",
+      "closedRequest": "This request is closed. Open questions are shown for reference and can't be answered here.",
       "resolved": "Resolved",
       "quick": "Quick replies · from the request data",
       "suggestion": "Quoly suggestion",
