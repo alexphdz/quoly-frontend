@@ -1,0 +1,44 @@
+/* Quoly 2.0 · Base — roles tipográficos, utilidades numéricas y keyframes. La fuente base va en body (no en html) para mantener rem = 16px. Los enlaces usan .q-link (opt-in). */
+body,.q-root{background:var(--color-canvas);color:var(--color-text-primary);font:var(--type-body-md);font-feature-settings:var(--font-features-text);font-optical-sizing:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+.q-data,.q-mono{font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-numeric)}
+.q-num{font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-numeric)}
+.q-id{font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-id);letter-spacing:0.01em}
+.q-affix{font-weight:var(--font-weight-regular);color:var(--color-text-secondary)}
+.q-link{color:var(--color-link);text-decoration:underline;text-decoration-color:var(--color-link-decoration);text-underline-offset:3px;text-decoration-thickness:1px}
+.q-link:hover{color:var(--color-link);text-decoration-color:var(--color-link-decoration-hover);text-decoration-thickness:2px}
+::selection{background:var(--color-text-selection-bg)}
+
+/* Roles tipográficos */
+.q-type-display-xl{font:var(--type-display-xl);letter-spacing:var(--type-display-xl-tracking)}
+.q-type-display-lg{font:var(--type-display-lg);letter-spacing:var(--type-display-lg-tracking)}
+.q-type-display-md{font:var(--type-display-md);letter-spacing:var(--type-display-md-tracking)}
+.q-type-heading-xl{font:var(--type-heading-xl);letter-spacing:var(--type-heading-xl-tracking)}
+.q-type-heading-lg{font:var(--type-heading-lg);letter-spacing:var(--type-heading-lg-tracking)}
+.q-type-heading-md{font:var(--type-heading-md);letter-spacing:var(--type-heading-md-tracking)}
+.q-type-heading-sm{font:var(--type-heading-sm);letter-spacing:var(--type-heading-sm-tracking)}
+.q-type-title-lg{font:var(--type-title-lg);letter-spacing:var(--type-title-lg-tracking)}
+.q-type-title-sm{font:var(--type-title-sm);letter-spacing:var(--type-title-sm-tracking)}
+.q-type-body-lg{font:var(--type-body-lg);letter-spacing:var(--type-body-lg-tracking)}
+.q-type-body-md{font:var(--type-body-md);letter-spacing:var(--type-body-md-tracking)}
+.q-type-body-sm{font:var(--type-body-sm);letter-spacing:var(--type-body-sm-tracking)}
+.q-type-label-lg{font:var(--type-label-lg);letter-spacing:var(--type-label-lg-tracking)}
+.q-type-label-md{font:var(--type-label-md);letter-spacing:var(--type-label-md-tracking)}
+.q-type-label-sm{font:var(--type-label-sm);letter-spacing:var(--type-label-sm-tracking)}
+.q-type-caption{font:var(--type-caption);letter-spacing:var(--type-caption-tracking)}
+.q-type-micro{font:var(--type-micro);letter-spacing:var(--type-micro-tracking)}
+.q-type-figure-xl{font:var(--type-figure-xl);letter-spacing:var(--type-figure-xl-tracking);font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-numeric)}
+.q-type-figure-lg{font:var(--type-figure-lg);letter-spacing:var(--type-figure-lg-tracking);font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-numeric)}
+.q-type-figure-md{font:var(--type-figure-md);letter-spacing:var(--type-figure-md-tracking);font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-numeric)}
+.q-type-figure-sm{font:var(--type-figure-sm);letter-spacing:var(--type-figure-sm-tracking);font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-numeric)}
+.q-type-data-lg{font:var(--type-data-lg);letter-spacing:var(--type-data-lg-tracking);font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-numeric)}
+.q-type-data-md{font:var(--type-data-md);letter-spacing:var(--type-data-md-tracking);font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-numeric)}
+.q-type-data-md-strong{font:var(--type-data-md-strong);letter-spacing:var(--type-data-md-strong-tracking);font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-numeric)}
+.q-type-data-sm{font:var(--type-data-sm);letter-spacing:var(--type-data-sm-tracking);font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-numeric)}
+.q-type-id-md{font:var(--type-id-md);letter-spacing:var(--type-id-md-tracking);font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-id)}
+.q-type-id-sm{font:var(--type-id-sm);letter-spacing:var(--type-id-sm-tracking);font-variant-numeric:tabular-nums;font-feature-settings:var(--font-features-id)}
+.q-type-evidence{font:var(--type-evidence);letter-spacing:var(--type-evidence-tracking)}
+.q-type-original{font:var(--type-original);letter-spacing:var(--type-original-tracking);white-space:pre-line}
+
+/* Animaciones de componentes (05A) — respetan prefers-reduced-motion */
+@keyframes q-drawer-in{from{transform:translateX(-16px);opacity:0}to{transform:none;opacity:1}}@keyframes q-spin{to{transform:rotate(360deg)}}@keyframes q-pulse{0%,100%{opacity:1}50%{opacity:.55}}@keyframes q-indeterminate{0%{left:-30%}100%{left:100%}}
+@media (prefers-reduced-motion:reduce){[style*="q-spin"],[style*="q-pulse"],[style*="q-indeterminate"],[style*="q-drawer-in"]{animation:none!important}}

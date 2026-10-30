@@ -143,15 +143,21 @@ export interface RFQDetail extends RFQRead {
 }
 
 export interface SupplierCreate {
-  name: string
+  /** Company name — the primary supplier identity (required). */
+  company_name: string
   email: string
+  /** Optional contact person; never replaces the company name. */
+  contact_name?: string | null
 }
 
 export interface SupplierRead {
   id: string
   rfq_id: string
   supplier_company_id?: string | null
+  /** Company name — the identity shown everywhere. */
   name: string
+  /** Optional contact person for this request. */
+  contact_name?: string | null
   email: string
   status: string
   requested_at: string | null

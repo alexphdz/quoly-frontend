@@ -145,18 +145,26 @@
 .cmp-rec-ai {
   grid-area: ai;
   display: grid;
-  gap: 6px;
+  gap: 8px;
   margin: 0 24px 20px;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, var(--ice) 20%, var(--line));
+
+  /* "Análisis de Quoly" reads as the Intelligence family: Ice label + Ice mark. */
+  .cmp-rec-kicker {
+    color: var(--accent-text);
+    font-weight: 500;
+
+    .brand-mark { background: var(--accent-line); }
+  }
 
   .ds-ai-summary, .ds-ai-summary p, .ds-ai-summary li, .ds-ai-summary strong {
     margin: 0;
     max-width: 72ch;
-    color: var(--tx-2);
+    color: var(--tx-body);
     font-size: 13px;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 21px;
   }
 }
 
@@ -173,11 +181,15 @@
   text-align: left;
 }
 
+/* The comparable price is the primary numeric anchor of the panel: Geist Mono,
+   strong scale, tabular. Importance comes from type + scale, not a coloured
+   box or underline. */
 .cmp-rec-price {
   color: var(--tx-1);
-  font-size: 32px;
-  font-weight: 600;
-  line-height: 38px;
+  font-family: var(--font-mono);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 40px;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
   text-align: left;
@@ -186,6 +198,7 @@
 .cmp-rec-cur {
   margin-left: 6px;
   color: var(--tx-3);
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 400;
   letter-spacing: 0;
@@ -450,16 +463,16 @@ td.qy-num .cmp-clip { margin-left: auto; }
   gap: 4px;
 }
 
+/* Restrained Ice annotation, not a filled block (brief §23). */
 .cmp-best {
   display: inline-block;
-  padding: 1px 6px;
-  border-radius: 4px;
-  background: var(--success-bg);
-  color: var(--success-fg);
+  padding: 0;
+  color: var(--accent-text);
   font-weight: 500;
+  letter-spacing: 0.01em;
 }
 
-.cmp-best-label { color: var(--success-fg); }
+.cmp-best-label { color: var(--accent-text); }
 
 .cmp-matrix-total {
   th, td { border-top: 1px solid var(--line-strong); font-weight: 600; }
@@ -518,3 +531,27 @@ td.qy-num .cmp-clip { margin-left: auto; }
   .cmp-review-impact, .cmp-review-row > a { grid-column: 2; }
   .cmp-winner { flex-wrap: wrap; padding: 16px; }
 }
+
+// One final specification drawer: document actions and Quoly's reading.
+.spec-drawer-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.spec-drawer-body { display: grid; align-content: start; gap: 16px; }
+.spec-summary {
+  margin-top: 0;
+  h3 { margin: 0; font-size: 13px; font-weight: 500; }
+}
+.spec-parameters { margin: 0; }
+.ai-panel-summary + .spec-parameters { margin-top: 16px; }
+.spec-parameter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+  &:first-child { border-top: 0; }
+  dt { color: var(--tx-2); }
+  dd { margin: 0; display: grid; justify-items: start; gap: 6px; min-width: 0; }
+}
+.spec-parameter-reference { color: var(--tx-2); font-size: 11px; }

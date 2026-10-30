@@ -31,10 +31,29 @@ export function useAuth() {
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       authApi.register(email, password),
     onSuccess: (data) => {
-      setToken(data.access_token)
-      queryClient.invalidateQueries({ queryKey: ['me'] })
-      navigate('/')
+      // Email confirmation is required: signup returns no session until the
+      // user confirms. Only log in if Supabase actually returned a token;
+      // otherwise RegisterPage shows a "check your email" screen. Never fake
+      // a session with an empty token.
+      if (data.access_token) {
+        setToken(data.access_token)
+        queryClient.invalidateQueries({ queryKey: ['me'] })
+        navigate('/')
+      }
     },
+  })
+
+  const requestPasswordResetMutation = useMutation({
+    mutationFn: (email: string) => authApi.requestPasswordReset(email),
+  })
+
+  const confirmPasswordResetMutation = useMutation({
+    mutationFn: ({ accessToken, newPassword }: { accessToken: string; newPassword: string }) =>
+      authApi.confirmPasswordReset(accessToken, newPassword),
+  })
+
+  const resendConfirmationMutation = useMutation({
+    mutationFn: (email: string) => authApi.resendConfirmation(email),
   })
 
   const logout = () => {
@@ -83,12 +102,29 @@ export function useAuth() {
       authApi.changePassword(currentPassword, newPassword),
   })
 
+  const uploadAvatarMutation = useMutation({
+    mutationFn: (blob: Blob) => authApi.uploadAvatar(blob),
+    onSuccess: (profile) => {
+      queryClient.setQueryData(['me'], profile)
+    },
+  })
+
+  const removeAvatarMutation = useMutation({
+    mutationFn: authApi.deleteAvatar,
+    onSuccess: (profile) => {
+      queryClient.setQueryData(['me'], profile)
+    },
+  })
+
   return {
     user,
     userLoading,
     isAuthenticated,
     login: loginMutation,
     register: registerMutation,
+    requestPasswordReset: requestPasswordResetMutation,
+    confirmPasswordReset: confirmPasswordResetMutation,
+    resendConfirmation: resendConfirmationMutation,
     logout,
     connectGoogle: connectGoogleMutation,
     disconnectGoogle: disconnectGoogleMutation,
@@ -96,5 +132,7 @@ export function useAuth() {
     disconnectOutlook: disconnectOutlookMutation,
     changePassword: changePasswordMutation,
     updateProfile: updateProfileMutation,
+    uploadAvatar: uploadAvatarMutation,
+    removeAvatar: removeAvatarMutation,
   }
 }

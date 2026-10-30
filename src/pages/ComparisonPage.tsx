@@ -1,12 +1,11 @@
 import { useMemo, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, Navigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useComparison, useDecision, useCreateDecision } from '../hooks/useComparison'
 import { exportDecisionPdf } from '../api/comparisons'
 import { useRFQ } from '../hooks/useRFQs'
 import LineComparisonTable from '../components/comparison/LineComparisonTable'
 import SpecQuickView from '../components/comparison/SpecQuickView'
-import SpecPdfModal from '../components/comparison/SpecPdfModal'
 import RecommendationCard from '../components/comparison/RecommendationCard'
 import ReviewBeforeChoosing from '../components/comparison/ReviewBeforeChoosing'
 import SupplierRanking from '../components/comparison/SupplierRanking'
@@ -22,12 +21,14 @@ import { Alert, toast } from '../components/ui'
 
 export default function ComparisonPage() {
   const { id } = useParams<{ id: string }>()
+  const location = useLocation()
   const { t, i18n } = useTranslation(['comparison', 'common'])
   const comparisonLocale = i18n.resolvedLanguage === 'es' ? 'es' : 'en'
   const { data: comparison, isLoading, error } = useComparison(id!, comparisonLocale)
   const { data: rfq } = useRFQ(id!)
   const { data: decision } = useDecision(id!)
 
+  if (rfq?.request_kind === 'commercial') return <Navigate to={`/rfqs/${id}?tab=comparison${location.search}`} replace />
   if (isLoading) return <ComparisonSkeleton />
 
   if (error) {
@@ -80,8 +81,14 @@ function ComparisonView({
   const createDecision = useCreateDecision(id)
   const [picking, setPicking] = useState<string | null>(null)
   const [reason, setReason] = useState('')
-  const [specRow, setSpecRow] = useState<ComparisonRow | null>(null)
-  const [specPdf, setSpecPdf] = useState<ComparisonRow | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const specRow = comparison.rows.find(row => row.quote_id === searchParams.get('spec'))
+  const setSpecRow = (row: ComparisonRow | null) => {
+    const next = new URLSearchParams(searchParams)
+    if (row) next.set('spec', row.quote_id)
+    else next.delete('spec')
+    setSearchParams(next, { replace: true, preventScrollReset: true })
+  }
   const [isExporting, setIsExporting] = useState(false)
 
   const allIn = comparison.ranking_basis === 'all_in'
@@ -209,7 +216,6 @@ function ComparisonView({
         awardedQuoteId={decision?.quote_id}
         onSelect={setPicking}
         onViewSpec={setSpecRow}
-        onViewSpecSheet={setSpecPdf}
       />
 
       <CostLineMatrix model={model} f={f} />
@@ -218,9 +224,6 @@ function ComparisonView({
         <LineComparisonTable rows={comparison.line_item_rows} ranking={comparison.line_item_ranking} baseCurrency={comparison.base_currency} />
       )}
 
-      {specPdf?.spec_source_url && (
-        <SpecPdfModal title={t('specPdf.title', { supplier: specPdf.supplier_name })} url={specPdf.spec_source_url} onClose={() => setSpecPdf(null)} />
-      )}
       {specRow && <SpecQuickView row={specRow} onClose={() => setSpecRow(null)} />}
 
       <ConfirmDialog

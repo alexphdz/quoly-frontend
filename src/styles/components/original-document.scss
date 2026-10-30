@@ -1,0 +1,26 @@
+.original-document {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-card);
+}
+.original-document-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.original-document-pdf { flex: none; color: var(--danger-mark); }
+.original-document-icon { flex: none; color: var(--tx-2); }
+.original-document-copy {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  strong { font-size: 12px; line-height: 18px; font-weight: 500; overflow-wrap: anywhere; }
+}
+.original-document-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.original-document-actions .ds-btn { min-height: 28px; padding: 4px 8px; font-size: 11px; }
+.original-document > .form-feedback { margin-top: 12px; }
+@media (max-width: 640px) {
+  .original-document-row { flex-wrap: wrap; }
+  .original-document-actions { width: 100%; padding-left: 32px; }
+  .original-document-actions .ds-btn { min-height: 40px; }
+}
+
+.inbound-document { display: grid; gap: 8px; padding: 8px 0; }
+.inbound-document > span { justify-self: start; }

@@ -494,7 +494,15 @@
     "sendAnswers": "Enviar respuestas",
     "sentToast": "Respuestas enviadas",
     "needAnswers": "Elige una respuesta para cada pregunta.",
-    "sendFailed": "No se pudieron enviar las respuestas."
+    "sendFailed": "No se pudieron enviar las respuestas.",
+    "suggestionLabel": "Respuesta sugerida (IA)",
+    "generatingSuggestion": "Generando una respuesta sugerida…",
+    "useSuggestion": "Usar esta respuesta",
+    "writeOwn": "Escribir la mía",
+    "editHint": "Usa la sugerencia tal cual, edítala, o escribe la tuya.",
+    "sendReply": "Enviar respuesta",
+    "cancelAi": "Cancelar",
+    "suggestFailed": "No se pudo generar la sugerencia — escribe tu respuesta abajo."
   },
   "suppliers": {
     "emptyTitle": "Aún no hay proveedores",
@@ -513,6 +521,8 @@
   "addForm": {
     "title": "Agregar proveedor manualmente",
     "namePlaceholder": "Nombre del proveedor",
+    "companyNamePlaceholder": "Nombre de la empresa",
+    "contactNamePlaceholder": "Persona de contacto (opcional)",
     "emailPlaceholder": "correo@proveedor.com",
     "adding": "Agregando…",
     "add": "Agregar",
@@ -944,5 +954,432 @@
       "GBP": "GBP — Libra esterlina",
       "CNY": "CNY — Yuan chino"
     }
+  },
+  "inicio": {
+    "summary": {
+      "toReview_one": "{{count}} cotización por revisar",
+      "toReview_other": "{{count}} cotizaciones por revisar",
+      "awaiting_one": "{{count}} proveedor esperando tu respuesta",
+      "awaiting_other": "{{count}} proveedores esperando tu respuesta",
+      "both": "Tienes {{a}} y {{b}}.",
+      "one": "Tienes {{a}}.",
+      "clear": "No tienes cotizaciones ni preguntas pendientes por atender.",
+      "firstUse": "Aún no tienes solicitudes. Cuando crees la primera, aquí verás su avance."
+    },
+    "firstUse": {
+      "title": "Empieza con tu primera solicitud",
+      "text": "Una solicitud reúne el producto, la cantidad y la unidad que necesitas. Después eliges a qué proveedores enviarla. Cuando respondan por correo, verás aquí lo que necesita tu atención.",
+      "action": "Crear solicitud"
+    },
+    "attention": {
+      "title": "Necesitan tu atención",
+      "toReview": "Cotizaciones por revisar",
+      "toReviewCaption_one": "requiere revisión",
+      "toReviewCaption_other": "requieren revisión",
+      "awaiting": "Proveedores que esperan respuesta",
+      "awaitingCaption_one": "requiere tu respuesta",
+      "awaitingCaption_other": "requieren tu respuesta",
+      "viewQuotes": "Ver cotizaciones",
+      "viewRequests": "Ver solicitudes",
+      "reviewAria": "Revisar cotización de {{supplier}}, {{rfq}}",
+      "askAria": "Ver pregunta de {{name}}, {{rfq}}",
+      "suppliersWaiting_one": "{{count}} proveedor espera tu respuesta",
+      "suppliersWaiting_other": "{{count}} proveedores esperan tu respuesta"
+    },
+    "quoteContext": "{{rfq}} · Cotización",
+    "quoteContextNoPrice": "{{rfq}} · Cotización sin precio",
+    "askContext": "{{rfq}} · {{question}}",
+    "clear": {
+      "title": "Todo al día",
+      "text": "No tienes cotizaciones ni preguntas pendientes por atender. Cuando llegue una cotización o un proveedor te haga una pregunta, aparecerá aquí."
+    },
+    "status": {
+      "title": "Estado de solicitudes",
+      "sub": "Distribución por estado",
+      "draft": "Borrador",
+      "open": "Abierta",
+      "closed": "Cerrada",
+      "center": "solicitudes",
+      "legend": "Leyenda",
+      "aria": "Solicitudes por estado: {{list}}. Total {{total}}."
+    },
+    "dates": {
+      "title": "Próximas fechas",
+      "overdue": "Vencido",
+      "today": "Hoy",
+      "tomorrow": "Mañana",
+      "in_one": "En {{count}} día",
+      "in_other": "En {{count}} días",
+      "response": "Plazo de respuesta de proveedores",
+      "responseOverdue_one": "Plazo de respuesta · venció hace {{count}} día",
+      "responseOverdue_other": "Plazo de respuesta · venció hace {{count}} días",
+      "delivery": "Fecha de entrega deseada",
+      "undated_one": "{{list}} no tiene fechas definidas.",
+      "undated_other": "{{list}} no tienen fechas definidas.",
+      "empty": "Ninguna solicitud abierta tiene fechas definidas."
+    },
+    "activity": {
+      "title": "Actividad reciente",
+      "review": "La cotización de {{supplier}} necesita revisión",
+      "quote": "Llegó una cotización de {{supplier}}",
+      "ask": "Hay una pregunta pendiente en {{rfq}}",
+      "awarded": "Adjudicación registrada",
+      "created": "Creaste la solicitud {{rfq}}",
+      "createdContext": "Guardada como borrador",
+      "askContext": "{{supplier}}: {{question}}",
+      "noPrice": "{{rfq}} · El proveedor no indicó el precio.",
+      "missing_one": "{{rfq}} · {{count}} dato no indicado",
+      "missing_other": "{{rfq}} · {{count}} datos no indicados",
+      "empty": "Todavía no hay actividad."
+    },
+    "time": {
+      "minutes_one": "Hace {{count}} min",
+      "minutes_other": "Hace {{count}} min",
+      "hours_one": "Hace {{count}} h",
+      "hours_other": "Hace {{count}} h",
+      "yesterday": "Ayer"
+    },
+    "error": {
+      "label": "Datos no disponibles",
+      "title": "No pudimos cargar el inicio.",
+      "text": "La conexión se interrumpió. Puedes intentarlo de nuevo.",
+      "retry": "Reintentar",
+      "partialLabel": "Datos no disponibles",
+      "partialTitle": "No pudimos cargar las cotizaciones y preguntas.",
+      "partialText": "El resto del inicio está actualizado. Puedes intentarlo de nuevo."
+    }
+  },
+  "solicitudes": {
+    "title": "Solicitudes",
+    "lead": "Consulta tus solicitudes y revisa cuáles necesitan atención.",
+    "create": "Crear solicitud",
+    "summary": {
+      "total_one": "solicitud",
+      "total_other": "solicitudes",
+      "attention_one": "requiere atención",
+      "attention_other": "requieren atención",
+      "showing_one": "Se muestra {{count}} de {{total}}",
+      "showing_other": "Se muestran {{count}} de {{total}}"
+    },
+    "search": "Buscar por producto o referencia",
+    "searchLabel": "Buscar solicitudes",
+    "filterLabel": "Filtrar por estado",
+    "filters": {
+      "all": "Todas",
+      "draft": "Borrador",
+      "open": "Abierta",
+      "closed": "Cerrada",
+      "attention": "Requieren atención"
+    },
+    "status": {
+      "draft": "Borrador",
+      "open": "Abierta",
+      "closed": "Cerrada"
+    },
+    "columns": {
+      "request": "Solicitud",
+      "status": "Estado",
+      "quantity": "Cantidad",
+      "quotes": "Cotizaciones",
+      "attention": "Atención",
+      "actions": "Acciones"
+    },
+    "inComparison": "en comparación",
+    "attention": {
+      "required": "Requiere atención",
+      "waiting_one": "{{count}} proveedor espera respuesta",
+      "waiting_other": "{{count}} proveedores esperan respuesta",
+      "none": "Sin pendientes"
+    },
+    "compare": "Ver comparación",
+    "compareAria": "Ver comparación de {{name}}",
+    "openAria": "Abrir {{name}}",
+    "openStatusAria": "Abrir {{name}}, {{status}}",
+    "empty": {
+      "label": "Sin solicitudes",
+      "title": "Todavía no tienes solicitudes",
+      "text": "Crea una solicitud para comenzar a cotizar con tus proveedores."
+    },
+    "noResults": {
+      "label": "Sin coincidencias",
+      "searchTitle": "No encontramos solicitudes",
+      "searchText": "Prueba con otro nombre o referencia.",
+      "clearSearch": "Limpiar búsqueda",
+      "filterTitle": "No hay solicitudes con estos filtros",
+      "filterText": "Prueba con otro estado o quita los filtros.",
+      "clearFilters": "Quitar filtros"
+    },
+    "error": {
+      "label": "Datos no disponibles",
+      "title": "No pudimos cargar tus solicitudes.",
+      "text": "Se interrumpió la conexión. Tu búsqueda y tus filtros se conservan. Puedes intentarlo de nuevo.",
+      "retry": "Reintentar",
+      "retrying": "Reintentando…"
+    }
+  },
+  "crear": {
+    "title": "Nueva solicitud",
+    "intro": "Indica qué necesitas cotizar. Puedes guardar un borrador y completar los detalles después.",
+    "editTitle": "Editar solicitud",
+    "editIntro": "Actualiza los datos de esta solicitud.",
+    "breadcrumb": "Ruta",
+    "requiredNote": "Los campos con * son obligatorios.",
+    "optional": "(opcional)",
+    "nav": {
+      "label": "Secciones del formulario"
+    },
+    "sections": {
+      "producto": {
+        "nav": "Producto y cantidad",
+        "desc": "Nombre, cantidad y unidad",
+        "title": "Producto y cantidad"
+      },
+      "entrega": {
+        "nav": "Condiciones de entrega",
+        "desc": "Incoterm, lugar y fecha",
+        "title": "Condiciones de entrega",
+        "lead": "Agrega las condiciones que deben considerar tus proveedores."
+      },
+      "documentos": {
+        "nav": "Requisitos y documentos",
+        "desc": "Requisitos técnicos y archivo",
+        "title": "Requisitos y documentos"
+      }
+    },
+    "fields": {
+      "product": "Nombre del producto",
+      "productPlaceholder": "Ej. Vasos térmicos de 750 ml",
+      "quantity": "Cantidad solicitada",
+      "quantityPlaceholder": "Ej. 500",
+      "unit": "Unidad de medida",
+      "unitPlaceholder": "Seleccionar unidad",
+      "reference": "Referencia interna",
+      "referencePlaceholder": "Ej. REF-VT-2041",
+      "shareReference": "Mostrar esta referencia al proveedor",
+      "shareOn": "Los proveedores verán esta referencia en la solicitud.",
+      "shareOff": "Solo tú verás esta referencia.",
+      "incoterm": "Incoterm",
+      "deliveryDate": "Fecha de entrega deseada",
+      "requirements": "Requisitos técnicos",
+      "requirementsHelp": "Describe las características que debe cumplir el producto. Sin texto y sin archivo, la solicitud pide la ficha técnica vigente.",
+      "requirementsPlaceholder": "Ej. Acero inoxidable 18/8, doble pared, libre de BPA.",
+      "file": "Archivo de especificación",
+      "fileHelp": "Adjunta una ficha o documento de referencia en PDF si lo necesitas."
+    },
+    "place": {
+      "none": {
+        "label": "Lugar",
+        "placeholder": "Primero elige un Incoterm"
+      },
+      "place_of_delivery": {
+        "label": "Lugar de entrega",
+        "placeholder": "Ej. Planta del proveedor, Querétaro"
+      },
+      "place_of_destination": {
+        "label": "Lugar de destino",
+        "placeholder": "Ej. Ciudad de México"
+      },
+      "port_of_shipment": {
+        "label": "Puerto de embarque",
+        "placeholder": "Ej. Puerto de Manzanillo"
+      },
+      "port_of_destination": {
+        "label": "Puerto de destino",
+        "placeholder": "Ej. Puerto de Valencia"
+      }
+    },
+    "incoterm": {
+      "select": "Seleccionar Incoterm",
+      "count": "11 términos Incoterms 2020",
+      "change": "Cambiar",
+      "close": "Cerrar",
+      "remove": "Quitar Incoterm",
+      "modeAny": "Cualquier modo de transporte",
+      "modeSea": "Marítimo y vías navegables",
+      "group": {
+        "any": "Cualquier modo de transporte",
+        "sea": "Marítimo y vías navegables"
+      },
+      "short": {
+        "EXW": "El comprador recoge en las instalaciones del vendedor.",
+        "FCA": "El vendedor entrega al transportista del comprador.",
+        "CPT": "El vendedor paga el transporte hasta el destino.",
+        "CIP": "Transporte y seguro pagados hasta el destino.",
+        "DAP": "Entregado en el destino, sin descargar.",
+        "DPU": "Entregado y descargado en el destino.",
+        "DDP": "Entregado en el destino con impuestos pagados.",
+        "FAS": "Mercancía al costado del buque en el puerto de embarque.",
+        "FOB": "Mercancía a bordo del buque en el puerto de embarque.",
+        "CFR": "El vendedor paga el flete hasta el puerto de destino.",
+        "CIF": "Flete y seguro pagados hasta el puerto de destino."
+      }
+    },
+    "file": {
+      "title": "Arrastra un archivo aquí",
+      "text": "También puedes seleccionarlo desde tu equipo.",
+      "release": "Suelta el archivo para adjuntarlo",
+      "select": "Seleccionar archivo",
+      "saved": "Guardado con la solicitud",
+      "remove": "Quitar {{name}}",
+      "note": "El archivo se guarda con la solicitud y puede enviarse a los proveedores. La comparación técnica usa los requisitos que escribes arriba."
+    },
+    "errors": {
+      "name": "Escribe el nombre del producto.",
+      "quantity": "Ingresa una cantidad válida.",
+      "unit": "Selecciona una unidad de medida."
+    },
+    "actions": {
+      "cancel": "Cancelar",
+      "saveDraft": "Guardar borrador",
+      "create": "Crear solicitud",
+      "saveChanges": "Guardar cambios"
+    }
+  },
+  "detalle": {
+    "editRequest": "Editar solicitud",
+    "viewComparison": "Ver comparación",
+    "tabs": {
+      "overview": "Resumen",
+      "suppliers": "Proveedores",
+      "replies": "Respuestas",
+      "quotations": "Cotizaciones",
+      "comparison": "Comparación"
+    },
+    "summary": {
+      "title": "Resumen",
+      "deadline": "Plazo de respuesta de proveedores: {{date}}.",
+      "received": "Cotizaciones recibidas",
+      "ofTotal": "{{count}} de {{total}}",
+      "invited_one": "proveedor invitado",
+      "invited_other": "proveedores invitados",
+      "trackerLabel": "Cotizaciones",
+      "toReviewOne": "{{supplier}} envió una cotización. Aún no entra en la comparación porque está por revisar.",
+      "toReviewMany": "{{count}} cotizaciones están por revisar. Aún no entran en la comparación.",
+      "reviewQuote": "Revisar cotización",
+      "asks_one": "{{count}} pregunta de proveedor necesita respuesta",
+      "asks_other": "{{count}} preguntas de proveedores necesitan respuesta",
+      "askSeparator": " pide: ",
+      "viewQuestion": "Ver pregunta",
+      "noAsks": "No hay preguntas de proveedores pendientes.",
+      "allSuppliers": "Ver todos en Proveedores",
+      "draftTitle": "Esta solicitud es un borrador",
+      "draftText": "Complétala y créala para agregar proveedores y enviarla.",
+      "noSuppliersTitle": "Todavía no hay proveedores",
+      "noSuppliersText": "Agrega proveedores desde tu directorio o solo para esta solicitud. Agregarlos no les envía nada."
+    },
+    "stage": {
+      "quote_received": "Cotización recibida",
+      "partial_response": "Respuesta parcial",
+      "buyer_action_required": "Requiere acción del comprador",
+      "awaiting_response": "Esperando respuesta",
+      "not_contacted": "No contactado",
+      "declined": "Declinó",
+      "closed": "Cerrado"
+    },
+    "stageCount": {
+      "quote_received_one": "cotización recibida",
+      "quote_received_other": "cotizaciones recibidas",
+      "partial_response_one": "respuesta parcial",
+      "partial_response_other": "respuestas parciales",
+      "buyer_action_required_one": "requiere tu respuesta",
+      "buyer_action_required_other": "requieren tu respuesta",
+      "awaiting_response_one": "esperando respuesta",
+      "awaiting_response_other": "esperando respuesta",
+      "not_contacted_one": "no contactado",
+      "not_contacted_other": "no contactados",
+      "declined_one": "declinó",
+      "declined_other": "declinaron",
+      "closed_one": "cerrado",
+      "closed_other": "cerrados"
+    },
+    "meta": {
+      "quoteToReview": "Cotización por revisar · {{when}}",
+      "quoteConfirmed": "Cotización confirmada · {{date}}",
+      "notSent": "Aún no recibe la solicitud",
+      "sent": "Solicitud enviada · {{date}}"
+    },
+    "suppliers": {
+      "lead": "Consulta quién recibió la solicitud y el estado de sus respuestas.",
+      "add": "Agregar proveedores",
+      "send": "Enviar solicitud",
+      "sendCount_one": "Enviar solicitud · {{count}}",
+      "sendCount_other": "Enviar solicitud · {{count}}",
+      "added_one": "proveedor agregado",
+      "added_other": "proveedores agregados",
+      "respondedOf": "Respondieron, de los que recibieron la solicitud",
+      "colSupplier": "Proveedor",
+      "colStage": "Etapa",
+      "reviewResponse": "Revisar respuesta",
+      "viewQuote": "Ver cotización",
+      "viewReplies": "Ver respuestas",
+      "close": "Cerrar proveedor",
+      "closeHint": "Deja de participar. La solicitud sigue abierta.",
+      "more": "Más acciones para {{name}}",
+      "emptyLabel": "Sin proveedores",
+      "addNote": "Agregarlos no les envía nada. Tú decides cuándo enviar la solicitud.",
+      "fromDirectory": "Desde el directorio",
+      "forThisRequest": "Solo para esta solicitud",
+      "confirmTitle_one": "¿Enviar la solicitud a {{count}} proveedor?",
+      "confirmTitle_other": "¿Enviar la solicitud a {{count}} proveedores?",
+      "confirmMailbox": "Se enviará desde tu buzón conectado. Al terminar pasan a «Esperando respuesta».",
+      "confirmNoMailbox": "No tienes un buzón conectado. Verás el texto de la solicitud para copiarlo y enviarlo desde tu correo.",
+      "confirmAction_one": "Enviar a {{count}} proveedor",
+      "confirmAction_other": "Enviar a {{count}} proveedores",
+      "sendFailed": "No pudimos enviar la solicitud.",
+      "retrySend": "Reintentar envío",
+      "noMailboxTitle": "No tienes un buzón conectado",
+      "noMailboxText": "Copia la solicitud y envíala desde tu correo. Copiar no envía nada ni cambia la etapa."
+    },
+    "spec": {
+      "title": "Requisitos y documentos"
+    },
+    "panel": {
+      "label": "Datos de la solicitud",
+      "title": "Datos de la solicitud",
+      "edit": "Editar",
+      "currency": "Moneda base",
+      "deadline": "Plazo de respuesta",
+      "notSet": "Sin definir",
+      "mailTitle": "Correo de respuesta",
+      "mailText": "Los proveedores pueden responder a esta dirección.",
+      "copy": "Copiar dirección",
+      "copied": "Dirección copiada"
+    }
+  },
+  "respuestas": {
+    "title": "Respuestas",
+    "lead": "Correos de los proveedores. Quoly propone datos; nada se confirma ni se envía sin ti.",
+    "messages_one": "mensaje",
+    "messages_other": "mensajes",
+    "openQuestions_one": "pregunta abierta",
+    "openQuestions_other": "preguntas abiertas",
+    "messagesTitle": "Mensajes",
+    "questions": {
+      "title": "Preguntas del proveedor",
+      "open": "Abierta",
+      "closedRequest": "Esta solicitud está cerrada. Las preguntas abiertas se muestran como referencia y no se pueden responder aquí.",
+      "resolved": "Resuelta",
+      "quick": "Respuestas rápidas · de los datos de la solicitud",
+      "suggestion": "Sugerencia de Quoly",
+      "toReview": "· para revisar",
+      "yourReply": "Tu respuesta",
+      "resolveNote": "Marcar resuelta no envía nada al proveedor.",
+      "replySent": "Respuesta enviada desde tu correo"
+    }
+  },
+  "cotizaciones": {
+    "title": "Cotizaciones",
+    "lead": "Revisa las ofertas y confirma los datos antes de compararlas.",
+    "count_one": "{{count}} cotización identificada",
+    "count_other": "{{count}} cotizaciones identificadas",
+    "toReview_one": "{{count}} pendiente de revisión",
+    "toReview_other": "{{count}} pendientes de revisión",
+    "indexLabel": "Cotizaciones de la solicitud",
+    "noPrice": "Precio no indicado",
+    "missing_one": "{{count}} dato no indicado",
+    "missing_other": "{{count}} datos no indicados",
+    "emptyTitle": "Sin cotizaciones todavía",
+    "emptyText": "Cuando un proveedor envíe una cotización por correo, aparecerá aquí para revisarla. También puedes agregarla a mano.",
+    "uploadNote": "Sube el archivo o pega el texto del proveedor. Quoly lo lee y lo deja por revisar."
   }
 }

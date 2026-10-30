@@ -1,5 +1,4 @@
-@use "tokens-light";
-@use "tokens-dark";
+@use "tokens-bridge";
 @use "type";
 @use "components/button";
 @use "components/field";
@@ -7,11 +6,10 @@
 @use "components/pill";
 @use "components/stage-bar";
 @use "components/table";
-@use "components/tabs";
-@use "components/kpi";
 @use "components/journey";
 @use "components/ask-row";
 @use "components/comparison";
+@use "components/ai-panel";
 @use "components/modal";
 @use "components/overlay";
 @use "components/foundation";
@@ -22,5 +20,11 @@
 @use "components/request-detail";
 @use "components/suppliers";
 @use "components/sidebar";
+@use "components/home";
+@use "components/requests-list";
+@use "components/request-form";
+@use "components/request-detail-v2";
 @use "components/settings";
+@use "components/comparison-experience";
 
+@use "components/original-document";

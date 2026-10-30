@@ -175,7 +175,13 @@ table.rd-suppliers .qy-chip {
 
 .rd-preview-kicker { display: block; color: var(--tx-2); font-size: 12px; font-weight: 500; }
 .rd-preview-name { display: block; font-size: 18px; font-weight: 500; }
-.rd-preview-price, .rd-preview-total { font-size: 20px; font-weight: 600; }
+.rd-preview-price, .rd-preview-total {
+  font-family: var(--font-mono);
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
 .rd-preview-note { grid-column: 1 / -1; margin: 0; color: var(--tx-2); font-size: 13px; }
 
 .rd-suppliers {
@@ -232,7 +238,16 @@ table.rd-suppliers .qy-chip {
 
 .rd-progress { display: grid; gap: 12px; }
 .rd-progress-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-.rd-progress-big { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+/* "2 / 3" is a data value: Geist Mono, tabular, strong scale. The "/ 3" (in
+   .qt-unit) inherits the mono so the ratio aligns cleanly. */
+.rd-progress-big {
+  font-family: var(--font-mono);
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
 
 .rd-progress-rows {
   display: grid;
@@ -241,6 +256,14 @@ table.rd-suppliers .qy-chip {
 
   div { display: flex; justify-content: space-between; gap: 8px; }
   dt { display: inline-flex; align-items: center; gap: 6px; color: var(--tx-2); font-size: 13px; }
+  dd {
+    margin: 0;
+    color: var(--tx-1);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
 }
 
 .rd-inbox {
@@ -265,6 +288,15 @@ table.rd-suppliers .qy-chip {
 
   dt { color: var(--tx-2); font-size: 12px; }
   dd { margin: 2px 0 0; font-size: 14px; }
+  /* Quantity reads as a key data value (e.g. "50,000 piezas"): Geist Mono,
+     tabular. Dates / codes / text stay Geist. */
+  dd.rd-detail-num {
+    color: var(--tx-1);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
 }
 
 .rd-missing {

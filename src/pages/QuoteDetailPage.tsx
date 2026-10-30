@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link, Navigate, useNavigate } from 'react-router-dom'
 import {
   useQuote,
   useUpdateQuote,
@@ -9,6 +9,7 @@ import {
   useDeleteQuote,
 } from '../hooks/useQuotes'
 import ExtractionPassSummary from '../components/extraction/ExtractionPassSummary'
+import OriginalDocument from '../components/documents/OriginalDocument'
 import QuoteReview from '../components/quoteReview/QuoteReview'
 import QuoteFields from '../components/quotes/QuoteFields'
 import QuoteEditForm from '../components/quotes/QuoteEditForm'
@@ -21,7 +22,7 @@ import { useTranslation } from 'react-i18next'
 import { useEnumLabels } from '../i18n/labels'
 import { useFormat } from '../lib/format'
 import { useUnitLabel } from '../lib/units'
-import { Alert, Dialog, ErrorState, MissingFields, PageSkeleton, toast } from '../components/ui'
+import { Alert, Dialog, ErrorState, FormFeedback, MissingFields, PageSkeleton, toast } from '../components/ui'
 
 export default function QuoteDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -42,6 +43,10 @@ export default function QuoteDetailPage() {
 
   if (isLoading || rfqLoading) return <div className="ds-page"><PageSkeleton /></div>
   if (error || !quote) return <div className="ds-page"><ErrorState title={t('notFound.title')} message={t('notFound.message')} /></div>
+  // Las cotizaciones comerciales se revisan dentro del detalle de su solicitud (pestaña Cotizaciones).
+  if ((rfq as { request_kind?: string } | undefined)?.request_kind === 'commercial') {
+    return <Navigate to={`/rfqs/${quote.rfq_id}?tab=quotations&quote=${quote.id}`} replace />
+  }
   if (!(isQuoteLineItemsV2(quote.line_items) && rfq?.volume_tiers)) return <QuoteReview quote={quote} rfq={rfq} />
 
   const statusPill = quote.status === 'draft'
@@ -94,6 +99,8 @@ export default function QuoteDetailPage() {
         </p>
       </div>
 
+      {quote.file_url && <OriginalDocument endpoint={`/quotes/${quote.id}/original`} fileType={quote.file_type} />}
+
       {rfq && (
         <Alert
           tone={
@@ -145,11 +152,6 @@ export default function QuoteDetailPage() {
         <div className="grid-2">
           <div>
             <QuoteFields quote={quote} volumeTiers={rfq?.volume_tiers ?? undefined} />
-            {isCommercialRfq && quote.status === 'confirmed' && (
-              <Link to={`/quotes/${quote.id}/spec-evidence`} className="ds-btn ds-btn-secondary" style={{ marginTop: 16 }}>
-                {t('specEvidenceLink')}
-              </Link>
-            )}
             <div className="ds-toolbar-actions" style={{ marginTop: 20 }}>
               {quote.status === 'draft' && (
                 <button type="button" className="ds-btn ds-btn-primary" onClick={handleConfirm} disabled={confirmQuote.isPending}>
@@ -223,7 +225,7 @@ export default function QuoteDetailPage() {
           </aside>
 
           {confirmQuote.error && (
-            <Alert tone="error">{(confirmQuote.error as ApiError).detail || t('actions.acceptFailed')}</Alert>
+            <FormFeedback>{(confirmQuote.error as ApiError).detail || t('actions.acceptFailed')}</FormFeedback>
           )}
         </div>
       )}

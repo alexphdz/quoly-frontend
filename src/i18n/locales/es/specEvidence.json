@@ -14,6 +14,14 @@
   "openDocument": "Abrir documento del proveedor",
   "openComparison": "Abrir comparación",
   "openSource": "Fuente",
+  "sourcePage": "página {{page}}",
+  "sourceSheetRow": "{{sheet}}, fila {{row}}",
+  "sourceSection": {
+    "email_subject": "Asunto del correo",
+    "latest_reply": "Respuesta más reciente",
+    "quoted_history": "Historial citado del correo",
+    "unknown": "Ubicación de la fuente no disponible"
+  },
   "empty": "Aún no hay parámetros de especificación extraídos.",
   "states": {
     "not_received": "No recibida",
@@ -37,5 +45,19 @@
     "not_comparable": "No comparable",
     "additional_supplier_parameter": "Adicional del proveedor",
     "needs_review": "Por revisar"
-  }
+  },
+  "reason": {
+    "exact_value": "Los valores indicados son iguales.",
+    "equivalent_value": "Los valores son equivalentes después de convertir las unidades.",
+    "polarity_conflict": "Una afirmación confirma el requisito y la otra lo niega explícitamente.",
+    "threshold_satisfied": "El valor del proveedor cumple el umbral solicitado.",
+    "threshold_not_satisfied": "El valor del proveedor no cumple el umbral solicitado.",
+    "unit_mismatch": "Las unidades representan mediciones diferentes o no compatibles.",
+    "value_mismatch": "Los valores indicados son diferentes.",
+    "unparsed_value": "Quoly no pudo comparar este texto de forma confiable.",
+    "missing_supplier_value": "El valor del proveedor está vacío.",
+    "missing_supplier_parameter": "El proveedor no abordó este requisito en el material interpretado.",
+    "additional_supplier_parameter": "El proveedor indicó este parámetro fuera de la referencia del comprador."
+  },
+  "notStated": "No indicado"
 }

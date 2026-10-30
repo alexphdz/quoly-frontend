@@ -142,6 +142,14 @@
     "complete": "Completa"
   },
   "review": {
+    "retryComplete": "La interpretación se completó",
+    "retryStillFailed": "La interpretación todavía no pudo completarse",
+    "priceApplicability": {
+      "above_requested_quantity": "Este precio aplica desde {{offered}} {{offeredUnit}}; la solicitud es por {{requested}} {{requestedUnit}}. No se utiliza para ordenar precios.",
+      "unit_mismatch": "La unidad de la escala de precio no puede compararse con la unidad solicitada. Confirma el precio aplicable antes de comparar.",
+      "unknown_quantity_basis": "El proveedor indicó un precio por cantidad, pero no está claro si es una cantidad exacta o un mínimo. Confírmalo antes de comparar.",
+      "missing_requested_quantity": "No se puede seleccionar el precio aplicable hasta conocer la cantidad solicitada."
+    },
     "crumbRequests": "Solicitudes",
     "sourceKind": {
       "email": "Correo",
@@ -151,7 +159,7 @@
       "docx": "Cotización Word"
     },
     "received": "Recibida {{date}}",
-    "sourceTitle": "Lo que envió el proveedor",
+    "sourceTitle": "Respuesta original",
     "viewLabel": "Vista de la fuente",
     "viewOriginal": "Original",
     "viewText": "Texto",
@@ -180,6 +188,20 @@
       "edited": "Editado"
     },
     "costLines": "Conceptos cotizados",
+    "conditions": "Condiciones de la oferta",
+    "conditionType": {
+      "exclusion": "Excluido",
+      "inclusion": "Incluido",
+      "validity": "Vigencia",
+      "payment": "Pago",
+      "delivery": "Entrega",
+      "quantity_break": "Escala por cantidad",
+      "trigger": "Condición de inicio",
+      "other": "Condición"
+    },
+    "conditionField": "Aplica a {{field}}",
+    "paymentMilestones": "Calendario de pagos",
+    "paymentMilestone": "Hito de pago",
     "lineName": "Concepto",
     "lineAmount": "Importe",
     "lineBasis": "Cobro",
@@ -210,5 +232,61 @@
     },
     "normNeedsPrice": "Agrega un precio para ver el valor comparable.",
     "attachment": "Adjunto: {{name}}"
+  },
+  "v2": {
+    "sub": "Cotización para {{request}} · recibida {{when}}",
+    "status": {
+      "draft": "Pendiente de revisión",
+      "confirmed": "Confirmada",
+      "rejected": "Quitada de la comparación"
+    },
+    "viewOriginal": "Ver mensaje original",
+    "aiNote_one": "Quoly leyó {{count}} dato. Revísalo antes de confirmar.",
+    "aiNote_other": "Quoly leyó {{count}} datos. Revísalos antes de confirmar.",
+    "confirm": "Confirmar cotización",
+    "confirmNote": "Confirmar no adjudica: la cotización entra en la comparación.",
+    "confirmNoPrice": "Puedes confirmarla sin precio; no entrará en la comparación de precios.",
+    "confirmedNoPrice": "Cotización confirmada sin precio: no entra en la comparación de precios.",
+    "priceStated": "Precio indicado por el proveedor",
+    "priceNotStated": "No indicado",
+    "per": "por {{unit}}",
+    "normalized": "Precio normalizado",
+    "notComparableYet": "No comparable todavía",
+    "prov": {
+      "read": "Leído por Quoly · por revisar",
+      "confirmed": "Confirmado por ti",
+      "edited": "Corregido por ti",
+      "original": "Valor original: {{value}}"
+    },
+    "viewSource": "Ver origen",
+    "editData": "Editar dato",
+    "addData": "Añadir dato",
+    "cancel": "Cancelar",
+    "saveChange": "Guardar cambio",
+    "group": {
+      "quantity": "Cantidad y pedido mínimo",
+      "delivery": "Plazo de entrega",
+      "other": "Otras condiciones"
+    },
+    "label": {
+      "quantity_per_unit": "Piezas por unidad",
+      "quantity_moq": "Pedido mínimo (MOQ)",
+      "delivery_lead_time_days": "Tiempo de entrega",
+      "delivery_point": "Punto de entrega",
+      "payment_terms": "Condiciones de pago"
+    },
+    "days_one": "{{count}} día",
+    "days_other": "{{count}} días",
+    "sourceTitle": "Origen de los datos",
+    "tech": {
+      "title": "Revisión técnica",
+      "lead": "Lo que ofreció el proveedor frente a tus requisitos escritos. Veredictos por parámetro, no una certificación; el PDF de referencia no se usa como criterio.",
+      "requested": "Solicitado",
+      "offered": "Ofrecido",
+      "verdict": "Veredicto",
+      "notInRequest": "No está en la solicitud",
+      "unavailable": "La revisión técnica no está disponible por ahora. Los datos comerciales siguen visibles.",
+      "empty": "Quoly no encontró parámetros técnicos en esta respuesta."
+    }
   }
 }

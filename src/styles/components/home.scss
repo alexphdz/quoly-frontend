@@ -1,0 +1,296 @@
+// 01 · Inicio (Quoly 2.0). Retícula de 12 columnas; secciones abiertas, sin tarjetas.
+
+.hm-page {
+  box-sizing: border-box;
+  max-width: 1312px;
+  padding: 32px 32px 48px;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 32px 24px;
+
+  &.is-mobile { padding: 24px 16px 40px; }
+  > * { grid-column: 1 / -1; min-width: 0; }
+}
+
+.hm-welcome { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
+
+.hm-h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 42px;
+  letter-spacing: -0.018em;
+  color: var(--color-text-primary);
+  text-wrap: balance;
+
+  .is-mobile & { font-size: 28px; line-height: 36px; }
+}
+
+.hm-summary {
+  margin: 0;
+  max-width: 640px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--color-text-secondary);
+  text-wrap: pretty;
+}
+
+.hm-h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: -0.012em;
+  color: var(--color-text-primary);
+
+  .hm-dates &,
+  .hm-activity & { font-size: 21px; line-height: 26px; letter-spacing: -0.01em; }
+}
+
+.hm-sub { font-size: 12px; line-height: 17px; color: var(--color-text-secondary); }
+
+.hm-section { display: flex; flex-direction: column; gap: 16px; }
+.hm-section-head { display: flex; flex-direction: column; gap: 2px; }
+
+.hm-first-use,
+.hm-rule-top { border-top: 1px solid var(--color-divider); }
+
+// Columnas por rango
+.is-desktop {
+  > .hm-attention,
+  > .hm-activity { grid-column: span 7; }
+  > .hm-status,
+  > .hm-dates { grid-column: span 5; }
+  > .hm-status { padding-left: 24px; border-left: 1px solid var(--color-divider); }
+}
+
+.is-tablet {
+  > .hm-status,
+  > .hm-dates { grid-column: span 6; }
+}
+
+// ---- Necesitan tu atención ----
+.hm-attention,
+.hm-status { gap: 20px; }
+
+.hm-attn-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 58fr) minmax(0, 42fr);
+  gap: 36px 28px;
+
+  .is-mobile & { grid-template-columns: minmax(0, 1fr); }
+}
+
+.hm-attn-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  .q-skeleton + .q-skeleton { margin-top: 12px; }
+}
+
+.hm-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.hm-hero {
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+
+  &.is-a { font-size: 72px; line-height: 76px; letter-spacing: -0.035em; }
+  &.is-b { display: flex; align-items: flex-end; min-height: 76px; font-size: 56px; line-height: 62px; letter-spacing: -0.03em; }
+
+  .is-mobile &.is-a { font-size: 56px; line-height: 60px; }
+  .is-mobile &.is-b { min-height: 60px; font-size: 44px; line-height: 50px; }
+}
+
+.hm-caption { font-size: 13px; line-height: 18px; color: var(--color-text-secondary); }
+
+.hm-more { margin-top: 16px; white-space: nowrap; }
+.hm-more-btn { font-weight: 600; }
+
+// ---- Filas navegables ----
+.hm-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-divider);
+
+  &.is-attn { margin-top: 24px; padding-top: 12px; }
+}
+
+.hm-row-item { border-bottom: 1px solid var(--color-divider); }
+
+.hm-row {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) 16px;
+  align-items: center;
+  column-gap: 12px;
+  width: calc(100% + 16px);
+  min-height: 52px;
+  margin: 0 -8px;
+  padding: 8px;
+  border-radius: 5px;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  outline: none;
+  transition: background-color 140ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover { background: var(--color-surface-hover); }
+  &:focus-visible { box-shadow: var(--focus-ring); }
+
+  &.is-date { grid-template-columns: 96px minmax(0, 1fr) 24px; min-height: 68px; padding: 12px 8px; }
+  &.is-event { grid-template-columns: 16px minmax(0, 1fr) auto; align-items: start; min-height: 68px; padding: 14px 8px; }
+}
+
+.hm-row-icon {
+  display: flex;
+  color: var(--color-text-secondary);
+
+  &.is-warning { color: var(--color-status-warning-text); }
+  &.is-top { padding-top: 2px; }
+}
+
+.hm-row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+
+  .is-event & { padding-right: 4px; }
+}
+
+.hm-row-title { font-size: 13px; font-weight: 600; line-height: 18px; }
+
+.hm-row-context {
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--color-text-secondary);
+  text-wrap: pretty;
+
+  &.is-loose { line-height: 18px; }
+}
+
+.hm-row-caret {
+  display: flex;
+  color: var(--color-text-secondary);
+
+  &.is-end { justify-content: flex-end; }
+}
+
+.hm-event-title { font-size: 13px; font-weight: 500; line-height: 19px; text-wrap: pretty; }
+
+.hm-event-time {
+  padding-left: 12px;
+  font-size: 11px;
+  line-height: 19px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.hm-date {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  line-height: 16px;
+
+  .hm-date-day { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--color-text-primary); }
+  .hm-date-when { color: var(--color-text-secondary); }
+
+  &.is-overdue .hm-date-day,
+  &.is-overdue .hm-date-when { color: var(--color-status-warning-text); }
+}
+
+.hm-note {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-text-secondary);
+}
+
+.hm-skel-row {
+  display: grid;
+  column-gap: 16px;
+  align-items: center;
+  min-height: 68px;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+// ---- Estado de solicitudes ----
+.hm-status-body {
+  display: grid;
+  grid-template-columns: auto minmax(150px, 1fr);
+  gap: 20px 24px;
+  align-items: center;
+  padding-top: 4px;
+
+  @media (max-width: 359px) { grid-template-columns: minmax(0, 1fr); }
+}
+
+.hm-donut {
+  width: 148px;
+  zoom: calc(168 / 148);
+
+  &.is-sm { zoom: calc(136 / 148); }
+}
+
+.hm-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+
+  li {
+    box-sizing: border-box;
+    min-height: 42px;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    transition: opacity 140ms ease-out;
+
+    &.is-dim { opacity: 0.55; }
+  }
+}
+
+.hm-legend-row { display: flex; align-items: center; gap: 8px; }
+.hm-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.hm-legend-label { flex: 1; font-size: 12px; font-weight: 500; line-height: 16px; color: var(--color-text-primary); }
+.hm-legend-value { font-size: 13px; font-weight: 600; line-height: 16px; font-variant-numeric: tabular-nums; color: var(--color-text-primary); }
+
+.hm-legend-track {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--color-divider);
+  overflow: hidden;
+
+  > span { display: block; height: 2px; }
+}
+
+// La región vacía alinea su texto con la columna (el prototipo compensa su padding de 32).
+.hm-first-use > .q-empty-section,
+.hm-rule-top > .q-empty-section { margin: 0 -32px; }
+.is-mobile .hm-first-use > .q-empty-section,
+.is-mobile .hm-rule-top > .q-empty-section { margin: 0 -16px; padding-left: 16px; padding-right: 16px; }

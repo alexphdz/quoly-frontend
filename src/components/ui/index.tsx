@@ -8,6 +8,7 @@ import {
   useState,
   type ButtonHTMLAttributes,
   type ChangeEvent,
+  type CSSProperties,
   type FocusEvent,
   type InputHTMLAttributes,
   type ReactElement,
@@ -19,6 +20,7 @@ import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { Select as RadixSelect } from 'radix-ui'
 import { Icon } from '../ds/Icon'
+import { avatarHue } from '../../lib/avatarColor'
 import { Toaster, toast as sonnerToast } from 'sonner'
 import { useTheme } from './theme'
 export function cn(...parts: Array<string | false | null | undefined>) {
@@ -61,6 +63,12 @@ export function Badge({
   return <span className={cn('badge', `badge-${tone}`, dot && 'badge-dot', className)}>{children}</span>
 }
 
+/**
+ * Banner — persistent, page-level context only (archived entity, next-step
+ * guidance, blocking state, a standing note). NOT for field validation
+ * (use FormField's `error`) and NOT for transient action outcomes (use
+ * `toast`). See docs/design-system/feedback.md.
+ */
 export function Alert({
   tone = 'info',
   title,
@@ -74,14 +82,43 @@ export function Alert({
   children: ReactNode
   className?: string
 }) {
+  const assertive = tone === 'error' || tone === 'warning'
   return (
-    <div className={cn('alert', tone !== 'info' && `alert-${tone}`, className)}>
-      {icon && <span className="flex shrink-0 items-center">{icon}</span>}
-      <div className="flex-1">
-        {title && <div className="font-semibold">{title}</div>}
-        <div className="text-sm leading-relaxed">{children}</div>
+    <div
+      className={cn('alert', tone !== 'info' && `alert-${tone}`, className)}
+      role={assertive ? 'alert' : 'status'}
+      aria-live={assertive ? 'assertive' : 'polite'}
+    >
+      {icon && <span className="alert-icon">{icon}</span>}
+      <div className="alert-body">
+        {title && <div className="alert-title">{title}</div>}
+        <div className="alert-text">{children}</div>
       </div>
     </div>
+  )
+}
+
+/**
+ * Inline form feedback — a submit-level message that maps to the whole form
+ * (wrong password, "couldn't save, try again"), rendered as a single line near
+ * the submit button. Text + small mark, never a filled box. Returns null when
+ * empty so callers can pass a maybe-undefined message directly.
+ */
+export function FormFeedback({
+  tone = 'error',
+  children,
+  className,
+}: {
+  tone?: 'error' | 'success'
+  children?: ReactNode
+  className?: string
+}) {
+  if (!children) return null
+  return (
+    <p className={cn('form-feedback', `form-feedback-${tone}`, className)} role={tone === 'error' ? 'alert' : 'status'}>
+      <Icon name={tone === 'error' ? 'error' : 'check_circle'} size={14} />
+      <span>{children}</span>
+    </p>
   )
 }
 
@@ -110,7 +147,7 @@ export function FormField({
       </label>
       {children}
       {helper && <div className="field-help">{helper}</div>}
-      {error && <div className="field-error">{error}</div>}
+      {error && <div className="field-error" role="alert">{error}</div>}
     </div>
   )
 }
@@ -204,14 +241,30 @@ export const SelectInput = forwardRef<HTMLInputElement, SelectHTMLAttributes<HTM
   )
 })
 
-export function Avatar({ name, size = 'md' }: { name?: string | null, size?: 'sm' | 'md' }) {
+export function Avatar({ name, size = 'md', seed, src }: { name?: string | null, size?: 'sm' | 'md', seed?: string | null, src?: string | null }) {
+  const [imgFailed, setImgFailed] = useState(false)
+  useEffect(() => { setImgFailed(false) }, [src])
+
   const initials = (name || '?')
     .split(/\s|@/)
     .filter(Boolean)
     .slice(0, 2)
     .map(part => part[0]?.toUpperCase())
     .join('')
-  return <span className={cn('avatar', size === 'sm' && 'avatar-sm')}>{initials || '?'}</span>
+  // When a seed is given, tint the avatar with a stable per-seed hue instead of
+  // the brand colour (used for suppliers so each reads distinct).
+  const tint = seed
+    ? ({ ['--avatar-hue' as string]: avatarHue(seed) } as CSSProperties)
+    : undefined
+
+  const showImg = src && !imgFailed
+  return (
+    <span className={cn('avatar', size === 'sm' && 'avatar-sm', !showImg && seed && 'avatar--tinted')} style={showImg ? undefined : tint}>
+      {showImg
+        ? <img className="avatar-img" src={src} alt={name ?? ''} onError={() => setImgFailed(true)} />
+        : (initials || '?')}
+    </span>
+  )
 }
 
 export function ProgressBar({ value }: { value: number }) {

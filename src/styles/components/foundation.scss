@@ -504,16 +504,36 @@
 }
 
 // ---------- AI marker ----------
+/* Quoly Intelligence marker — a small Ice-tinted chip marking content Quoly's
+   AI produced. Ice is the shared identity of the Intelligence family; subtle,
+   not loud: a low-alpha Ice tint with the Quoly glyph. */
 .qy-ai {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  color: var(--tx-2);
-  font-size: 12px;
-  font-weight: 500;
+  gap: 5px;
+  padding: 2px 8px 2px 6px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--ice) 28%, transparent);
+  background: color-mix(in srgb, var(--ice) 12%, transparent);
+  color: var(--accent-text);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
 
   svg { color: var(--accent-text); }
 }
+
+/* The Quoly mark reads in Ice inside Intelligence markers (it is a masked
+   glyph that paints with background), reinforcing the product identity. */
+.qy-ai-glyph {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  background: var(--accent-line);
+}
+
+.qy-ai-label { white-space: nowrap; }
 
 // ---------- Form helpers ----------
 .qy-addon {

@@ -1,19 +1,25 @@
 import { del, get, patch, post } from './client'
 import type {
   SupplierCompanyCreate,
+  SupplierCompanyListRead,
   SupplierCompanyRead,
   SupplierCompanyUpdate,
   SupplierContactCreate,
   SupplierContactRead,
   SupplierContactUpdate,
+  SupplierRfqHistoryRead,
 } from '../types/supplierDirectory'
 
-export function listSuppliers(query?: string, includeInactive = false): Promise<SupplierCompanyRead[]> {
+export function listSuppliers(query?: string, includeInactive = false): Promise<SupplierCompanyListRead[]> {
   const params = new URLSearchParams()
   if (query) params.set('q', query)
   if (includeInactive) params.set('include_inactive', 'true')
   const qs = params.toString()
-  return get<SupplierCompanyRead[]>(`/suppliers${qs ? `?${qs}` : ''}`)
+  return get<SupplierCompanyListRead[]>(`/suppliers${qs ? `?${qs}` : ''}`)
+}
+
+export function listSupplierRfqs(supplierId: string): Promise<SupplierRfqHistoryRead> {
+  return get<SupplierRfqHistoryRead>(`/suppliers/${supplierId}/rfqs`)
 }
 
 export function createSupplier(data: SupplierCompanyCreate): Promise<SupplierCompanyRead> {

@@ -13,7 +13,9 @@ const ThemeContext = createContext<{
 function readPreference(): ThemePreference {
   const stored = window.localStorage.getItem('quoly_theme')
   if (stored === 'light' || stored === 'dark' || stored === 'system') return stored
-  return 'system'
+  // Default to the light (near-white) theme rather than following the OS, so the
+  // brand reads the same for everyone on first visit. Users can still switch.
+  return 'light'
 }
 
 function resolveTheme(preference: ThemePreference): ResolvedTheme {

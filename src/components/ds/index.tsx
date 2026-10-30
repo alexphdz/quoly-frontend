@@ -8,7 +8,6 @@ import { unitPriceFractionDigits } from '../../lib/format'
 import { Icon } from './Icon'
 
 export { Icon } from './Icon'
-export { MetricCard, type MetricCardProps, type MetricTone } from './MetricCard'
 
 /** Progressive-disclosure panel: a header with an optional marker + collapsed
  *  summary, and a body revealed on toggle. Used to keep optional/secondary
@@ -427,15 +426,15 @@ export function Skel({ w = '100%', h = 14, r, className }: { w?: number | string
 export function AiMark({ kind = 'read' }: { kind?: 'read' | 'suggests' }) {
   const { t } = useTranslation('common')
   return (
-    <span className="qy-ai">
+    <span className="qy-ai" title={kind === 'read' ? t('ds.aiRead') : t('ds.aiSuggests')}>
       <QuolyGlyph />
-      {kind === 'read' ? t('ds.aiRead') : t('ds.aiSuggests')}
+      <span className="qy-ai-label">{kind === 'read' ? t('ds.aiRead') : t('ds.aiSuggests')}</span>
     </span>
   )
 }
 
 function QuolyGlyph() {
-  return <span className="brand-mark" aria-hidden style={{ width: 14, height: 14 }} />
+  return <span className="brand-mark qy-ai-glyph" aria-hidden />
 }
 
 export function Segmented<T extends string>({
@@ -469,7 +468,7 @@ export function Segmented<T extends string>({
 /** Amount with a muted currency code. `digits="unit"` uses adaptive per-unit precision. */
 export function Money({ value, currency, digits = 2, className, signed }: { value: number | null | undefined, currency?: string | null, digits?: number | 'unit', className?: string, signed?: boolean }) {
   const { i18n } = useTranslation()
-  if (value === null || value === undefined) return <span className={cn('qy-num', className)} style={{ color: 'var(--tx-3)' }}>—</span>
+  if (value === null || value === undefined) return <span className={cn('qy-num', className)} style={{ color: 'var(--tx-3)' }}>{'—'}</span>
   const places = digits === 'unit' ? unitPriceFractionDigits(value) : digits
   const formatted = new Intl.NumberFormat(i18n.resolvedLanguage === 'es' ? 'es-MX' : 'en-US', {
     minimumFractionDigits: digits === 'unit' ? 2 : places,

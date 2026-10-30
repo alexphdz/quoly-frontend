@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { uploadReferenceSpec } from '../api/rfqs'
 import CommercialRFQForm from '../components/rfq/CommercialRFQForm'
+import { useShellLayout } from '../components/layout/useShellLayout'
+import { BreadcrumbItem } from '../design-system'
 import { ErrorState, PageSkeleton, toast } from '../components/ui'
 import { useCreateRFQ, useRFQ, useUpdateCommercialRFQ } from '../hooks/useRFQs'
 import type { ApiError } from '../api/client'
@@ -18,6 +20,7 @@ export default function CommercialRFQPage() {
   const updateRFQ = useUpdateCommercialRFQ()
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const layout = useShellLayout()
 
   const onSubmit = async (data: CommercialRFQWrite, specFiles: File[]) => {
     setUploadError(null)
@@ -62,15 +65,19 @@ export default function CommercialRFQPage() {
   const pending = saving || createRFQ.isPending || updateRFQ.isPending
   const error = uploadError ?? ((createRFQ.error ?? updateRFQ.error) as ApiError | null)?.detail ?? null
 
-  const title = isEdit ? t('commercial.editTitle') : t('commercial.title')
+  const editing = isEdit && existing.data
 
   return (
-    <div className="ds-page cr-page">
-      <div className="request-crumb">
-        <Link to="/requests" className="ds-link">{t('detail.breadcrumbRfqs')}</Link>
-        <span aria-hidden="true">/</span>
-        <span>{title}</span>
-      </div>
+    <div className={`cr2-page is-${layout}`}>
+      <header className="cr2-head">
+        <nav aria-label={t('crear.breadcrumb')}>
+          <ol className="q-crumbs">
+            <BreadcrumbItem to="/requests" last>{t('detail.breadcrumbRfqs')}</BreadcrumbItem>
+          </ol>
+        </nav>
+        <h1 className="cr2-h1">{editing ? t('crear.editTitle') : t('crear.title')}</h1>
+        <p className="cr2-intro">{editing ? t('crear.editIntro') : t('crear.intro')}</p>
+      </header>
       <CommercialRFQForm
         key={existing.data?.id ?? 'new'}
         initial={existing.data}

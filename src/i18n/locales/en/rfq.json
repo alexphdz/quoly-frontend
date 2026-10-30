@@ -494,7 +494,15 @@
     "sendAnswers": "Send answers",
     "sentToast": "Answers sent",
     "needAnswers": "Choose an answer for each question first.",
-    "sendFailed": "Could not send the answers."
+    "sendFailed": "Could not send the answers.",
+    "suggestionLabel": "Suggested reply (AI)",
+    "generatingSuggestion": "Writing a suggested reply…",
+    "useSuggestion": "Use this reply",
+    "writeOwn": "Write my own",
+    "editHint": "Use the suggestion as-is, edit it, or write your own.",
+    "sendReply": "Send reply",
+    "cancelAi": "Cancel",
+    "suggestFailed": "Couldn't generate a suggestion — write your reply below."
   },
   "suppliers": {
     "emptyTitle": "No suppliers yet",
@@ -513,6 +521,8 @@
   "addForm": {
     "title": "Add supplier manually",
     "namePlaceholder": "Supplier name",
+    "companyNamePlaceholder": "Company name",
+    "contactNamePlaceholder": "Contact person (optional)",
     "emailPlaceholder": "email@supplier.com",
     "adding": "Adding…",
     "add": "Add",
@@ -944,5 +954,432 @@
       "GBP": "GBP — British pound",
       "CNY": "CNY — Chinese yuan"
     }
+  },
+  "inicio": {
+    "summary": {
+      "toReview_one": "{{count}} quote to review",
+      "toReview_other": "{{count}} quotes to review",
+      "awaiting_one": "{{count}} supplier waiting for your reply",
+      "awaiting_other": "{{count}} suppliers waiting for your reply",
+      "both": "You have {{a}} and {{b}}.",
+      "one": "You have {{a}}.",
+      "clear": "You have no quotes or questions waiting for you.",
+      "firstUse": "You don't have any requests yet. Once you create the first one, you'll see its progress here."
+    },
+    "firstUse": {
+      "title": "Start with your first request",
+      "text": "A request brings together the product, quantity and unit you need. Then you choose which suppliers to send it to. When they reply by email, you'll see here what needs your attention.",
+      "action": "Create request"
+    },
+    "attention": {
+      "title": "Needs your attention",
+      "toReview": "Quotes to review",
+      "toReviewCaption_one": "needs review",
+      "toReviewCaption_other": "need review",
+      "awaiting": "Suppliers waiting for a reply",
+      "awaitingCaption_one": "needs your reply",
+      "awaitingCaption_other": "need your reply",
+      "viewQuotes": "View quotes",
+      "viewRequests": "View requests",
+      "reviewAria": "Review quote from {{supplier}}, {{rfq}}",
+      "askAria": "View question from {{name}}, {{rfq}}",
+      "suppliersWaiting_one": "{{count}} supplier is waiting for your reply",
+      "suppliersWaiting_other": "{{count}} suppliers are waiting for your reply"
+    },
+    "quoteContext": "{{rfq}} · Quote",
+    "quoteContextNoPrice": "{{rfq}} · Quote without a price",
+    "askContext": "{{rfq}} · {{question}}",
+    "clear": {
+      "title": "All caught up",
+      "text": "You have no quotes or questions waiting for you. When a quote arrives or a supplier asks you something, it will show up here."
+    },
+    "status": {
+      "title": "Request status",
+      "sub": "Distribution by status",
+      "draft": "Draft",
+      "open": "Open",
+      "closed": "Closed",
+      "center": "requests",
+      "legend": "Legend",
+      "aria": "Requests by status: {{list}}. Total {{total}}."
+    },
+    "dates": {
+      "title": "Upcoming dates",
+      "overdue": "Overdue",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "in_one": "In {{count}} day",
+      "in_other": "In {{count}} days",
+      "response": "Supplier response deadline",
+      "responseOverdue_one": "Response deadline · {{count}} day overdue",
+      "responseOverdue_other": "Response deadline · {{count}} days overdue",
+      "delivery": "Requested delivery date",
+      "undated_one": "{{list}} has no dates set.",
+      "undated_other": "{{list}} have no dates set.",
+      "empty": "No open request has dates set."
+    },
+    "activity": {
+      "title": "Recent activity",
+      "review": "The quote from {{supplier}} needs review",
+      "quote": "A quote arrived from {{supplier}}",
+      "ask": "There's a pending question in {{rfq}}",
+      "awarded": "Award recorded",
+      "created": "You created the request {{rfq}}",
+      "createdContext": "Saved as draft",
+      "askContext": "{{supplier}}: {{question}}",
+      "noPrice": "{{rfq}} · The supplier didn't state a price.",
+      "missing_one": "{{rfq}} · {{count}} detail not stated",
+      "missing_other": "{{rfq}} · {{count}} details not stated",
+      "empty": "No activity yet."
+    },
+    "time": {
+      "minutes_one": "{{count}} min ago",
+      "minutes_other": "{{count}} min ago",
+      "hours_one": "{{count}} h ago",
+      "hours_other": "{{count}} h ago",
+      "yesterday": "Yesterday"
+    },
+    "error": {
+      "label": "Data unavailable",
+      "title": "We couldn't load your home.",
+      "text": "The connection was interrupted. You can try again.",
+      "retry": "Retry",
+      "partialLabel": "Data unavailable",
+      "partialTitle": "We couldn't load quotes and questions.",
+      "partialText": "The rest of your home is up to date. You can try again."
+    }
+  },
+  "solicitudes": {
+    "title": "Requests",
+    "lead": "Look through your requests and see which ones need attention.",
+    "create": "Create request",
+    "summary": {
+      "total_one": "request",
+      "total_other": "requests",
+      "attention_one": "needs attention",
+      "attention_other": "need attention",
+      "showing_one": "Showing {{count}} of {{total}}",
+      "showing_other": "Showing {{count}} of {{total}}"
+    },
+    "search": "Search by product or reference",
+    "searchLabel": "Search requests",
+    "filterLabel": "Filter by status",
+    "filters": {
+      "all": "All",
+      "draft": "Draft",
+      "open": "Open",
+      "closed": "Closed",
+      "attention": "Need attention"
+    },
+    "status": {
+      "draft": "Draft",
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "columns": {
+      "request": "Request",
+      "status": "Status",
+      "quantity": "Quantity",
+      "quotes": "Quotes",
+      "attention": "Attention",
+      "actions": "Actions"
+    },
+    "inComparison": "in comparison",
+    "attention": {
+      "required": "Needs attention",
+      "waiting_one": "{{count}} supplier is waiting for a reply",
+      "waiting_other": "{{count}} suppliers are waiting for a reply",
+      "none": "Nothing pending"
+    },
+    "compare": "View comparison",
+    "compareAria": "View comparison for {{name}}",
+    "openAria": "Open {{name}}",
+    "openStatusAria": "Open {{name}}, {{status}}",
+    "empty": {
+      "label": "No requests",
+      "title": "You don't have any requests yet",
+      "text": "Create a request to start getting quotes from your suppliers."
+    },
+    "noResults": {
+      "label": "No matches",
+      "searchTitle": "We couldn't find any requests",
+      "searchText": "Try another name or reference.",
+      "clearSearch": "Clear search",
+      "filterTitle": "No requests match these filters",
+      "filterText": "Try another status or remove the filters.",
+      "clearFilters": "Remove filters"
+    },
+    "error": {
+      "label": "Data unavailable",
+      "title": "We couldn't load your requests.",
+      "text": "The connection was interrupted. Your search and filters are kept. You can try again.",
+      "retry": "Retry",
+      "retrying": "Retrying…"
+    }
+  },
+  "crear": {
+    "title": "New request",
+    "intro": "Tell us what you need quoted. You can save a draft and complete the details later.",
+    "editTitle": "Edit request",
+    "editIntro": "Update the details of this request.",
+    "breadcrumb": "Breadcrumb",
+    "requiredNote": "Fields marked * are required.",
+    "optional": "(optional)",
+    "nav": {
+      "label": "Form sections"
+    },
+    "sections": {
+      "producto": {
+        "nav": "Product and quantity",
+        "desc": "Name, quantity and unit",
+        "title": "Product and quantity"
+      },
+      "entrega": {
+        "nav": "Delivery terms",
+        "desc": "Incoterm, place and date",
+        "title": "Delivery terms",
+        "lead": "Add the terms your suppliers should take into account."
+      },
+      "documentos": {
+        "nav": "Requirements and documents",
+        "desc": "Technical requirements and file",
+        "title": "Requirements and documents"
+      }
+    },
+    "fields": {
+      "product": "Product name",
+      "productPlaceholder": "E.g. 750 ml thermal cups",
+      "quantity": "Requested quantity",
+      "quantityPlaceholder": "E.g. 500",
+      "unit": "Unit of measure",
+      "unitPlaceholder": "Select unit",
+      "reference": "Internal reference",
+      "referencePlaceholder": "E.g. REF-VT-2041",
+      "shareReference": "Show this reference to suppliers",
+      "shareOn": "Suppliers will see this reference in the request.",
+      "shareOff": "Only you will see this reference.",
+      "incoterm": "Incoterm",
+      "deliveryDate": "Requested delivery date",
+      "requirements": "Technical requirements",
+      "requirementsHelp": "Describe what the product must meet. With no text and no file, the request asks for the current datasheet.",
+      "requirementsPlaceholder": "E.g. 18/8 stainless steel, double wall, BPA free.",
+      "file": "Specification file",
+      "fileHelp": "Attach a PDF datasheet or reference document if you need to."
+    },
+    "place": {
+      "none": {
+        "label": "Place",
+        "placeholder": "Choose an Incoterm first"
+      },
+      "place_of_delivery": {
+        "label": "Place of delivery",
+        "placeholder": "E.g. Supplier plant, Querétaro"
+      },
+      "place_of_destination": {
+        "label": "Place of destination",
+        "placeholder": "E.g. Mexico City"
+      },
+      "port_of_shipment": {
+        "label": "Port of shipment",
+        "placeholder": "E.g. Port of Manzanillo"
+      },
+      "port_of_destination": {
+        "label": "Port of destination",
+        "placeholder": "E.g. Port of Valencia"
+      }
+    },
+    "incoterm": {
+      "select": "Select Incoterm",
+      "count": "11 Incoterms 2020 terms",
+      "change": "Change",
+      "close": "Close",
+      "remove": "Remove Incoterm",
+      "modeAny": "Any mode of transport",
+      "modeSea": "Sea and inland waterway",
+      "group": {
+        "any": "Any mode of transport",
+        "sea": "Sea and inland waterway"
+      },
+      "short": {
+        "EXW": "The buyer collects at the seller's premises.",
+        "FCA": "The seller delivers to the buyer's carrier.",
+        "CPT": "The seller pays carriage to the destination.",
+        "CIP": "Carriage and insurance paid to the destination.",
+        "DAP": "Delivered at destination, not unloaded.",
+        "DPU": "Delivered and unloaded at destination.",
+        "DDP": "Delivered at destination with duties paid.",
+        "FAS": "Goods alongside the ship at the port of shipment.",
+        "FOB": "Goods on board the ship at the port of shipment.",
+        "CFR": "The seller pays freight to the port of destination.",
+        "CIF": "Freight and insurance paid to the port of destination."
+      }
+    },
+    "file": {
+      "title": "Drag a file here",
+      "text": "You can also select it from your computer.",
+      "release": "Drop the file to attach it",
+      "select": "Select file",
+      "saved": "Saved with the request",
+      "remove": "Remove {{name}}",
+      "note": "The file is saved with the request and can be sent to suppliers. The technical comparison uses the requirements you write above."
+    },
+    "errors": {
+      "name": "Enter the product name.",
+      "quantity": "Enter a valid quantity.",
+      "unit": "Select a unit of measure."
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "saveDraft": "Save draft",
+      "create": "Create request",
+      "saveChanges": "Save changes"
+    }
+  },
+  "detalle": {
+    "editRequest": "Edit request",
+    "viewComparison": "View comparison",
+    "tabs": {
+      "overview": "Summary",
+      "suppliers": "Suppliers",
+      "replies": "Replies",
+      "quotations": "Quotes",
+      "comparison": "Comparison"
+    },
+    "summary": {
+      "title": "Summary",
+      "deadline": "Supplier response deadline: {{date}}.",
+      "received": "Quotes received",
+      "ofTotal": "{{count}} of {{total}}",
+      "invited_one": "supplier invited",
+      "invited_other": "suppliers invited",
+      "trackerLabel": "Quotes",
+      "toReviewOne": "{{supplier}} sent a quote. It isn't in the comparison yet because it's waiting for review.",
+      "toReviewMany": "{{count}} quotes are waiting for review. They aren't in the comparison yet.",
+      "reviewQuote": "Review quote",
+      "asks_one": "{{count}} supplier question needs an answer",
+      "asks_other": "{{count}} supplier questions need an answer",
+      "askSeparator": " asks: ",
+      "viewQuestion": "View question",
+      "noAsks": "No supplier questions are pending.",
+      "allSuppliers": "View all in Suppliers",
+      "draftTitle": "This request is a draft",
+      "draftText": "Complete and create it to add suppliers and send it.",
+      "noSuppliersTitle": "No suppliers yet",
+      "noSuppliersText": "Add suppliers from your directory or just for this request. Adding them doesn't send them anything."
+    },
+    "stage": {
+      "quote_received": "Quote received",
+      "partial_response": "Partial response",
+      "buyer_action_required": "Buyer action required",
+      "awaiting_response": "Awaiting response",
+      "not_contacted": "Not contacted",
+      "declined": "Declined",
+      "closed": "Closed"
+    },
+    "stageCount": {
+      "quote_received_one": "quote received",
+      "quote_received_other": "quotes received",
+      "partial_response_one": "partial response",
+      "partial_response_other": "partial responses",
+      "buyer_action_required_one": "needs your reply",
+      "buyer_action_required_other": "need your reply",
+      "awaiting_response_one": "awaiting response",
+      "awaiting_response_other": "awaiting response",
+      "not_contacted_one": "not contacted",
+      "not_contacted_other": "not contacted",
+      "declined_one": "declined",
+      "declined_other": "declined",
+      "closed_one": "closed",
+      "closed_other": "closed"
+    },
+    "meta": {
+      "quoteToReview": "Quote to review · {{when}}",
+      "quoteConfirmed": "Quote confirmed · {{date}}",
+      "notSent": "Hasn't received the request yet",
+      "sent": "Request sent · {{date}}"
+    },
+    "suppliers": {
+      "lead": "See who received the request and where their responses stand.",
+      "add": "Add suppliers",
+      "send": "Send request",
+      "sendCount_one": "Send request · {{count}}",
+      "sendCount_other": "Send request · {{count}}",
+      "added_one": "supplier added",
+      "added_other": "suppliers added",
+      "respondedOf": "Responded, of those who received the request",
+      "colSupplier": "Supplier",
+      "colStage": "Stage",
+      "reviewResponse": "Review response",
+      "viewQuote": "View quote",
+      "viewReplies": "View replies",
+      "close": "Close supplier",
+      "closeHint": "Stops participating. The request stays open.",
+      "more": "More actions for {{name}}",
+      "emptyLabel": "No suppliers",
+      "addNote": "Adding them doesn't send them anything. You decide when to send the request.",
+      "fromDirectory": "From the directory",
+      "forThisRequest": "Just for this request",
+      "confirmTitle_one": "Send the request to {{count}} supplier?",
+      "confirmTitle_other": "Send the request to {{count}} suppliers?",
+      "confirmMailbox": "It will be sent from your connected mailbox. Afterwards they move to “Awaiting response”.",
+      "confirmNoMailbox": "You don't have a connected mailbox. You'll see the request text to copy and send from your email.",
+      "confirmAction_one": "Send to {{count}} supplier",
+      "confirmAction_other": "Send to {{count}} suppliers",
+      "sendFailed": "We couldn't send the request.",
+      "retrySend": "Retry send",
+      "noMailboxTitle": "You don't have a connected mailbox",
+      "noMailboxText": "Copy the request and send it from your email. Copying doesn't send anything or change the stage."
+    },
+    "spec": {
+      "title": "Requirements and documents"
+    },
+    "panel": {
+      "label": "Request details",
+      "title": "Request details",
+      "edit": "Edit",
+      "currency": "Base currency",
+      "deadline": "Response deadline",
+      "notSet": "Not set",
+      "mailTitle": "Reply email",
+      "mailText": "Suppliers can reply to this address.",
+      "copy": "Copy address",
+      "copied": "Address copied"
+    }
+  },
+  "respuestas": {
+    "title": "Replies",
+    "lead": "Supplier emails. Quoly suggests data; nothing is confirmed or sent without you.",
+    "messages_one": "message",
+    "messages_other": "messages",
+    "openQuestions_one": "open question",
+    "openQuestions_other": "open questions",
+    "messagesTitle": "Messages",
+    "questions": {
+      "title": "Supplier questions",
+      "open": "Open",
+      "closedRequest": "This request is closed. Open questions are shown for reference and can't be answered here.",
+      "resolved": "Resolved",
+      "quick": "Quick replies · from the request data",
+      "suggestion": "Quoly suggestion",
+      "toReview": "· to review",
+      "yourReply": "Your reply",
+      "resolveNote": "Marking as resolved doesn't send anything to the supplier.",
+      "replySent": "Reply sent from your email"
+    }
+  },
+  "cotizaciones": {
+    "title": "Quotes",
+    "lead": "Review the offers and confirm the data before comparing them.",
+    "count_one": "{{count}} quote identified",
+    "count_other": "{{count}} quotes identified",
+    "toReview_one": "{{count}} waiting for review",
+    "toReview_other": "{{count}} waiting for review",
+    "indexLabel": "Quotes for this request",
+    "noPrice": "Price not stated",
+    "missing_one": "{{count}} detail not stated",
+    "missing_other": "{{count}} details not stated",
+    "emptyTitle": "No quotes yet",
+    "emptyText": "When a supplier sends a quote by email, it will show up here for review. You can also add it by hand.",
+    "uploadNote": "Upload the file or paste the supplier's text. Quoly reads it and leaves it for review."
   }
 }

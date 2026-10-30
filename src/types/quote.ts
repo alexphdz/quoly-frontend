@@ -4,8 +4,18 @@ export interface CommercialOfferShape {
     unit?: string | null
     price?: number | null
     currency?: string | null
+    quantity_basis?: 'minimum' | 'exact' | 'unknown'
     source_wording?: string | null
   }>
+  price_applicability?: {
+    status: 'applicable' | 'inapplicable' | 'unresolved' | 'not_available'
+    reason: 'minimum_break_met' | 'exact_quantity' | 'above_requested_quantity' | 'unit_mismatch' | 'unknown_quantity_basis' | 'missing_requested_quantity' | 'no_priced_tiers'
+    requested_quantity?: number | null
+    requested_unit?: string | null
+    offered_quantity?: number | null
+    offered_unit?: string | null
+    tier_index?: number | null
+  } | null
   lead_time?: {
     production_days?: number | null
     transit_days?: number | null
@@ -23,6 +33,19 @@ export interface CommercialOfferShape {
     unit?: string | null
     included?: boolean
     source_wording?: string | null
+  }>
+  conditions?: Array<{
+    kind: 'exclusion' | 'inclusion' | 'validity' | 'payment' | 'delivery' | 'quantity_break' | 'trigger' | 'other'
+    wording: string
+    field_name?: string | null
+    evidence_ids?: string[]
+  }>
+  payment_milestones?: Array<{
+    percentage?: number | null
+    trigger?: string | null
+    due?: string | null
+    source_wording?: string | null
+    evidence_ids?: string[]
   }>
   /** Supplier's own words behind each extracted field. */
   field_sources?: Record<string, string>
@@ -53,16 +76,40 @@ export interface QuoteRead {
   missing_fields: string[]
   line_items?: QuoteLineItem[] | import('./quoteIntake').QuoteLineItemsV2 | null
   extraction_pass?: {
+    summary?: string | null
     buyer_actions?: Array<{ question: string; context?: string | null }>
-    spec_parameters?: Array<{ name: string; value: string; source?: string | null }>
+    spec_parameters?: Array<{ name: string; value: string; source?: string | null; evidence?: Array<{ segment_id: string; exact_text?: string | null }> }>
+    facts?: Array<{ field_name: string; raw_value?: unknown; unit?: string | null; review_state?: string; evidence?: Array<{ segment_id: string; exact_text?: string | null }> }>
+    source_artifact_ids?: string[]
+    source_map?: Array<{
+      artifact_id: string
+      segment_id: string
+      source_kind: string
+      original_filename?: string | null
+      segment_type: string
+      locator?: Record<string, unknown>
+      parsing_method?: string | null
+      read_status: string
+      speaker: string
+    }>
     message_labels?: string[]
+    processing?: {
+      schema_version?: number
+      status: 'pending' | 'complete' | 'partial' | 'failed' | 'unknown'
+      failure_reason?: 'provider_unavailable' | 'timeout' | 'invalid_output' | 'invalid_evidence' | 'output_truncated' | 'upstream_parse_failure' | 'unknown_error' | null
+      readable_inputs?: string[]
+      unreadable_inputs?: string[]
+      detail?: string | null
+    }
   } | null
   commercial_offer?: CommercialOfferShape | null
+  approved_revision?: number
   created_at: string
   updated_at: string
 }
 
 export interface QuoteUpdate {
+  expected_approved_revision?: number
   raw_price?: number | null
   raw_currency?: string | null
   raw_unit?: string | null

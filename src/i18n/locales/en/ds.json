@@ -1,0 +1,499 @@
+{
+  "actions": {
+    "close": "Close",
+    "moreOptions": "More options"
+  },
+  "alert": {
+    "dismiss": "Dismiss notice",
+    "howToResolve": "How to resolve it"
+  },
+  "breadcrumbs": {
+    "label": "Breadcrumb"
+  },
+  "chart": {
+    "col": {
+      "category": "Category",
+      "count": "Count",
+      "interval": "Interval",
+      "period": "Period",
+      "share": "Share",
+      "supplier": "Supplier",
+      "value": "Value"
+    },
+    "compact": {
+      "countOf": "{{value}} of {{total}}",
+      "donutTitle": "Quote status",
+      "gaugeDescriptor": "Resolved",
+      "gaugeTitle": "Percent resolved",
+      "ofTotal": "{{pct}}% of total",
+      "segmentedTitle": "Quote value",
+      "unitLabel": "quotes"
+    },
+    "dist": {
+      "caption": "{{caption}}. Median {{value}}",
+      "emptyText_one": "At least {{min}} numeric values are needed to group into intervals. There is {{count}}.",
+      "emptyText_other": "At least {{min}} numeric values are needed to group into intervals. There are {{count}}.",
+      "emptyTitle": "Not enough data to show a distribution",
+      "median": "Median",
+      "records": "records",
+      "shareOf_one": "{{pct}}% of {{count}} value",
+      "shareOf_other": "{{pct}}% of {{count}} values"
+    },
+    "dot": {
+      "scaleNote": "{{label}} in {{unit}}. Common scale for all rows; position does not indicate preference."
+    },
+    "legend": "Legend",
+    "noComparable": "Not comparable",
+    "noComparableValue": "No comparable value",
+    "noData": "No data",
+    "role": {
+      "bar": "bar chart",
+      "compactBars": "compact bar chart",
+      "donut": "donut chart",
+      "dot": "dot plot",
+      "hbar": "horizontal bar chart",
+      "histogram": "histogram",
+      "line": "line chart",
+      "segmented": "distribution bar"
+    },
+    "state": {
+      "clear": "Reset filters",
+      "emptyText": "The chart will appear once requests with recorded responses exist in the period.",
+      "emptyTitle": "No data for this chart yet",
+      "errorLabel": "Data unavailable",
+      "errorText": "The connection was interrupted. The period and filters have been kept.",
+      "errorTitle": "The chart could not be loaded",
+      "loading": "Loading chart",
+      "noResultsLabel": "No matches",
+      "noResultsText": "Try another period or remove the active filters.",
+      "noResultsTitle": "No data for the selected filters",
+      "retry": "Retry loading"
+    },
+    "table": {
+      "hide": "Hide data table",
+      "show": "View as table"
+    },
+    "total": "total"
+  },
+  "chip": {
+    "remove": "Remove {{label}}"
+  },
+  "cmp": {
+    "diff": {
+      "barLabel": "Relative price: {{pct}} % of the highest comparable price",
+      "base": "Base",
+      "baseDetail": "Lowest comparable price in the set",
+      "noSet": "No comparison set: at least one more comparable quote is needed.",
+      "normalized": "Normalized price: {{value}}",
+      "percent": "+{{pct}} % over the lowest comparable price"
+    },
+    "exception": {
+      "seeDetail": "see detail",
+      "unconfirmed": "Value proposed by AI, not confirmed by the buyer"
+    },
+    "focus": {
+      "all": "All groups",
+      "label": "Attribute group"
+    },
+    "matrix": {
+      "demoData": "Fictional demo data",
+      "label": "Comparison matrix",
+      "next": "More suppliers",
+      "previous": "Previous suppliers",
+      "requested": "Requested",
+      "scrollHint": "Scroll horizontally to see all {{count}} suppliers · the attribute column stays fixed",
+      "scrollable": "{{label}}, scrolls horizontally",
+      "showingTwo": "Showing 2 of {{count}} quotes. Change the compared suppliers with the selectors.",
+      "supplierA": "Supplier A",
+      "supplierB": "Supplier B"
+    },
+    "noSource": "No linked source",
+    "notComparable": "Not comparable",
+    "originalCurrency": "Original currency · {{currency}}",
+    "overview": {
+      "comparable_one": "1 comparable",
+      "comparable_other": "{{count}} comparable",
+      "received_one": "Quote received",
+      "received_other": "Quotes received",
+      "review_one": "1 needs review",
+      "review_other": "{{count}} need review",
+      "title": "Quote comparison"
+    },
+    "price": {
+      "noNormalized": "No normalized price",
+      "noNormalizedReason": "No normalized price for this quote",
+      "normalized": "Normalized",
+      "normalizedDemo": "Normalized · demo figure",
+      "original": "Original:"
+    },
+    "sourceOf": "Source · {{supplier}}",
+    "status": {
+      "pending": "Not reviewed",
+      "review": "Needs review",
+      "reviewed": "Reviewed"
+    },
+    "viewSource": "View source"
+  },
+  "comp": {
+    "countOf": "{{value}} of {{total}}",
+    "ofTotal": "of {{total}} {{unit}}",
+    "view": "View"
+  },
+  "confirm": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "currency": {
+    "amount": "Amount",
+    "currency": "Currency"
+  },
+  "date": {
+    "formatDayFirst": "dd/mm/yyyy",
+    "formatMonthFirst": "mm/dd/yyyy",
+    "openCalendar": "Open calendar"
+  },
+  "dec": {
+    "base": "Base: {{value}}",
+    "changeSelection": "Change selection",
+    "confirm": {
+      "description": "The buyer’s selection and its commercial data will be saved.",
+      "eyebrow": "Confirm award",
+      "failed": "The award could not be recorded. Nothing was saved; you can try again.",
+      "priceNotComparable": "Price not comparable",
+      "record": "Record award",
+      "recording": "Recording…",
+      "title": "Record this award?"
+    },
+    "indicator": {
+      "pending": "Selected for award",
+      "recorded": "Awarded",
+      "selected": "Selected"
+    },
+    "notProvided": "— Not provided",
+    "original": "Original: {{value}}",
+    "rationale": {
+      "context": "Quote data · for reference, not part of the reason",
+      "description": "Record the commercial factors you considered to make this decision.",
+      "field": "Buyer explanation",
+      "note": "Written by the buyer. Quoly neither generates nor completes it.",
+      "optional": "Optional",
+      "title": "Reason for the selection"
+    },
+    "record": {
+      "ariaRecorded": "Award recorded: {{supplier}}",
+      "ariaSelected": "Selected for award: {{supplier}}",
+      "notYet": "Award not recorded yet",
+      "price": "Awarded price",
+      "rationale": "Recorded reason",
+      "recorded": "Award recorded",
+      "recordedBy": "Recorded by {{name}}",
+      "recordedSub": "Final decision recorded by the buyer",
+      "selected": "Selected for award",
+      "selectedSub": "Pending buyer confirmation"
+    },
+    "row": {
+      "ariaAwarded": "{{supplier}}, awarded",
+      "ariaSelected": "{{supplier}}, award candidate, pending confirmation",
+      "candidate": "Award candidate",
+      "change": "Change",
+      "confirm": "Confirm award",
+      "finalRecord": "Final record",
+      "incoterm": "Incoterm",
+      "leadTime": "Lead time",
+      "moq": "MOQ",
+      "pending": "Pending confirmation",
+      "recordedAt": "Recorded · {{date}}",
+      "select": "Select",
+      "supplier": "Supplier",
+      "unitPrice": "Unit price",
+      "viewRecord": "View record"
+    },
+    "selectSupplier": "Select supplier",
+    "summary": {
+      "label": "Decision summary",
+      "referencePrice": "Reference price",
+      "selected": "Selected supplier"
+    },
+    "timeline": {
+      "emptyText": "When the buyer selects a supplier or records an award, the event will appear here.",
+      "emptyTitle": "No decisions recorded",
+      "label": "Decision history"
+    },
+    "viewQuote": "View quote"
+  },
+  "field": {
+    "optional": "optional",
+    "readOnly": "Read only"
+  },
+  "form": {
+    "drop": {
+      "button": "Select file",
+      "description": "Or select it from your computer.",
+      "label": "Specification file",
+      "release": "Drop the file to attach it",
+      "remove": "Remove {{name}}",
+      "selected": "File selected: {{name}}",
+      "title": "Drag a file here",
+      "uploading": "Uploading",
+      "uploadingFile": "Uploading file…",
+      "uploadingName": "Uploading {{name}}"
+    },
+    "incoterm": {
+      "change": "Change",
+      "desc": {
+        "CFR": "Cost and freight",
+        "CIF": "Cost, insurance and freight",
+        "CIP": "Carriage and insurance",
+        "CPT": "Carriage paid",
+        "DAP": "Delivered at destination",
+        "DDP": "Duties paid",
+        "DPU": "Delivered and unloaded",
+        "EXW": "At the factory",
+        "FAS": "Alongside the ship",
+        "FCA": "Delivered to the carrier",
+        "FOB": "On board the ship"
+      },
+      "description": "Define how and where the product will be delivered.",
+      "group": "Incoterms 2020",
+      "hint": {
+        "CFR": "E.g. Port of Valencia",
+        "CIF": "E.g. Port of Valencia",
+        "CIP": "E.g. Mexico City",
+        "CPT": "E.g. Mexico City",
+        "DAP": "E.g. Mexico City",
+        "DDP": "E.g. Buyer warehouse, Guadalajara",
+        "DPU": "E.g. Buyer warehouse, Guadalajara",
+        "EXW": "E.g. Supplier plant, Querétaro",
+        "FAS": "E.g. Port of Manzanillo",
+        "FCA": "E.g. Supplier distribution center, Monterrey",
+        "FOB": "E.g. Port of Manzanillo"
+      },
+      "mode": {
+        "any": "Any mode",
+        "sea": "Sea / inland waterway"
+      },
+      "place": {
+        "delivery": "Place of delivery",
+        "destination": "Place of destination",
+        "destinationPort": "Port of destination",
+        "loadingPort": "Port of shipment"
+      },
+      "remove": "Remove",
+      "title": "Add Incoterm"
+    },
+    "nav": {
+      "label": "Form sections"
+    }
+  },
+  "nav": {
+    "account": "Account and workspace: {{summary}}",
+    "close": "Close navigation",
+    "collapse": "Collapse navigation",
+    "expand": "Expand navigation",
+    "label": "Navigation",
+    "primary": "Primary",
+    "search": "Search",
+    "settings": "Settings"
+  },
+  "qi": {
+    "completeness": {
+      "available": "{{available}} of {{total}} fields available",
+      "availableShort": "available",
+      "confirmed_one": "confirmed",
+      "confirmed_other": "confirmed",
+      "description": "Fields present in the source and their review status. It does not measure accuracy.",
+      "missing_one": "not provided",
+      "missing_other": "not provided",
+      "noncomparable_one": "not comparable",
+      "noncomparable_other": "not comparable",
+      "pending_one": "to review",
+      "pending_other": "to review",
+      "title": "Information completeness"
+    },
+    "editor": {
+      "add": "Add value",
+      "confirm": "Confirm",
+      "correct": "Correct {{field}}",
+      "edit": "Edit",
+      "editing": "Editing · {{state}}",
+      "note": "Saving records a buyer correction; confirming is a separate action.",
+      "required": "Enter a value or cancel editing.",
+      "save": "Save change"
+    },
+    "evidence": {
+      "linked": "Linked passage · {{field}}",
+      "noPassage": "The source has no passage for this field.",
+      "noneSelected": "No field selected",
+      "notLinked": "No linked passage · {{field}}",
+      "openOriginal": "Open original",
+      "region": "Evidence: {{source}}",
+      "selectField": "Select a field to see its passage.",
+      "subject": "Subject: {{subject}}",
+      "view": "View evidence"
+    },
+    "history": {
+      "extracted": "Extracted value: {{value}}",
+      "original": "Original: {{value}}",
+      "originalExtracted": "Extracted original: {{value}}",
+      "originalMissing": "Original: not provided in the source"
+    },
+    "noValue": "No value",
+    "notInSource": "Not provided in the source",
+    "provenance": {
+      "corrected": "Corrected by buyer",
+      "proposed": "Proposed by AI"
+    },
+    "source": {
+      "attachment": "Attachment",
+      "document": "Document",
+      "email": "Supplier email",
+      "pdf": "Attached PDF"
+    },
+    "state": {
+      "confirmed": "Confirmed",
+      "missing": "Not provided",
+      "noncomparable": "Not comparable",
+      "toConfirm": "To confirm",
+      "toReview": "To review"
+    },
+    "summary": {
+      "analyzing": "Analyzing the message and its attachments",
+      "availableFields": "Available fields",
+      "label": "Extraction summary",
+      "missing": "Not provided: {{fields}}",
+      "nothingToReview": "No fields to review",
+      "retry": "Retry extraction",
+      "review": "Review fields",
+      "status": {
+        "failed": "Could not extract",
+        "partial": "Partial extraction",
+        "processing": "Processing",
+        "ready": "Ready for review",
+        "reviewed": "Reviewed"
+      },
+      "toReview_one": "{{count}} to review",
+      "toReview_other": "{{count}} to review"
+    },
+    "workspace": {
+      "claimPending": "The commercial data of the offer was identified.",
+      "claimReviewed": "The available values were reviewed by the buyer.",
+      "emailFrom": "Email from {{supplier}}",
+      "fieldOf": "Field {{current}} of {{total}}",
+      "fields": "Extracted fields",
+      "next": "Next field",
+      "previous": "Previous field",
+      "source": "Original source",
+      "summaryPending_one": "The buyer must review 1 field before using the information.",
+      "summaryPending_other": "The buyer must review {{count}} fields before using the information.",
+      "summaryReviewed": "Confirmation records the human review; it does not validate the technical document.",
+      "title": "Interpreted data"
+    }
+  },
+  "rfq": {
+    "created": "Created on {{date}}",
+    "lifecycleLabel": "Request stage",
+    "question": {
+      "answerSent": "Response sent",
+      "answered": "Answered",
+      "label": "Question from {{sender}}",
+      "needsAnswer": "Needs a response",
+      "respond": "Respond",
+      "respondTo": "to {{sender}}"
+    },
+    "stage": {
+      "closed": "Closed",
+      "draft": "Draft",
+      "quotes": "Quotes",
+      "sent": "Sent"
+    },
+    "stageState": {
+      "current": ", current stage",
+      "done": ", completed",
+      "future": ", pending"
+    },
+    "summary": {
+      "currency": "Base currency",
+      "deadline": "Response deadline",
+      "label": "Commercial summary",
+      "leading": "Leading quote",
+      "noComparable": "No comparable quotes",
+      "noSuppliers": "No suppliers invited",
+      "overdue": "Deadline passed",
+      "quantity": "Requested quantity",
+      "responded": "{{responded}} of {{total}} responded",
+      "suppliers": "Suppliers"
+    },
+    "supplier": {
+      "header": {
+        "activity": "Last activity",
+        "participation": "Participation",
+        "quote": "Quote",
+        "supplier": "Supplier"
+      },
+      "noActivity": "No activity yet",
+      "noContact": "No contact on file",
+      "status": {
+        "declined": "Not participating",
+        "invited": "Invited",
+        "question": "Open question",
+        "responded": "Responded",
+        "viewed": "Awaiting response"
+      }
+    },
+    "tracker": {
+      "label": "Suppliers",
+      "pending_one": "pending",
+      "pending_other": "pending",
+      "responded_one": "responded",
+      "responded_other": "responded",
+      "valueText": "{{responded}} of {{total}} suppliers responded"
+    }
+  },
+  "search": {
+    "clear": "Clear search"
+  },
+  "select": {
+    "placeholder": "Select"
+  },
+  "status": {
+    "loading": "Loading"
+  },
+  "table": {
+    "actions": "Actions",
+    "ascending": ", ascending",
+    "clearSelection": "Clear selection",
+    "descending": ", descending",
+    "empty": {
+      "label": "No records",
+      "title": "No records yet"
+    },
+    "error": {
+      "failedAgain": "The {{time}} attempt did not complete either. The data is still unavailable.",
+      "label": "Data unavailable",
+      "retry": "Retry loading",
+      "retrying": "Retrying…",
+      "text": "The connection was interrupted. Your filters and search criteria were kept.",
+      "title": "The data could not be loaded"
+    },
+    "nextPage": "Next page",
+    "noResults": {
+      "clear": "Clear search",
+      "label": "No matches",
+      "text": "Try another term or remove the active filters.",
+      "title": "No results"
+    },
+    "notComparable": "Not comparable",
+    "notProvided": "Not provided",
+    "of": "of",
+    "pageOf": "Page {{page}} of {{pages}}",
+    "pagination": "Pagination",
+    "previousPage": "Previous page",
+    "results": "results",
+    "rowsPerPage": "Rows per page",
+    "selectAll": "Select all rows",
+    "selectRow": "Select {{label}}",
+    "selected_one": "{{count}} selected",
+    "selected_other": "{{count}} selected",
+    "selectionActions": "Selection actions"
+  }
+}

@@ -1,0 +1,670 @@
+import { useState } from 'react'
+import { useTheme } from '../../components/ui/theme'
+import {
+  Avatar, Breadcrumbs, Button, ButtonGroup, Checkbox, Chip, ConfirmDialog, ContentSection, ContextPanel, Counter,
+  CurrencyInput, DataTable, DateInput, DetailPanel, Dialog, Divider, Drawer, EmptySection, EmptyState, Expandable,
+  IconButton, InfoGroup, InlineAlert, IntelligenceMark, KeyValueGroup, Kbd, Menu, MenuItem, MenuSeparator, Metric,
+  MetricGroup, MobileNavDrawer, MultiSelect, NotificationIndicator, NumberInput, PanelSection, Popover, Progress,
+  QuolyMark, Radio, SearchInput, SectionHeader, SegmentedControl, Select, SideSheet, Sidebar, Skeleton, Spinner,
+  SplitButton, StatusBadge, Switch, TableCell, TablePagination, TableToolbar, Tabs, Tag, TextButton, TextInput,
+  Textarea, Toast, Tooltip, TooltipBubble, ValidationMessage, notify, type DataTableColumn, type NavItem,
+  RfqHeader, RfqLifecycle, RfqSummary, ResponseTracker, SupplierRow, SupplierRowHeader, SupplierQuestion,
+  ReviewWorkspace, ExtractionSummary, EvidenceReference, type ReviewField,
+  ComparisonOverview, ComparisonFocus, type ComparisonGroup, type ComparisonSupplier,
+  DecisionRow, DecisionRowHeader, DecisionCandidate, DecisionSummary, DecisionRationale, AwardConfirmation, AwardRecord, DecisionTimeline,
+  ChartHeader, BarChart, HBarChart, LineChart, DonutChart, DistributionChart, DotPlot, ChartState, ChartNote, ChartDataTable,
+  CompactDonut, SegmentedDistribution, RadialGauge, CompactBars,
+  OverviewStrip, MetricChart, InsightSection, ProgressComposition, ComparativeAnalytics,
+  FormSectionNavigator, IncotermExplorer, DocumentDropzone,
+} from '..'
+import './showcase.scss'
+
+/* Datos ficticios para la sección de gráficas. */
+const CH_MONTHS = [
+  { label: 'Mayo 2026', short: 'May' }, { label: 'Junio 2026', short: 'Jun' }, { label: 'Julio 2026', short: 'Jul' },
+  { label: 'Agosto 2026', short: 'Ago' }, { label: 'Septiembre 2026', short: 'Sep' }, { label: 'Octubre 2026', short: 'Oct' },
+]
+const CH_SENT = [14, 18, 12, 21, 17, 19]
+const CH_RESP = [9, 13, 10, 16, 11, 15]
+const CH_BY_MONTH = CH_MONTHS.map((m, i) => ({ ...m, values: [CH_SENT[i], CH_RESP[i]] }))
+const CH_SERIES = [{ name: 'Enviadas', color: 'violet' }, { name: 'Respondidas', color: 'mint' }]
+const CH_PRICES = [
+  { label: 'Northstar Drinkware', value: 7.95 }, { label: 'Hanyu Steelware Co.', value: 7.4 },
+  { label: 'Altamar Envases Industriales S.A. de C.V.', value: 8.62 }, { label: 'Copa Industrial', value: 8.1 },
+  { label: 'Termos del Bajío', value: null, reason: 'Precio por lote sin tamaño de referencia' },
+]
+const CH_STATUS = [
+  { label: 'Confirmadas', value: 5, color: 'mint' }, { label: 'Por revisar', value: 4, color: 'violet' },
+  { label: 'Información faltante', value: 2, color: 'yellow' }, { label: 'No comparable', value: 1, color: 'teal' },
+]
+const CH_LEAD = [18, 21, 22, 25, 25, 26, 28, 28, 30, 30, 30, 32, 33, 35, 35, 38, 40, 40, 42, 45, 48, 50, 55, 60]
+
+type QuoteRow = {
+  id: string
+  supplier: string
+  ref: string
+  total: number | null
+  currency: string
+  qty: number
+  due: string
+  status: { text: string, tone: 'success' | 'warning' | 'error' | 'info' | 'ai' | 'neutral' }
+}
+
+/* Datos ficticios de demostración. */
+const ROWS: QuoteRow[] = [
+  { id: 'q-1', supplier: 'Empaques del Norte (ficticio)', ref: 'PRV-0056', total: 184250.5, currency: 'MXN', qty: 12000, due: '2026-11-04', status: { text: 'Recibida', tone: 'success' } },
+  { id: 'q-2', supplier: 'Cartonera Andina (ficticio)', ref: 'PRV-0087', total: 176900, currency: 'MXN', qty: 12000, due: '2026-10-30', status: { text: 'Pendiente de revisión', tone: 'ai' } },
+  { id: 'q-3', supplier: 'Corrugados Delta (ficticio)', ref: 'PRV-0142', total: null, currency: 'MXN', qty: 10000, due: '2026-10-27', status: { text: 'Sin respuesta', tone: 'warning' } },
+  { id: 'q-4', supplier: 'Envases Pacífico (ficticio)', ref: 'PRV-0174', total: 9120.75, currency: 'USD', qty: 12000, due: '2026-11-12', status: { text: 'Declinada', tone: 'error' } },
+]
+
+const NAV: NavItem[] = [
+  { value: 'home', label: 'Inicio', icon: 'house' },
+  { value: 'rfq', label: 'Solicitudes', icon: 'files', count: 12 },
+  { value: 'quotes', label: 'Cotizaciones', icon: 'quotes', count: 4 },
+  { value: 'suppliers', label: 'Proveedores', icon: 'users-three' },
+]
+
+const QI_EVIDENCE = { source: 'email' as const, location: 'párrafo 2' }
+const QI_FIELDS: ReviewField[] = [
+  { key: 'price', label: 'Precio unitario', value: '14,20', currency: 'MXN', unit: 'por caja', passage: 'p1', evidence: QI_EVIDENCE },
+  { key: 'lead', label: 'Plazo de entrega', value: '15 días hábiles', passage: 'p2', evidence: QI_EVIDENCE },
+  { key: 'moq', label: 'Cantidad mínima', value: '5.000', unit: 'uds', state: 'confirmed' },
+  { key: 'payment', label: 'Condiciones de pago', value: null, state: 'missing' },
+  { key: 'freight', label: 'Flete', value: 'Incluido', state: 'noncomparable', reason: 'Incoterm distinto (EXW)' },
+]
+const QI_SOURCE = {
+  from: 'Empaques del Norte (ficticio) <ventas@ejemplo.test>',
+  received: '28 oct, 10:42',
+  subject: 'Cotización RFQ-0318',
+  segments: ['Hola Ana,\n\nTe compartimos nuestra propuesta. ', { id: 'p1', text: 'Precio unitario: 14,20 MXN por caja' }, ', con ', { id: 'p2', text: 'entrega en 15 días hábiles' }, '.\n\nSaludos.'],
+}
+
+const CMP_SUPPLIERS: ComparisonSupplier[] = [{"key": "a", "name": "Empaques del Norte", "reference": "PRV-0056", "status": "reviewed", "currency": "MXN"}, {"key": "b", "name": "Cartonera Andina", "reference": "PRV-0087", "status": "review", "currency": "USD"}, {"key": "c", "name": "Corrugados Delta", "reference": "PRV-0142", "status": "pending", "currency": "MXN"}]
+const CMP_GROUPS: ComparisonGroup[] = [{"key": "price", "title": "Precio", "rows": [{"key": "unit", "label": "Precio unitario", "detail": "Por caja", "type": "price", "cells": {"a": {"normalized": {"amount": 14.2, "currency": "MXN", "unit": "/ caja"}, "original": "14,20 MXN", "evidence": {"source": "email", "label": "Correo", "location": "párrafo 2", "passage": "p1"}}, "b": {"normalized": {"amount": 15.8, "currency": "MXN", "unit": "/ caja"}, "original": "0,86 USD", "exception": {"tone": "ai", "text": "Tipo de cambio propuesto por IA"}}, "c": {"normalized": null, "original": "1.420 MXN por lote", "reason": "Unidad distinta (lote de 100)"}}}, {"key": "diff", "label": "Diferencia", "type": "diff", "of": "unit"}]}, {"key": "terms", "title": "Condiciones", "rows": [{"key": "moq", "label": "Cantidad mínima", "type": "qty", "cells": {"a": {"value": "5.000", "unit": "uds"}, "b": {"value": "10.000", "unit": "uds", "exception": {"tone": "warning", "text": "Supera la cantidad solicitada"}}}}, {"key": "lead", "label": "Plazo de entrega", "type": "lead", "cells": {"a": {"value": "15 días"}, "b": {"value": "20 días"}, "c": {"value": "12 días"}}}, {"key": "inc", "label": "Incoterm", "type": "incoterm", "cells": {"a": {"value": "DAP Monterrey"}, "b": {"value": "FOB Callao"}, "c": {"value": "EXW"}}}, {"key": "pay", "label": "Condiciones de pago", "type": "terms", "cells": {"a": {"value": "30 días después de entrega"}, "c": {"value": "50 % anticipo"}}}, {"key": "rev", "label": "Revisión", "type": "review", "cells": {"a": {"status": "reviewed"}, "b": {"status": "review", "detail": "2 campos por revisar"}, "c": {"status": "pending"}}}]}]
+
+const COLOR_ROLES = [
+  'canvas', 'surface', 'surface-elevated', 'surface-sunken', 'surface-inverse', 'brand', 'action-primary-bg',
+  'text-primary', 'text-secondary', 'border', 'border-strong', 'selection-bg',
+  'status-success-text', 'status-warning-text', 'status-error-text', 'status-info-text', 'status-ai-text', 'status-neutral-text',
+]
+
+const TYPE_ROLES = ['display-lg', 'heading-xl', 'heading-md', 'title-lg', 'body-lg', 'body-md', 'body-sm', 'label-lg', 'label-md', 'caption', 'figure-lg', 'data-md']
+
+export default function DesignSystemShowcase() {
+  const { theme, toggleTheme } = useTheme()
+  const [collapsed, setCollapsed] = useState(false)
+  const [nav, setNav] = useState('rfq')
+  const [tableState, setTableState] = useState<'ready' | 'loading' | 'empty' | 'no-results' | 'error'>('ready')
+  const [selected, setSelected] = useState<string[]>([])
+  const [page, setPage] = useState(1)
+  const [segment, setSegment] = useState('all')
+  const [date, setDate] = useState('2026-11-04')
+  const [multi, setMulti] = useState<string[]>(['mx', 'co', 'pe'])
+  const [search, setSearch] = useState('')
+  const [overlay, setOverlay] = useState<null | 'dialog' | 'confirm' | 'sheet' | 'drawer' | 'bottom' | 'nav'>(null)
+  const close = () => setOverlay(null)
+  const [decision, setDecision] = useState<'default' | 'selected' | 'awarded'>('default')
+  const [formSection, setFormSection] = useState('producto')
+  const [dropFile, setDropFile] = useState<{ name: string, size?: number } | null>(null)
+  const [awardOpen, setAwardOpen] = useState(false)
+
+  const columns: DataTableColumn<QuoteRow>[] = [
+    { key: 'supplier', header: 'Proveedor', type: 'identity', sortable: true, minWidth: 220, render: (r) => <TableCell type="identity" value={r.supplier} secondary={r.ref} /> },
+    { key: 'total', header: 'Total', type: 'money', group: 'Oferta', sortable: true, width: 170, render: (r) => <TableCell type="money" value={r.total} currency={r.currency} reason="Sin cotización" /> },
+    { key: 'qty', header: 'Cantidad', type: 'number', group: 'Oferta', width: 130, render: (r) => <TableCell type="number" value={r.qty} unit="uds" /> },
+    { key: 'due', header: 'Vence', type: 'date', sortable: true, width: 140, hideBelow: 720, render: (r) => <TableCell type="date" value={r.due} tone={r.id === 'q-3' ? 'overdue' : undefined} note={r.id === 'q-3' ? 'Hace 2 días' : undefined} /> },
+    { key: 'status', header: 'Estado', type: 'status', width: 190, render: (r) => <TableCell type="status" value={r.status.text} tone={r.status.tone} /> },
+    {
+      key: 'actions', type: 'actions', width: 150,
+      render: () => <IconButton icon="dots-three" label="Más acciones" size="xs" />,
+      primary: () => <TextButton size="sm">Abrir</TextButton>,
+    },
+  ]
+
+  return (
+    <div className="ds-sc">
+      <header className="ds-sc-top">
+        <span className="ds-sc-brand"><QuolyMark size={24} />Quoly 2.0 · Design System</span>
+        <StatusBadge tone="info">Datos ficticios</StatusBadge>
+        <Button variant="secondary" size="sm" icon={theme === 'dark' ? 'circle-half' : 'circle-half'} onClick={toggleTheme}>
+          {theme === 'dark' ? 'Tema claro' : 'Tema oscuro'}
+        </Button>
+      </header>
+
+      <main className="ds-sc-main">
+        <ContentSection title="01 · Color" description="Roles --color-* (claro/oscuro). La marca coral es interacción, foco y selección; nunca «mejor».">
+          <div className="ds-sc-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))' }}>
+            {COLOR_ROLES.map((r) => (
+              <div key={r} className="ds-sc-swatch">
+                <span style={{ background: `var(--color-${r})` }} />
+                <span>{r}</span>
+              </div>
+            ))}
+          </div>
+        </ContentSection>
+
+        <ContentSection title="02 · Tipografía" description="Outfit (display, títulos, cifras destacadas) + Inter (texto, controles, datos). Cifras tabulares.">
+          <div className="ds-sc-stack">
+            {TYPE_ROLES.map((r) => (
+              <div key={r} className="ds-sc-row" style={{ alignItems: 'baseline' }}>
+                <span className="q-type-caption" style={{ width: 120, color: 'var(--color-text-secondary)' }}>{r}</span>
+                <span className={`q-type-${r}`}>{r.startsWith('figure') || r.startsWith('data') ? '1.284.500,00' : 'Comparar ofertas de proveedores'}</span>
+              </div>
+            ))}
+          </div>
+        </ContentSection>
+
+        <ContentSection title="04 · Iconografía" description="Phosphor curado + Quoly Intelligence Graph.">
+          <div className="ds-sc-row">
+            <IntelligenceMark size={24} />
+            <IntelligenceMark size={24} variant="proposed" />
+            <IntelligenceMark size={24} processing />
+            <IntelligenceMark size={32} />
+          </div>
+        </ContentSection>
+
+        <ContentSection title="05A · Acciones">
+          <div className="ds-sc-stack">
+            <div className="ds-sc-row">
+              <Button>Enviar solicitud</Button>
+              <Button variant="secondary" icon="paperclip">Adjuntar</Button>
+              <Button variant="tertiary">Cancelar</Button>
+              <Button variant="destructive" icon="trash">Eliminar</Button>
+              <Button variant="destructive-strong">Confirmar eliminación</Button>
+              <Button loading>Guardando</Button>
+              <Button disabled>Deshabilitado</Button>
+            </div>
+            <div className="ds-sc-row">
+              <Button size="xs">xs</Button>
+              <Button size="sm">sm</Button>
+              <Button size="md">md</Button>
+              <Button size="lg">lg</Button>
+              <Button size="xl" iconEnd="arrow-square-out">xl</Button>
+            </div>
+            <div className="ds-sc-row">
+              <IconButton icon="pencil-simple" label="Editar" />
+              <IconButton icon="copy" label="Copiar" variant="secondary" />
+              <IconButton icon="flag" label="Marcar" selected />
+              <IconButton icon="trash" label="Eliminar" variant="destructive" />
+              <TextButton icon="plus">Agregar proveedor</TextButton>
+              <TextButton tone="destructive">Quitar</TextButton>
+              <SplitButton icon="export" onClick={() => notify({ title: 'Exportación iniciada', children: 'Te avisaremos al terminar.' })}>Exportar decisión</SplitButton>
+              <SplitButton variant="secondary">Exportar</SplitButton>
+            </div>
+            <ButtonGroup
+              attached
+              label="Vista"
+              items={[{ label: 'Tabla', icon: 'columns', selected: true }, { label: 'Tarjetas' }, { icon: 'list', ariaLabel: 'Lista' }]}
+            />
+          </div>
+        </ContentSection>
+
+        <ContentSection title="05A · Campos">
+          <div className="ds-sc-grid">
+            <TextInput label="Nombre de la solicitud" placeholder="Ej. Caja corrugada 40×30" required />
+            <TextInput label="Correo del proveedor" icon="envelope-simple" defaultValue="ventas@ejemplo.test" description="Usaremos este correo para enviar la solicitud." />
+            <TextInput label="Referencia" defaultValue="RFQ-0318" readOnly />
+            <TextInput label="Código postal" defaultValue="0600" status="error" message="El código postal debe tener 5 dígitos." />
+            <NumberInput label="Cantidad" unit="uds" defaultValue="12000" />
+            <CurrencyInput label="Precio objetivo" defaultValue="14.50" currency="MXN" currencies={['MXN', 'USD', 'EUR']} unit="ud" />
+            <Select label="Incoterm" placeholder="Seleccionar" options={['EXW', 'FCA', 'FOB', 'CIF', 'DAP', 'DDP']} />
+            <MultiSelect
+              label="Países"
+              value={multi}
+              onChange={setMulti}
+              options={[{ value: 'mx', label: 'México' }, { value: 'co', label: 'Colombia' }, { value: 'pe', label: 'Perú', meta: '3 proveedores' }, { value: 'cl', label: 'Chile' }]}
+            />
+            <DateInput label="Fecha límite" value={date} onChange={setDate} />
+            <SearchInput label="Buscar" placeholder="Buscar proveedores" value={search} onChange={(e) => setSearch(e.target.value)} onClear={() => setSearch('')} shortcut="/" />
+            <Textarea label="Notas para proveedores" maxLength={280} placeholder="Condiciones de entrega, tolerancias…" optionalLabel="opcional" />
+            <TextInput label="Deshabilitado" placeholder="No editable" disabled />
+          </div>
+        </ContentSection>
+
+        <ContentSection title="05A · Selección">
+          <div className="ds-sc-grid">
+            <div className="ds-sc-stack">
+              <Checkbox label="Incluir flete" defaultChecked />
+              <Checkbox label="Parcial" indeterminate />
+              <Checkbox label="Acepto los términos" status="error" message="Necesario para continuar." />
+              <Checkbox label="Deshabilitado" disabled />
+            </div>
+            <div className="ds-sc-stack" role="radiogroup" aria-label="Entrega">
+              <Radio name="ship" value="a" label="Entrega en planta" description="Proveedor entrega en el destino." defaultChecked />
+              <Radio name="ship" value="b" label="Recolección" />
+              <Radio name="ship" value="c" label="No disponible" disabled />
+            </div>
+            <div className="ds-sc-stack">
+              <Switch label="Recordatorios automáticos" description="Cada 48 h a proveedores sin respuesta." defaultChecked />
+              <Switch label="Con etiquetas" stateLabels={['Sí', 'No']} />
+              <Switch label="Guardando" loading defaultChecked />
+              <SegmentedControl
+                label="Filtro"
+                value={segment}
+                onChange={setSegment}
+                options={[{ value: 'all', label: 'Todas', count: 24 }, { value: 'open', label: 'Abiertas', count: 9 }, { value: 'closed', label: 'Cerradas' }]}
+              />
+            </div>
+          </div>
+        </ContentSection>
+
+        <ContentSection title="05A · Indicadores">
+          <div className="ds-sc-stack">
+            <div className="ds-sc-row">
+              <StatusBadge tone="success">Recibida</StatusBadge>
+              <StatusBadge tone="warning">Por vencer</StatusBadge>
+              <StatusBadge tone="error">Declinada</StatusBadge>
+              <StatusBadge tone="info">Enviada</StatusBadge>
+              <StatusBadge tone="ai">Propuesto por IA</StatusBadge>
+              <StatusBadge>Borrador</StatusBadge>
+              <StatusBadge tone="success" variant="strong">Adjudicada</StatusBadge>
+              <StatusBadge tone="warning" variant="quiet">Pendiente</StatusBadge>
+            </div>
+            <div className="ds-sc-row">
+              <Tag>Corrugado</Tag>
+              <Tag variant="outline" icon="package">Caja RSC</Tag>
+              <Tag variant="plain">Doble pared</Tag>
+              <Chip selected count={4}>Recibidas</Chip>
+              <Chip count={2}>Pendientes</Chip>
+              <Chip removable>México</Chip>
+              <Chip disabled>Deshabilitado</Chip>
+              <Counter value={128} />
+              <Counter value={7} variant="subtle" />
+              <Counter value={3} tone="ai" />
+              <NotificationIndicator label="3 respuestas nuevas" count={3}><IconButton icon="tray-arrow-down" label="Bandeja" /></NotificationIndicator>
+              <NotificationIndicator label="Novedades"><Avatar name="Ana Ruiz" /></NotificationIndicator>
+            </div>
+            <div className="ds-sc-grid">
+              <Progress label="Respuestas" value={3} max={5} variant="ratio" valueText="3 de 5" />
+              <Progress label="Extracción" value={64} valueText="64%" tone="ai" />
+              <Progress label="Pasos" variant="steps" value={2} steps={4} stepLabels={['Datos', 'Proveedores', 'Revisión', 'Envío']} />
+              <Progress label="Procesando" variant="indeterminate" />
+            </div>
+          </div>
+        </ContentSection>
+
+        <ContentSection title="05A · Feedback">
+          <div className="ds-sc-stack">
+            <InlineAlert tone="info" title="Recordatorio:" divider>Dos proveedores no han respondido.</InlineAlert>
+            <InlineAlert prominence="contextual" tone="ai" title="Campos propuestos por IA" actions={<TextButton size="sm">Revisar campos</TextButton>}>
+              Revisa y confirma los valores extraídos antes de comparar.
+            </InlineAlert>
+            <InlineAlert
+              prominence="blocking"
+              tone="error"
+              title="No se pudo enviar la solicitud"
+              resolution="Verifica la conexión de correo en Configuración."
+              actions={<Button variant="secondary" size="sm">Ir a Configuración</Button>}
+              onDismiss={() => undefined}
+            >
+              El servidor de correo rechazó la autenticación.
+            </InlineAlert>
+            <div className="ds-sc-row">
+              <ValidationMessage>Campo obligatorio.</ValidationMessage>
+              <ValidationMessage tone="success">Guardado.</ValidationMessage>
+              <ValidationMessage tone="warning">Revisa la unidad.</ValidationMessage>
+            </div>
+            <div className="ds-sc-row" style={{ alignItems: 'flex-start' }}>
+              <Toast title="Solicitud enviada" onDismiss={() => undefined}>5 proveedores notificados.</Toast>
+              <Toast tone="error" title="Error al guardar" action={<TextButton size="sm">Reintentar</TextButton>} />
+              <Toast tone="loading" title="Extrayendo datos…" />
+            </div>
+            <div className="ds-sc-row">
+              <TooltipBubble shortcut="⌘K">Buscar</TooltipBubble>
+              <Tooltip content="Copiar referencia" shortcut="⌘C"><Button variant="secondary" size="sm">Tooltip</Button></Tooltip>
+              <Popover
+                trigger={<Button variant="secondary" size="sm">Popover</Button>}
+                title="Plazo de respuesta"
+                closable
+                footer={<Button size="sm">Aplicar</Button>}
+              >
+                Los proveedores podrán responder hasta la fecha límite.
+              </Popover>
+              <Menu trigger={<Button variant="secondary" size="sm" iconEnd="caret-down">Menú</Button>}>
+                <MenuItem icon="pencil-simple" shortcut="E">Editar</MenuItem>
+                <MenuItem icon="copy" description="Crea un borrador con los mismos datos">Duplicar</MenuItem>
+                <MenuItem selected>Ordenar por fecha</MenuItem>
+                <MenuSeparator />
+                <MenuItem icon="trash" tone="destructive">Eliminar</MenuItem>
+                <MenuItem disabled>No disponible</MenuItem>
+              </Menu>
+              <Spinner showLabel />
+            </div>
+            <div className="ds-sc-grid">
+              <div className="ds-sc-stack"><Skeleton lines={3} /><Skeleton shape="control" /><Skeleton shape="circle" /></div>
+              <EmptyState title="Sin cotizaciones" actions={<Button size="sm">Crear solicitud</Button>}>Las respuestas de proveedores aparecerán aquí.</EmptyState>
+            </div>
+          </div>
+        </ContentSection>
+
+        <ContentSection title="05A · Auxiliares">
+          <div className="ds-sc-stack">
+            <Breadcrumbs items={[{ label: 'Solicitudes', to: '/_ds' }, { label: 'RFQ-0318', to: '/_ds' }, { label: 'Comparación' }]} />
+            <Tabs label="Secciones" items={[{ value: 'resumen', label: 'Resumen' }, { value: 'prov', label: 'Proveedores', count: 5 }, { value: 'docs', label: 'Documentos' }, { value: 'x', label: 'Historial', disabled: true }]} />
+            <Tabs variant="secondary" items={['Todas', 'Recibidas', 'Pendientes']} />
+            <div className="ds-sc-row">
+              <Avatar name="Ana Ruiz" size={20} />
+              <Avatar name="Ana Ruiz" size={24} />
+              <Avatar name="Ana Ruiz" />
+              <Avatar name="Empaques del Norte" kind="organization" size={40} />
+              <Kbd keys={['⌘', 'K']} />
+              <Divider orientation="vertical" />
+              <span className="q-link">Enlace .q-link</span>
+            </div>
+            <Divider label="o" />
+            <Divider tone="structural" />
+          </div>
+        </ContentSection>
+
+        <ContentSection title="05A · Navegación" actions={<Button variant="secondary" size="sm" onClick={() => setOverlay('nav')}>Abrir cajón móvil</Button>}>
+          <div className="ds-sc-nav">
+            <Sidebar
+              height="100%"
+              collapsed={collapsed}
+              onToggle={() => setCollapsed((c) => !c)}
+              items={NAV}
+              active={nav}
+              onNavigate={setNav}
+              onSearch={() => undefined}
+              user="Ana Ruiz"
+              workspace="Empaques Demo (ficticio)"
+              accountMenu={<><MenuItem icon="user-circle">Perfil</MenuItem><MenuItem icon="door-open">Cerrar sesión</MenuItem></>}
+            />
+            <div style={{ flex: 1, padding: 24 }}>
+              <SectionHeader title="Solicitudes" description="Contenido de ejemplo junto al sidebar." />
+            </div>
+          </div>
+        </ContentSection>
+
+        <ContentSection title="05B.1 · Tabla">
+          <div className="ds-sc-stack">
+            <SegmentedControl
+              label="Estado de la tabla"
+              value={tableState}
+              onChange={setTableState}
+              options={[{ value: 'ready', label: 'Datos' }, { value: 'loading', label: 'Cargando' }, { value: 'empty', label: 'Vacía' }, { value: 'no-results', label: 'Sin resultados' }, { value: 'error', label: 'Error' }]}
+            />
+            <DataTable
+              columns={columns}
+              rows={ROWS}
+              state={tableState}
+              selectable
+              selected={selected}
+              onSelectedChange={setSelected}
+              rowLabel={(r) => r.supplier}
+              onRowClick={() => undefined}
+              empty={{ title: 'Todavía no hay cotizaciones', text: 'Envía una solicitud para recibir ofertas.', action: <Button>Crear solicitud</Button> }}
+              noResults={{ onClear: () => setTableState('ready') }}
+              error={{ onRetry: () => new Promise((resolve) => setTimeout(resolve, 900)).then(() => setTableState('ready')) }}
+              toolbar={(
+                <TableToolbar
+                  title="Cotizaciones"
+                  count={ROWS.length}
+                  context="RFQ-0318 · Caja corrugada 40×30 (ficticio)"
+                  selectedCount={selected.length}
+                  onClearSelection={() => setSelected([])}
+                  selectionActions={<Button size="sm" variant="secondary">Comparar</Button>}
+                  groups={[<SearchInput key="s" size="sm" placeholder="Buscar" aria-label="Buscar" />, <Button key="e" size="sm" variant="secondary" icon="export">Exportar</Button>]}
+                />
+              )}
+              footer={<TablePagination page={page} total={248} pageSize={25} onPageChange={setPage} pageSizeOptions={[25, 50, 100]} />}
+            />
+            <DataTable variant="contained" density="compact" columns={columns.slice(0, 3)} rows={ROWS} />
+          </div>
+        </ContentSection>
+
+        <ContentSection title="05B.2 · Estructura">
+          <div className="ds-sc-split">
+            <div className="ds-sc-stack">
+              <SectionHeader title="Resumen de la solicitud" description="Hechos clave de la RFQ." meta="Actualizado hoy" actions={<Button size="sm" variant="secondary">Editar</Button>} divider />
+              <InfoGroup items={[{ label: 'Proveedores', value: '5', detail: '3 respondieron' }, { label: 'Cantidad', value: '12.000 uds' }, { label: 'Incoterm', value: 'DAP' }, { label: 'Presupuesto', value: null }]} />
+              <MetricGroup dividers>
+                <Metric label="Respuestas" value="3" unit="de 5" />
+                <Metric label="Rango de precio" value="14,20–15,80" unit="MXN / ud" />
+                <Metric label="Días restantes" value="6" marker="var(--color-dv-cat-1)" />
+              </MetricGroup>
+              <KeyValueGroup items={[{ label: 'Material', value: 'Cartón corrugado doble pared' }, { label: 'Dimensiones', value: '40 × 30 × 25 cm' }, { label: 'Tolerancia', value: null }, { label: 'Notas', value: 'Entrega en dos lotes con 15 días de diferencia; etiquetado por lote.', span: true, long: true }]} />
+              <Expandable title="Condiciones comerciales" meta="3 campos">Pago a 30 días, entrega DAP en Monterrey.</Expandable>
+              <Expandable title="Historial" defaultOpen>Solicitud creada y enviada a 5 proveedores.</Expandable>
+              <ContentSection variant="delimited" title="Sección delimitada" density="dense">
+                <EmptySection title="Sin documentos" text="Adjunta planos o especificaciones para los proveedores." action={<Button size="sm" variant="secondary" icon="paperclip">Adjuntar</Button>} dense />
+              </ContentSection>
+              <DetailPanel context="Cotización" title="Empaques del Norte (ficticio)" meta={<><span>Recibida 28 oct</span><span>PDF · 2 páginas</span></>} actions={<Button size="sm">Revisar</Button>}>
+                Oferta por 12.000 cajas con entrega DAP en 15 días hábiles.
+              </DetailPanel>
+            </div>
+            <ContextPanel title="Contexto" icon="info" footer={<TextButton size="sm">Ver todo</TextButton>}>
+              <PanelSection title="Solicitud" divider={false}>
+                <span className="q-type-body-sm">RFQ-0318 · enviada el 21 oct.</span>
+              </PanelSection>
+              <PanelSection title="Proveedores">
+                <span className="q-type-body-sm">5 invitados, 3 respuestas.</span>
+              </PanelSection>
+            </ContextPanel>
+          </div>
+          <div className="ds-sc-row">
+            <Button variant="secondary" onClick={() => setOverlay('dialog')}>Dialog</Button>
+            <Button variant="secondary" onClick={() => setOverlay('confirm')}>ConfirmDialog</Button>
+            <Button variant="secondary" onClick={() => setOverlay('sheet')}>SideSheet</Button>
+            <Button variant="secondary" onClick={() => setOverlay('drawer')}>Drawer</Button>
+            <Button variant="secondary" onClick={() => setOverlay('bottom')}>Drawer inferior</Button>
+          </div>
+          <div className="ds-sc-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(440px, 1fr))' }}>
+            <Dialog inline title="Renombrar solicitud" description="El nombre es visible para los proveedores." footer={<><Button variant="secondary">Cancelar</Button><Button>Guardar</Button></>}>
+              <TextInput label="Nombre" defaultValue="Caja corrugada 40×30" />
+            </Dialog>
+            <ConfirmDialog inline tone="destructive" title="¿Eliminar la solicitud?" description="Esta acción no se puede deshacer." details={[{ label: 'Solicitud', value: 'RFQ-0318' }, { label: 'Proveedores', value: '5' }]} confirmLabel="Eliminar" />
+          </div>
+        </ContentSection>
+        <ContentSection title="05C.1 · Solicitudes y proveedores">
+          <div className="ds-sc-stack">
+            <RfqHeader title="Caja corrugada 40×30 doble pared (ficticio)" reference="RFQ-0318" status="quotes" created="21 oct 2026" action={<Button variant="secondary" icon="columns">Comparar cotizaciones</Button>} />
+            <RfqLifecycle current="quotes" />
+            <RfqSummary quantity="12.000" unit="uds" deadline="4 nov 2026" deadlineDetail="En 6 días" currency="MXN" suppliersResponded={3} suppliersTotal={5} leading={{ price: '14,20 MXN / ud', supplier: 'Empaques del Norte (ficticio)' }} />
+            <div className="ds-sc-grid"><ResponseTracker responded={3} total={5} /><ResponseTracker responded={9} total={20} /></div>
+            <div>
+              <SupplierRowHeader />
+              <SupplierRow name="Empaques del Norte (ficticio)" contact="ventas@ejemplo.test" status="responded" activity="Respondió hace 2 h" price="14,20 MXN" priceDetail="por unidad" onClick={() => undefined} />
+              <SupplierRow name="Cartonera Andina (ficticio)" status="question" activity="Ayer" onClick={() => undefined} />
+              <SupplierRow name="Corrugados Delta (ficticio)" contact="compras@ejemplo.test" status="viewed" activity="Vio la solicitud el lunes" last />
+            </div>
+            <div>
+              <SupplierQuestion sender="Cartonera Andina (ficticio)" channel="Correo" received="Ayer, 14:20" question="¿La entrega puede ser en dos lotes?" context="Sobre: condiciones de entrega" onRespond={() => undefined} />
+              <SupplierQuestion sender="Empaques del Norte (ficticio)" question="¿Aceptan cartón reciclado?" state="answered" answer="Sí, siempre que cumpla ECT 32." answeredBy="Respondida por Ana Ruiz" last />
+            </div>
+          </div>
+        </ContentSection>
+        <ContentSection title="05C.2 · Quote Intelligence y revisión humana">
+          <div className="ds-sc-stack">
+            <div className="ds-sc-row"><EvidenceReference {...QI_EVIDENCE} onClick={() => undefined} /><EvidenceReference {...QI_EVIDENCE} /></div>
+            <ExtractionSummary status="processing" />
+            <ReviewWorkspace fields={QI_FIELDS} source={QI_SOURCE} supplier="Empaques del Norte (ficticio)" meta="Recibida 28 oct" onOpenSource={() => undefined} />
+          </div>
+        </ContentSection>
+        <ContentSection title="05C.3 · Comparación de cotizaciones">
+          <div className="ds-sc-stack">
+            <ComparisonOverview reference="RFQ-0318" product="Caja corrugada 40×30 (ficticio)" received={3} comparable={2} review={1} />
+            <ComparisonFocus demo suppliers={CMP_SUPPLIERS} groups={CMP_GROUPS} requested="12.000 cajas · DAP Monterrey" sources={{ a: QI_SOURCE }} />
+          </div>
+        </ContentSection>
+        <ContentSection title="05C.4 · Decisión y adjudicación">
+          <div className="ds-sc-stack">
+            <div>
+              <DecisionRowHeader />
+              <DecisionRow
+                state={decision}
+                supplier="Empaques del Norte (ficticio)"
+                quotation="COT-1182"
+                price={{ amount: 14.2, currency: 'MXN' }}
+                moq="5.000"
+                leadTime="15 d"
+                incoterm="DAP"
+                recordedAt="28 oct 2026"
+                onSelect={() => setDecision('selected')}
+                onChange={() => setDecision('default')}
+                onConfirm={() => setAwardOpen(true)}
+                onView={() => setDecision('default')}
+              />
+              <DecisionRow supplier="Cartonera Andina (ficticio)" quotation="COT-1190" price={{ amount: 15.8, currency: 'MXN' }} moq="10.000" leadTime="20 d" incoterm="FOB" onSelect={() => undefined} />
+            </div>
+            <DecisionCandidate name="Corrugados Delta (ficticio)" reference="PRV-0142" status="pending" price={null} priceReason="Unidad distinta (lote de 100)" facts={[{ label: 'MOQ', value: '100 lotes' }, { label: 'Plazo', value: '12 días' }]} onSelect={() => undefined} onViewQuote={() => undefined} />
+            <DecisionSummary supplier="Empaques del Norte (ficticio)" reference="PRV-0056" price={{ amount: 14.2, currency: 'MXN', unit: '/ caja' }} original="14,20 MXN" facts={[{ label: 'MOQ', value: '5.000 uds' }, { label: 'Plazo', value: '15 días' }, { label: 'Incoterm', value: 'DAP' }]} />
+            <DecisionRationale maxLength={500} />
+            <AwardRecord supplier="Empaques del Norte (ficticio)" rfq="RFQ-0318" quotation="COT-1182" price={{ amount: 14.2, currency: 'MXN', unit: '/ caja' }} facts={[{ label: 'MOQ', value: '5.000 uds' }, { label: 'Plazo', value: '15 días' }, { label: 'Incoterm', value: 'DAP' }]} recordedBy="Ana Ruiz" recordedAt="28 oct 2026, 16:05" date="28 oct 2026" rationale="Mejor plazo de entrega y condiciones DAP." onViewQuote={() => undefined} />
+            <DecisionTimeline events={[{ date: '28 oct', time: '16:05', title: 'Adjudicación registrada', actor: 'Ana Ruiz' }, { date: '27 oct', time: '11:30', title: 'Proveedor seleccionado', actor: 'Ana Ruiz' }, { date: '21 oct', title: 'Solicitud enviada' }]} />
+          </div>
+          <AwardConfirmation
+            open={awardOpen}
+            onCancel={() => setAwardOpen(false)}
+            onConfirm={() => new Promise((resolve) => setTimeout(resolve, 900)).then(() => {
+              setAwardOpen(false)
+              setDecision('awarded')
+            })}
+            supplier="Empaques del Norte (ficticio)"
+            reference="PRV-0056"
+            price={{ amount: 14.2, currency: 'MXN', unit: '/ caja' }}
+          />
+        </ContentSection>
+
+        <ContentSection title="06A · Gráficas" description="Datos ficticios. Escalas desde cero, sin rankings; un valor ausente es texto, nunca cero.">
+          <div className="ds-sc-stack">
+            <div>
+              <ChartHeader
+                context="Últimos 6 meses"
+                title="Solicitudes enviadas y respondidas"
+                description="Conteo mensual de solicitudes de cotización."
+                value="101"
+                unit="solicitudes"
+                comparison="74 con al menos una respuesta"
+              />
+              <BarChart data={CH_BY_MONTH} series={CH_SERIES} yLabel="Solicitudes" ariaLabel="Solicitudes enviadas y respondidas por mes" />
+            </div>
+            <LineChart
+              periods={CH_MONTHS}
+              area
+              series={[{ name: 'Respondidas', color: 'violet', values: [9, 13, null, 16, 11, 15] }]}
+              ariaLabel="Respuestas por mes"
+            />
+            <ChartNote>{'Julio sin datos: la sincronización del buzón estuvo detenida.'}</ChartNote>
+            <HBarChart rows={CH_PRICES} unit="USD" decimals={2} color="blue" ariaLabel="Precio unitario por proveedor" axisLabel="USD / unidad" />
+            <DotPlot rows={CH_PRICES} unit="USD" valueLabel="Precio unitario" ariaLabel="Precio unitario por proveedor" basis="Precio por unidad, sin flete" />
+            <div className="ds-sc-grid">
+              <DonutChart segments={CH_STATUS} size="compact" centerLabel="cotizaciones" ariaLabel="Estado de las cotizaciones" />
+              <DistributionChart values={CH_LEAD} unit="días" showQuartiles ariaLabel="Tiempo de entrega" />
+            </div>
+            <ChartDataTable caption="Solicitudes por mes" columns={['Mes', 'Enviadas', 'Respondidas']} rows={CH_BY_MONTH.map((d) => [d.label, ...d.values])} />
+            <div className="ds-sc-grid">
+              <CompactDonut segments={CH_STATUS} caption="12 cotizaciones recibidas" />
+              <SegmentedDistribution unit="USD" categories={[{ label: 'Confirmadas', value: 48200, color: 'mint' }, { label: 'Por revisar', value: 31750, color: 'violet' }, { label: 'Faltante', value: 9800, color: 'yellow' }]} />
+              <RadialGauge value={9} total={12} startLabel="0" endLabel="12" caption="9 de 12 cotizaciones revisadas" />
+              <CompactBars title="Respuestas" value="74" unit="este semestre" data={CH_MONTHS.map((m, i) => ({ ...m, value: CH_RESP[i] }))} />
+            </div>
+            <div className="ds-sc-grid">
+              <ChartState state="loading" shape="line" height={160} />
+              <ChartState state="noresults" onClear={() => undefined} narrow />
+            </div>
+          </div>
+        </ContentSection>
+
+        <ContentSection title="06B · Composiciones" description="Combinan las gráficas 06A sin modificarlas. Sin rankings; disponible ≠ confirmado.">
+          <div className="ds-sc-stack">
+            <OverviewStrip
+              metric={{ label: 'Cotizaciones recibidas', value: '12', unit: 'de 15 solicitadas', detail: '3 proveedores sin respuesta' }}
+              distribution={{ unit: 'USD', categories: [{ label: 'Confirmadas', value: 48200, color: 'mint' }, { label: 'Por revisar', value: 31750, color: 'violet' }, { label: 'Faltante', value: 9800, color: 'yellow' }] }}
+              gauge={{ value: 9, total: 12, caption: '9 de 12 revisadas' }}
+            />
+            <MetricChart
+              heading="Respuestas por mes"
+              description="Solicitudes con al menos una cotización."
+              value="74"
+              unit="respuestas"
+              comparison="De 101 solicitudes enviadas"
+              chart={<BarChart data={CH_MONTHS.map((m, i) => ({ ...m, value: CH_RESP[i] }))} height={220} ariaLabel="Respuestas por mes" />}
+            />
+            <InsightSection
+              context="Precio unitario"
+              heading="Rango de precios"
+              statement="Las cuatro cotizaciones comparables están entre 7.40 y 8.62 USD por unidad."
+              meta="Un proveedor no es comparable: cotizó por lote."
+              points={[{ label: 'Mínimo', value: '7.40', unit: 'USD' }, { label: 'Máximo', value: '8.62', unit: 'USD' }, { label: 'Comparables', value: '4' }]}
+              chart={<DotPlot rows={CH_PRICES} unit="USD" valueLabel="Precio unitario" ariaLabel="Precio unitario por proveedor" />}
+            />
+            <ProgressComposition
+              title="Cotizaciones procesadas"
+              value={9}
+              total={12}
+              unit="cotizaciones"
+              statement="Disponible no significa confirmado."
+              gauge={{ value: 9, total: 12 }}
+              groups={[
+                { label: 'Disponibilidad', items: [{ label: 'Con precio', value: 7, kind: 'confirmed' }, { label: 'Por revisar', value: 3, kind: 'pending' }, { label: 'Sin dato', value: 2, kind: 'missing' }] },
+                { label: 'Revisión humana', items: [{ label: 'Confirmadas', value: 5, kind: 'confirmed' }, { label: 'Pendientes', value: 4, kind: 'pending' }] },
+              ]}
+            />
+            <ComparativeAnalytics
+              title="Precio y tiempo de respuesta"
+              description="Escala común; la posición no indica preferencia."
+              views={[
+                {
+                  value: 'precio',
+                  label: 'Precio',
+                  chart: <HBarChart rows={CH_PRICES} unit="USD" decimals={2} color="blue" ariaLabel="Precio unitario" />,
+                  facts: [{ label: 'Rango', value: '7.40–8.62', unit: 'USD' }, { label: 'Comparables', value: '4 de 5' }],
+                  note: 'Termos del Bajío cotizó por lote.',
+                },
+                { value: 'tiempo', label: 'Tiempo', chart: <DistributionChart values={CH_LEAD} unit="días" ariaLabel="Tiempo de entrega" /> },
+              ]}
+            />
+          </div>
+        </ContentSection>
+
+        <ContentSection title="07 · Formularios" description="Navegación por anclas, Incoterm opcional y documento de especificaciones. No validan ni envían.">
+          <div className="ds-sc-stack">
+            <FormSectionNavigator
+              active={formSection}
+              onNavigate={setFormSection}
+              sections={[
+                { id: 'producto', title: 'Producto', description: 'Especificaciones', icon: 'package' },
+                { id: 'entrega', title: 'Entrega', description: 'Incoterm y lugar', icon: 'truck' },
+                { id: 'requisitos', title: 'Requisitos', description: 'Documento opcional', icon: 'file-text' },
+              ]}
+            />
+            <IncotermExplorer />
+            <DocumentDropzone
+              accept=".pdf,.xlsx,.docx"
+              file={dropFile}
+              onSelect={(f) => { const one = Array.isArray(f) ? f[0] : f; setDropFile({ name: one.name, size: one.size }) }}
+              onRemove={() => setDropFile(null)}
+            />
+          </div>
+        </ContentSection>
+      </main>
+
+      <Dialog open={overlay === 'dialog'} onClose={close} title="Renombrar solicitud" footer={<><Button variant="secondary" onClick={close}>Cancelar</Button><Button onClick={close}>Guardar</Button></>}>
+        <TextInput label="Nombre" defaultValue="Caja corrugada 40×30" />
+      </Dialog>
+      <ConfirmDialog open={overlay === 'confirm'} title="¿Adjudicar a Empaques del Norte?" description="Se notificará al proveedor." details={[{ label: 'Total', value: '184.250,50 MXN' }]} onCancel={close} onConfirm={close} confirmLabel="Adjudicar" />
+      <SideSheet open={overlay === 'sheet'} onClose={close} title="Detalle del proveedor" description="Empaques del Norte (ficticio)" footer={<Button onClick={close}>Listo</Button>}>
+        <KeyValueGroup columns={1} items={[{ label: 'Contacto', value: 'ventas@ejemplo.test' }, { label: 'País', value: 'México' }]} />
+      </SideSheet>
+      <Drawer open={overlay === 'drawer'} onClose={close} title="Filtros" footer={<><Button variant="secondary" onClick={close}>Limpiar</Button><Button onClick={close}>Aplicar</Button></>}>
+        <Checkbox label="Solo con respuesta" />
+        <Select label="Estado" options={['Todas', 'Recibidas', 'Pendientes']} />
+      </Drawer>
+      <Drawer side="bottom" open={overlay === 'bottom'} onClose={close} title="Acciones" footer={<Button fullWidth onClick={close}>Cerrar</Button>}>
+        <span className="q-type-body-md">Cajón inferior para móvil.</span>
+      </Drawer>
+      <MobileNavDrawer
+        open={overlay === 'nav'}
+        onOpenChange={(o) => setOverlay(o ? 'nav' : null)}
+        items={NAV}
+        active={nav}
+        onNavigate={setNav}
+        onSearch={() => undefined}
+        user="Ana Ruiz"
+        workspace="Empaques Demo (ficticio)"
+      />
+    </div>
+  )
+}

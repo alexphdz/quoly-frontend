@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test'
-import { pickOption } from './helpers/select'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { e2eCredentials, gotoAuthenticated } from './helpers/auth'
@@ -16,9 +15,9 @@ test.describe('Documents QA (module 6)', () => {
     const product = `E2E Spec PDF ${stamp}`
 
     await gotoAuthenticated(page, '/rfqs/new')
-    await page.getByPlaceholder('What you are sourcing').fill(product)
+    await page.locator('input[name="name"]').fill(product)
     await page.locator('input[name="quantity"]').fill('800')
-    await pickOption(page, 'base_unit', 'kg')
+    await page.locator('select[name="base_unit"]').selectOption('kg')
     await page.locator('input[type="file"][accept*="pdf"]').setInputFiles(specPdf)
     await page.getByRole('button', { name: 'Create request' }).click()
     await expect(page).toHaveURL(/\/rfqs\/[a-f0-9-]+/, { timeout: 25_000 })
@@ -51,9 +50,9 @@ test.describe('Documents QA (module 6)', () => {
     skipNoCreds()
     const stamp = Date.now()
     await gotoAuthenticated(page, '/rfqs/new')
-    await page.getByPlaceholder('What you are sourcing').fill(`E2E Text Spec ${stamp}`)
+    await page.locator('input[name="name"]').fill(`E2E Text Spec ${stamp}`)
     await page.locator('input[name="quantity"]').fill('500')
-    await pickOption(page, 'base_unit', 'kg')
+    await page.locator('select[name="base_unit"]').selectOption('kg')
     await page.locator('textarea[name="technical_requirements"]').fill('Assay 99% minimum.')
     await page.getByRole('button', { name: 'Create request' }).click()
     await expect(page).toHaveURL(/\/rfqs\/[a-f0-9-]+/, { timeout: 25_000 })

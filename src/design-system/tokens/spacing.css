@@ -1,0 +1,66 @@
+/* Quoly 2.0 · Fundamentos espaciales (Fase 03): espaciado, layout, densidad, geometría, bordes, superficies, elevación, dimensiones.
+   Documentación: guidelines/spatial-system.md. Colores y tipografía: Fases 01–02, sin cambios. */
+:root{
+/* 1 · Escala de espaciado (base 4px) */
+--space-0:0px;--space-0-5:2px;--space-1:4px;--space-1-5:6px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-20:80px;--space-24:96px;
+/* 2 · Espaciado semántico — densidad default */
+--gap-micro:var(--space-1);--gap-inline:var(--space-2);--gap-label:var(--space-1-5);--gap-label-inline:var(--space-3);--gap-stack:var(--space-3);--gap-field:var(--space-4);--gap-group:var(--space-6);--gap-section:var(--space-10);
+--gap-heading-page:var(--space-6);--gap-heading-section:var(--space-4);--gap-heading-group:var(--space-2);
+--gap-actions:var(--space-2);--gap-action-groups:var(--space-4);--gap-data-columns:var(--space-6);
+--inset-region-x:var(--space-6);--inset-region-y:var(--space-5);--inset-context:var(--space-4);--inset-dialog:var(--space-6);--inset-floating:var(--space-1);--inset-floating-item-x:var(--space-3);
+--row-height:44px;--row-inset-x:var(--space-3);--row-inset-y:var(--space-2);
+--gap-editorial-section:clamp(4rem, 2.5rem + 4vw, 6rem);/* @kind spacing */--gap-editorial-block:clamp(2rem, 1.5rem + 1.5vw, 3rem);/* @kind spacing */
+/* 3 · Layout */
+--grid-columns:4;/* @kind other */--grid-gutter:16px;--page-margin:clamp(1rem, 0.6rem + 2vw, 2.5rem);/* @kind spacing */
+--width-reading:720px;--width-form:640px;--width-context:360px;--width-context-min:320px;--width-context-max:400px;--width-main-min:560px;
+--width-compare-column-min:200px;--width-compare-column-max:320px;--width-compare-label:220px;
+--width-dialog-sm:400px;--width-dialog-md:560px;--width-dialog-lg:720px;--width-floating-min:200px;--width-floating-max:360px;
+--width-workspace-max:1440px;--width-wide-max:1680px;--width-editorial-max:1200px;
+--breakpoint-sm:480px;/* @kind other */--breakpoint-md:768px;/* @kind other */--breakpoint-lg:1024px;/* @kind other */--breakpoint-xl:1280px;/* @kind other */--breakpoint-2xl:1536px;/* @kind other */
+/* 4 · Geometría */
+--radius-none:0px;--radius-xs:3px;--radius-sm:5px;--radius-md:8px;--radius-lg:12px;--radius-xl:16px;--radius-2xl:20px;--radius-full:9999px;
+--radius-indicator:var(--radius-xs);--radius-tag:var(--radius-sm);--radius-control-compact:var(--radius-sm);--radius-control:var(--radius-md);--radius-region:var(--radius-lg);--radius-floating:var(--radius-lg);--radius-dialog:var(--radius-xl);--radius-editorial:var(--radius-2xl);
+/* 5 · Bordes */
+--border-width-0:0px;--border-width-1:1px;--border-width-2:2px;
+/* 6 · Dimensiones */
+--size-control-xs:32px;--size-control-sm:36px;--size-control-md:40px;--size-control-lg:44px;--size-control-xl:48px;
+--size-icon-xs:12px;--size-icon-sm:14px;--size-icon-md:16px;--size-icon-lg:20px;--size-icon-xl:24px;--size-icon-2xl:32px;
+--size-target-min:24px;--size-target-touch:44px;--gap-target-min:8px;
+--ratio-document:1 / 1.414;/* @kind other */--ratio-media:16 / 9;/* @kind other */--ratio-square:1 / 1;/* @kind other */
+/* 7 · Capas */
+--layer-base:0;/* @kind other */--layer-sticky:10;/* @kind other */--layer-floating:100;/* @kind other */--layer-overlay:1000;/* @kind other */--layer-toast:1100;/* @kind other */
+}
+/* 5b · Bordes y foco compuestos — redeclarados en cada ámbito de tema para resolver con los colores locales */
+:root,[data-theme]{
+--border-divider:1px solid var(--color-divider);--border-default:1px solid var(--color-border);--border-control:1px solid var(--color-border-strong);--border-structural:1px solid var(--color-border-structural);--border-emphasis:2px solid var(--color-border-structural);--border-selected:2px solid var(--color-selection-indicator);
+--focus-ring-width:2px;--focus-ring-offset:2px;--focus-ring:0 0 0 2px var(--color-focus-ring-offset),0 0 0 4px var(--color-focus-ring);
+}
+/* 8 · Superficies y elevación — light */
+:root,[data-theme="light"]{
+--surface-canvas:var(--color-canvas);/* @kind color */--surface-content:var(--color-surface);/* @kind color */--surface-context:var(--color-surface-sunken);/* @kind color */--surface-band:var(--color-surface-elevated);/* @kind color */
+--elevation-0:none;/* @kind shadow */
+--elevation-1:0 1px 2px 0 rgba(21,23,29,.06);/* @kind shadow */
+--elevation-2:0 1px 3px 0 rgba(21,23,29,.06),0 8px 24px -6px rgba(21,23,29,.14);/* @kind shadow */
+--elevation-3:0 2px 6px 0 rgba(21,23,29,.06),0 24px 56px -12px rgba(21,23,29,.24);/* @kind shadow */
+--elevation-1-bg:var(--color-surface);/* @kind color */--elevation-2-bg:var(--color-surface);/* @kind color */--elevation-3-bg:var(--color-surface);/* @kind color */
+--elevation-1-border:var(--color-border);/* @kind color */--elevation-2-border:var(--color-border);/* @kind color */--elevation-3-border:transparent;/* @kind color */
+}
+/* 8 · Superficies y elevación — dark: la elevación sube en claridad; el borde la define, la sombra solo la refuerza */
+[data-theme="dark"]{
+--surface-canvas:var(--color-canvas);/* @kind color */--surface-content:var(--color-surface);/* @kind color */--surface-context:var(--color-surface-sunken);/* @kind color */--surface-band:var(--color-surface-elevated);/* @kind color */
+--elevation-0:none;/* @kind shadow */
+--elevation-1:0 1px 2px 0 rgba(0,0,0,.32);/* @kind shadow */
+--elevation-2:inset 0 1px 0 0 rgba(246,246,247,.05),0 8px 24px -6px rgba(0,0,0,.56);/* @kind shadow */
+--elevation-3:inset 0 1px 0 0 rgba(246,246,247,.06),0 24px 56px -12px rgba(0,0,0,.72);/* @kind shadow */
+--elevation-1-bg:var(--color-surface);/* @kind color */--elevation-2-bg:var(--color-surface-elevated);/* @kind color */--elevation-3-bg:var(--color-surface-elevated);/* @kind color */
+--elevation-1-border:var(--color-border);/* @kind color */--elevation-2-border:var(--color-border);/* @kind color */--elevation-3-border:var(--color-border);/* @kind color */
+}
+/* 9 · Densidad */
+[data-density="comfortable"]{--gap-stack:var(--space-4);--gap-field:var(--space-5);--gap-group:var(--space-8);--gap-section:var(--space-12);--gap-heading-section:var(--space-5);--inset-region-x:var(--space-8);--inset-region-y:var(--space-6);--inset-context:var(--space-5);--inset-dialog:var(--space-8);--row-height:56px;--row-inset-x:var(--space-4);--row-inset-y:var(--space-3);--gap-data-columns:var(--space-8)}
+[data-density="compact"]{--gap-stack:var(--space-2);--gap-field:var(--space-3);--gap-group:var(--space-5);--gap-section:var(--space-8);--gap-heading-section:var(--space-3);--inset-region-x:var(--space-4);--inset-region-y:var(--space-3);--inset-context:var(--space-3);--inset-dialog:var(--space-5);--row-height:36px;--row-inset-x:var(--space-2);--row-inset-y:var(--space-1-5);--gap-data-columns:var(--space-4)}
+/* 10 · Grid responsive */
+@media (min-width:768px){:root{--grid-columns:8;/* @kind other */--grid-gutter:24px}}
+@media (min-width:1024px){:root{--grid-columns:12;/* @kind other */}}
+@media (min-width:1536px){:root{--grid-gutter:32px}}
+@media (pointer:coarse){:root{--size-target-min:44px}}
+:root,[data-theme]{--shadow-popover:var(--elevation-2);/* @kind shadow */--shadow-modal:var(--elevation-3);/* @kind shadow */--shadow-doc:var(--elevation-1);/* @kind shadow */}

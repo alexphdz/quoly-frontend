@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next'
 import { useEnumLabels } from '../i18n/labels'
 import { useFormat } from '../lib/format'
 import { useUnreadCount } from '../hooks/useInboundStream'
-import { Alert, Badge, Button, Card, Dialog, EmptyState, ErrorState, PageSkeleton, ProgressBar, StatusBadge, toast } from '../components/ui'
+import { Alert, Badge, Button, Card, Dialog, EmptyState, ErrorState, FormFeedback, PageSkeleton, ProgressBar, StatusBadge, toast } from '../components/ui'
 
 export default function RFQDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -63,7 +63,7 @@ export default function RFQDetailPage() {
   const draftQuotes = quotes?.filter(q => q.status === 'draft').length ?? 0
   const progress = suppliers.length ? (confirmedQuotes / suppliers.length) * 100 : 0
   const attentionMessages = inbound?.filter(message => message.status === 'unmatched' || message.status === 'error').length ?? 0
-  const unreadMessages = id ? unread?.by_rfq[id] ?? 0 : 0
+  const unreadMessages = id ? unread?.by_rfq?.[id] ?? 0 : 0
   // Show the comparison preview as soon as there is a confirmed quote; runners-up and spread only appear with 2+.
   const comparisonLocale = i18n.resolvedLanguage === 'es' ? 'es' : 'en'
   const { data: comparison } = useComparison(id!, comparisonLocale, confirmedQuotes >= 1)
@@ -320,7 +320,7 @@ export default function RFQDetailPage() {
               <AddSupplierFromDirectory suppliers={directorySuppliers ?? []} isLoading={directoryLoading} isPending={addSupplierFromDirectory.isPending} onAdd={(supplierCompanyId) => addSupplierFromDirectory.mutate(supplierCompanyId)} />
               <hr className="border-[var(--border-subtle)]" />
               <AddSupplierForm onSubmit={handleAddSupplier} isPending={addSupplier.isPending} error={addSupplier.error} />
-              {addSupplierFromDirectory.error && <Alert tone="error">{t('detail.directoryAddError')}</Alert>}
+              {addSupplierFromDirectory.error && <FormFeedback>{t('detail.directoryAddError')}</FormFeedback>}
             </div>
           </Dialog>
         </Card>

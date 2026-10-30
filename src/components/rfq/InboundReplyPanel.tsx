@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useReplyToInbound } from '../../hooks/useInboundActions'
+import { useReplyToInbound, useSuggestReply } from '../../hooks/useInboundActions'
 import type { ApiError } from '../../api/client'
 
 interface Props {
@@ -12,7 +12,9 @@ interface Props {
 export default function InboundReplyPanel({ inboundId, rfqId, onClose }: Props) {
   const { t } = useTranslation('inbox')
   const [body, setBody] = useState('')
+  const [suggestion, setSuggestion] = useState<string | null>(null)
   const reply = useReplyToInbound(inboundId, rfqId)
+  const suggest = useSuggestReply(inboundId)
 
   const handleSend = () => {
     if (!body.trim()) return
@@ -21,8 +23,63 @@ export default function InboundReplyPanel({ inboundId, rfqId, onClose }: Props) 
     })
   }
 
+  // The AI draft is only generated on explicit request; the buyer always
+  // reviews, edits, and sends. Nothing is auto-sent.
+  const handleSuggest = () => {
+    suggest.mutate(undefined, {
+      onSuccess: data => setSuggestion(data.suggested_reply),
+    })
+  }
+
+  const takeSuggestion = () => {
+    if (suggestion) {
+      setBody(suggestion)
+      setSuggestion(null)
+    }
+  }
+
   return (
     <div className="ds-ask">
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
+        <button
+          type="button"
+          onClick={handleSuggest}
+          disabled={suggest.isPending}
+          className="ds-btn ds-btn-secondary"
+        >
+          {suggest.isPending ? t('reply_panel.suggesting') : t('reply_panel.suggest')}
+        </button>
+      </div>
+
+      {suggestion && (
+        <div
+          style={{
+            border: '1px solid var(--line-strong)',
+            borderRadius: 8,
+            background: 'var(--bg-subtle)',
+            padding: '10px 12px',
+            marginBottom: 10,
+          }}
+        >
+          <p className="ds-meta" style={{ marginBottom: 6 }}>{t('reply_panel.suggestionLabel')}</p>
+          <p style={{ whiteSpace: 'pre-wrap', margin: '0 0 10px', color: 'var(--tx-1)' }}>{suggestion}</p>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button type="button" onClick={takeSuggestion} className="ds-btn ds-btn-primary">
+              {t('reply_panel.useSuggestion')}
+            </button>
+            <button type="button" onClick={() => setSuggestion(null)} className="ds-btn ds-btn-quiet">
+              {t('reply_panel.dismissSuggestion')}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {suggest.error && (
+        <p className="ds-meta" style={{ color: 'var(--danger-fg)', marginBottom: 8 }}>
+          {t('reply_panel.suggestFailed')}
+        </p>
+      )}
+
       <textarea
         value={body}
         onChange={event => setBody(event.target.value)}

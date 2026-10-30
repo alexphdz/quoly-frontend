@@ -109,7 +109,7 @@ export function requestAttentionEvents(
       kind: 'ask',
       rfq,
       at: latest.created_at,
-      to: `/rfqs/${rfq.id}?tab=overview#needs-answer`,
+      to: `/rfqs/${rfq.id}?tab=replies#needs-answer`,
       supplierName: latest.supplier_name?.trim() || undefined,
       question: latest.question?.trim() || undefined,
       askCount: group.length,
@@ -125,7 +125,7 @@ export function requestAttentionEvents(
       key: `need-${rfq.id}`,
       kind: 'ask',
       rfq,
-      to: `/rfqs/${rfq.id}?tab=overview#needs-answer`,
+      to: `/rfqs/${rfq.id}?tab=replies#needs-answer`,
       askCount: need,
       supplierNames: [],
     })

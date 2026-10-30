@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { DropdownMenu } from 'radix-ui'
-import { Icon } from '../ds'
+import { IconButton, MenuItem, MenuSeparator, MobileNavDrawer, QuolyMark, Sidebar, type NavItem } from '../../design-system'
 import CommandPalette, { useCommandPalette } from './CommandPalette'
+import type { ShellLayout } from './useShellLayout'
 import { useAuth } from '../../hooks/useAuth'
 import { useRFQs } from '../../hooks/useRFQs'
 import { useAllQuotes } from '../../hooks/useQuotes'
@@ -17,141 +17,98 @@ function countRequestsNeedingBuyer(rfqs: { status: string; supplier_stage_counts
   }).length
 }
 
-function Item({
-  to,
-  icon,
-  label,
-  count,
-  end,
-}: {
-  to: string
-  icon: string
-  label: string
-  count?: number
-  end?: boolean
-}) {
-  return (
-    <NavLink to={to} end={end} className={({ isActive }) => `nav-item${isActive ? ' is-active' : ''}`}>
-      <Icon name={icon} size={18} className="nav-item-icon" />
-      <span className="nav-item-text">{label}</span>
-      {count != null && count > 0 && <span className="nav-badge">{count}</span>}
-    </NavLink>
-  )
+/** Destino activo del menú según la ruta. */
+function activeFor(pathname: string) {
+  if (pathname === '/') return 'home'
+  if (pathname.startsWith('/requests') || pathname.startsWith('/rfqs')) return 'rfq'
+  if (pathname.startsWith('/quotations') || pathname.startsWith('/quotes')) return 'quotes'
+  if (pathname.startsWith('/suppliers')) return 'suppliers'
+  return undefined
 }
 
-export default function Navbar() {
+export default function Navbar({ layout, collapsed, onToggle }: { layout: ShellLayout, collapsed: boolean, onToggle: () => void }) {
   const { t } = useTranslation('common')
   const { user, logout } = useAuth()
   const { data: rfqs } = useRFQs()
   const { data: allQuotes } = useAllQuotes()
   const location = useLocation()
   const navigate = useNavigate()
-  const [open, setOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const palette = useCommandPalette()
   const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
 
   useEffect(() => {
-    setOpen(false)
+    setDrawerOpen(false)
   }, [location.pathname])
 
-  const requestsAttention = useMemo(
-    () => countRequestsNeedingBuyer(rfqs ?? []),
-    [rfqs],
-  )
+  const requestsAttention = useMemo(() => countRequestsNeedingBuyer(rfqs ?? []), [rfqs])
   const toReviewCount = allQuotes?.filter(q => q.status === 'draft').length ?? 0
   const workspaceOrg = useMemo(() => {
-    const list = rfqs ?? []
-    for (const rfq of list) {
+    for (const rfq of rfqs ?? []) {
       const company = rfq.header_data?.buyer_company?.trim()
       if (company) return company
     }
-    return null
+    return undefined
   }, [rfqs])
 
+  const items: NavItem[] = [
+    { value: 'home', label: t('nav.dashboard'), icon: 'house', to: '/' },
+    { value: 'rfq', label: t('nav.rfqs'), icon: 'files', to: '/requests', count: requestsAttention || undefined },
+    { value: 'quotes', label: t('nav.quotations'), icon: 'quotes', to: '/quotations', count: toReviewCount || undefined },
+    { value: 'suppliers', label: t('nav.suppliers'), icon: 'users-three', to: '/suppliers' },
+  ]
+  const active = activeFor(location.pathname)
+  const settingsActive = location.pathname.startsWith('/settings')
   const displayName = user ? displayNameFromEmail(user.email) : ''
-  const initial = displayName.slice(0, 1)
+  const accountMenu = (
+    <>
+      <MenuItem icon="gear-six" onSelect={() => navigate('/settings')}>{t('nav.settings')}</MenuItem>
+      <MenuSeparator />
+      <MenuItem icon="door-open" tone="destructive" onSelect={logout}>{t('nav.signOut')}</MenuItem>
+    </>
+  )
+  const account = { user: displayName, workspace: workspaceOrg, avatarSrc: user?.avatar_url, accountMenu }
 
   return (
     <>
-      <header className="mobile-bar">
-        <button
-          type="button"
-          className="mobile-menu"
-          aria-expanded={open}
-          aria-controls="app-nav"
-          aria-label={open ? t('nav.closeMenu') : t('nav.openMenu')}
-          onClick={() => setOpen(value => !value)}
-        >
-          <Icon name={open ? 'close' : 'menu'} size={18} />
-        </button>
-        <Link to="/" className="mobile-brand">
-          <span className="brand-mark" aria-hidden="true" />
-          <span className="brand-name">Quoly</span>
-        </Link>
-      </header>
-
-      {open && (
-        <button type="button" className="sidebar-scrim" aria-label={t('nav.closeMenu')} onClick={() => setOpen(false)} />
-      )}
-
-      <aside id="app-nav" className={`app-sidebar${open ? ' is-open' : ''}`}>
-        <Link to="/" className="sidebar-brand" aria-label={t('nav.brand')}>
-          <span className="brand-mark" aria-hidden="true" />
-        </Link>
-
-        <div className="sidebar-actions">
-          <button type="button" className={`sidebar-search${palette.open ? ' is-open' : ''}`} onClick={() => palette.setOpen(true)}>
-            <Icon name="search" size={16} />
-            <span>{t('palette.search')}</span>
-            <kbd>{isMac ? '⌘K' : 'Ctrl K'}</kbd>
-          </button>
-        </div>
-
-        <nav className="nav-list nav-list-main" aria-label={t('nav.main')}>
-          <Item to="/" end icon="home" label={t('nav.dashboard')} />
-          <Item to="/requests" icon="files" label={t('nav.rfqs')} count={requestsAttention} />
-          <Item to="/quotations" icon="quotes" label={t('nav.quotations')} count={toReviewCount} />
-          <Item to="/suppliers" icon="suppliers" label={t('nav.suppliers')} />
-        </nav>
-
-        <div className="sidebar-bottom">
-          <nav className="nav-list" aria-label={t('nav.settings')}>
-            <Item to="/settings" icon="sliders" label={t('nav.settings')} />
-          </nav>
-
-          {user && (
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger asChild>
-                <button type="button" className="sidebar-user-button">
-                  <span className="sidebar-avatar" aria-hidden="true">{initial}</span>
-                  <span className="sidebar-user-copy">
-                    <span className="sidebar-user-name">{displayName}</span>
-                    <span className="sidebar-user-email truncate">{user.email}</span>
-                    {workspaceOrg ? (
-                      <span className="sidebar-user-org">
-                        <Icon name="apartment" size={12} />
-                        <span className="sidebar-user-org-name">{workspaceOrg}</span>
-                      </span>
-                    ) : null}
-                  </span>
-                  <Icon name="unfold_more" size={14} />
-                </button>
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content side="top" align="start" sideOffset={6} className="qy-popover" style={{ minWidth: 200 }}>
-                  <DropdownMenu.Item className="qy-item" onSelect={() => navigate('/settings')}>
-                    <Icon name="sliders" size={16} />{t('nav.settings')}
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Separator className="qy-menu-sep" />
-                  <DropdownMenu.Item className="qy-item qy-item-danger" onSelect={logout}>
-                    <Icon name="logout" size={16} />{t('nav.signOut')}
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Root>
-          )}
-        </div>
-      </aside>
+      {layout === 'mobile'
+        ? (
+          <>
+            <header className="app-topbar">
+              <IconButton icon="list" label={t('nav.openMenu')} size="lg" onClick={() => setDrawerOpen(true)} />
+              <span className="app-topbar-brand">
+                <QuolyMark size={24} />
+                <span className="app-topbar-name">{t('nav.brand')}</span>
+              </span>
+            </header>
+            <MobileNavDrawer
+              open={drawerOpen}
+              onOpenChange={setDrawerOpen}
+              items={items}
+              active={active}
+              settingsActive={settingsActive}
+              settingsTo="/settings"
+              onSearch={() => palette.setOpen(true)}
+              {...account}
+            />
+          </>
+        )
+        : (
+          <div className="app-sidebar-slot">
+            <Sidebar
+              collapsed={collapsed}
+              onToggle={onToggle}
+              items={items}
+              active={active}
+              settingsActive={settingsActive}
+              settingsTo="/settings"
+              onSearch={() => palette.setOpen(true)}
+              searchShortcut={isMac ? '⌘K' : 'Ctrl K'}
+              height="100dvh"
+              {...account}
+            />
+          </div>
+        )}
       <CommandPalette open={palette.open} onOpenChange={palette.setOpen} />
     </>
   )

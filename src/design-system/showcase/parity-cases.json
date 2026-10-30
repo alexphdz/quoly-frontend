@@ -1,0 +1,3497 @@
+[
+  [
+    "btn-primary",
+    [
+      "Button",
+      {},
+      "Crear solicitud"
+    ]
+  ],
+  [
+    "btn-secondary",
+    [
+      "Button",
+      {
+        "variant": "secondary"
+      },
+      "Revisar cotización"
+    ]
+  ],
+  [
+    "btn-tertiary",
+    [
+      "Button",
+      {
+        "variant": "tertiary"
+      },
+      "Ver respuesta"
+    ]
+  ],
+  [
+    "btn-destructive",
+    [
+      "Button",
+      {
+        "variant": "destructive",
+        "icon": "trash"
+      },
+      "Descartar respuesta"
+    ]
+  ],
+  [
+    "btn-destructive-strong",
+    [
+      "Button",
+      {
+        "variant": "destructive-strong"
+      },
+      "Eliminar borrador"
+    ]
+  ],
+  [
+    "btn-icon-end",
+    [
+      "Button",
+      {
+        "variant": "secondary",
+        "iconEnd": "caret-right"
+      },
+      "Siguiente proveedor"
+    ]
+  ],
+  [
+    "btn-xs",
+    [
+      "Button",
+      {
+        "size": "xs"
+      },
+      "Extra pequeño"
+    ]
+  ],
+  [
+    "btn-sm",
+    [
+      "Button",
+      {
+        "size": "sm",
+        "icon": "plus"
+      },
+      "Pequeño"
+    ]
+  ],
+  [
+    "btn-lg",
+    [
+      "Button",
+      {
+        "size": "lg",
+        "icon": "paper-plane-tilt"
+      },
+      "Grande"
+    ]
+  ],
+  [
+    "btn-xl",
+    [
+      "Button",
+      {
+        "size": "xl"
+      },
+      "Extra grande"
+    ]
+  ],
+  [
+    "btn-disabled",
+    [
+      "Button",
+      {
+        "disabled": true
+      },
+      "Deshabilitado"
+    ]
+  ],
+  [
+    "btn-loading",
+    [
+      "Button",
+      {
+        "loading": true
+      },
+      "Enviando…"
+    ]
+  ],
+  [
+    "btn-selected",
+    [
+      "Button",
+      {
+        "variant": "secondary",
+        "selected": true
+      },
+      "Seleccionado"
+    ]
+  ],
+  [
+    "iconbtn-tertiary",
+    [
+      "IconButton",
+      {
+        "icon": "pencil-simple",
+        "label": "Editar"
+      }
+    ]
+  ],
+  [
+    "iconbtn-secondary-sm",
+    [
+      "IconButton",
+      {
+        "icon": "copy",
+        "label": "Copiar",
+        "variant": "secondary",
+        "size": "sm"
+      }
+    ]
+  ],
+  [
+    "iconbtn-selected",
+    [
+      "IconButton",
+      {
+        "icon": "flag",
+        "label": "Marcar",
+        "variant": "secondary",
+        "selected": true
+      }
+    ]
+  ],
+  [
+    "iconbtn-lg",
+    [
+      "IconButton",
+      {
+        "icon": "x",
+        "label": "Cerrar",
+        "size": "lg"
+      }
+    ]
+  ],
+  [
+    "textbtn",
+    [
+      "TextButton",
+      {
+        "icon": "plus"
+      },
+      "Agregar proveedor"
+    ]
+  ],
+  [
+    "textbtn-destructive-sm",
+    [
+      "TextButton",
+      {
+        "tone": "destructive",
+        "size": "sm"
+      },
+      "Quitar"
+    ]
+  ],
+  [
+    "splitbtn",
+    [
+      "SplitButton",
+      {
+        "icon": "export"
+      },
+      "Exportar decisión"
+    ]
+  ],
+  [
+    "splitbtn-secondary",
+    [
+      "SplitButton",
+      {
+        "variant": "secondary"
+      },
+      "Exportar"
+    ]
+  ],
+  [
+    "btngroup",
+    [
+      "ButtonGroup",
+      {
+        "attached": true,
+        "label": "Vista",
+        "items": [
+          {
+            "label": "Tabla",
+            "selected": true
+          },
+          {
+            "label": "Tarjetas"
+          },
+          {
+            "icon": "list",
+            "ariaLabel": "Lista"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "text-input",
+    [
+      "TextInput",
+      {
+        "id": "c1",
+        "label": "Nombre de la solicitud",
+        "placeholder": "Ej. Caja corrugada",
+        "required": true
+      }
+    ]
+  ],
+  [
+    "text-input-desc",
+    [
+      "TextInput",
+      {
+        "id": "c2",
+        "label": "Correo",
+        "icon": "envelope-simple",
+        "defaultValue": "ventas@ejemplo.test",
+        "description": "Usaremos este correo."
+      }
+    ]
+  ],
+  [
+    "text-input-error",
+    [
+      "TextInput",
+      {
+        "id": "c3",
+        "label": "Código postal",
+        "defaultValue": "0600",
+        "status": "error",
+        "message": "Debe tener 5 dígitos."
+      }
+    ]
+  ],
+  [
+    "text-input-readonly",
+    [
+      "TextInput",
+      {
+        "id": "c4",
+        "label": "Referencia",
+        "defaultValue": "RFQ-0318",
+        "readOnly": true
+      }
+    ]
+  ],
+  [
+    "text-input-disabled",
+    [
+      "TextInput",
+      {
+        "id": "c5",
+        "label": "Deshabilitado",
+        "placeholder": "No editable",
+        "disabled": true
+      }
+    ]
+  ],
+  [
+    "text-input-sm",
+    [
+      "TextInput",
+      {
+        "id": "c6",
+        "size": "sm",
+        "placeholder": "Pequeño",
+        "suffix": "kg"
+      }
+    ]
+  ],
+  [
+    "number-input",
+    [
+      "NumberInput",
+      {
+        "id": "c7",
+        "label": "Cantidad",
+        "unit": "uds",
+        "defaultValue": "12000"
+      }
+    ]
+  ],
+  [
+    "currency-input",
+    [
+      "CurrencyInput",
+      {
+        "id": "c8",
+        "label": "Precio objetivo",
+        "defaultValue": "14.50",
+        "currency": "MXN",
+        "unit": "/ ud"
+      }
+    ]
+  ],
+  [
+    "search-input",
+    [
+      "SearchInput",
+      {
+        "id": "c9",
+        "placeholder": "Buscar proveedores",
+        "shortcut": "/"
+      }
+    ]
+  ],
+  [
+    "select",
+    [
+      "Select",
+      {
+        "id": "c10",
+        "label": "Incoterm",
+        "placeholder": "Seleccionar",
+        "options": [
+          "EXW",
+          "FOB",
+          "DAP"
+        ]
+      }
+    ]
+  ],
+  [
+    "textarea",
+    [
+      "Textarea",
+      {
+        "id": "c11",
+        "label": "Notas",
+        "maxLength": 280,
+        "placeholder": "Condiciones…",
+        "rows": 3
+      }
+    ]
+  ],
+  [
+    "date-input",
+    [
+      "DateInput",
+      {
+        "id": "c12",
+        "label": "Fecha límite"
+      }
+    ]
+  ],
+  [
+    "multiselect",
+    [
+      "MultiSelect",
+      {
+        "id": "c13",
+        "label": "Países",
+        "value": [
+          "mx",
+          "co",
+          "pe"
+        ],
+        "options": [
+          {
+            "value": "mx",
+            "label": "México"
+          },
+          {
+            "value": "co",
+            "label": "Colombia"
+          },
+          {
+            "value": "pe",
+            "label": "Perú"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "checkbox",
+    [
+      "Checkbox",
+      {
+        "id": "c14",
+        "label": "Incluir flete",
+        "defaultChecked": true
+      }
+    ]
+  ],
+  [
+    "checkbox-off-desc",
+    [
+      "Checkbox",
+      {
+        "id": "c15",
+        "label": "Notificar",
+        "description": "Envía un aviso al proveedor."
+      }
+    ]
+  ],
+  [
+    "checkbox-indeterminate",
+    [
+      "Checkbox",
+      {
+        "id": "c16",
+        "label": "Parcial",
+        "indeterminate": true
+      }
+    ]
+  ],
+  [
+    "checkbox-error",
+    [
+      "Checkbox",
+      {
+        "id": "c17",
+        "label": "Acepto",
+        "status": "error",
+        "message": "Necesario."
+      }
+    ]
+  ],
+  [
+    "radio-on",
+    [
+      "Radio",
+      {
+        "id": "c18",
+        "name": "r",
+        "label": "Entrega en planta",
+        "checked": true,
+        "description": "El proveedor entrega."
+      }
+    ]
+  ],
+  [
+    "radio-off",
+    [
+      "Radio",
+      {
+        "id": "c19",
+        "name": "r2",
+        "label": "Recolección",
+        "checked": false
+      }
+    ]
+  ],
+  [
+    "switch-on",
+    [
+      "Switch",
+      {
+        "id": "c20",
+        "label": "Recordatorios",
+        "description": "Cada 48 h.",
+        "defaultChecked": true
+      }
+    ]
+  ],
+  [
+    "switch-off-labels",
+    [
+      "Switch",
+      {
+        "id": "c21",
+        "label": "Etiquetas",
+        "stateLabels": [
+          "Sí",
+          "No"
+        ]
+      }
+    ]
+  ],
+  [
+    "segmented",
+    [
+      "SegmentedControl",
+      {
+        "label": "Filtro",
+        "value": "all",
+        "options": [
+          {
+            "value": "all",
+            "label": "Todas",
+            "count": 24
+          },
+          {
+            "value": "open",
+            "label": "Abiertas",
+            "count": 9
+          },
+          {
+            "value": "closed",
+            "label": "Cerradas"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "segmented-sm",
+    [
+      "SegmentedControl",
+      {
+        "label": "Vista",
+        "size": "sm",
+        "value": "a",
+        "options": [
+          {
+            "value": "a",
+            "label": "Tabla",
+            "icon": "columns"
+          },
+          {
+            "value": "b",
+            "label": "Lista",
+            "icon": "list"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "badge-success",
+    [
+      "StatusBadge",
+      {
+        "tone": "success"
+      },
+      "Recibida"
+    ]
+  ],
+  [
+    "badge-warning",
+    [
+      "StatusBadge",
+      {
+        "tone": "warning"
+      },
+      "Por vencer"
+    ]
+  ],
+  [
+    "badge-error",
+    [
+      "StatusBadge",
+      {
+        "tone": "error"
+      },
+      "Declinada"
+    ]
+  ],
+  [
+    "badge-info",
+    [
+      "StatusBadge",
+      {
+        "tone": "info"
+      },
+      "Enviada"
+    ]
+  ],
+  [
+    "badge-ai",
+    [
+      "StatusBadge",
+      {
+        "tone": "ai"
+      },
+      "Propuesto por IA"
+    ]
+  ],
+  [
+    "badge-neutral",
+    [
+      "StatusBadge",
+      {},
+      "Borrador"
+    ]
+  ],
+  [
+    "badge-strong",
+    [
+      "StatusBadge",
+      {
+        "tone": "success",
+        "variant": "strong"
+      },
+      "Adjudicada"
+    ]
+  ],
+  [
+    "badge-quiet",
+    [
+      "StatusBadge",
+      {
+        "tone": "warning",
+        "variant": "quiet"
+      },
+      "Pendiente"
+    ]
+  ],
+  [
+    "tag",
+    [
+      "Tag",
+      {},
+      "Corrugado"
+    ]
+  ],
+  [
+    "tag-outline",
+    [
+      "Tag",
+      {
+        "variant": "outline",
+        "icon": "package"
+      },
+      "Caja RSC"
+    ]
+  ],
+  [
+    "chip-selected",
+    [
+      "Chip",
+      {
+        "selected": true,
+        "count": 4
+      },
+      "Recibidas"
+    ]
+  ],
+  [
+    "chip",
+    [
+      "Chip",
+      {
+        "count": 2
+      },
+      "Pendientes"
+    ]
+  ],
+  [
+    "chip-removable",
+    [
+      "Chip",
+      {
+        "removable": true
+      },
+      "México"
+    ]
+  ],
+  [
+    "counter",
+    [
+      "Counter",
+      {
+        "value": 128
+      }
+    ]
+  ],
+  [
+    "counter-subtle",
+    [
+      "Counter",
+      {
+        "value": 7,
+        "variant": "subtle"
+      }
+    ]
+  ],
+  [
+    "notify-count",
+    [
+      "NotificationIndicator",
+      {
+        "label": "3 nuevas",
+        "count": 3
+      },
+      [
+        "IconButton",
+        {
+          "icon": "tray-arrow-down",
+          "label": "Bandeja"
+        }
+      ]
+    ]
+  ],
+  [
+    "progress-linear",
+    [
+      "Progress",
+      {
+        "label": "Extracción",
+        "value": 64,
+        "valueText": "64%"
+      }
+    ]
+  ],
+  [
+    "progress-ratio",
+    [
+      "Progress",
+      {
+        "label": "Respuestas",
+        "variant": "ratio",
+        "value": 3,
+        "max": 5,
+        "valueText": "3 de 5"
+      }
+    ]
+  ],
+  [
+    "progress-steps",
+    [
+      "Progress",
+      {
+        "label": "Pasos",
+        "variant": "steps",
+        "value": 2,
+        "steps": 4,
+        "stepLabels": [
+          "Datos",
+          "Proveedores",
+          "Revisión",
+          "Envío"
+        ]
+      }
+    ]
+  ],
+  [
+    "validation-error",
+    [
+      "ValidationMessage",
+      {},
+      "Campo obligatorio."
+    ]
+  ],
+  [
+    "validation-success",
+    [
+      "ValidationMessage",
+      {
+        "tone": "success"
+      },
+      "Guardado."
+    ]
+  ],
+  [
+    "alert-notice",
+    [
+      "InlineAlert",
+      {
+        "tone": "info",
+        "title": "Recordatorio:"
+      },
+      "Dos proveedores no han respondido."
+    ]
+  ],
+  [
+    "alert-contextual",
+    [
+      "InlineAlert",
+      {
+        "prominence": "contextual",
+        "tone": "ai",
+        "title": "Campos propuestos por IA"
+      },
+      "Revisa y confirma los valores extraídos."
+    ]
+  ],
+  [
+    "alert-blocking",
+    [
+      "InlineAlert",
+      {
+        "prominence": "blocking",
+        "tone": "error",
+        "title": "No se pudo enviar",
+        "resolution": "Verifica la conexión de correo."
+      },
+      "El servidor rechazó la autenticación."
+    ]
+  ],
+  [
+    "toast",
+    [
+      "Toast",
+      {
+        "title": "Solicitud enviada"
+      },
+      "5 proveedores notificados."
+    ]
+  ],
+  [
+    "toast-error",
+    [
+      "Toast",
+      {
+        "tone": "error",
+        "title": "Error al guardar"
+      }
+    ]
+  ],
+  [
+    "tooltip",
+    [
+      "Tooltip|TooltipBubble",
+      {
+        "shortcut": "⌘K"
+      },
+      "Buscar"
+    ]
+  ],
+  [
+    "popover",
+    [
+      "Popover|PopoverPanel",
+      {
+        "title": "Plazo de respuesta"
+      },
+      "Los proveedores podrán responder hasta la fecha límite."
+    ]
+  ],
+  [
+    "spinner",
+    [
+      "Spinner",
+      {
+        "showLabel": true,
+        "label": "Cargando"
+      }
+    ]
+  ],
+  [
+    "skeleton",
+    [
+      "Skeleton",
+      {
+        "lines": 3,
+        "width": 240
+      }
+    ]
+  ],
+  [
+    "empty-state",
+    [
+      "EmptyState",
+      {
+        "title": "Sin cotizaciones"
+      },
+      "Las respuestas aparecerán aquí."
+    ]
+  ],
+  [
+    "empty-state-sm",
+    [
+      "EmptyState",
+      {
+        "title": "Sin archivos",
+        "size": "sm",
+        "align": "start",
+        "icon": "paperclip"
+      }
+    ]
+  ],
+  [
+    "divider-label",
+    [
+      "Divider",
+      {
+        "label": "o"
+      }
+    ]
+  ],
+  [
+    "avatar",
+    [
+      "Avatar",
+      {
+        "name": "Ana Ruiz"
+      }
+    ]
+  ],
+  [
+    "avatar-org",
+    [
+      "Avatar",
+      {
+        "name": "Empaques del Norte",
+        "kind": "organization",
+        "size": 40
+      }
+    ]
+  ],
+  [
+    "kbd",
+    [
+      "Kbd",
+      {
+        "keys": [
+          "⌘",
+          "K"
+        ]
+      }
+    ]
+  ],
+  [
+    "tabs",
+    [
+      "Tabs",
+      {
+        "label": "Secciones",
+        "value": "resumen",
+        "items": [
+          {
+            "value": "resumen",
+            "label": "Resumen"
+          },
+          {
+            "value": "prov",
+            "label": "Proveedores",
+            "count": 5
+          },
+          {
+            "value": "docs",
+            "label": "Documentos"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "tabs-secondary",
+    [
+      "Tabs",
+      {
+        "variant": "secondary",
+        "value": "Todas",
+        "items": [
+          "Todas",
+          "Recibidas",
+          "Pendientes"
+        ]
+      }
+    ]
+  ],
+  [
+    "sidebar",
+    [
+      "Sidebar",
+      {
+        "height": 600,
+        "active": "rfq",
+        "user": "Ana Ruiz",
+        "workspace": "Empaques Demo",
+        "items": [
+          {
+            "value": "home",
+            "label": "Inicio",
+            "icon": "house"
+          },
+          {
+            "value": "rfq",
+            "label": "Solicitudes",
+            "icon": "files",
+            "count": 12
+          },
+          {
+            "value": "quotes",
+            "label": "Cotizaciones",
+            "icon": "quotes"
+          },
+          {
+            "value": "suppliers",
+            "label": "Proveedores",
+            "icon": "users-three"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "sidebar-collapsed",
+    [
+      "Sidebar",
+      {
+        "height": 600,
+        "collapsed": true,
+        "active": "rfq",
+        "user": "Ana Ruiz",
+        "items": [
+          {
+            "value": "home",
+            "label": "Inicio",
+            "icon": "house"
+          },
+          {
+            "value": "rfq",
+            "label": "Solicitudes",
+            "icon": "files"
+          },
+          {
+            "value": "quotes",
+            "label": "Cotizaciones",
+            "icon": "quotes"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "section-header",
+    [
+      "SectionHeader",
+      {
+        "title": "Resumen de la solicitud",
+        "description": "Hechos clave de la RFQ.",
+        "meta": "Actualizado hoy",
+        "divider": true
+      }
+    ]
+  ],
+  [
+    "info-group",
+    [
+      "InfoGroup",
+      {
+        "items": [
+          {
+            "label": "Proveedores",
+            "value": "5",
+            "detail": "3 respondieron"
+          },
+          {
+            "label": "Cantidad",
+            "value": "12.000 uds"
+          },
+          {
+            "label": "Incoterm",
+            "value": "DAP"
+          },
+          {
+            "label": "Presupuesto",
+            "value": null
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "kv-group",
+    [
+      "KeyValueGroup",
+      {
+        "items": [
+          {
+            "label": "Material",
+            "value": "Cartón corrugado"
+          },
+          {
+            "label": "Dimensiones",
+            "value": "40 × 30 × 25 cm"
+          },
+          {
+            "label": "Notas",
+            "value": "Entrega en dos lotes.",
+            "span": true,
+            "long": true
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "metric",
+    [
+      "Metric",
+      {
+        "label": "Respuestas",
+        "value": "3",
+        "unit": "de 5",
+        "detail": "2 pendientes"
+      }
+    ]
+  ],
+  [
+    "metric-hero",
+    [
+      "Metric",
+      {
+        "label": "Ahorro potencial",
+        "value": "14.200",
+        "unit": "MXN",
+        "size": "hero"
+      }
+    ]
+  ],
+  [
+    "context-panel",
+    [
+      "ContextPanel",
+      {
+        "title": "Contexto",
+        "icon": "info"
+      },
+      "RFQ-0318 enviada el 21 oct."
+    ]
+  ],
+  [
+    "detail-panel",
+    [
+      "DetailPanel",
+      {
+        "context": "Cotización",
+        "title": "Empaques del Norte",
+        "meta": "Recibida 28 oct"
+      },
+      "Oferta por 12.000 cajas con entrega DAP."
+    ]
+  ],
+  [
+    "expandable-open",
+    [
+      "Expandable",
+      {
+        "title": "Condiciones comerciales",
+        "meta": "3 campos",
+        "defaultOpen": true
+      },
+      "Pago a 30 días."
+    ]
+  ],
+  [
+    "expandable-closed",
+    [
+      "Expandable",
+      {
+        "title": "Historial"
+      },
+      "Solicitud creada."
+    ]
+  ],
+  [
+    "empty-section",
+    [
+      "EmptySection",
+      {
+        "title": "Sin documentos",
+        "text": "Adjunta planos o especificaciones."
+      }
+    ]
+  ],
+  [
+    "dialog",
+    [
+      "Dialog",
+      {
+        "inline": true,
+        "title": "Renombrar solicitud",
+        "description": "El nombre es visible para los proveedores."
+      },
+      "Contenido del diálogo."
+    ]
+  ],
+  [
+    "confirm",
+    [
+      "ConfirmDialog",
+      {
+        "inline": true,
+        "tone": "destructive",
+        "title": "¿Eliminar la solicitud?",
+        "description": "No se puede deshacer.",
+        "details": [
+          {
+            "label": "Solicitud",
+            "value": "RFQ-0318"
+          }
+        ],
+        "confirmLabel": "Eliminar",
+        "cancelLabel": "Cancelar"
+      }
+    ]
+  ],
+  [
+    "cell-identity",
+    [
+      "TableCell",
+      {
+        "type": "identity",
+        "value": "Empaques del Norte",
+        "secondary": "PRV-0056"
+      }
+    ]
+  ],
+  [
+    "cell-money",
+    [
+      "TableCell",
+      {
+        "type": "money",
+        "value": 184250.5,
+        "currency": "MXN",
+        "unit": "ud"
+      }
+    ]
+  ],
+  [
+    "cell-number",
+    [
+      "TableCell",
+      {
+        "type": "number",
+        "value": 12000,
+        "unit": "uds"
+      }
+    ]
+  ],
+  [
+    "cell-date-overdue",
+    [
+      "TableCell",
+      {
+        "type": "date",
+        "value": "2026-10-27",
+        "tone": "overdue",
+        "note": "Hace 2 días"
+      }
+    ]
+  ],
+  [
+    "cell-status",
+    [
+      "TableCell",
+      {
+        "type": "status",
+        "value": "Recibida",
+        "tone": "success"
+      }
+    ]
+  ],
+  [
+    "cell-missing",
+    [
+      "TableCell",
+      {
+        "type": "money",
+        "value": null,
+        "reason": "Sin cotización"
+      }
+    ]
+  ],
+  [
+    "toolbar",
+    [
+      "TableToolbar",
+      {
+        "title": "Cotizaciones",
+        "count": 24,
+        "context": "RFQ-0318"
+      }
+    ]
+  ],
+  [
+    "toolbar-selected",
+    [
+      "TableToolbar",
+      {
+        "selectedCount": 3,
+        "onClearSelection": true
+      }
+    ]
+  ],
+  [
+    "pagination",
+    [
+      "TablePagination",
+      {
+        "page": 1,
+        "pageSize": 25,
+        "total": 248
+      }
+    ]
+  ],
+  [
+    "datatable",
+    [
+      "DataTable",
+      {
+        "rowKey": "id",
+        "selectable": true,
+        "defaultSelected": [
+          "b"
+        ],
+        "columns": [
+          {
+            "key": "name",
+            "header": "Proveedor",
+            "type": "identity"
+          },
+          {
+            "key": "total",
+            "header": "Total",
+            "type": "money",
+            "sortable": true
+          },
+          {
+            "key": "status",
+            "header": "Estado",
+            "type": "status"
+          }
+        ],
+        "rows": [
+          {
+            "id": "a",
+            "name": "Empaques del Norte",
+            "total": 184250.5,
+            "status": "Recibida"
+          },
+          {
+            "id": "b",
+            "name": "Cartonera Andina",
+            "total": 176900,
+            "status": "Pendiente"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "datatable-empty",
+    [
+      "DataTable",
+      {
+        "state": "empty",
+        "columns": [
+          {
+            "key": "name",
+            "header": "Proveedor",
+            "type": "identity"
+          },
+          {
+            "key": "total",
+            "header": "Total",
+            "type": "money"
+          }
+        ],
+        "rows": []
+      }
+    ]
+  ],
+  [
+    "rfq-header",
+    [
+      "RfqHeader",
+      {
+        "title": "Caja corrugada 40×30 doble pared",
+        "reference": "RFQ-0318",
+        "status": "quotes",
+        "created": "21 oct 2026"
+      }
+    ]
+  ],
+  [
+    "rfq-header-draft",
+    [
+      "RfqHeader",
+      {
+        "title": "Etiquetas adhesivas",
+        "status": "draft"
+      }
+    ]
+  ],
+  [
+    "rfq-lifecycle",
+    [
+      "RfqLifecycle",
+      {
+        "current": "quotes"
+      }
+    ]
+  ],
+  [
+    "rfq-lifecycle-vertical",
+    [
+      "RfqLifecycle",
+      {
+        "current": "sent",
+        "layout": "vertical"
+      }
+    ]
+  ],
+  [
+    "rfq-summary",
+    [
+      "RfqSummary",
+      {
+        "quantity": "12.000",
+        "unit": "uds",
+        "deadline": "4 nov 2026",
+        "deadlineDetail": "En 6 días",
+        "currency": "MXN",
+        "suppliersResponded": 3,
+        "suppliersTotal": 5,
+        "leading": {
+          "price": "14,20 MXN / ud",
+          "supplier": "Empaques del Norte"
+        }
+      }
+    ]
+  ],
+  [
+    "rfq-summary-overdue",
+    [
+      "RfqSummary",
+      {
+        "quantity": "500",
+        "unit": "kg",
+        "deadline": "20 oct 2026",
+        "overdue": true,
+        "suppliersTotal": 0
+      }
+    ]
+  ],
+  [
+    "rfq-tracker",
+    [
+      "ResponseTracker",
+      {
+        "responded": 3,
+        "total": 5
+      }
+    ]
+  ],
+  [
+    "rfq-tracker-continuous",
+    [
+      "ResponseTracker",
+      {
+        "responded": 9,
+        "total": 20
+      }
+    ]
+  ],
+  [
+    "rfq-supplier-row",
+    [
+      "SupplierRow",
+      {
+        "name": "Empaques del Norte",
+        "contact": "ventas@ejemplo.test",
+        "status": "responded",
+        "activity": "Respondió hace 2 h",
+        "price": "14,20 MXN",
+        "priceDetail": "por unidad",
+        "onClick": true
+      }
+    ]
+  ],
+  [
+    "rfq-supplier-row-question",
+    [
+      "SupplierRow",
+      {
+        "name": "Cartonera Andina",
+        "status": "question",
+        "activity": "Ayer"
+      }
+    ]
+  ],
+  [
+    "rfq-supplier-header",
+    [
+      "SupplierRowHeader",
+      {}
+    ]
+  ],
+  [
+    "rfq-question-open",
+    [
+      "SupplierQuestion",
+      {
+        "sender": "Cartonera Andina",
+        "channel": "Correo",
+        "received": "Ayer, 14:20",
+        "question": "¿La entrega puede ser en dos lotes?",
+        "context": "Sobre: condiciones de entrega",
+        "onRespond": true
+      }
+    ]
+  ],
+  [
+    "rfq-question-answered",
+    [
+      "SupplierQuestion",
+      {
+        "sender": "Empaques del Norte",
+        "question": "¿Aceptan cartón reciclado?",
+        "state": "answered",
+        "answer": "Sí, siempre que cumpla ECT 32.",
+        "answeredBy": "Respondida por Ana Ruiz"
+      }
+    ]
+  ],
+  [
+    "qi-evidence-ref",
+    [
+      "EvidenceReference",
+      {
+        "source": "email",
+        "label": "Correo del proveedor",
+        "location": "párrafo 2"
+      }
+    ]
+  ],
+  [
+    "qi-evidence-ref-active",
+    [
+      "EvidenceReference",
+      {
+        "source": "email",
+        "label": "Correo del proveedor",
+        "location": "párrafo 2",
+        "active": true,
+        "onClick": true
+      }
+    ]
+  ],
+  [
+    "qi-evidence-ref-btn",
+    [
+      "EvidenceReference",
+      {
+        "source": "email",
+        "label": "Correo del proveedor",
+        "location": "párrafo 2",
+        "onClick": true
+      }
+    ]
+  ],
+  [
+    "qi-evidence-panel",
+    [
+      "EvidencePanel",
+      {
+        "id": "ep1",
+        "from": "Empaques del Norte <ventas@ejemplo.test>",
+        "received": "28 oct, 10:42",
+        "subject": "Cotización RFQ-0318",
+        "segments": [
+          "Hola Ana,\n\nTe compartimos nuestra propuesta. ",
+          {
+            "id": "p1",
+            "text": "Precio unitario: 14,20 MXN por caja"
+          },
+          ", con ",
+          {
+            "id": "p2",
+            "text": "entrega en 15 días hábiles"
+          },
+          ".\n\nSaludos."
+        ],
+        "active": "p1",
+        "activeLabel": "Precio unitario",
+        "onOpen": true
+      }
+    ]
+  ],
+  [
+    "qi-evidence-passage-only",
+    [
+      "EvidencePanel",
+      {
+        "id": "ep2",
+        "segments": [
+          "Hola Ana,\n\nTe compartimos nuestra propuesta. ",
+          {
+            "id": "p1",
+            "text": "Precio unitario: 14,20 MXN por caja"
+          },
+          ", con ",
+          {
+            "id": "p2",
+            "text": "entrega en 15 días hábiles"
+          },
+          ".\n\nSaludos."
+        ],
+        "active": "p2",
+        "activeLabel": "Plazo de entrega",
+        "passageOnly": true
+      }
+    ]
+  ],
+  [
+    "qi-field-proposed",
+    [
+      "ExtractedField",
+      {
+        "label": "Precio unitario",
+        "value": "14,20",
+        "currency": "MXN",
+        "unit": "por caja",
+        "evidence": {
+          "source": "email",
+          "label": "Correo del proveedor",
+          "location": "párrafo 2"
+        }
+      }
+    ]
+  ],
+  [
+    "qi-field-confirmed",
+    [
+      "ExtractedField",
+      {
+        "label": "Plazo de entrega",
+        "value": "15 días hábiles",
+        "state": "confirmed",
+        "selected": true
+      }
+    ]
+  ],
+  [
+    "qi-field-corrected",
+    [
+      "ExtractedField",
+      {
+        "label": "Cantidad mínima",
+        "value": "5.000",
+        "unit": "uds",
+        "corrected": true,
+        "original": "500"
+      }
+    ]
+  ],
+  [
+    "qi-field-missing",
+    [
+      "ExtractedField",
+      {
+        "label": "Condiciones de pago",
+        "value": null,
+        "state": "missing"
+      }
+    ]
+  ],
+  [
+    "qi-field-noncomparable",
+    [
+      "ExtractedField",
+      {
+        "label": "Flete",
+        "state": "noncomparable",
+        "value": "Incluido",
+        "reason": "Incoterm distinto (EXW)"
+      }
+    ]
+  ],
+  [
+    "qi-editor",
+    [
+      "FieldReviewEditor",
+      {
+        "label": "Precio unitario",
+        "value": "14,20",
+        "currency": "MXN",
+        "evidence": {
+          "source": "email",
+          "label": "Correo del proveedor",
+          "location": "párrafo 2"
+        }
+      }
+    ]
+  ],
+  [
+    "qi-editor-editing",
+    [
+      "FieldReviewEditor",
+      {
+        "label": "Precio unitario",
+        "value": "14,20",
+        "currency": "MXN",
+        "startEditing": true,
+        "draftValue": "14,50"
+      }
+    ]
+  ],
+  [
+    "qi-completeness",
+    [
+      "ExtractionCompleteness",
+      {
+        "total": 7,
+        "confirmed": 2,
+        "pending": 3,
+        "missing": 1,
+        "noncomparable": 1
+      }
+    ]
+  ],
+  [
+    "qi-completeness-continuous",
+    [
+      "ExtractionCompleteness",
+      {
+        "total": 40,
+        "confirmed": 20,
+        "pending": 10,
+        "missing": 10
+      }
+    ]
+  ],
+  [
+    "qi-summary",
+    [
+      "ExtractionSummary",
+      {
+        "title": "Se identificaron los datos comerciales de la oferta.",
+        "summary": "El comprador debe revisar 3 campos antes de utilizar la información.",
+        "meta": "Correo de Empaques del Norte",
+        "available": 6,
+        "total": 7,
+        "reviewCount": 3,
+        "missing": [
+          "Condiciones de pago"
+        ],
+        "onReview": true
+      }
+    ]
+  ],
+  [
+    "qi-summary-processing",
+    [
+      "ExtractionSummary",
+      {
+        "status": "processing"
+      }
+    ]
+  ],
+  [
+    "qi-summary-failed",
+    [
+      "ExtractionSummary",
+      {
+        "status": "failed",
+        "title": "No se pudo leer el adjunto.",
+        "onRetry": true
+      }
+    ]
+  ],
+  [
+    "cmp-overview",
+    [
+      "ComparisonOverview",
+      {
+        "reference": "RFQ-0318",
+        "product": "Caja corrugada 40×30",
+        "received": 3,
+        "comparable": 2,
+        "review": 1
+      }
+    ]
+  ],
+  [
+    "cmp-head",
+    [
+      "SupplierComparisonHeader",
+      {
+        "key": "a",
+        "name": "Empaques del Norte",
+        "reference": "PRV-0056",
+        "status": "reviewed",
+        "currency": "MXN"
+      }
+    ]
+  ],
+  [
+    "cmp-head-selected",
+    [
+      "SupplierComparisonHeader",
+      {
+        "key": "b",
+        "name": "Cartonera Andina",
+        "reference": "PRV-0087",
+        "status": "review",
+        "currency": "USD",
+        "selected": true,
+        "onSelect": true
+      }
+    ]
+  ],
+  [
+    "cmp-diff-base",
+    [
+      "PriceDifference",
+      {
+        "amount": 14.2,
+        "currency": "MXN",
+        "set": [
+          14.2,
+          15.8
+        ]
+      }
+    ]
+  ],
+  [
+    "cmp-diff",
+    [
+      "PriceDifference",
+      {
+        "amount": 15.8,
+        "currency": "MXN",
+        "unit": "/ caja",
+        "set": [
+          14.2,
+          15.8
+        ]
+      }
+    ]
+  ],
+  [
+    "cmp-diff-single",
+    [
+      "PriceDifference",
+      {
+        "amount": 15.8,
+        "currency": "MXN",
+        "set": [
+          15.8
+        ]
+      }
+    ]
+  ],
+  [
+    "cmp-diff-nc",
+    [
+      "PriceDifference",
+      {
+        "amount": null,
+        "reason": "Unidad distinta"
+      }
+    ]
+  ],
+  [
+    "cmp-exception",
+    [
+      "CommercialException",
+      {
+        "tone": "warning",
+        "text": "Supera la cantidad solicitada"
+      }
+    ]
+  ],
+  [
+    "cmp-exception-ai",
+    [
+      "CommercialException",
+      {
+        "tone": "ai",
+        "text": "Tipo de cambio propuesto por IA",
+        "onDetail": true
+      }
+    ]
+  ],
+  [
+    "cmp-evidence",
+    [
+      "ComparisonEvidenceLink",
+      {
+        "evidence": {
+          "source": "email",
+          "label": "Correo",
+          "location": "párrafo 2",
+          "passage": "p1"
+        },
+        "onOpen": true
+      }
+    ]
+  ],
+  [
+    "cmp-evidence-none",
+    [
+      "ComparisonEvidenceLink",
+      {}
+    ]
+  ],
+  [
+    "cmp-matrix",
+    [
+      "ComparisonMatrix",
+      {
+        "suppliers": [
+          {
+            "key": "a",
+            "name": "Empaques del Norte",
+            "reference": "PRV-0056",
+            "status": "reviewed",
+            "currency": "MXN"
+          },
+          {
+            "key": "b",
+            "name": "Cartonera Andina",
+            "reference": "PRV-0087",
+            "status": "review",
+            "currency": "USD"
+          },
+          {
+            "key": "c",
+            "name": "Corrugados Delta",
+            "reference": "PRV-0142",
+            "status": "pending",
+            "currency": "MXN"
+          }
+        ],
+        "groups": [
+          {
+            "key": "price",
+            "title": "Precio",
+            "rows": [
+              {
+                "key": "unit",
+                "label": "Precio unitario",
+                "detail": "Por caja",
+                "type": "price",
+                "cells": {
+                  "a": {
+                    "normalized": {
+                      "amount": 14.2,
+                      "currency": "MXN",
+                      "unit": "/ caja"
+                    },
+                    "original": "14,20 MXN",
+                    "evidence": {
+                      "source": "email",
+                      "label": "Correo",
+                      "location": "párrafo 2",
+                      "passage": "p1"
+                    }
+                  },
+                  "b": {
+                    "normalized": {
+                      "amount": 15.8,
+                      "currency": "MXN",
+                      "unit": "/ caja"
+                    },
+                    "original": "0,86 USD",
+                    "exception": {
+                      "tone": "ai",
+                      "text": "Tipo de cambio propuesto por IA"
+                    }
+                  },
+                  "c": {
+                    "normalized": null,
+                    "original": "1.420 MXN por lote",
+                    "reason": "Unidad distinta (lote de 100)"
+                  }
+                }
+              },
+              {
+                "key": "diff",
+                "label": "Diferencia",
+                "type": "diff",
+                "of": "unit"
+              }
+            ]
+          },
+          {
+            "key": "terms",
+            "title": "Condiciones",
+            "rows": [
+              {
+                "key": "moq",
+                "label": "Cantidad mínima",
+                "type": "qty",
+                "cells": {
+                  "a": {
+                    "value": "5.000",
+                    "unit": "uds"
+                  },
+                  "b": {
+                    "value": "10.000",
+                    "unit": "uds",
+                    "exception": {
+                      "tone": "warning",
+                      "text": "Supera la cantidad solicitada"
+                    }
+                  }
+                }
+              },
+              {
+                "key": "lead",
+                "label": "Plazo de entrega",
+                "type": "lead",
+                "cells": {
+                  "a": {
+                    "value": "15 días"
+                  },
+                  "b": {
+                    "value": "20 días"
+                  },
+                  "c": {
+                    "value": "12 días"
+                  }
+                }
+              },
+              {
+                "key": "inc",
+                "label": "Incoterm",
+                "type": "incoterm",
+                "cells": {
+                  "a": {
+                    "value": "DAP Monterrey"
+                  },
+                  "b": {
+                    "value": "FOB Callao"
+                  },
+                  "c": {
+                    "value": "EXW"
+                  }
+                }
+              },
+              {
+                "key": "pay",
+                "label": "Condiciones de pago",
+                "type": "terms",
+                "cells": {
+                  "a": {
+                    "value": "30 días después de entrega"
+                  },
+                  "c": {
+                    "value": "50 % anticipo"
+                  }
+                }
+              },
+              {
+                "key": "rev",
+                "label": "Revisión",
+                "type": "review",
+                "cells": {
+                  "a": {
+                    "status": "reviewed"
+                  },
+                  "b": {
+                    "status": "review",
+                    "detail": "2 campos por revisar"
+                  },
+                  "c": {
+                    "status": "pending"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "requested": "12.000 cajas · DAP Monterrey",
+        "layout": "desktop",
+        "demo": true
+      }
+    ]
+  ],
+  [
+    "dec-indicator-selected",
+    [
+      "SelectionIndicator",
+      {
+        "state": "selected"
+      }
+    ]
+  ],
+  [
+    "dec-indicator-pending",
+    [
+      "SelectionIndicator",
+      {
+        "state": "pending"
+      }
+    ]
+  ],
+  [
+    "dec-indicator-recorded",
+    [
+      "SelectionIndicator",
+      {
+        "state": "recorded"
+      }
+    ]
+  ],
+  [
+    "dec-candidate",
+    [
+      "DecisionCandidate",
+      {
+        "name": "Empaques del Norte",
+        "reference": "PRV-0056 · COT-1182",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "original": "14,20 MXN",
+        "facts": [
+          {
+            "label": "MOQ",
+            "value": "5.000 uds"
+          },
+          {
+            "label": "Plazo",
+            "value": "15 días"
+          },
+          {
+            "label": "Incoterm",
+            "value": "DAP"
+          },
+          {
+            "label": "Pago",
+            "value": null
+          }
+        ],
+        "onSelect": true,
+        "onViewQuote": true
+      }
+    ]
+  ],
+  [
+    "dec-candidate-selected",
+    [
+      "DecisionCandidate",
+      {
+        "name": "Cartonera Andina",
+        "status": "review",
+        "price": null,
+        "priceReason": "Unidad distinta",
+        "facts": [
+          {
+            "label": "MOQ",
+            "value": "5.000 uds"
+          },
+          {
+            "label": "Plazo",
+            "value": "15 días"
+          }
+        ],
+        "selection": "pending",
+        "onChangeSelection": true
+      }
+    ]
+  ],
+  [
+    "dec-summary",
+    [
+      "DecisionSummary",
+      {
+        "supplier": "Empaques del Norte",
+        "reference": "PRV-0056",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "original": "14,20 MXN",
+        "facts": [
+          {
+            "label": "MOQ",
+            "value": "5.000 uds"
+          },
+          {
+            "label": "Plazo",
+            "value": "15 días"
+          },
+          {
+            "label": "Incoterm",
+            "value": "DAP"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "dec-rationale",
+    [
+      "DecisionRationale",
+      {
+        "maxLength": 500,
+        "context": [
+          {
+            "label": "Precio",
+            "value": "14,20 MXN"
+          },
+          {
+            "label": "Plazo",
+            "value": "15 días"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "dec-row-header",
+    [
+      "DecisionRowHeader",
+      {}
+    ]
+  ],
+  [
+    "dec-row",
+    [
+      "DecisionRow",
+      {
+        "supplier": "Empaques del Norte",
+        "quotation": "COT-1182",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "moq": "5.000",
+        "leadTime": "15 d",
+        "incoterm": "DAP",
+        "onSelect": true
+      }
+    ]
+  ],
+  [
+    "dec-row-selected",
+    [
+      "DecisionRow",
+      {
+        "state": "selected",
+        "supplier": "Empaques del Norte",
+        "quotation": "COT-1182",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "moq": "5.000",
+        "leadTime": "15 d",
+        "incoterm": "DAP",
+        "onChange": true
+      }
+    ]
+  ],
+  [
+    "dec-row-awarded",
+    [
+      "DecisionRow",
+      {
+        "state": "awarded",
+        "supplier": "Empaques del Norte",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "moq": "5.000",
+        "leadTime": null,
+        "incoterm": "DAP",
+        "recordedAt": "28 oct 2026"
+      }
+    ]
+  ],
+  [
+    "dec-confirm",
+    [
+      "AwardConfirmation",
+      {
+        "inline": true,
+        "supplier": "Empaques del Norte",
+        "reference": "PRV-0056",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "original": "14,20 MXN",
+        "context": [
+          "MOQ 5.000 uds",
+          "15 días",
+          "DAP"
+        ]
+      }
+    ]
+  ],
+  [
+    "dec-confirm-error",
+    [
+      "AwardConfirmation",
+      {
+        "inline": true,
+        "supplier": "Empaques del Norte",
+        "price": null,
+        "initialError": "No se pudo registrar la adjudicación. No se guardó ningún cambio; puedes volver a intentarlo."
+      }
+    ]
+  ],
+  [
+    "dec-record",
+    [
+      "AwardRecord",
+      {
+        "supplier": "Empaques del Norte",
+        "rfq": "RFQ-0318",
+        "quotation": "COT-1182",
+        "price": {
+          "amount": 14.2,
+          "currency": "MXN",
+          "unit": "/ caja"
+        },
+        "facts": [
+          {
+            "label": "MOQ",
+            "value": "5.000 uds"
+          },
+          {
+            "label": "Plazo",
+            "value": "15 días"
+          },
+          {
+            "label": "Incoterm",
+            "value": "DAP"
+          }
+        ],
+        "summary": "12.000 cajas de cartón corrugado doble pared.",
+        "recordedBy": "Ana Ruiz",
+        "recordedAt": "28 oct 2026, 16:05",
+        "date": "28 oct 2026",
+        "rationale": "Mejor plazo de entrega y condiciones DAP.",
+        "onViewQuote": true
+      }
+    ]
+  ],
+  [
+    "dec-record-selected",
+    [
+      "AwardRecord",
+      {
+        "state": "selected",
+        "supplier": "Cartonera Andina",
+        "priceText": "No comparable"
+      }
+    ]
+  ],
+  [
+    "dec-timeline",
+    [
+      "DecisionTimeline",
+      {
+        "events": [
+          {
+            "date": "28 oct",
+            "time": "16:05",
+            "title": "Adjudicación registrada",
+            "actor": "Ana Ruiz",
+            "description": "Empaques del Norte · 14,20 MXN / caja",
+            "reference": "COT-1182"
+          },
+          {
+            "date": "27 oct",
+            "time": "11:30",
+            "title": "Proveedor seleccionado",
+            "actor": "Ana Ruiz"
+          },
+          {
+            "date": "21 oct",
+            "title": "Solicitud enviada"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "dec-timeline-empty",
+    [
+      "DecisionTimeline",
+      {}
+    ]
+  ],
+  [
+    "ch-header",
+    [
+      "ChartHeader",
+      {
+        "context": "Últimos 6 meses",
+        "title": "Solicitudes enviadas y respondidas",
+        "description": "Conteo mensual de solicitudes de cotización.",
+        "value": "101",
+        "unit": "solicitudes",
+        "comparison": "74 con al menos una respuesta"
+      }
+    ]
+  ],
+  [
+    "ch-header-plain",
+    [
+      "ChartHeader",
+      {
+        "title": "Tiempo de respuesta por proveedor"
+      }
+    ]
+  ],
+  [
+    "ch-bar",
+    [
+      "BarChart",
+      {
+        "data": [
+          {
+            "label": "Mayo 2026",
+            "short": "May",
+            "value": 9
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun",
+            "value": 13
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul",
+            "value": 10
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago",
+            "value": 16
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep",
+            "value": 11
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct",
+            "value": 15
+          }
+        ],
+        "series": [
+          {
+            "name": "Respondidas",
+            "color": "violet"
+          }
+        ],
+        "ariaLabel": "Respuestas por mes",
+        "yLabel": "Solicitudes"
+      }
+    ]
+  ],
+  [
+    "ch-bar-grouped",
+    [
+      "BarChart",
+      {
+        "data": [
+          {
+            "label": "Mayo 2026",
+            "short": "May",
+            "values": [
+              14,
+              9
+            ]
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun",
+            "values": [
+              18,
+              13
+            ]
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul",
+            "values": [
+              12,
+              10
+            ]
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago",
+            "values": [
+              21,
+              16
+            ]
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep",
+            "values": [
+              17,
+              11
+            ]
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct",
+            "values": [
+              19,
+              15
+            ]
+          }
+        ],
+        "series": [
+          {
+            "name": "Enviadas",
+            "color": "violet"
+          },
+          {
+            "name": "Respondidas",
+            "color": "mint"
+          }
+        ],
+        "size": "compact",
+        "ariaLabel": "Enviadas y respondidas"
+      }
+    ]
+  ],
+  [
+    "ch-bar-active",
+    [
+      "BarChart",
+      {
+        "data": [
+          {
+            "label": "Mayo 2026",
+            "short": "May",
+            "values": [
+              14,
+              9
+            ]
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun",
+            "values": [
+              18,
+              13
+            ]
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul",
+            "values": [
+              12,
+              10
+            ]
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago",
+            "values": [
+              21,
+              16
+            ]
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep",
+            "values": [
+              17,
+              11
+            ]
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct",
+            "values": [
+              19,
+              15
+            ]
+          }
+        ],
+        "series": [
+          {
+            "name": "Enviadas",
+            "color": "violet"
+          },
+          {
+            "name": "Respondidas",
+            "color": "mint"
+          }
+        ],
+        "activeIndex": 3,
+        "ariaLabel": "Enviadas y respondidas"
+      }
+    ]
+  ],
+  [
+    "ch-hbar",
+    [
+      "HBarChart",
+      {
+        "rows": [
+          {
+            "label": "Northstar Drinkware",
+            "value": 2.5
+          },
+          {
+            "label": "Hanyu Steelware Co.",
+            "value": 4
+          },
+          {
+            "label": "Altamar Envases Industriales S.A. de C.V.",
+            "value": 1.5
+          },
+          {
+            "label": "Copa Industrial",
+            "value": 6
+          },
+          {
+            "label": "Termos del Bajío",
+            "value": 3
+          }
+        ],
+        "unit": "días",
+        "decimals": 1,
+        "axisLabel": "Días",
+        "ariaLabel": "Tiempo de respuesta"
+      }
+    ]
+  ],
+  [
+    "ch-hbar-missing",
+    [
+      "HBarChart",
+      {
+        "rows": [
+          {
+            "label": "Northstar Drinkware",
+            "value": 7.95
+          },
+          {
+            "label": "Hanyu Steelware Co.",
+            "value": 7.4
+          },
+          {
+            "label": "Altamar Envases Industriales S.A. de C.V.",
+            "value": 8.62
+          },
+          {
+            "label": "Copa Industrial",
+            "value": 8.1
+          },
+          {
+            "label": "Termos del Bajío",
+            "value": null,
+            "missing": "No comparable",
+            "reason": "Precio por lote sin tamaño de referencia"
+          }
+        ],
+        "unit": "USD",
+        "decimals": 2,
+        "color": "blue",
+        "ariaLabel": "Precio unitario",
+        "activeIndex": 1
+      }
+    ]
+  ],
+  [
+    "ch-line",
+    [
+      "LineChart",
+      {
+        "periods": [
+          {
+            "label": "Mayo 2026",
+            "short": "May"
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun"
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul"
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago"
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep"
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct"
+          }
+        ],
+        "series": [
+          {
+            "name": "Enviadas",
+            "color": "violet",
+            "values": [
+              14,
+              18,
+              12,
+              21,
+              17,
+              19
+            ]
+          },
+          {
+            "name": "Respondidas",
+            "color": "mint",
+            "values": [
+              9,
+              13,
+              10,
+              16,
+              11,
+              15
+            ]
+          }
+        ],
+        "ariaLabel": "Tendencia"
+      }
+    ]
+  ],
+  [
+    "ch-line-area",
+    [
+      "LineChart",
+      {
+        "periods": [
+          {
+            "label": "Mayo 2026",
+            "short": "May"
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun"
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul"
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago"
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep"
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct"
+          }
+        ],
+        "area": true,
+        "series": [
+          {
+            "name": "Respondidas",
+            "color": "violet",
+            "values": [
+              9,
+              13,
+              null,
+              16,
+              11,
+              15
+            ]
+          }
+        ],
+        "ariaLabel": "Tendencia",
+        "activeIndex": 4
+      }
+    ]
+  ],
+  [
+    "ch-donut",
+    [
+      "DonutChart",
+      {
+        "segments": [
+          {
+            "label": "Confirmadas",
+            "value": 5,
+            "color": "mint"
+          },
+          {
+            "label": "Por revisar",
+            "value": 4,
+            "color": "violet"
+          },
+          {
+            "label": "Información faltante",
+            "value": 2,
+            "color": "yellow"
+          },
+          {
+            "label": "No comparable",
+            "value": 1,
+            "color": "teal"
+          }
+        ],
+        "ariaLabel": "Estado",
+        "centerLabel": "cotizaciones"
+      }
+    ]
+  ],
+  [
+    "ch-donut-compact",
+    [
+      "DonutChart",
+      {
+        "segments": [
+          {
+            "label": "Confirmadas",
+            "value": 5,
+            "color": "mint"
+          },
+          {
+            "label": "Por revisar",
+            "value": 4,
+            "color": "violet"
+          },
+          {
+            "label": "Información faltante",
+            "value": 2,
+            "color": "yellow"
+          },
+          {
+            "label": "No comparable",
+            "value": 1,
+            "color": "teal"
+          }
+        ],
+        "size": "compact",
+        "ariaLabel": "Estado",
+        "activeIndex": 0
+      }
+    ]
+  ],
+  [
+    "ch-dist",
+    [
+      "DistributionChart",
+      {
+        "values": [
+          18,
+          21,
+          22,
+          25,
+          25,
+          26,
+          28,
+          28,
+          30,
+          30,
+          30,
+          32,
+          33,
+          35,
+          35,
+          38,
+          40,
+          40,
+          42,
+          45,
+          48,
+          50,
+          55,
+          60
+        ],
+        "unit": "días",
+        "ariaLabel": "Tiempo de entrega",
+        "showQuartiles": true
+      }
+    ]
+  ],
+  [
+    "ch-dist-empty",
+    [
+      "DistributionChart",
+      {
+        "values": [
+          3,
+          5
+        ],
+        "ariaLabel": "Tiempo de entrega"
+      }
+    ]
+  ],
+  [
+    "ch-dot",
+    [
+      "DotPlot",
+      {
+        "rows": [
+          {
+            "label": "Northstar Drinkware",
+            "value": 7.95
+          },
+          {
+            "label": "Hanyu Steelware Co.",
+            "value": 7.4
+          },
+          {
+            "label": "Altamar Envases Industriales S.A. de C.V.",
+            "value": 8.62
+          },
+          {
+            "label": "Copa Industrial",
+            "value": 8.1
+          },
+          {
+            "label": "Termos del Bajío",
+            "value": null,
+            "missing": "No comparable",
+            "reason": "Precio por lote sin tamaño de referencia"
+          }
+        ],
+        "unit": "USD",
+        "valueLabel": "Precio unitario",
+        "ariaLabel": "Precio unitario"
+      }
+    ]
+  ],
+  [
+    "ch-tooltip",
+    [
+      "ChartTooltip",
+      {
+        "inline": true,
+        "title": "Agosto 2026",
+        "rows": [
+          {
+            "label": "Enviadas",
+            "value": "21",
+            "color": "violet"
+          },
+          {
+            "label": "Respondidas",
+            "value": "16",
+            "color": "mint"
+          }
+        ],
+        "context": "Incluye respuestas parciales"
+      }
+    ]
+  ],
+  [
+    "ch-legend",
+    [
+      "ChartLegend",
+      {
+        "items": [
+          {
+            "label": "Enviadas",
+            "color": "violet"
+          },
+          {
+            "label": "Respondidas",
+            "color": "mint"
+          },
+          {
+            "label": "Meta",
+            "color": "coral",
+            "shape": "line"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "ch-state-loading",
+    [
+      "ChartState",
+      {
+        "state": "loading",
+        "shape": "bar",
+        "height": 160
+      }
+    ]
+  ],
+  [
+    "ch-state-loading-hbar",
+    [
+      "ChartState",
+      {
+        "state": "loading",
+        "shape": "hbar"
+      }
+    ]
+  ],
+  [
+    "ch-state-empty",
+    [
+      "ChartState",
+      {
+        "state": "empty"
+      }
+    ]
+  ],
+  [
+    "ch-state-noresults",
+    [
+      "ChartState",
+      {
+        "state": "noresults",
+        "onClear": true
+      }
+    ]
+  ],
+  [
+    "ch-state-error",
+    [
+      "ChartState",
+      {
+        "state": "error",
+        "onRetry": true
+      }
+    ]
+  ],
+  [
+    "ch-note",
+    [
+      "ChartNote",
+      {},
+      "Dos proveedores no reportaron tiempo de entrega; no se incluyen en la distribución."
+    ]
+  ],
+  [
+    "ch-datatable",
+    [
+      "ChartDataTable",
+      {
+        "caption": "Respuestas por mes",
+        "columns": [
+          "Mes",
+          "Enviadas",
+          "Respondidas"
+        ],
+        "rows": [
+          [
+            "Mayo",
+            14,
+            9
+          ],
+          [
+            "Junio",
+            18,
+            13
+          ]
+        ],
+        "defaultOpen": true
+      }
+    ]
+  ],
+  [
+    "ch-cdonut",
+    [
+      "CompactDonut",
+      {
+        "segments": [
+          {
+            "label": "Confirmadas",
+            "value": 5,
+            "color": "mint"
+          },
+          {
+            "label": "Por revisar",
+            "value": 4,
+            "color": "violet"
+          },
+          {
+            "label": "Información faltante",
+            "value": 2,
+            "color": "yellow"
+          },
+          {
+            "label": "No comparable",
+            "value": 1,
+            "color": "teal"
+          }
+        ],
+        "caption": "12 cotizaciones recibidas"
+      }
+    ]
+  ],
+  [
+    "ch-seg",
+    [
+      "SegmentedDistribution",
+      {
+        "unit": "USD",
+        "categories": [
+          {
+            "label": "Confirmadas",
+            "value": 48200,
+            "color": "mint"
+          },
+          {
+            "label": "Por revisar",
+            "value": 31750,
+            "color": "violet"
+          },
+          {
+            "label": "Faltante",
+            "value": 9800,
+            "color": "yellow"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "ch-gauge",
+    [
+      "RadialGauge",
+      {
+        "value": 9,
+        "total": 12,
+        "startLabel": "0",
+        "endLabel": "12",
+        "caption": "9 de 12 cotizaciones revisadas"
+      }
+    ]
+  ],
+  [
+    "ch-cbars",
+    [
+      "CompactBars",
+      {
+        "title": "Respuestas",
+        "value": "74",
+        "unit": "este semestre",
+        "comparison": "6 meses",
+        "data": [
+          {
+            "label": "Mayo 2026",
+            "short": "May",
+            "value": 9
+          },
+          {
+            "label": "Junio 2026",
+            "short": "Jun",
+            "value": 13
+          },
+          {
+            "label": "Julio 2026",
+            "short": "Jul",
+            "value": 10
+          },
+          {
+            "label": "Agosto 2026",
+            "short": "Ago",
+            "value": 16
+          },
+          {
+            "label": "Septiembre 2026",
+            "short": "Sep",
+            "value": 11
+          },
+          {
+            "label": "Octubre 2026",
+            "short": "Oct",
+            "value": 15
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "cp-strip",
+    [
+      "OverviewStrip",
+      {
+        "metric": {
+          "label": "Cotizaciones recibidas",
+          "value": "12",
+          "unit": "de 15 solicitadas",
+          "detail": "3 proveedores sin respuesta"
+        },
+        "distribution": {
+          "unit": "USD",
+          "categories": [
+            {
+              "label": "Confirmadas",
+              "value": 48200,
+              "color": "mint"
+            },
+            {
+              "label": "Por revisar",
+              "value": 31750,
+              "color": "violet"
+            },
+            {
+              "label": "Faltante",
+              "value": 9800,
+              "color": "yellow"
+            }
+          ]
+        },
+        "gauge": {
+          "value": 9,
+          "total": 12,
+          "caption": "9 de 12 revisadas"
+        }
+      }
+    ]
+  ],
+  [
+    "cp-metric",
+    [
+      "MetricChart",
+      {
+        "heading": "Tiempo de respuesta",
+        "description": "Mediana de días hasta la primera cotización.",
+        "value": "3,5",
+        "unit": "días",
+        "comparison": "Rango 1,5–6 días",
+        "chart": "[gráfica]"
+      }
+    ]
+  ],
+  [
+    "cp-metric-contrast",
+    [
+      "MetricChart",
+      {
+        "treatment": "contrasting",
+        "heading": "Tiempo de respuesta",
+        "value": "3,5",
+        "unit": "días",
+        "chart": "[gráfica]"
+      }
+    ]
+  ],
+  [
+    "cp-insight",
+    [
+      "InsightSection",
+      {
+        "context": "Precio unitario",
+        "heading": "Rango de precios",
+        "statement": "Las cuatro cotizaciones comparables están entre 7,40 y 8,62 USD por unidad.",
+        "meta": "Un proveedor no es comparable: cotizó por lote.",
+        "points": [
+          {
+            "label": "Mínimo",
+            "value": "7,40",
+            "unit": "USD"
+          },
+          {
+            "label": "Máximo",
+            "value": "8,62",
+            "unit": "USD"
+          },
+          {
+            "label": "Comparables",
+            "value": "4"
+          }
+        ],
+        "chart": "[gráfica]"
+      }
+    ]
+  ],
+  [
+    "cp-progress",
+    [
+      "ProgressComposition",
+      {
+        "title": "Cotizaciones procesadas",
+        "value": 9,
+        "total": 12,
+        "unit": "cotizaciones",
+        "statement": "Disponible no significa confirmado.",
+        "groups": [
+          {
+            "label": "Disponibilidad",
+            "items": [
+              {
+                "label": "Con precio",
+                "value": 7,
+                "kind": "confirmed"
+              },
+              {
+                "label": "Por revisar",
+                "value": 3,
+                "kind": "pending"
+              },
+              {
+                "label": "Sin dato",
+                "value": 2,
+                "kind": "missing"
+              }
+            ]
+          },
+          {
+            "label": "Revisión humana",
+            "items": [
+              {
+                "label": "Confirmadas",
+                "value": 5,
+                "kind": "confirmed"
+              },
+              {
+                "label": "Pendientes",
+                "value": 4,
+                "kind": "pending"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "cp-analytics",
+    [
+      "ComparativeAnalytics",
+      {
+        "title": "Precio unitario por proveedor",
+        "description": "Escala común; la posición no indica preferencia.",
+        "views": [
+          {
+            "value": "precio",
+            "label": "Precio",
+            "chart": "[gráfica]",
+            "facts": [
+              {
+                "label": "Rango",
+                "value": "7,40–8,62",
+                "unit": "USD"
+              },
+              {
+                "label": "Diferencia",
+                "value": "1,22",
+                "unit": "USD",
+                "detail": "entre extremos"
+              },
+              {
+                "label": "Comparables",
+                "value": "4 de 5"
+              }
+            ],
+            "note": "Termos del Bajío cotizó por lote."
+          },
+          {
+            "value": "entrega",
+            "label": "Entrega",
+            "chart": "[gráfica]"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "fm-nav",
+    [
+      "FormSectionNavigator",
+      {
+        "sections": [
+          {
+            "id": "producto",
+            "title": "Producto",
+            "description": "Especificaciones",
+            "icon": "package"
+          },
+          {
+            "id": "entrega",
+            "title": "Entrega",
+            "description": "Incoterm y lugar",
+            "icon": "truck"
+          },
+          {
+            "id": "requisitos",
+            "title": "Requisitos",
+            "description": "Documento opcional",
+            "icon": "file-text"
+          }
+        ],
+        "active": "entrega"
+      }
+    ]
+  ],
+  [
+    "fm-incoterm",
+    [
+      "IncotermExplorer",
+      {}
+    ]
+  ],
+  [
+    "fm-incoterm-open",
+    [
+      "IncotermExplorer",
+      {
+        "defaultExpanded": true,
+        "defaultValue": null
+      }
+    ]
+  ],
+  [
+    "fm-incoterm-selected",
+    [
+      "IncotermExplorer",
+      {
+        "defaultValue": "FOB",
+        "defaultPlace": "Puerto de Manzanillo"
+      }
+    ]
+  ],
+  [
+    "fm-drop",
+    [
+      "DocumentDropzone",
+      {}
+    ]
+  ],
+  [
+    "fm-drop-error",
+    [
+      "DocumentDropzone",
+      {
+        "error": "El archivo supera el límite de 20 MB."
+      }
+    ]
+  ],
+  [
+    "fm-drop-file",
+    [
+      "DocumentDropzone",
+      {
+        "file": {
+          "name": "especificaciones-caja.pdf",
+          "size": 284000
+        },
+        "onRemove": true
+      }
+    ]
+  ],
+  [
+    "fm-drop-upload",
+    [
+      "DocumentDropzone",
+      {
+        "file": {
+          "name": "especificaciones-caja.pdf",
+          "size": 284000
+        },
+        "upload": {
+          "progress": 42
+        }
+      }
+    ]
+  ]
+]

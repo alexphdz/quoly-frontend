@@ -1,7 +1,7 @@
 // Settings page only. Do not change global form, table, or segmented styles here.
 
 .st-page {
-  max-width: 760px;
+  max-width: none;
   min-width: 0;
 }
 
@@ -14,6 +14,121 @@
     font-size: 13px;
     line-height: 20px;
   }
+}
+
+.st-page > .q-tabs {
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 24px;
+  overflow: visible;
+  padding-bottom: 2px;
+}
+
+.st-page > .q-tabs .q-tab {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: var(--color-surface);
+}
+
+.st-page > .q-tabs .q-tab[aria-selected='true'] {
+  border-color: var(--color-brand);
+  background: var(--color-brand-subtle);
+}
+
+.st-panel {
+  max-width: 900px;
+  min-width: 0;
+}
+
+.st-profile-section {
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  border-top: 0 !important;
+}
+
+.st-profile-heading {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 28px;
+
+  h2 { font-size: 23px !important; line-height: 29px !important; }
+  p { margin: 0; font-size: 13px; line-height: 20px; }
+}
+
+.st-profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  min-width: 0;
+  max-width: 760px;
+}
+
+.st-profile-identity > .avatar {
+  width: 96px;
+  height: 96px;
+  flex: none;
+  font-size: 24px;
+}
+
+.st-profile-identity-copy {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+
+  > strong { font-size: 20px; font-weight: 600; line-height: 28px; }
+  > span { margin-top: 4px; color: var(--color-text-secondary); font-size: 13px; line-height: 20px; overflow-wrap: anywhere; }
+}
+
+.st-profile-identity-copy .photo-profile { margin-top: 12px; }
+
+.st-settings-section { max-width: 900px; padding-top: 4px; }
+
+.st-settings-heading {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 28px;
+
+  h2 { margin: 0; font-size: 23px; font-weight: 500; line-height: 29px; }
+  p { margin: 0; color: var(--color-text-secondary); font-size: 13px; line-height: 20px; }
+}
+
+.st-security-form { display: grid; gap: 20px; width: min(440px, 100%); }
+.st-password-input { position: relative; }
+.st-password-input .q-control-input { padding-right: 42px; }
+.st-password-input .q-icon-btn { position: absolute; right: 4px; bottom: 4px; }
+
+.st-preference-list { display: flex; flex-direction: column; border-top: 1px solid var(--color-border); }
+.st-preference-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 80px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+.st-preference-copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; max-width: 340px; }
+.st-preference-copy strong { color: var(--color-text-primary); font-size: 13px; font-weight: 600; line-height: 18px; }
+.st-preference-copy span { color: var(--color-text-secondary); font-size: 12px; line-height: 18px; }
+.st-preference-select { width: 220px; flex: none; }
+.st-theme-control {
+  display: flex;
+  flex: none;
+  gap: 2px;
+  width: 144px;
+  height: 44px;
+  padding: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-elevated);
+
+  .q-segment { display: flex; flex: 1; align-items: center; justify-content: center; height: 34px; padding: 0; }
 }
 
 .st-page .ds-form-section {
@@ -37,21 +152,24 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px 32px;
-  margin: 0;
+  margin: 32px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
   min-width: 0;
+  max-width: 760px;
 
   dt {
     font-size: 12px;
     font-weight: 500;
     line-height: 18px;
-    color: var(--tx-2);
+    color: var(--color-text-secondary);
   }
 
   dd {
     margin: 6px 0 0;
     font-size: 14px;
     line-height: 22px;
-    color: var(--tx-1);
+    color: var(--color-text-primary);
     overflow-wrap: anywhere;
     word-break: break-word;
   }
@@ -63,32 +181,11 @@
   }
 }
 
-.st-theme.ds-segmented {
+.st-preferences .q-segmented {
   justify-self: start;
   width: max-content;
-  flex-wrap: nowrap;
   max-width: 100%;
-
-  button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    min-width: 40px;
-    height: 36px;
-    padding: 0;
-    flex: none;
-
-    &:hover:not([aria-pressed='true']) {
-      color: var(--tx-1);
-      background: color-mix(in srgb, var(--tx-1) 5%, transparent);
-    }
-
-    &:focus-visible {
-      outline: 1.5px solid var(--focus);
-      outline-offset: 2px;
-    }
-  }
+  overflow-x: auto;
 }
 
 .st-integrations {
@@ -97,13 +194,17 @@
   min-width: 0;
 }
 
+.st-integrations-section .st-integrations { max-width: 620px; border-top: 1px solid var(--color-divider); }
+.st-integrations-section .st-integration { min-height: 84px; padding: 16px 20px; border-top: 0; border-bottom: 1px solid var(--color-divider); }
+.st-integration-note { max-width: 560px; margin: 20px 0 0; color: var(--color-text-secondary); font-size: 12px; line-height: 18px; }
+
 .st-integration {
   display: flex;
   align-items: center;
   gap: 16px;
   min-width: 0;
   padding: 16px 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--color-border);
 
   &:first-child {
     padding-top: 4px;
@@ -119,8 +220,8 @@
   width: 40px;
   height: 40px;
   border-radius: 8px;
-  background: var(--bg-card);
-  box-shadow: inset 0 0 0 1px var(--line);
+  background: var(--color-surface-elevated);
+  box-shadow: inset 0 0 0 1px var(--color-border);
 
   svg {
     display: block;
@@ -143,7 +244,7 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
-    color: var(--tx-1);
+    color: var(--color-text-primary);
   }
 }
 
@@ -157,6 +258,10 @@
 }
 
 @media (max-width: 800px) {
+  .st-panel { max-width: none; }
+  .st-profile-identity > .avatar { width: 88px; height: 88px; }
+  .st-profile-identity { flex-wrap: nowrap; gap: 16px; }
+  .st-profile-identity-copy { flex: 1 1 0; }
   .st-facts {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -164,6 +269,10 @@
 }
 
 @media (max-width: 640px) {
+  .st-preference-row { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .st-preference-select { width: 100%; }
+  .st-theme-control { align-self: flex-start; }
+
   .st-integration {
     flex-wrap: wrap;
     align-items: flex-start;
@@ -178,8 +287,26 @@
     width: 100%;
     padding-left: 56px;
 
-    .ds-btn {
-      width: auto;
+    .q-btn {
+      width: 100%;
     }
   }
+}
+
+.photo-profile, .photo-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.photo-profile > .avatar { width: 64px; height: 64px; flex: none; font-size: 20px; }
+.photo-dialog {
+  position: fixed; z-index: 100; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: min(480px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto;
+  display: grid; gap: 18px;
+  h2 { font-size: 18px; font-weight: 500; }
+}
+.photo-picker, .photo-zoom { display: grid; gap: 8px; font-size: 13px; }
+.photo-picker input { max-width: 100%; }
+.photo-crop { position: relative; height: clamp(220px, 40vh, 320px); background: var(--color-surface-elevated); }
+.photo-crop-busy { position: absolute; inset: 0; z-index: 2; }
+.photo-actions { justify-content: flex-end; margin-top: 12px; }
+.sidebar-avatar > .avatar { width: 100%; height: 100%; }
+@media (max-width: 640px) {
+  .photo-dialog { top: auto; bottom: 0; left: 0; transform: none; width: 100%; max-height: 90dvh; border-radius: 16px 16px 0 0; padding-bottom: max(24px, env(safe-area-inset-bottom)); }
 }

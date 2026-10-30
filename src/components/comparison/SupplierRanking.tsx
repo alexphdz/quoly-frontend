@@ -23,10 +23,9 @@ interface Props {
   awardedQuoteId?: string | null
   onSelect: (quoteId: string) => void
   onViewSpec: (row: ComparisonRow) => void
-  onViewSpecSheet: (row: ComparisonRow) => void
 }
 
-export default function SupplierRanking({ rfqId, model, f, allIn, fxLine, canSelect, awardedQuoteId, onSelect, onViewSpec, onViewSpecSheet }: Props) {
+export default function SupplierRanking({ rfqId, model, f, allIn, fxLine, canSelect, awardedQuoteId, onSelect, onViewSpec }: Props) {
   const { t } = useTranslation('comparison')
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -68,7 +67,6 @@ export default function SupplierRanking({ rfqId, model, f, allIn, fxLine, canSel
                 awarded={item.row.quote_id === awardedQuoteId}
                 onSelect={onSelect}
                 onViewSpec={onViewSpec}
-                onViewSpecSheet={onViewSpecSheet}
                 onOpen={() => navigate(`/quotes/${item.row.quote_id}`)}
                 onExclude={() => exclude.mutate(item.row.quote_id)}
               />
@@ -96,7 +94,6 @@ function SupplierRow({
   awarded,
   onSelect,
   onViewSpec,
-  onViewSpecSheet,
   onOpen,
   onExclude,
 }: {
@@ -107,7 +104,6 @@ function SupplierRow({
   awarded: boolean
   onSelect: (id: string) => void
   onViewSpec: (row: ComparisonRow) => void
-  onViewSpecSheet: (row: ComparisonRow) => void
   onOpen: () => void
   onExclude: () => void
 }) {
@@ -191,13 +187,10 @@ function SupplierRow({
             )}
       </td>
       <td className="cmp-col-spec">
-        {row.spec_source_url ? (
-          <button type="button" className="ds-link" onClick={() => onViewSpecSheet(row)}>{t('table.viewSpec')}</button>
+        {row.spec_source_url || row.spec_evidence_lines?.length || row.extracted_parameters?.length || (row.spec_state && row.spec_state !== 'not_received') ? (
+          <Btn size="sm" variant="secondary" icon="description" onClick={() => onViewSpec(row)}>{t('table.viewSpec')}</Btn>
         ) : (
           <span className="cmp-muted">{t('table.noSpecification')}</span>
-        )}
-        {row.spec_state && row.spec_state !== 'not_received' && (
-          <div><button type="button" className="ds-link cmp-sub" onClick={() => onViewSpec(row)}>{t('table.specStatus.received')}</button></div>
         )}
       </td>
       <td className="cmp-col-actions">

@@ -14,6 +14,7 @@
     "select": "Select",
     "refresh": "Refresh",
     "retry": "Retry",
+    "clearSearch": "Clear search",
     "showMore": "Show more",
     "showLess": "Show less"
   },
@@ -29,6 +30,7 @@
     "complete": "Complete"
   },
   "apiErrors": {
+    "quote_revision_conflict": "This quote changed since you opened it. Reload it before saving again.",
     "invalid_credentials": "Incorrect email or password. Try again.",
     "email_not_confirmed": "Confirm the email before signing in.",
     "user_banned": "This account has been suspended.",
@@ -86,6 +88,9 @@
     "quote_not_confirmed": "That quote is not in the comparison.",
     "decision_not_found": "No award recorded for this request.",
     "invalid_token": "Invalid or expired token.",
+  "otp_expired": "This link has expired. Request a new one.",
+  "password_reset_failed": "Couldn't reset the password. Try again.",
+  "resend_failed": "Couldn't resend the email. Try again.",
     "invalid_token_payload": "Invalid token payload.",
     "network_error": "Can't reach Quoly. Try again.",
     "volume_tiers_required": "At least one volume tier is required.",
@@ -126,24 +131,41 @@
     "brand": "Quoly"
   },
   "auth": {
+    "editorial": {
+      "eyebrow": "Sourcing workspace",
+      "title": "Clearer buying. Better decisions.",
+      "body": "Organize requests, review quotes, and compare suppliers in one place.",
+      "footnote": "Illustrative data",
+      "examples": {
+        "andina": "Andina Supply",
+        "delta": "Delta Insumos",
+        "norte": "Norte Global",
+        "prisma": "Prisma Co."
+      }
+    },
     "connectError": "Can't reach the server. Check the connection and try again.",
     "invalidEmail": "Enter a valid email address",
     "invalidWorkEmail": "Enter a valid work email address",
     "passwordMin": "Password must be at least 6 characters",
     "login": {
       "title": "Sign in",
+      "welcomeTitle": "Welcome back",
+      "subtitle": "Sign in to your account to continue.",
       "email": "Email",
-      "emailPlaceholder": "alex@company.com",
+      "emailPlaceholder": "you@company.com",
       "password": "Password",
+      "passwordPlaceholder": "Enter your password",
       "showPassword": "Show password",
       "hidePassword": "Hide password",
       "submit": "Sign in",
       "submitting": "Signing in…",
       "newToQuoly": "Don't have an account?",
-      "createAccount": "Create account"
+      "createAccount": "Create account",
+      "forgotPassword": "Forgot your password?"
     },
     "register": {
       "title": "Create account",
+      "subtitle": "Start organizing your requests and quotes in Quoly.",
       "email": "Work email",
       "emailPlaceholder": "name@company.com",
       "password": "Password",
@@ -151,18 +173,54 @@
       "submit": "Create account",
       "submitting": "Creating account…",
       "haveAccount": "Already have an account?",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "checkEmail": {
+        "title": "Confirm your email",
+        "body": "We sent a confirmation link to {{email}}. Click it to activate your account, then sign in.",
+        "resend": "Resend email",
+        "resending": "Sending…",
+        "resent": "Email sent. Check your inbox (and spam).",
+        "backToLogin": "Back to sign in"
+      }
+    },
+    "forgot": {
+      "title": "Recover your password",
+      "subtitle": "Enter your email and we'll send you a link to set a new password.",
+      "email": "Email",
+      "submit": "Send reset link",
+      "submitting": "Sending…",
+      "sentTitle": "Check your email",
+      "sentBody": "If an account exists for {{email}}, we sent a link to reset your password.",
+      "backToLogin": "Back to sign in"
+    },
+    "reset": {
+      "title": "Set a new password",
+      "password": "New password",
+      "confirm": "Confirm password",
+      "submit": "Update password",
+      "submitting": "Updating…",
+      "mismatch": "Passwords don't match",
+      "successTitle": "Password updated",
+      "successBody": "Your password has been changed. You can now sign in.",
+      "goToLogin": "Go to sign in",
+      "invalidTitle": "Invalid or expired link",
+      "invalidBody": "This reset link is no longer valid. Request a new one.",
+      "requestNew": "Request a new link"
     }
   },
   "settings": {
     "title": "Settings",
+    "subtitle": "Manage your account and customize your Quoly experience.",
     "profile": {
-      "title": "Profile",
+      "title": "My profile",
+      "subtitle": "This information identifies your account.",
       "email": "Email",
       "memberSince": "Member since"
     },
     "appearance": {
       "title": "Appearance",
+      "description": "Choose how Quoly looks on this device.",
+      "groupLabel": "Appearance mode",
       "light": "Light mode",
       "dark": "Dark mode",
       "switchToLight": "Switch to light",
@@ -170,6 +228,9 @@
     },
     "security": {
       "title": "Security",
+      "subtitle": "Update your password whenever you need.",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
       "currentPassword": "Current password",
       "newPassword": "New password",
       "confirmPassword": "Confirm new password",
@@ -182,13 +243,19 @@
       "mismatch": "Passwords do not match"
     },
     "preferences": {
+      "title": "Preferences",
+      "subtitle": "Choose how you want to use Quoly.",
+      "interfaceLanguage": "Interface language",
+      "interfaceLanguageHelper": "Choose the language used throughout Quoly.",
       "emailLanguage": "Language for supplier emails",
-      "emailLanguageHelper": "Used for supplier emails unless a request overrides it.",
+      "emailLanguageHelper": "Used in messages prepared for suppliers.",
       "saved": "Preferences saved",
       "saveError": "Could not save preferences."
     },
     "integrations": {
-      "title": "Integrations",
+      "title": "Connected email",
+      "subtitle": "Connect your email to send requests and reply from Quoly.",
+      "note": "Connecting your mailbox is optional. Quoly still works without it: you can send a request by copying it and sending it from your email. Only Gmail and Microsoft Outlook are supported.",
       "gmail": "Gmail",
       "gmailDescription": "",
       "outlook": "Outlook",
@@ -208,6 +275,27 @@
       "loading": "Loading demo data…",
       "loaded": "Demo data loaded",
       "already": "Demo data is already loaded for this account"
+    },
+    "photo": {
+      "title": "Profile photo",
+      "change": "Change photo",
+      "upload": "Upload photo",
+      "remove": "Remove photo",
+      "dialogTitle": "Crop profile photo",
+      "choose": "Choose image",
+      "help": "PNG, JPEG or WebP, up to 20 MB. Drag to position the photo, or use the arrow keys.",
+      "zoom": "Zoom",
+      "position": "Photo position",
+      "saving": "Saving…",
+      "saved": "Profile photo updated",
+      "removed": "Profile photo removed",
+      "typeError": "Choose a PNG, JPEG or WebP image.",
+      "sizeError": "Choose an image smaller than 20 MB.",
+      "imageError": "This image could not be opened. Choose another image.",
+      "saveError": "The photo could not be saved. Try again.",
+      "removeError": "The photo could not be removed. Try again.",
+      "removeTitle": "Remove profile photo?",
+      "removeHelp": "Your initials will appear instead."
     }
   },
   "suppliers": {
@@ -221,15 +309,30 @@
     },
     "directory": {
       "title": "Suppliers",
+      "subtitle": "Organize your suppliers and keep their contacts close at hand.",
       "addSupplier": "Add supplier",
+      "activeCount": "active suppliers",
+      "archivedCount": "archived",
+      "showing": "Showing {{count}}",
+      "requestsUnavailable": "Related requests unavailable",
+      "openSupplier": "Open supplier {{name}}",
+      "viewSupplier": "View supplier",
+      "noResults": "No matching suppliers",
+      "loadError": "Couldn't load the directory",
+      "loadErrorText": "Check your connection and try again.",
+      "formDescription": "These details stay private to your supplier directory.",
       "showArchived": "Show archived",
       "count_one": "{{count}} supplier",
       "count_other": "{{count}} suppliers",
+      "requestCount_one": "{{count}} request",
+      "requestCount_other": "{{count}} requests",
       "searchPlaceholder": "Company or contact",
+      "searchSupplier": "Search suppliers",
       "tabs": {
         "active": "Active",
         "archived": "Archived"
       },
+      "status": { "all": "All", "active": "Active", "archived": "Archived" },
       "columns": {
         "company": "Company",
         "contact": "Primary contact",
@@ -245,6 +348,7 @@
       "restored": "Supplier restored",
       "restore": "Restore",
       "filters": {
+        "status": "Filter by status",
         "tag": "Tag",
         "location": "Location",
         "allTags": "All tags",
@@ -258,6 +362,8 @@
       "emptyTitle": "No suppliers yet",
       "emptyDescription": "",
       "locationNotSet": "Location not set",
+      "moreTags_one": "+{{count}} tag",
+      "moreTags_other": "+{{count}} tags",
       "contacts_one": "{{count}} contact",
       "contacts_other": "{{count}} contacts",
       "addedManually": "Added manually",
@@ -280,11 +386,20 @@
       "inDirectorySince": "In the directory since {{date}}",
       "archivedToast": "Supplier archived",
       "restoredToast": "Supplier restored",
+      "saveError": "Couldn't save the supplier changes.",
       "primaryUpdated": "Primary contact updated",
       "contactRemoved": "Contact removed",
       "removeContactError": "Could not remove contact.",
       "company": "Company",
       "primaryContact": "Primary contact",
+      "primaryEmail": "Primary email",
+      "noTags": "No tags",
+      "editDescription": "Update this supplier's private directory information.",
+      "contactFormDescription": "Add a contact to your private supplier directory.",
+      "contactName": "Contact name",
+      "contactEmail": "Contact email",
+      "jobTitle": "Job title",
+      "inDirectorySinceLabel": "In directory since",
       "notSet": "Not set",
       "legalName": "Legal name",
       "phone": "Phone",
@@ -303,6 +418,13 @@
       "contactAdded": "Contact added",
       "addContactError": "Couldn't add the contact. Try again.",
       "supplierData": "Supplier data",
+      "relatedRequests": "Related requests",
+      "relatedRequestsCount_one": "{{count}} request",
+      "relatedRequestsCount_other": "{{count}} requests",
+      "noRelatedRequests": "This supplier hasn't participated in any requests yet.",
+      "relatedRequestsError": "Couldn't load related requests.",
+      "relatedRequestsErrorText": "Check your connection and try again.",
+      "viewRequest": "View request",
       "confidence": "Confidence",
       "reusableNote": ""
     },
@@ -363,5 +485,17 @@
     "actions": "Actions",
     "pages": "Pages",
     "reviewNext": "Review next quote"
+  },
+  "documents": {
+    "originalPdf": "Original PDF",
+    "originalFile": "Original file",
+    "supplierDocument": "Supplier document",
+    "open": "Open in new tab",
+    "download": "Download",
+    "opening": "Opening…",
+    "downloading": "Downloading…",
+    "accessError": "The document could not be opened. Try again.",
+    "popupBlocked": "Allow new tabs in your browser and try again.",
+    "unnamedFile": "Attached file"
   }
 }

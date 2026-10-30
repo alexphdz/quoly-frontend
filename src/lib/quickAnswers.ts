@@ -20,13 +20,6 @@ function unitLabel(raw: string): string {
   return raw
 }
 
-function alternateMeasure(n: number, unit: string): number {
-  if (unit === 'in' && n === 18) return 20
-  if (unit === 'in') return n + 2
-  if (unit === 'µm' && n === 18) return 23
-  return Number.isFinite(n) ? n + 1 : n
-}
-
 /** Neutral chips from the supplier's wording plus what is already on the request. */
 export function quickAnswersForQuestion(question: string, rfq: RFQRead): QuickChip[] {
   const chips: QuickChip[] = []
@@ -45,9 +38,7 @@ export function quickAnswersForQuestion(question: string, rfq: RFQRead): QuickCh
     if (pairs.length === 1) {
       const n = pairs[0][1]
       const unit = unitLabel(pairs[0][2])
-      const alt = alternateMeasure(Number(n.replace(',', '.')), unit)
       push({ id: `yes-${n}`, label: `Yes, ${n} ${unit}`, technicalLine: `${n} ${unit}` })
-      push({ id: `no-${alt}`, label: `No, ${alt} ${unit}`, technicalLine: `${alt} ${unit}` })
     } else {
       for (const pair of pairs) {
         const n = pair[1]

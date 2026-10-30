@@ -1,14 +1,16 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
 import type { BuyerActionRead } from '../../types/buyerAction'
 import type { InboundMessageRead } from '../../types/inbound'
 import type { QuoteListItem } from '../../types/quote'
 import type { RFQDetail, SupplierRead } from '../../types/rfq'
-import { composeSupplierReply, patchFromAnswers, quickAnswersForQuestion, type QuickChip } from '../../lib/quickAnswers'
+import { patchFromAnswers, quickAnswersForQuestion, type QuickChip } from '../../lib/quickAnswers'
 import { useResolveBuyerAction, useUpdateCommercialRFQ } from '../../hooks/useRFQs'
+import { suggestBuyerActionReply } from '../../api/rfqs'
 import { replyToInbound } from '../../api/inbound'
-import { Btn, SectionCard } from '../ds'
+import { Button, Chip, IntelligenceMark, StatusBadge, TextButton, Textarea } from '../../design-system'
+import { useRelativeTime } from '../../lib/relativeTime'
 import { toast } from '../ui'
 
 function compactAgo(iso: string, t: TFunction): string {
@@ -42,6 +44,7 @@ export default function SupplierQuestions({
   const { t } = useTranslation('rfq')
   const open = actions.filter(action => action.status === 'open')
   const resolved = actions.filter(action => action.status === 'resolved')
+  const readOnly = rfq.status === 'decided' || rfq.status === 'closed'
   const groups = useMemo(() => {
     const map = new Map<string, BuyerActionRead[]>()
     for (const action of open) {
@@ -54,16 +57,12 @@ export default function SupplierQuestions({
   }, [open])
 
   return (
-    <SectionCard
-      id="needs-answer"
-      className="rd-sq-card"
-      title={t('buyerActions.questionsTitle')}
-      actions={open.length > 0 ? <span className="rd-sq-count">{t('buyerActions.openCount', { count: open.length })}</span> : undefined}
-      flush
-    >
-      {open.length === 0 && (
-        <p className="rd-sq-empty">{t('buyerActions.emptyLine')}</p>
-      )}
+    <section id="needs-answer" aria-labelledby="rd2-h-questions" className="rd2-block rp-questions">
+      <h3 id="rd2-h-questions" className="rd2-h2 is-sm">
+        {t('respuestas.questions.title')}
+        <span className="rd2-count">{actions.length}</span>
+      </h3>
+      {actions.length === 0 && <p className="rd2-muted rp-empty-line">{t('buyerActions.emptyLine')}</p>}
       {groups.map(group => (
         <SupplierBlock
           key={group.supplierId}
@@ -72,22 +71,29 @@ export default function SupplierQuestions({
           supplier={suppliers.find(s => s.id === group.supplierId)}
           quotes={quotes}
           inbound={inbound.filter(msg => msg.supplier_id === group.supplierId)}
+          readOnly={readOnly}
         />
       ))}
-      {resolved.length > 0 && (
-        <div className="rd-resolved">
-          <h3>{t('buyerActions.resolvedTitle')}</h3>
-          <ul>
-            {resolved.map(action => (
-              <li key={action.id}>
-                <span className="rd-resolved-q">{action.question}</span>
-                <span className="rd-ask-meta">{action.supplier_name ?? t('buyerActions.unknownSupplier')} · {t('buyerActions.resolvedByYou')}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </SectionCard>
+      {resolved.map(action => <ResolvedQuestion key={action.id} action={action} inbound={inbound} />)}
+    </section>
+  )
+}
+
+function ResolvedQuestion({ action, inbound }: { action: BuyerActionRead, inbound: InboundMessageRead[] }) {
+  const { t } = useTranslation('rfq')
+  const relative = useRelativeTime()
+  const message = inbound.find(msg => msg.id === action.inbound_message_id)
+  return (
+    <article className="rp-q is-resolved">
+      <header className="rp-q-head">
+        <span className="rp-q-name">{action.supplier_name ?? t('buyerActions.unknownSupplier')}</span>
+        <StatusBadge tone="success" variant="quiet" icon="check-circle">{t('respuestas.questions.resolved')}</StatusBadge>
+        <span className="rp-q-when">{relative(action.resolved_at ?? action.created_at)}</span>
+      </header>
+      <p className="rp-q-text">{`«${action.question}»`}</p>
+      {message?.reply_text && <p className="rp-q-answer">{message.reply_text}</p>}
+      <p className="rp-q-foot"><span>{message?.replied_at ? t('respuestas.questions.replySent') : t('buyerActions.resolvedByYou')}</span></p>
+    </article>
   )
 }
 
@@ -97,44 +103,70 @@ function SupplierBlock({
   supplier,
   quotes,
   inbound,
+  readOnly,
 }: {
   rfq: RFQDetail
   items: BuyerActionRead[]
   supplier?: SupplierRead
   quotes: QuoteListItem[]
   inbound: InboundMessageRead[]
+  readOnly: boolean
 }) {
   const { t } = useTranslation('rfq')
   const updateRfq = useUpdateCommercialRFQ()
   const resolve = useResolveBuyerAction(rfq.id)
   const name = supplier?.name ?? items[0].supplier_name ?? t('buyerActions.unknownSupplier')
   const latest = items.reduce((max, item) => (item.created_at > max ? item.created_at : max), items[0].created_at)
+  const blocking = blocksQuote(supplier, quotes)
+
   const chipsById = useMemo(
     () => Object.fromEntries(items.map(item => [item.id, quickAnswersForQuestion(item.question, rfq)])),
     [items, rfq],
   )
-  const [picked, setPicked] = useState<Record<string, string>>({})
-  const [other, setOther] = useState<Record<string, string>>({})
-  const [note, setNote] = useState('')
-  const [sending, setSending] = useState(false)
-  const blocking = blocksQuote(supplier, quotes)
+  const allChips = useMemo(() => items.flatMap(item => chipsById[item.id] ?? []), [items, chipsById])
 
-  const answerFor = (item: BuyerActionRead): { chip?: QuickChip, text: string } | null => {
-    const choice = picked[item.id]
-    if (!choice) return null
-    if (choice === '__other') {
-      const text = other[item.id]?.trim()
-      return text ? { text } : null
+  // The AI reply is generated automatically when the block appears. The buyer
+  // then uses it as-is, edits it, or writes their own. Nothing is auto-sent.
+  const [suggestion, setSuggestion] = useState<string | null>(null)
+  const [loadingSuggestion, setLoadingSuggestion] = useState(true)
+  const [suggestionError, setSuggestionError] = useState(false)
+  const [draft, setDraft] = useState('')
+  const [mode, setMode] = useState<'choose' | 'write'>('choose')
+  const [usedChips, setUsedChips] = useState<QuickChip[]>([])
+  const [sending, setSending] = useState(false)
+  const fetched = useRef(false)
+
+  useEffect(() => {
+    if (readOnly) {
+      setLoadingSuggestion(false)
+      return
     }
-    const chip = chipsById[item.id]?.find(c => c.id === choice)
-    return chip ? { chip, text: chip.label } : null
+    if (fetched.current) return
+    fetched.current = true
+    suggestBuyerActionReply(rfq.id, items[0].id)
+      .then(res => setSuggestion(res.suggested_reply))
+      .catch(() => { setSuggestionError(true); setMode('write') })
+      .finally(() => setLoadingSuggestion(false))
+  }, [rfq.id, items, readOnly])
+
+  const useSuggestion = () => {
+    setDraft(suggestion ?? '')
+    setMode('write')
+  }
+  const writeOwn = () => {
+    setDraft('')
+    setMode('write')
+  }
+  const addChip = (chip: QuickChip) => {
+    const line = chip.technicalLine ?? chip.label
+    setDraft(prev => (prev.trim() ? `${prev.trim()}\n${line}` : line))
+    setUsedChips(prev => (prev.some(c => c.id === chip.id) ? prev : [...prev, chip]))
+    setMode('write')
   }
 
   const saveSpec = async () => {
-    const chips = items.map(item => answerFor(item)?.chip).filter((chip): chip is QuickChip => !!chip)
-    const others = items.map(item => (picked[item.id] === '__other' ? other[item.id] : '')).filter(Boolean)
-    if (chips.length === 0 && others.length === 0) return
-    await updateRfq.mutateAsync({ id: rfq.id, data: patchFromAnswers(rfq, chips, others) })
+    if (usedChips.length === 0) return
+    await updateRfq.mutateAsync({ id: rfq.id, data: patchFromAnswers(rfq, usedChips, []) })
   }
 
   const markResolved = async () => {
@@ -143,28 +175,24 @@ function SupplierBlock({
     toast(t('buyerActions.resolvedToast'))
   }
 
-  const sendAnswers = async () => {
-    const rows = items.map(item => ({ question: item.question, answer: answerFor(item)?.text ?? '' }))
-    if (rows.some(row => !row.answer)) {
-      toast(t('buyerActions.needAnswers'), 'error')
-      return
-    }
+  const sendReply = async () => {
+    if (!draft.trim()) return
     setSending(true)
     try {
       await saveSpec()
-      const body = composeSupplierReply(name, rows, note)
-      const inboundId = items.find(item => item.inbound_message_id)?.inbound_message_id
-        ?? inbound[0]?.id
+      const inboundId = items.find(item => item.inbound_message_id)?.inbound_message_id ?? inbound[0]?.id
+      const mailto = () => {
+        if (!supplier?.email) throw new Error('no_channel')
+        window.location.href = `mailto:${supplier.email}?subject=${encodeURIComponent(rfq.name)}&body=${encodeURIComponent(draft)}`
+      }
       if (inboundId) {
         try {
-          await replyToInbound(inboundId, body)
+          await replyToInbound(inboundId, draft)
         } catch {
-          const email = supplier?.email
-          if (email) window.location.href = `mailto:${email}?subject=${encodeURIComponent(rfq.name)}&body=${encodeURIComponent(body)}`
-          else throw new Error('no_channel')
+          mailto()
         }
-      } else if (supplier?.email) {
-        window.location.href = `mailto:${supplier.email}?subject=${encodeURIComponent(rfq.name)}&body=${encodeURIComponent(body)}`
+      } else {
+        mailto()
       }
       for (const item of items) await resolve.mutateAsync(item.id)
       toast(t('buyerActions.sentToast'))
@@ -176,83 +204,71 @@ function SupplierBlock({
   }
 
   return (
-    <article className="rd-sq-block">
-      <header className="rd-sq-head">
-        <p className="rd-sq-supplier">
-          <span className="rd-sq-name">{name}</span>
-          <span className="rd-ask-meta">
-            {t('buyerActions.askedLine', { count: items.length, when: compactAgo(latest, t) })}
-          </span>
-        </p>
-        {blocking && (
-          <span className="rd-sq-block-flag">
-            <span className="rq-dot is-warn" />
-            {t('buyerActions.cantQuote')}
-          </span>
-        )}
+    <article className="rp-q">
+      <header className="rp-q-head">
+        <span className="rp-q-name">{name}</span>
+        <StatusBadge tone={readOnly ? 'neutral' : 'warning'} variant="quiet" icon={readOnly ? 'lock-simple' : 'chat-text'}>{readOnly ? t('solicitudes.status.closed') : t('respuestas.questions.open')}</StatusBadge>
+        {blocking && <span className="rp-q-flag">{t('buyerActions.cantQuote')}</span>}
+        <span className="rp-q-when">{compactAgo(latest, t)}</span>
       </header>
 
-      <ul className="rd-sq-questions">
-        {items.map((item) => {
-          const chips = chipsById[item.id] ?? []
-          const choice = picked[item.id]
-          return (
-            <li key={item.id}>
-              <p className="rd-sq-q">{item.question}</p>
-              <div className="rd-sq-chips" role="group" aria-label={t('buyerActions.quickAnswers')}>
-                {chips.map(chip => (
-                  <button
-                    key={chip.id}
-                    type="button"
-                    className={choice === chip.id ? 'rd-sq-chip is-on' : 'rd-sq-chip'}
-                    onClick={() => setPicked(prev => ({ ...prev, [item.id]: chip.id }))}
-                  >
-                    {chip.label}
-                    {choice === chip.id && <span className="rd-sq-check" aria-hidden>✓</span>}
-                  </button>
-                ))}
-                <button
-                  type="button"
-                  className={choice === '__other' ? 'rd-sq-chip is-on' : 'rd-sq-chip'}
-                  onClick={() => setPicked(prev => ({ ...prev, [item.id]: '__other' }))}
-                >
-                  {t('buyerActions.other')}
-                </button>
-              </div>
-              {choice === '__other' && (
-                <input
-                  className="rd-sq-other"
-                  value={other[item.id] ?? ''}
-                  onChange={event => setOther(prev => ({ ...prev, [item.id]: event.target.value }))}
-                  placeholder={t('buyerActions.otherPlaceholder')}
-                />
-              )}
-            </li>
-          )
-        })}
-      </ul>
+      {items.map(item => <p key={item.id} className="rp-q-text">{`«${item.question}»`}</p>)}
 
-      <label className="rd-sq-note">
-        <span className="sr-only">{t('buyerActions.note')}</span>
-        <textarea
-          rows={2}
-          value={note}
-          onChange={event => setNote(event.target.value)}
-          placeholder={t('buyerActions.note')}
-        />
-      </label>
-
-      <footer className="rd-sq-foot">
-        <p>{t('buyerActions.specHelper')}</p>
-        <div className="rd-sq-foot-actions">
-          <Btn variant="text" loading={resolve.isPending && !sending} onClick={() => void markResolved()}>
-            {t('buyerActions.resolve')}
-          </Btn>
-          <Btn variant="primary" loading={sending} onClick={() => void sendAnswers()}>
-            {t('buyerActions.sendAnswers')}
-          </Btn>
+      {!readOnly && allChips.length > 0 && (
+        <div className="rp-q-quick">
+          <span className="rp-q-label">{t('respuestas.questions.quick')}</span>
+          <div className="rp-q-chips" role="group" aria-label={t('buyerActions.quickAnswers')}>
+            {items.flatMap(item => (chipsById[item.id] ?? []).map(chip => (
+              <Chip key={`${item.id}-${chip.id}`} selected={usedChips.some(c => c.id === chip.id)} onClick={() => addChip(chip)}>{chip.label}</Chip>
+            )))}
+          </div>
         </div>
-      </footer>
+      )}
+
+      {readOnly
+        ? <p className="rd2-muted">{t('respuestas.questions.closedRequest')}</p>
+        : loadingSuggestion
+        ? <p className="rd2-muted">{t('buyerActions.generatingSuggestion')}</p>
+        : mode === 'choose' && suggestion
+          ? (
+            <div className="rp-suggestion">
+              <span className="rp-suggestion-label">
+                <IntelligenceMark size={14} />
+                {t('respuestas.questions.suggestion')}
+                <span className="rp-suggestion-review">{t('respuestas.questions.toReview')}</span>
+              </span>
+              <p className="rp-suggestion-text">{suggestion}</p>
+              <div className="rp-suggestion-actions">
+                <Button variant="secondary" size="sm" icon="pencil-simple" onClick={useSuggestion}>{t('buyerActions.useSuggestion')}</Button>
+                <TextButton size="sm" onClick={writeOwn}>{t('buyerActions.writeOwn')}</TextButton>
+              </div>
+            </div>
+          )
+          : (
+            <Textarea
+              label={t('respuestas.questions.yourReply')}
+              description={suggestionError ? t('buyerActions.suggestFailed') : t('buyerActions.editHint')}
+              value={draft}
+              onChange={event => setDraft(event.target.value)}
+              rows={5}
+            />
+          )}
+
+      {!readOnly && (
+        <footer className="rp-q-actions">
+          <p className="rd2-muted">{t('respuestas.questions.resolveNote')}</p>
+          <div className="rp-q-buttons">
+            <Button variant="secondary" icon="check" loading={resolve.isPending && !sending} onClick={() => void markResolved()}>
+              {t('buyerActions.resolve')}
+            </Button>
+            {mode === 'write' && (
+              <Button icon="paper-plane-tilt" loading={sending} disabled={!draft.trim()} onClick={() => void sendReply()}>
+                {t('buyerActions.sendReply')}
+              </Button>
+            )}
+          </div>
+        </footer>
+      )}
     </article>
   )
 }

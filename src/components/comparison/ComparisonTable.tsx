@@ -19,11 +19,14 @@ interface Props {
   onPick?: (quoteId: string) => void
   showPick: boolean
   onViewSpec?: (row: ComparisonRow) => void
-  onViewSpecSheet?: (row: ComparisonRow) => void
   awardedQuoteId?: string | null
 }
 
-const CONVERSION_FLAGS = ['currency_conversion', 'unit_conversion']
+const COMPARISON_BLOCK_FLAGS = ['currency_conversion', 'unit_conversion', 'moq_above_requested_quantity', 'cost_line_amount_missing']
+
+function priceBlocked(row: ComparisonRow) {
+  return row.missing_fields.some(field => COMPARISON_BLOCK_FLAGS.includes(field) || field.startsWith('unquoted_'))
+}
 
 type CurrencyView = 'normalized' | 'original'
 
@@ -39,13 +42,12 @@ export default function ComparisonTable({
   onPick,
   showPick,
   onViewSpec,
-  onViewSpecSheet,
   awardedQuoteId = null,
 }: Props) {
   const { t } = useTranslation('comparison')
   const fmt = useFormat()
   const [currencyView, setCurrencyView] = useState<CurrencyView>('normalized')
-  const bestId = ranking[0] ?? null
+  const bestId = sortedBestId(rows, ranking)
 
   const sorted = [...rows].sort((a, b) => {
     const ai = ranking.indexOf(a.quote_id)
@@ -56,7 +58,7 @@ export default function ComparisonTable({
     return (a.normalized_price ?? Number.MAX_SAFE_INTEGER) - (b.normalized_price ?? Number.MAX_SAFE_INTEGER)
   })
 
-  const priced = sorted.filter(row => row.normalized_price != null)
+  const priced = sorted.filter(row => row.normalized_price != null && !priceBlocked(row))
   const maxPrice = priced.reduce((max, row) => Math.max(max, row.normalized_price ?? 0), 0)
 
   if (rows.length === 0) {
@@ -130,7 +132,7 @@ export default function ComparisonTable({
                     view={currencyView}
                     baseCurrency={baseCurrency}
                     maxPrice={maxPrice}
-                    showMeter={currencyView === 'normalized' && priced.length > 1 && maxPrice > 0}
+                    showMeter={currencyView === 'normalized' && !priceBlocked(row) && priced.length > 1 && maxPrice > 0}
                     rfqQuantity={rfqQuantity}
                   />
                 </td>
@@ -185,9 +187,7 @@ export default function ComparisonTable({
               {sorted.map(row => (
                 <td key={row.quote_id} className={row.quote_id === bestId ? 'is-recommended' : undefined}>
                   {row.spec_state && row.spec_state !== 'not_received' ? (
-                    <button type="button" className="ds-link" onClick={() => onViewSpec?.(row)}>
-                      {t(`table.specStatus.${row.spec_state}`)}
-                    </button>
+                    <span>{t(`table.specStatus.${row.spec_state}`)}</span>
                   ) : (
                     <span className="ds-muted">{t('table.specStatus.not_received')}</span>
                   )}
@@ -200,8 +200,8 @@ export default function ComparisonTable({
             <MatrixRow label={t('table.headers.specSheet')}>
               {sorted.map(row => (
                 <td key={row.quote_id} className={row.quote_id === bestId ? 'is-recommended' : undefined}>
-                  {row.spec_source_url ? (
-                    <button type="button" className="ds-link" onClick={() => onViewSpecSheet?.(row)}>
+                  {row.spec_source_url || row.spec_evidence_lines?.length || row.extracted_parameters?.length || (row.spec_state && row.spec_state !== 'not_received') ? (
+                    <button type="button" className="ds-btn ds-btn-secondary ds-btn-sm" onClick={() => onViewSpec?.(row)}>
                       {t('table.viewSpec')}
                     </button>
                   ) : (
@@ -248,6 +248,7 @@ function PriceCell({
   const fmt = useFormat()
   const units = useUnitLabel()
   const tiers = formatPriceTierSummary(row.commercial_offer, fmt, units.per)
+  const blockedReason = row.missing_fields.find(field => COMPARISON_BLOCK_FLAGS.includes(field) || field.startsWith('unquoted_'))
   const extended = row.normalized_price != null && rfqQuantity
     ? fmt.money(row.normalized_price * rfqQuantity, baseCurrency, { maximumFractionDigits: 0 })
     : null
@@ -268,11 +269,13 @@ function PriceCell({
     )
   }
 
-  const blocked = row.missing_fields.some(field => CONVERSION_FLAGS.includes(field))
+  const blocked = priceBlocked(row)
   return (
     <div>
       <div className="ds-matrix-value tnum">
-        {row.normalized_price != null
+        {blocked
+          ? t('table.notComparable')
+          : row.normalized_price != null
           ? fmt.unitMoney(row.normalized_price, baseCurrency)
           : tiers.length > 0
             ? tiers[0]
@@ -280,7 +283,10 @@ function PriceCell({
               ? t('table.notComparable')
               : t('table.notProvided')}
       </div>
-      {tiers.length > 0 && row.normalized_price != null && (
+      {blocked && blockedReason && (
+        <div className="ds-matrix-sub">{t(`table.priceBlocked.${blockedReason}`, { defaultValue: t('table.notComparable') })}</div>
+      )}
+      {tiers.length > 0 && row.normalized_price != null && !blocked && (
         <div className="ds-matrix-sub">{tiers.join(' · ')}</div>
       )}
       {tiers.length > 1 && row.normalized_price == null && (
@@ -294,7 +300,14 @@ function PriceCell({
       {row.raw_price != null && (
         <div className="ds-matrix-sub">{row.raw_price} {row.raw_currency ?? ''}/{units.per(row.raw_unit) || row.raw_unit || ''}</div>
       )}
-      {extended && <div className="ds-matrix-sub">{t('table.totalLine', { amount: extended })}</div>}
+      {!blocked && extended && <div className="ds-matrix-sub">{t('table.totalLine', { amount: extended })}</div>}
     </div>
   )
+}
+
+function sortedBestId(rows: ComparisonRow[], ranking: string[]): string | null {
+  const eligible = new Set(rows.filter(row => row.normalized_price != null
+    && !row.missing_fields.some(field => COMPARISON_BLOCK_FLAGS.includes(field) || field.startsWith('unquoted_')))
+    .map(row => row.quote_id))
+  return ranking.find(quoteId => eligible.has(quoteId)) ?? null
 }

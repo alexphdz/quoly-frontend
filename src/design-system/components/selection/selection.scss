@@ -1,0 +1,245 @@
+@use '../shared' as *;
+
+// ---- Checkbox / Radio ----
+.q-choice-wrap {
+  display: grid;
+  gap: 4px;
+}
+
+.q-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 28px;
+  padding: 2px 0;
+  cursor: pointer;
+
+  &.is-disabled { cursor: not-allowed; }
+}
+
+.q-choice-control {
+  position: relative;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+
+  > input {
+    position: absolute;
+    inset: -4px;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+}
+
+.q-checkbox-visual,
+.q-radio-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text-inverse);
+  pointer-events: none;
+  @include color-transition;
+}
+
+.q-checkbox-visual {
+  border-radius: var(--radius-indicator);
+
+  &.is-filled {
+    border-color: var(--color-text-primary);
+    background: var(--color-text-primary);
+  }
+}
+
+.q-radio-visual { border-radius: var(--radius-full); }
+
+.q-choice:hover:not(.is-disabled) {
+  .q-checkbox-visual:not(.is-filled),
+  .q-radio-visual { border-color: var(--color-border-hover); }
+}
+
+.q-choice-control > input:checked + .q-radio-visual {
+  border-color: var(--color-text-primary);
+
+  &::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-text-primary);
+  }
+}
+
+.q-choice-control > input:focus-visible + .q-checkbox-visual,
+.q-choice-control > input:focus-visible + .q-radio-visual {
+  box-shadow: var(--focus-ring);
+}
+
+.q-choice.is-error .q-checkbox-visual { border-color: var(--color-status-error-text); }
+
+.q-choice.is-disabled {
+  .q-checkbox-visual,
+  .q-radio-visual {
+    border-color: var(--color-disabled-border);
+    background: var(--color-disabled-bg);
+  }
+
+  .q-checkbox-visual.is-filled { background: var(--color-disabled-fg); }
+  .q-radio-visual::after { background: var(--color-disabled-fg); }
+  .q-choice-label { color: var(--color-disabled-fg); }
+}
+
+.q-choice-text {
+  display: grid;
+  gap: 2px;
+
+  &.is-grow { flex: 1; min-width: 0; }
+}
+
+.q-choice-label { font: var(--type-body-md); color: var(--color-text-primary); }
+.q-choice-description { font: var(--type-body-sm); color: var(--color-text-secondary); }
+
+.q-choice-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 26px;
+  font: var(--type-body-sm);
+  color: var(--color-status-error-text);
+}
+
+// ---- Switch ----
+.q-switch {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 24px;
+  cursor: pointer;
+
+  &.is-disabled {
+    cursor: not-allowed;
+
+    .q-choice-label { color: var(--color-disabled-fg); }
+  }
+}
+
+.q-switch-side {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.q-switch-state {
+  min-width: 28px;
+  font: var(--type-label-md);
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
+.q-switch-control {
+  position: relative;
+  width: 36px;
+  height: 20px;
+
+  > input {
+    position: absolute;
+    inset: -2px;
+    width: 40px;
+    height: 24px;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+}
+
+.q-switch-track {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-border-strong);
+  pointer-events: none;
+  @include color-transition;
+}
+
+.q-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  pointer-events: none;
+  transition: left var(--motion-dur-color) var(--motion-ease-standard);
+}
+
+.q-switch:hover:not(.is-disabled) .q-switch-track { background: var(--color-border-hover); }
+.q-switch-control > input:checked ~ .q-switch-track { background: var(--color-text-primary); }
+.q-switch-control > input:checked ~ .q-switch-thumb { left: 18px; }
+.q-switch-control > input:focus-visible ~ .q-switch-track { box-shadow: var(--focus-ring); }
+.q-switch-control > input:disabled ~ .q-switch-track { background: var(--color-disabled-bg); }
+.q-switch.is-disabled .q-switch-thumb { background: var(--color-disabled-fg); }
+
+// ---- SegmentedControl ----
+.q-segmented {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius-control);
+  background: var(--color-surface-elevated);
+
+  &.is-full { display: flex; }
+}
+
+.q-segment {
+  display: inline-flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font: var(--type-label-md);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  @include color-transition;
+
+  .is-sm > & { min-height: 28px; }
+
+  &:hover:not(:disabled) { background: var(--color-surface-hover); }
+
+  &[aria-checked='true'] {
+    background: var(--elevation-1-bg);
+    color: var(--color-text-primary);
+    box-shadow: var(--elevation-1), 0 0 0 1px var(--color-border);
+  }
+
+  &:focus-visible { box-shadow: var(--focus-ring); }
+  &[aria-checked='true']:focus-visible { box-shadow: var(--elevation-1), 0 0 0 1px var(--color-border), var(--focus-ring); }
+  &:disabled { color: var(--color-disabled-fg); cursor: not-allowed; }
+}
+
+.q-segment-count {
+  font: var(--type-label-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}

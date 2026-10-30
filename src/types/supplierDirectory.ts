@@ -66,3 +66,23 @@ export interface SupplierCompanyRead extends SupplierCompanyCreate {
   updated_at: string
   contacts: SupplierContactRead[]
 }
+
+export interface SupplierCompanyListRead extends SupplierCompanyRead {
+  rfq_count: number
+}
+
+export interface SupplierRfqHistoryItem {
+  supplier_id: string
+  rfq_id: string
+  rfq_name: string
+  rfq_status: string
+  supplier_status: string
+  created_at: string
+  requested_at: string | null
+}
+
+export interface SupplierRfqHistoryRead {
+  supplier_company_id: string
+  total: number
+  items: SupplierRfqHistoryItem[]
+}

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import { authErrorMessage } from '../lib/authError'
-import { Alert, FormField } from '../components/ui'
+import { FormFeedback, FormField } from '../components/ui'
 import { Icon } from '../components/ds'
 import AuthStage from '../components/auth/AuthStage'
 
@@ -19,17 +19,61 @@ type FormData = z.infer<typeof schema>
 
 export default function RegisterPage() {
   const { t } = useTranslation('common')
-  const { register: registerMutation } = useAuth()
+  const { register: registerMutation, resendConfirmation } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
+  const [submittedEmail, setSubmittedEmail] = useState('')
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
   })
 
+  // Signup succeeded but no session returned → email confirmation is pending.
+  if (registerMutation.isSuccess && !registerMutation.data?.access_token) {
+    return (
+      <AuthStage>
+        <h1>{t('auth.register.checkEmail.title')}</h1>
+        <p className="ds-auth-note">
+          {t('auth.register.checkEmail.body', { email: submittedEmail })}
+        </p>
+
+        {resendConfirmation.isSuccess ? (
+          <p className="ds-auth-note">{t('auth.register.checkEmail.resent')}</p>
+        ) : (
+          <button
+            type="button"
+            className="ds-btn ds-btn-secondary"
+            disabled={resendConfirmation.isPending}
+            onClick={() => resendConfirmation.mutate(submittedEmail)}
+          >
+            {resendConfirmation.isPending
+              ? t('auth.register.checkEmail.resending')
+              : t('auth.register.checkEmail.resend')}
+          </button>
+        )}
+
+        {resendConfirmation.error && (
+          <FormFeedback>{authErrorMessage(resendConfirmation.error, t)}</FormFeedback>
+        )}
+
+        <p className="ds-auth-switch">
+          <Link to="/login" className="ds-link">{t('auth.register.checkEmail.backToLogin')}</Link>
+        </p>
+      </AuthStage>
+    )
+  }
+
   return (
     <AuthStage>
-      <h1>{t('auth.register.title')}</h1>
+      <div className="ds-auth-heading">
+        <h1>{t('auth.register.title')}</h1>
+        <p>{t('auth.register.subtitle')}</p>
+      </div>
 
-      <form onSubmit={handleSubmit(data => registerMutation.mutate(data))}>
+      <form
+        onSubmit={handleSubmit(data => {
+          setSubmittedEmail(data.email)
+          registerMutation.mutate(data)
+        })}
+      >
         <FormField label={t('auth.register.email')} error={errors.email?.message && t(errors.email.message as 'auth.invalidWorkEmail')}>
           <input
             type="email"
@@ -62,7 +106,7 @@ export default function RegisterPage() {
         </FormField>
 
         {registerMutation.error && (
-          <Alert tone="error">{authErrorMessage(registerMutation.error, t)}</Alert>
+          <FormFeedback>{authErrorMessage(registerMutation.error, t)}</FormFeedback>
         )}
 
         <button type="submit" className="ds-btn ds-btn-primary" disabled={registerMutation.isPending}>

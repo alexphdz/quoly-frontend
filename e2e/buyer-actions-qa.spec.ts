@@ -15,7 +15,7 @@ test.describe('Buyer actions QA (module 4)', () => {
     const supplier = await addSupplier(request, page, rfq.id, 'E2E ChemCo', `e2e-buyer-${stamp}@example.com`)
     seedBuyerActionViaScript(rfq.id, supplier.id, question)
 
-    await page.goto(`/rfqs/${rfq.id}`)
+    await page.goto(`/rfqs/${rfq.id}?tab=replies`)
     await expect(page.getByRole('heading', { name: rfq.name })).toBeVisible({ timeout: 15_000 })
 
     await expect(page.getByRole('heading', { name: 'Supplier questions' })).toBeVisible()
@@ -27,7 +27,7 @@ test.describe('Buyer actions QA (module 4)', () => {
     await expect(page.getByText('Ask marked resolved')).toBeVisible({ timeout: 10_000 })
     await expect(page.getByRole('button', { name: 'Mark resolved' })).toHaveCount(0, { timeout: 10_000 })
 
-    await expect(page.getByRole('heading', { name: 'Resolved' })).toBeVisible()
+    await expect(page.getByText('Resolved', { exact: true }).first()).toBeVisible()
     await expect(page.getByText('No open questions from suppliers.')).toBeVisible()
     await expect(page.getByText(question)).toBeVisible()
 
