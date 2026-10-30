@@ -1,0 +1,309 @@
+@use '../shared' as *;
+
+// ---- StatusBadge ----
+.q-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  min-height: 22px;
+  padding: 0 8px;
+  border-radius: var(--radius-tag);
+  font: var(--type-label-sm);
+  white-space: nowrap;
+
+  @each $tone in success, warning, error, info, ai, neutral {
+    &.is-#{$tone} {
+      background: var(--color-status-#{$tone}-bg-subtle);
+      color: var(--color-status-#{$tone}-text);
+
+      &.is-strong {
+        background: var(--color-status-#{$tone}-strong);
+        color: var(--color-status-#{$tone}-on-strong);
+      }
+    }
+  }
+
+  &.is-quiet {
+    padding: 0;
+    background: transparent;
+  }
+}
+
+.q-status-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ---- Tag ----
+.q-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-sizing: border-box;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-xs);
+  background: var(--color-status-neutral-bg-subtle);
+  font: var(--type-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+
+  &.is-outline {
+    padding: 0 5px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+  }
+
+  &.is-plain {
+    padding: 0;
+    background: transparent;
+  }
+}
+
+// ---- Chip ----
+.q-chip {
+  display: inline-flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  height: 32px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-primary);
+  @include color-transition;
+
+  &:hover:not(.is-disabled, .is-selected) { border-color: var(--color-border-hover); background: var(--color-surface-hover); }
+  &:has(.q-chip-main:active):not(.is-disabled, .is-selected) { background: var(--color-surface-active); }
+  &:has(.q-chip-main:focus-visible) { box-shadow: var(--focus-ring); }
+
+  &.is-selected {
+    border-color: var(--color-surface-inverse);
+    background: var(--color-surface-inverse);
+    color: var(--color-text-inverse);
+  }
+
+  &.is-disabled {
+    border-color: var(--color-disabled-border);
+    background: var(--color-disabled-bg);
+    color: var(--color-disabled-fg);
+  }
+}
+
+.q-chip-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font: var(--type-label-md);
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+
+  .is-removable > & { padding: 0 8px 0 12px; }
+  &:disabled { cursor: not-allowed; }
+}
+
+.q-chip-count {
+  font: var(--type-data-sm);
+  font-weight: var(--font-weight-regular);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+
+  .is-selected & { color: inherit; opacity: 0.78; }
+}
+
+.q-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  border: 0;
+  border-left: 1px solid var(--color-divider);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  @include focus-ring;
+
+  &:hover:not(:disabled) { background: var(--color-surface-hover); }
+  .is-selected > & { border-left-color: color-mix(in srgb, currentColor 35%, transparent); }
+  .is-selected > &:hover { background: transparent; }
+}
+
+// ---- Counter ----
+.q-counter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font: var(--type-data-sm);
+  font-weight: var(--font-weight-medium);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: var(--font-features-numeric);
+  line-height: 1;
+  color: var(--color-text-secondary);
+
+  &.is-ai { color: var(--color-status-ai-text); }
+  &.is-attention { color: var(--color-status-warning-text); }
+
+  &.is-subtle {
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: var(--radius-xs);
+    background: var(--color-status-neutral-bg);
+
+    &.is-neutral { color: var(--color-text-primary); }
+  }
+}
+
+// ---- NotificationIndicator ----
+.q-notify {
+  --q-notify-bg: var(--color-brand);
+  --q-notify-fg: var(--color-text-on-brand);
+
+  position: relative;
+  display: inline-flex;
+
+  &.is-info { --q-notify-bg: var(--color-status-info-text); --q-notify-fg: var(--color-text-on-strong); }
+  &.is-warning { --q-notify-bg: var(--color-status-warning-text); --q-notify-fg: var(--color-text-on-strong); }
+  &.is-ai { --q-notify-bg: var(--color-status-ai-text); --q-notify-fg: var(--color-text-on-strong); }
+}
+
+.q-notify-dot,
+.q-notify-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: var(--radius-full);
+  background: var(--q-notify-bg);
+  box-shadow: 0 0 0 2px var(--color-surface);
+}
+
+.q-notify-dot {
+  width: 8px;
+  height: 8px;
+  transform: translate(30%, -30%);
+}
+
+.q-notify-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  transform: translate(40%, -40%);
+  font: var(--type-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--q-notify-fg);
+}
+
+// ---- Progress ----
+.q-progress {
+  --q-progress-fill: var(--color-text-primary);
+
+  display: grid;
+  gap: 8px;
+  min-width: 120px;
+
+  &.is-success { --q-progress-fill: var(--color-status-success-text); }
+  &.is-ai { --q-progress-fill: var(--color-status-ai-text); }
+  &.is-info { --q-progress-fill: var(--color-status-info-text); }
+}
+
+.q-progress-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.q-progress-label { font: var(--type-label-md); color: var(--color-text-primary); }
+.q-progress-value { font: var(--type-data-sm); color: var(--color-text-secondary); white-space: nowrap; }
+
+.q-progress-track {
+  position: relative;
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  border-radius: var(--radius-xs);
+  background: var(--color-border);
+
+  &.is-thin { height: 2px; background: var(--color-divider); }
+}
+
+.q-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--radius-xs);
+  background: var(--q-progress-fill);
+  transition: width var(--motion-dur-disclosure) var(--motion-ease-standard);
+}
+
+.q-progress-runner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 24%;
+  background: var(--q-progress-fill);
+  animation: q-indeterminate 1.6s var(--motion-ease-standard) infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    left: 0;
+    width: 100%;
+    opacity: 0.4;
+    animation: none;
+  }
+}
+
+.q-progress-ratio {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  > span {
+    box-sizing: border-box;
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-xs);
+
+    &.is-on { border-color: var(--q-progress-fill); background: var(--q-progress-fill); }
+  }
+}
+
+.q-progress-steps { display: grid; gap: 6px; }
+
+.q-progress-segments {
+  display: flex;
+  gap: 3px;
+  height: 4px;
+
+  > span {
+    flex: 1;
+    border-radius: var(--radius-xs);
+    background: var(--color-border);
+
+    &.is-on { background: var(--q-progress-fill); }
+  }
+}
+
+.q-progress-step-labels {
+  display: grid;
+  gap: 3px;
+
+  > span {
+    font: var(--type-caption);
+    color: var(--color-text-secondary);
+
+    &.is-done { color: var(--color-text-primary); }
+    &.is-current { font-weight: var(--font-weight-medium); }
+  }
+}

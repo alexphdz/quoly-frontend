@@ -166,7 +166,7 @@
 .ds-kpi-warn { color: var(--warn-fg); }
 
 [data-theme='dark'] {
-  .qy-metric-wait { --metric-accent: #a8bcc8; }
+  .qy-metric-wait { --metric-accent: var(--color-text-secondary); }
   .qy-metric-week { --metric-accent: var(--accent-text); }
 }
 

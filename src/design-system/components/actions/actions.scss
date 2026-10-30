@@ -1,0 +1,151 @@
+@use '../shared' as *;
+
+// ---- Button ----
+.q-btn {
+  --q-btn-h: var(--size-control-md);
+  --q-btn-px: 16px;
+  --q-btn-gap: 8px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--q-btn-gap);
+  min-height: var(--q-btn-h);
+  padding: 0 var(--q-btn-px);
+  font: var(--type-label-lg);
+  letter-spacing: var(--type-label-lg-tracking);
+  text-align: center;
+  border: 1px solid;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  @include color-transition;
+  @include focus-ring;
+  @include action-variants;
+
+  &.is-xs { --q-btn-h: var(--size-control-xs); --q-btn-px: 10px; --q-btn-gap: 6px; font: var(--type-label-md); border-radius: var(--radius-control-compact); }
+  &.is-sm { --q-btn-h: var(--size-control-sm); --q-btn-px: 12px; --q-btn-gap: 6px; font: var(--type-label-md); }
+  &.is-lg { --q-btn-h: var(--size-control-lg); --q-btn-px: 20px; }
+  &.is-xl { --q-btn-h: var(--size-control-xl); --q-btn-px: 24px; }
+
+  &.has-icon { padding-left: calc(var(--q-btn-px) - 2px); }
+  &.has-icon-end { padding-right: calc(var(--q-btn-px) - 2px); }
+  &.is-full { display: flex; width: 100%; }
+  &.is-loading { cursor: progress; }
+}
+
+.q-btn-label {
+  min-width: 0;
+  padding: 6px 0;
+}
+
+.q-spin { @include spin; }
+
+// ---- IconButton ----
+.q-icon-btn {
+  --q-ib: var(--size-control-md);
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--q-ib);
+  height: var(--q-ib);
+  padding: 0;
+  border: 1px solid;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  @include color-transition;
+  @include focus-ring;
+  @include action-variants;
+
+  &.is-xs { --q-ib: var(--size-control-xs); border-radius: var(--radius-control-compact); }
+  &.is-sm { --q-ib: var(--size-control-sm); }
+  &.is-lg { --q-ib: var(--size-control-lg); }
+}
+
+// ---- TextButton ----
+.q-text-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 2px 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-xs);
+  font: var(--type-label-lg);
+  color: var(--color-text-primary);
+  text-align: left;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-link-decoration);
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+  @include color-transition;
+  @include focus-ring;
+
+  &.is-sm { font: var(--type-label-md); }
+  &.is-destructive { color: var(--color-status-error-text); text-decoration-color: var(--color-status-error-text); }
+  &:hover:not(:disabled) { text-decoration-line: underline; }
+  &:active:not(:disabled) { text-decoration-line: underline; text-decoration-thickness: 2px; }
+  &:disabled { color: var(--color-disabled-fg); cursor: not-allowed; }
+}
+
+// ---- SplitButton ----
+.q-split-btn {
+  display: inline-flex;
+  gap: 1px;
+
+  .q-btn-label { padding: 0; }
+
+  &.is-secondary { gap: 0; }
+
+  .q-btn { position: relative; }
+  .q-btn:focus-visible { z-index: 1; }
+
+  .q-split-main {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .q-split-trigger {
+    padding: 0 calc(var(--q-btn-px) - 4px);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &.is-secondary .q-split-trigger { margin-left: -1px; }
+}
+
+// ---- ButtonGroup ----
+.q-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-actions);
+
+  &.is-attached {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    gap: 0;
+
+    .q-btn-label { padding: 0; }
+
+    .q-btn {
+      position: relative;
+      border-radius: 0;
+      padding: 0 var(--q-btn-px);
+
+      &.is-icon-only { padding: 0 10px; }
+      &:hover { z-index: 1; }
+      &[aria-pressed='true'],
+      &:focus-visible { z-index: 2; }
+      & + .q-btn { margin-left: -1px; }
+      &:first-child { border-radius: var(--radius-control) 0 0 var(--radius-control); }
+      &:last-child { border-radius: 0 var(--radius-control) var(--radius-control) 0; }
+      &:only-child { border-radius: var(--radius-control); }
+    }
+
+    .q-btn.is-xs:first-child { border-radius: var(--radius-control-compact) 0 0 var(--radius-control-compact); }
+    .q-btn.is-xs:last-child { border-radius: 0 var(--radius-control-compact) var(--radius-control-compact) 0; }
+  }
+}

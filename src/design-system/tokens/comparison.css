@@ -1,0 +1,12 @@
+/* Quoly 2.0 · Commercial quote comparison (Fase 05C.3) — alias sobre tokens aprobados. Sin colores nuevos. Doc: guidelines/quote-comparison.md */
+:root,[data-theme="light"],[data-theme="dark"]{
+--cmp-price-bg:var(--color-surface-sunken);/* @kind color */--cmp-header-hover:var(--color-surface-hover);/* @kind color */--cmp-cell-active:var(--color-surface-elevated);/* @kind color */
+--cmp-bar-track:var(--color-surface-elevated);/* @kind color */--cmp-bar-fill:var(--color-status-info-text);/* @kind color */--cmp-focus-line:var(--color-brand);/* @kind color */
+}
+:root{
+--cmp-rail-w:216px;/* @kind spacing */--cmp-col-w:248px;/* @kind spacing */--cmp-col-min:224px;/* @kind spacing */--cmp-bar-w:120px;/* @kind spacing */
+--cmp-ease:cubic-bezier(0.22,1,0.36,1);/* @kind other */--cmp-dur-hover:140ms;/* @kind other */--cmp-dur-line:200ms;/* @kind other */--cmp-dur-underline:180ms;/* @kind other */--cmp-dur-bar:240ms;/* @kind other */--cmp-dur-cell:160ms;/* @kind other */--cmp-dur-color:140ms;/* @kind other */
+--cmp-fade:cmp-fade 160ms ease-out both;/* @kind other */
+}
+@keyframes cmp-fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){:root{--cmp-dur-hover:0ms;/* @kind other */--cmp-dur-line:0ms;/* @kind other */--cmp-dur-underline:0ms;/* @kind other */--cmp-dur-bar:0ms;/* @kind other */--cmp-dur-cell:0ms;/* @kind other */--cmp-dur-color:0ms;/* @kind other */--cmp-fade:none;/* @kind other */}}

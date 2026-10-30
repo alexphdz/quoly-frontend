@@ -1,5 +1,4 @@
-@use "tokens-light";
-@use "tokens-dark";
+@use "tokens-bridge";
 @use "type";
 @use "components/button";
 @use "components/field";
@@ -23,6 +22,8 @@
 @use "components/request-detail";
 @use "components/suppliers";
 @use "components/sidebar";
+@use "components/home";
+@use "components/requests-list";
 @use "components/settings";
 
 @use "components/original-document";

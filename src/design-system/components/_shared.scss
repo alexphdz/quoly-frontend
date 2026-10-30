@@ -1,0 +1,90 @@
+// Utilidades compartidas por los componentes Quoly 2.0.
+
+// Transición de color estándar (fondo, borde, texto, sombra).
+@mixin color-transition {
+  transition: var(--motion-color);
+}
+
+// Anillo de foco visible (solo teclado).
+@mixin focus-ring {
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: var(--focus-ring);
+  }
+}
+
+// Variantes de acción: fondo/texto/borde por estado (hover, active, aria-pressed, disabled).
+@mixin action-variants {
+  &.is-primary {
+    background: var(--color-action-primary-bg);
+    color: var(--color-action-primary-fg);
+    border-color: transparent;
+
+    &:hover:not(:disabled) { background: var(--color-action-primary-bg-hover); }
+    &:active:not(:disabled) { background: var(--color-action-primary-bg-active); }
+  }
+
+  &.is-secondary {
+    background: var(--color-action-secondary-bg);
+    color: var(--color-action-secondary-fg);
+    border-color: var(--color-action-secondary-border);
+
+    &:hover:not(:disabled) { background: var(--color-action-secondary-bg-hover); border-color: var(--color-border-hover); }
+    &:active:not(:disabled) { background: var(--color-action-secondary-bg-active); }
+  }
+
+  &.is-tertiary {
+    background: transparent;
+    color: var(--color-text-primary);
+    border-color: transparent;
+
+    &:hover:not(:disabled) { background: var(--color-action-ghost-bg-hover); }
+    &:active:not(:disabled) { background: var(--color-surface-active); }
+  }
+
+  &.is-destructive {
+    background: var(--color-action-secondary-bg);
+    color: var(--color-status-error-text);
+    border-color: var(--color-status-error-border);
+
+    &:hover:not(:disabled) { background: var(--color-status-error-bg-subtle); border-color: var(--color-status-error-text); }
+    &:active:not(:disabled) { background: var(--color-status-error-bg); }
+  }
+
+  &.is-destructive-strong {
+    background: var(--color-action-destructive-bg);
+    color: var(--color-action-destructive-fg);
+    border-color: transparent;
+
+    &:hover:not(:disabled),
+    &:active:not(:disabled) { background: var(--color-action-destructive-bg-hover); }
+  }
+
+  &[aria-pressed='true']:not(:disabled) {
+    background: var(--color-selection-bg);
+    color: var(--color-selection-text);
+    border-color: var(--color-selection-indicator);
+  }
+
+  &:disabled {
+    background: var(--color-disabled-bg);
+    color: var(--color-disabled-fg);
+    border-color: transparent;
+    cursor: not-allowed;
+
+    &.is-tertiary { background: transparent; }
+    &.is-secondary,
+    &.is-destructive { border-color: var(--color-disabled-border); }
+  }
+}
+
+// Spinner de carga (respeta reduced motion).
+@mixin spin {
+  display: block;
+  animation: q-spin 0.9s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}

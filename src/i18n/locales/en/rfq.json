@@ -954,5 +954,167 @@
       "GBP": "GBP — British pound",
       "CNY": "CNY — Chinese yuan"
     }
+  },
+  "inicio": {
+    "summary": {
+      "toReview_one": "{{count}} quote to review",
+      "toReview_other": "{{count}} quotes to review",
+      "awaiting_one": "{{count}} supplier waiting for your reply",
+      "awaiting_other": "{{count}} suppliers waiting for your reply",
+      "both": "You have {{a}} and {{b}}.",
+      "one": "You have {{a}}.",
+      "clear": "You have no quotes or questions waiting for you.",
+      "firstUse": "You don't have any requests yet. Once you create the first one, you'll see its progress here."
+    },
+    "firstUse": {
+      "title": "Start with your first request",
+      "text": "A request brings together the product, quantity and unit you need. Then you choose which suppliers to send it to. When they reply by email, you'll see here what needs your attention.",
+      "action": "Create request"
+    },
+    "attention": {
+      "title": "Needs your attention",
+      "toReview": "Quotes to review",
+      "toReviewCaption_one": "needs review",
+      "toReviewCaption_other": "need review",
+      "awaiting": "Suppliers waiting for a reply",
+      "awaitingCaption_one": "needs your reply",
+      "awaitingCaption_other": "need your reply",
+      "viewQuotes": "View quotes",
+      "viewRequests": "View requests",
+      "reviewAria": "Review quote from {{supplier}}, {{rfq}}",
+      "askAria": "View question from {{name}}, {{rfq}}",
+      "suppliersWaiting_one": "{{count}} supplier is waiting for your reply",
+      "suppliersWaiting_other": "{{count}} suppliers are waiting for your reply"
+    },
+    "quoteContext": "{{rfq}} · Quote",
+    "quoteContextNoPrice": "{{rfq}} · Quote without a price",
+    "askContext": "{{rfq}} · {{question}}",
+    "clear": {
+      "title": "All caught up",
+      "text": "You have no quotes or questions waiting for you. When a quote arrives or a supplier asks you something, it will show up here."
+    },
+    "status": {
+      "title": "Request status",
+      "sub": "Distribution by status",
+      "draft": "Draft",
+      "open": "Open",
+      "closed": "Closed",
+      "center": "requests",
+      "legend": "Legend",
+      "aria": "Requests by status: {{list}}. Total {{total}}."
+    },
+    "dates": {
+      "title": "Upcoming dates",
+      "overdue": "Overdue",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "in_one": "In {{count}} day",
+      "in_other": "In {{count}} days",
+      "response": "Supplier response deadline",
+      "responseOverdue_one": "Response deadline · {{count}} day overdue",
+      "responseOverdue_other": "Response deadline · {{count}} days overdue",
+      "delivery": "Requested delivery date",
+      "undated_one": "{{list}} has no dates set.",
+      "undated_other": "{{list}} have no dates set.",
+      "empty": "No open request has dates set."
+    },
+    "activity": {
+      "title": "Recent activity",
+      "review": "The quote from {{supplier}} needs review",
+      "quote": "A quote arrived from {{supplier}}",
+      "ask": "There's a pending question in {{rfq}}",
+      "awarded": "Award recorded",
+      "created": "You created the request {{rfq}}",
+      "createdContext": "Saved as draft",
+      "askContext": "{{supplier}}: {{question}}",
+      "noPrice": "{{rfq}} · The supplier didn't state a price.",
+      "missing_one": "{{rfq}} · {{count}} detail not stated",
+      "missing_other": "{{rfq}} · {{count}} details not stated",
+      "empty": "No activity yet."
+    },
+    "time": {
+      "minutes_one": "{{count}} min ago",
+      "minutes_other": "{{count}} min ago",
+      "hours_one": "{{count}} h ago",
+      "hours_other": "{{count}} h ago",
+      "yesterday": "Yesterday"
+    },
+    "error": {
+      "label": "Data unavailable",
+      "title": "We couldn't load your home.",
+      "text": "The connection was interrupted. You can try again.",
+      "retry": "Retry",
+      "partialLabel": "Data unavailable",
+      "partialTitle": "We couldn't load quotes and questions.",
+      "partialText": "The rest of your home is up to date. You can try again."
+    }
+  },
+  "solicitudes": {
+    "title": "Requests",
+    "lead": "Look through your requests and see which ones need attention.",
+    "create": "Create request",
+    "summary": {
+      "total_one": "request",
+      "total_other": "requests",
+      "attention_one": "needs attention",
+      "attention_other": "need attention",
+      "showing_one": "Showing {{count}} of {{total}}",
+      "showing_other": "Showing {{count}} of {{total}}"
+    },
+    "search": "Search by product or reference",
+    "searchLabel": "Search requests",
+    "filterLabel": "Filter by status",
+    "filters": {
+      "all": "All",
+      "draft": "Draft",
+      "open": "Open",
+      "closed": "Closed",
+      "attention": "Need attention"
+    },
+    "status": {
+      "draft": "Draft",
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "columns": {
+      "request": "Request",
+      "status": "Status",
+      "quantity": "Quantity",
+      "quotes": "Quotes",
+      "attention": "Attention",
+      "actions": "Actions"
+    },
+    "inComparison": "in comparison",
+    "attention": {
+      "required": "Needs attention",
+      "waiting_one": "{{count}} supplier is waiting for a reply",
+      "waiting_other": "{{count}} suppliers are waiting for a reply",
+      "none": "Nothing pending"
+    },
+    "compare": "View comparison",
+    "compareAria": "View comparison for {{name}}",
+    "openAria": "Open {{name}}",
+    "openStatusAria": "Open {{name}}, {{status}}",
+    "empty": {
+      "label": "No requests",
+      "title": "You don't have any requests yet",
+      "text": "Create a request to start getting quotes from your suppliers."
+    },
+    "noResults": {
+      "label": "No matches",
+      "searchTitle": "We couldn't find any requests",
+      "searchText": "Try another name or reference.",
+      "clearSearch": "Clear search",
+      "filterTitle": "No requests match these filters",
+      "filterText": "Try another status or remove the filters.",
+      "clearFilters": "Remove filters"
+    },
+    "error": {
+      "label": "Data unavailable",
+      "title": "We couldn't load your requests.",
+      "text": "The connection was interrupted. Your search and filters are kept. You can try again.",
+      "retry": "Retry",
+      "retrying": "Retrying…"
+    }
   }
 }

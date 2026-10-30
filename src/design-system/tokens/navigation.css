@@ -1,0 +1,20 @@
+/* Quoly 2.0 · Navigation System V4 — sidebar unificado. Alias de componente sobre tokens aprobados (sin colores nuevos) + movimiento de navegación. */
+:root,[data-theme="light"]{
+--nav-bg:var(--color-canvas);/* @kind color */--nav-divider:var(--color-border);/* @kind color */
+--nav-fg:var(--color-text-secondary);/* @kind color */--nav-fg-strong:var(--color-text-primary);/* @kind color */
+--nav-accent:var(--color-brand);/* @kind color */--nav-indicator-hover:var(--q-brand-300);/* @kind color */
+}
+[data-theme="dark"]{
+--nav-bg:var(--color-surface);/* @kind color */--nav-divider:var(--color-border);/* @kind color */
+--nav-fg:var(--color-text-secondary);/* @kind color */--nav-fg-strong:var(--color-text-primary);/* @kind color */
+--nav-accent:var(--color-brand);/* @kind color */--nav-indicator-hover:var(--q-brand-700);/* @kind color */
+}
+:root{
+--nav-width:256px;--nav-width-collapsed:68px;--nav-row:46px;--nav-row-gap:6px;
+--nav-ease-in:cubic-bezier(0.22,1,0.36,1);/* @kind other */--nav-ease-out:cubic-bezier(0.4,0,0.2,1);/* @kind other */
+--nav-dur-expand:240ms;/* @kind other */--nav-dur-collapse:200ms;/* @kind other */--nav-dur-text:140ms;/* @kind other */--nav-delay-text:45ms;/* @kind other */
+--nav-dur-color:160ms;/* @kind other */
+--nav-dur-line-in:220ms;/* @kind other */--nav-dur-line-fade:140ms;/* @kind other */--nav-dur-line-out:160ms;/* @kind other */--nav-dur-line-switch:140ms;/* @kind other */--nav-delay-line-switch:60ms;/* @kind other */
+--nav-dur-drawer-in:260ms;/* @kind other */--nav-dur-drawer-out:200ms;/* @kind other */--nav-dur-backdrop:200ms;/* @kind other */
+}
+@media (prefers-reduced-motion:reduce){:root{--nav-dur-expand:0ms;/* @kind other */--nav-dur-collapse:0ms;/* @kind other */--nav-dur-text:0ms;/* @kind other */--nav-delay-text:0ms;/* @kind other */--nav-dur-color:0ms;/* @kind other */--nav-dur-line-in:0ms;/* @kind other */--nav-dur-line-fade:0ms;/* @kind other */--nav-dur-line-out:0ms;/* @kind other */--nav-dur-line-switch:0ms;/* @kind other */--nav-delay-line-switch:0ms;/* @kind other */--nav-dur-drawer-in:0ms;/* @kind other */--nav-dur-drawer-out:0ms;/* @kind other */}}

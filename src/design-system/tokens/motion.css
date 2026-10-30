@@ -1,0 +1,9 @@
+/* Quoly 2.0 · Movimiento — easing estándar sin rebote; prefers-reduced-motion anula las duraciones. */
+:root{
+--motion-ease-standard:cubic-bezier(0.22,1,0.36,1);/* @kind other */--motion-ease-exit:cubic-bezier(0.4,0,0.2,1);/* @kind other */
+--motion-dur-color:150ms;/* @kind other */--motion-dur-disclosure:180ms;/* @kind other */
+--motion-dur-sheet-in:260ms;/* @kind other */--motion-dur-sheet-out:200ms;/* @kind other */
+--motion-dur-trace-in:200ms;/* @kind other */--motion-dur-trace-out:140ms;/* @kind other */
+--motion-color:background-color var(--motion-dur-color) var(--motion-ease-standard),border-color var(--motion-dur-color) var(--motion-ease-standard),color var(--motion-dur-color) var(--motion-ease-standard),box-shadow var(--motion-dur-color) var(--motion-ease-standard);/* @kind other */
+}
+@media (prefers-reduced-motion:reduce){:root{--motion-dur-color:0ms;/* @kind other */--motion-dur-disclosure:0ms;/* @kind other */--motion-dur-sheet-in:0ms;/* @kind other */--motion-dur-sheet-out:0ms;/* @kind other */--motion-dur-trace-in:0ms;/* @kind other */--motion-dur-trace-out:0ms;/* @kind other */}}

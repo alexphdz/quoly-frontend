@@ -1,0 +1,18 @@
+/* Quoly 2.0 · Structural components (Fase 05B.2) — alias sobre tokens aprobados de 01–03. Sin colores nuevos. Doc: guidelines/structural-components.md */
+:root,[data-theme="light"]{
+--struct-section-bg:transparent;/* @kind color */--struct-delimited-bg:var(--color-surface);/* @kind color */--struct-border:var(--color-border);/* @kind color */--struct-rule:var(--color-divider);/* @kind color */
+--struct-context-bg:var(--surface-context);/* @kind color */--struct-detail-bg:var(--color-surface);/* @kind color */
+--struct-overlay-bg:var(--elevation-3-bg);/* @kind color */--struct-overlay-border:var(--color-border);/* @kind color */--struct-sheet-bg:var(--color-surface);/* @kind color */--struct-scrim:var(--color-scrim);/* @kind color */
+}
+[data-theme="dark"]{
+--struct-section-bg:transparent;/* @kind color */--struct-delimited-bg:var(--color-surface);/* @kind color */--struct-border:var(--color-border);/* @kind color */--struct-rule:var(--color-divider);/* @kind color */
+--struct-context-bg:var(--color-canvas);/* @kind color */--struct-detail-bg:var(--color-surface);/* @kind color */
+--struct-overlay-bg:var(--elevation-3-bg);/* @kind color */--struct-overlay-border:var(--color-border);/* @kind color */--struct-sheet-bg:var(--color-surface);/* @kind color */--struct-scrim:var(--color-scrim);/* @kind color */
+}
+:root{
+--struct-section-gap:40px;/* @kind spacing */--struct-header-gap:20px;/* @kind spacing */--struct-header-gap-dense:16px;/* @kind spacing */
+--struct-sheet-width:480px;/* @kind spacing */--struct-dialog-sm:400px;/* @kind spacing */--struct-dialog-md:480px;/* @kind spacing */--struct-dialog-lg:640px;/* @kind spacing */--struct-confirm:440px;/* @kind spacing */
+--struct-ease-in:cubic-bezier(0.22,1,0.36,1);/* @kind other */--struct-ease-out:cubic-bezier(0.4,0,0.2,1);/* @kind other */
+--struct-dur-color:150ms;/* @kind other */--struct-dur-chevron:160ms;/* @kind other */--struct-dur-disclose:180ms;/* @kind other */--struct-dur-dialog:180ms;/* @kind other */--struct-dur-dialog-out:140ms;/* @kind other */--struct-dur-sheet-in:260ms;/* @kind other */--struct-dur-sheet-out:200ms;/* @kind other */--struct-dur-scrim:200ms;/* @kind other */
+}
+@media (prefers-reduced-motion:reduce){:root{--struct-dur-color:0ms;/* @kind other */--struct-dur-chevron:0ms;/* @kind other */--struct-dur-disclose:0ms;/* @kind other */--struct-dur-dialog:0ms;/* @kind other */--struct-dur-dialog-out:0ms;/* @kind other */--struct-dur-sheet-in:0ms;/* @kind other */--struct-dur-sheet-out:0ms;/* @kind other */--struct-dur-scrim:0ms;/* @kind other */}}

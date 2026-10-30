@@ -7,6 +7,7 @@ import type rfq from './locales/en/rfq.json'
 import type inbox from './locales/en/inbox.json'
 import type quotation from './locales/en/quotation.json'
 import type corrugated from './locales/en/corrugated.json'
+import type ds from './locales/en/ds.json'
 
 declare module 'react-i18next' {
   interface CustomTypeOptions {
@@ -20,6 +21,7 @@ declare module 'react-i18next' {
       inbox: typeof inbox
       quotation: typeof quotation
       corrugated: typeof corrugated
+      ds: typeof ds
     }
   }
 }

@@ -1,0 +1,12 @@
+/* Quoly 2.0 · Iconografía (Fase 04). Phosphor Icons + símbolos Quoly. Documentación: guidelines/iconography-system.md */
+:root{
+--icon-xs:12px;--icon-sm:16px;--icon-md:20px;--icon-lg:24px;--icon-xl:32px;--icon-2xl:40px;--icon-display:48px;
+--icon-gap-inline:var(--space-1);--icon-gap-sm:var(--space-1-5);--icon-gap-md:var(--space-2);--icon-gap-lg:var(--space-3);
+}
+:root,[data-theme]{
+--icon-color-primary:var(--color-text-primary);/* @kind color */--icon-color-secondary:var(--color-text-secondary);/* @kind color */--icon-color-muted:var(--color-text-muted);/* @kind color */
+--icon-color-interactive:var(--color-text-secondary);/* @kind color */--icon-color-interactive-hover:var(--color-text-primary);/* @kind color */--icon-color-selected:var(--color-text-primary);/* @kind color */
+--icon-color-disabled:var(--color-disabled-fg);/* @kind color */--icon-color-on-brand:var(--color-text-on-brand);/* @kind color */--icon-color-inverse:var(--color-text-inverse);/* @kind color */
+--icon-color-success:var(--color-status-success-text);/* @kind color */--icon-color-warning:var(--color-status-warning-text);/* @kind color */--icon-color-error:var(--color-status-error-text);/* @kind color */--icon-color-info:var(--color-status-info-text);/* @kind color */--icon-color-neutral:var(--color-status-neutral-text);/* @kind color */
+--icon-color-ai:var(--color-data-proposed-text);/* @kind color */--icon-color-confirmed:var(--color-data-confirmed-mark);/* @kind color */--icon-color-edited:var(--color-data-edited-mark);/* @kind color */
+}

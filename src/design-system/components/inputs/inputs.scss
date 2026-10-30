@@ -1,0 +1,367 @@
+@use '../shared' as *;
+
+// ---- Field ----
+.q-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap-label);
+  min-width: 0;
+}
+
+.q-field-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  font: var(--type-label-md);
+  color: var(--color-text-primary);
+}
+
+.q-field-required { color: var(--color-text-secondary); }
+.q-field-optional { font: var(--type-body-sm); color: var(--color-text-secondary); }
+
+.q-field-description {
+  margin-top: -2px;
+  font: var(--type-body-sm);
+  color: var(--color-text-secondary);
+}
+
+// ---- Marco de control ----
+.q-control {
+  --q-ctrl-h: var(--size-control-md);
+  --q-ctrl-px: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: var(--q-ctrl-h);
+  padding: 0 var(--q-ctrl-px);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-sunken);
+  color: var(--color-text-primary);
+  font: var(--type-body-md);
+  cursor: text;
+  @include color-transition;
+
+  &.is-xs { --q-ctrl-h: var(--size-control-xs); --q-ctrl-px: 10px; border-radius: var(--radius-control-compact); }
+  &.is-sm { --q-ctrl-h: var(--size-control-sm); }
+  &.is-lg { --q-ctrl-h: var(--size-control-lg); --q-ctrl-px: 14px; }
+
+  &:hover { border-color: var(--color-border-hover); }
+
+  &:focus-within {
+    border-color: var(--color-text-primary);
+    box-shadow: var(--focus-ring);
+  }
+
+  &.is-error { border-color: var(--color-status-error-text); }
+  &.is-success { border-color: var(--color-status-success-text); }
+
+  &.is-readonly {
+    border-color: var(--color-divider);
+    background: transparent;
+  }
+
+  &.is-disabled {
+    border-color: var(--color-disabled-border);
+    background: var(--color-disabled-bg);
+    color: var(--color-disabled-fg);
+    cursor: not-allowed;
+  }
+
+  &.is-multiline {
+    display: grid;
+    align-items: stretch;
+    padding: 10px 12px;
+  }
+
+  &.is-select {
+    position: relative;
+    padding: 0;
+    cursor: pointer;
+
+    &.is-disabled { cursor: not-allowed; }
+  }
+
+  &.is-multiselect {
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 4px var(--q-ctrl-px);
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+
+    &:focus-visible {
+      border-color: var(--color-text-primary);
+      box-shadow: var(--focus-ring);
+    }
+
+    &:disabled { cursor: not-allowed; }
+  }
+}
+
+.q-control-input,
+.q-control-textarea {
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+
+  &::placeholder { color: var(--color-text-muted); }
+  &:disabled { cursor: not-allowed; }
+  &[type='search']::-webkit-search-cancel-button { appearance: none; }
+}
+
+.q-control-input {
+  &.is-numeric {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: var(--font-features-numeric);
+  }
+
+  &.is-numeric-text { font-variant-numeric: tabular-nums; }
+  &.is-amount { font: var(--type-data-md-strong); }
+}
+
+.q-control-textarea {
+  width: auto;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.q-control-counter {
+  justify-self: end;
+  font: var(--type-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}
+
+.q-control-icon {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+}
+
+.q-control-suffix {
+  font: var(--type-body-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.q-control-unit {
+  font: var(--type-data-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.q-control-placeholder {
+  flex: 1;
+  color: var(--color-text-muted);
+}
+
+.q-control-clear {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: 0 -4px 0 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  @include color-transition;
+  @include focus-ring;
+
+  &:hover:not(:disabled) { color: var(--color-text-primary); background: var(--color-surface-hover); }
+  &:disabled { cursor: not-allowed; }
+
+  &.is-calendar {
+    width: 28px;
+    height: 28px;
+    margin-right: -6px;
+  }
+}
+
+.q-control-kbd {
+  display: inline-flex;
+  box-sizing: content-box;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  background: var(--color-surface);
+  font: var(--type-label-sm);
+  color: var(--color-text-secondary);
+}
+
+.q-control-divider {
+  align-self: stretch;
+  width: 1px;
+  margin: 8px 2px 8px 4px;
+  background: var(--color-border);
+}
+
+.q-control-currency,
+.q-control-currency-select {
+  font: var(--type-data-md);
+  color: var(--color-text-secondary);
+}
+
+.q-control-currency-select {
+  padding: 0 2px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+
+  &:focus-visible { color: var(--color-text-primary); text-decoration: underline; }
+}
+
+.q-control-select {
+  width: 100%;
+  min-width: 0;
+  height: calc(var(--q-ctrl-h) - 2px);
+  padding: 0 calc(var(--q-ctrl-px) + 24px) 0 var(--q-ctrl-px);
+  border: 0;
+  outline: none;
+  background: transparent;
+  appearance: none;
+  font: var(--type-body-md);
+  color: inherit;
+  cursor: inherit;
+}
+
+.q-control-caret {
+  position: absolute;
+  right: var(--q-ctrl-px);
+  display: flex;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+// ---- MultiSelect ----
+.q-multiselect-values {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-width: 0;
+}
+
+.q-multiselect-value {
+  display: inline-flex;
+  align-items: center;
+  max-width: 180px;
+  height: 24px;
+  padding: 0 8px;
+  overflow: hidden;
+  border-radius: var(--radius-tag);
+  background: var(--color-surface-elevated);
+  font: var(--type-label-md);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.q-multiselect-more {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 6px;
+  font: var(--type-label-md);
+  color: var(--color-text-secondary);
+}
+
+.q-multiselect-pop { max-height: 240px; overflow: auto; }
+
+// ---- Listbox (MultiSelect, menús) ----
+.q-listbox {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.q-listbox-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 var(--inset-floating-item-x);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  font: var(--type-body-md);
+  color: var(--color-text-primary);
+  text-align: left;
+  cursor: pointer;
+  @include color-transition;
+  @include focus-ring;
+
+  &:hover:not(:disabled) { background: var(--color-surface-hover); }
+  &:disabled { color: var(--color-disabled-fg); cursor: not-allowed; }
+}
+
+.q-listbox-label { flex: 1; min-width: 0; }
+.q-listbox-meta { font: var(--type-body-sm); color: var(--color-text-secondary); }
+
+// Casilla visual (MultiSelect, Checkbox).
+.q-check-box {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-indicator);
+  background: transparent;
+  color: var(--color-text-inverse);
+  @include color-transition;
+
+  &.is-checked {
+    border-color: var(--color-text-primary);
+    background: var(--color-text-primary);
+  }
+}
+
+// ---- DateInput (calendario) ----
+.q-date-pop {
+  --rdp-accent-color: var(--color-brand);
+  --rdp-accent-background-color: var(--color-selection-bg);
+  --rdp-today-color: var(--color-brand-strong);
+  --rdp-day-height: 36px;
+  --rdp-day-width: 36px;
+  --rdp-day_button-height: 34px;
+  --rdp-day_button-width: 34px;
+  --rdp-day_button-border-radius: var(--radius-md);
+  --rdp-selected-border: 1px solid var(--color-selection-indicator);
+  --rdp-nav_button-height: 32px;
+  --rdp-nav_button-width: 32px;
+
+  padding: var(--space-3);
+  font: var(--type-body-sm);
+  color: var(--color-text-primary);
+
+  .rdp-caption_label { font: var(--type-label-lg); }
+  .rdp-weekday { font: var(--type-label-sm); color: var(--color-text-secondary); }
+  .rdp-day_button { font-variant-numeric: tabular-nums; }
+  .rdp-selected .rdp-day_button { background: var(--color-selection-bg); color: var(--color-selection-text); font-weight: var(--font-weight-medium); }
+  .rdp-chevron { fill: currentColor; }
+}

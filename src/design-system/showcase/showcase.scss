@@ -1,0 +1,92 @@
+// Catálogo de verificación del DS (solo desarrollo).
+.ds-sc {
+  min-height: 100vh;
+  background: var(--color-canvas);
+  color: var(--color-text-primary);
+}
+
+.ds-sc-top {
+  position: sticky;
+  top: 0;
+  z-index: var(--layer-sticky);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  padding: 16px var(--page-margin);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-canvas);
+}
+
+.ds-sc-brand {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+  font: var(--type-title-lg);
+}
+
+.ds-sc-main {
+  display: grid;
+  gap: var(--gap-section);
+  max-width: var(--width-workspace-max);
+  margin: 0 auto;
+  padding: 32px var(--page-margin) 96px;
+}
+
+.ds-sc-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.ds-sc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px 24px;
+  align-items: start;
+}
+
+.ds-sc-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.ds-sc-swatch {
+  display: grid;
+  gap: 6px;
+  font: var(--type-caption);
+  color: var(--color-text-secondary);
+
+  > span:first-child {
+    height: 48px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+}
+
+.ds-sc-nav {
+  display: flex;
+  height: 640px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-region);
+  background: var(--color-surface);
+}
+
+.ds-sc-surface {
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-region);
+  background: var(--color-surface);
+}
+
+.ds-sc-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+
+  > :first-child { flex: 1 1 420px; min-width: 0; }
+}
