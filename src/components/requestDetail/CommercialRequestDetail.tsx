@@ -11,15 +11,13 @@ import { Breadcrumbs, Button, RfqHeader, Tabs } from '../../design-system'
 import { useShellLayout } from '../layout/useShellLayout'
 import { useElementWidth } from '../../design-system/hooks'
 import { Btn, Empty, SectionCard } from '../ds'
-import { Alert } from '../ui'
 import InboundList from '../rfq/InboundList'
 import ComparisonPreview from '../comparison/ComparisonPreview'
-import QuoteList from '../quotes/QuoteList'
-import QuoteUploadForm from '../quotes/QuoteUploadForm'
 import SupplierQuestions from './SupplierQuestions'
 import OverviewTab from './OverviewTab'
 import SuppliersTab from './SuppliersTab'
 import RequestPanel from './RequestPanel'
+import QuotesTab from './QuotesTab'
 import { headerStatus } from './stages'
 
 export type DetailTab = 'overview' | 'suppliers' | 'replies' | 'quotations' | 'comparison'
@@ -143,29 +141,7 @@ export default function CommercialRequestDetail(props: CommercialRequestDetailPr
               </section>
             </div>
           )}
-          {tab === 'quotations' && (
-            <SectionCard
-              icon="receipt_long"
-              title={t('detail.quotesHeading', { count: quotes.length })}
-              actions={(
-                <Btn size="sm" variant="secondary" icon={props.showUpload ? undefined : 'upload'} onClick={() => props.setShowUpload(!props.showUpload)}>
-                  {props.showUpload ? t('common:actions.cancel') : t('detail.addQuoteManually')}
-                </Btn>
-              )}
-            >
-              {props.draftQuotes > 0 && <Alert tone="warning" className="mb-4">{t('detail.draftWarning')}</Alert>}
-              {props.showUpload && (
-                <div className="mb-4">
-                  <QuoteUploadForm suppliers={props.suppliers} onSubmit={props.onCreateQuote} isPending={props.createQuotePending} error={props.createQuoteError} />
-                </div>
-              )}
-              {props.quotesLoading
-                ? <p className="ds-meta">{t('detail.loadingQuotes')}</p>
-                : quotes.length > 0
-                  ? <QuoteList quotes={quotes} baseCurrency={rfq.base_currency} />
-                  : <Empty icon="description" title={t('detail.noQuotesTitle')} description={t('detail.noQuotesDescription')} />}
-            </SectionCard>
-          )}
+          {tab === 'quotations' && <QuotesTab {...props} />}
           {tab === 'comparison' && (
             <SectionCard
               icon="balance"

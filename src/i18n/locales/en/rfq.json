@@ -1365,5 +1365,20 @@
       "resolveNote": "Marking as resolved doesn't send anything to the supplier.",
       "replySent": "Reply sent from your email"
     }
+  },
+  "cotizaciones": {
+    "title": "Quotes",
+    "lead": "Review the offers and confirm the data before comparing them.",
+    "count_one": "{{count}} quote identified",
+    "count_other": "{{count}} quotes identified",
+    "toReview_one": "{{count}} waiting for review",
+    "toReview_other": "{{count}} waiting for review",
+    "indexLabel": "Quotes for this request",
+    "noPrice": "Price not stated",
+    "missing_one": "{{count}} detail not stated",
+    "missing_other": "{{count}} details not stated",
+    "emptyTitle": "No quotes yet",
+    "emptyText": "When a supplier sends a quote by email, it will show up here for review. You can also add it by hand.",
+    "uploadNote": "Upload the file or paste the supplier's text. Quoly reads it and leaves it for review."
   }
 }

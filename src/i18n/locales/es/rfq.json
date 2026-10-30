@@ -1365,5 +1365,20 @@
       "resolveNote": "Marcar resuelta no envía nada al proveedor.",
       "replySent": "Respuesta enviada desde tu correo"
     }
+  },
+  "cotizaciones": {
+    "title": "Cotizaciones",
+    "lead": "Revisa las ofertas y confirma los datos antes de compararlas.",
+    "count_one": "{{count}} cotización identificada",
+    "count_other": "{{count}} cotizaciones identificadas",
+    "toReview_one": "{{count}} pendiente de revisión",
+    "toReview_other": "{{count}} pendientes de revisión",
+    "indexLabel": "Cotizaciones de la solicitud",
+    "noPrice": "Precio no indicado",
+    "missing_one": "{{count}} dato no indicado",
+    "missing_other": "{{count}} datos no indicados",
+    "emptyTitle": "Sin cotizaciones todavía",
+    "emptyText": "Cuando un proveedor envíe una cotización por correo, aparecerá aquí para revisarla. También puedes agregarla a mano.",
+    "uploadNote": "Sube el archivo o pega el texto del proveedor. Quoly lo lee y lo deja por revisar."
   }
 }
