@@ -1,0 +1,15 @@
+/* Quoly 2.0 · Quote Intelligence & human review (Fase 05C.2-R1) — alias sobre tokens aprobados. Sin colores nuevos. Doc: guidelines/quote-intelligence.md */
+:root,[data-theme="light"],[data-theme="dark"]{
+--qi-ai:var(--color-status-ai-text);/* @kind color */--qi-confirmed:var(--color-status-success-text);/* @kind color */
+--qi-passage-bg:var(--color-status-ai-bg-subtle);/* @kind color */--qi-passage-line:var(--color-status-ai-border);/* @kind color */
+--qi-select-bg:var(--color-surface-elevated);/* @kind color */--qi-hover-bg:var(--color-surface-hover);/* @kind color */--qi-track:var(--color-surface-elevated);/* @kind color */--qi-select-line:var(--color-brand);/* @kind color */--qi-seg-missing:var(--color-surface-elevated);/* @kind color */--qi-seg-pending:var(--color-status-ai-text);/* @kind color */--qi-seg-confirmed:var(--color-status-success-text);/* @kind color */
+--qi-evidence-bg:var(--struct-context-bg);/* @kind color */
+}
+:root{
+--qi-ease:cubic-bezier(0.22,1,0.36,1);/* @kind other */--qi-dur-hover:140ms;/* @kind other */--qi-dur-select:160ms;/* @kind other */--qi-dur-passage:180ms;/* @kind other */--qi-dur-seg:240ms;/* @kind other */--qi-dur-line:200ms;/* @kind other */--qi-dur-underline:180ms;/* @kind other */--qi-edge-anim:qi-edge 1800ms ease-in-out infinite;/* @kind other */
+--qi-fade:qi-fade 180ms ease-out both;/* @kind other */--qi-enter:qi-enter 160ms ease-out both;/* @kind other */
+}
+@keyframes qi-fade{from{opacity:0}to{opacity:1}}
+@keyframes qi-edge{0%,100%{opacity:.45}18%{opacity:1}40%{opacity:.45}}
+@keyframes qi-enter{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){:root{--qi-dur-hover:0ms;/* @kind other */--qi-dur-select:0ms;/* @kind other */--qi-dur-passage:0ms;/* @kind other */--qi-dur-seg:0ms;/* @kind other */--qi-dur-line:0ms;/* @kind other */--qi-dur-underline:0ms;/* @kind other */--qi-edge-anim:none;/* @kind other */--qi-fade:none;/* @kind other */--qi-enter:none;/* @kind other */}}

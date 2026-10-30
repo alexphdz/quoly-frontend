@@ -1,0 +1,118 @@
+// Puente de compatibilidad → Quoly 2.0.
+// Los nombres de token anteriores (usados por las pantallas actuales y por
+// src/index.css) apuntan a los roles del nuevo DS (src/design-system/tokens).
+// No contiene valores propios: el tema claro/oscuro lo resuelven los --color-*.
+// Temporal — se elimina a medida que cada pantalla migre a los tokens nuevos.
+// Declarado en :root y en [data-theme] para que cada ámbito de tema re-resuelva.
+:root,
+[data-theme] {
+  /* ---- Marca / acción ---- */
+  --graphite: var(--color-text-primary);
+  --graphite-strong: var(--color-surface-inverse);
+  --ice: var(--color-brand);
+  --ice-strong: var(--color-brand-strong);
+  --ice-soft: var(--color-text-selection-bg);
+  --ice-ink: var(--color-text-primary);
+
+  --action: var(--color-action-primary-bg);
+  --action-hover: var(--color-action-primary-bg-hover);
+  --on-action: var(--color-action-primary-fg);
+  --focus: var(--color-focus-ring);
+  --ring: var(--focus-ring);
+
+  /* ---- Superficies ---- */
+  --bg-canvas: var(--color-canvas);
+  --bg-page: var(--color-canvas);
+  --bg-content: var(--color-surface);
+  --bg-card: var(--color-surface);
+  --bg-raised: var(--elevation-2-bg);
+  --bg-surface: var(--color-surface-elevated);
+  --bg-band: var(--color-surface-elevated);
+  --line: var(--color-border);
+  --line-strong: var(--color-border-strong);
+
+  /* ---- Texto ---- */
+  --tx-1: var(--color-text-primary);
+  --tx-body: var(--color-text-primary);
+  --tx-2: var(--color-text-secondary);
+  --tx-3: var(--color-text-muted);
+
+  /* ---- Acento / selección ---- */
+  --accent: var(--color-action-primary-bg);
+  --accent-hover: var(--color-action-primary-bg-hover);
+  --accent-fg: var(--color-action-primary-fg);
+  --accent-text: var(--color-text-primary);
+  --accent-line: var(--color-brand);
+  --accent-underline: var(--color-link-decoration);
+  --selected: var(--color-selection-bg);
+  --selected-line: var(--color-selection-indicator);
+  --bg-selected: var(--color-selection-bg);
+
+  /* ---- Feedback semántico ---- */
+  --success-fg: var(--color-status-success-text);
+  --success-bg: var(--color-status-success-bg-subtle);
+  --success-mark: var(--color-status-success-text);
+  --success-tag: var(--color-status-success-bg);
+  --warn-fg: var(--color-status-warning-text);
+  --warn-bg: var(--color-status-warning-bg-subtle);
+  --warn-mark: var(--color-status-warning-text);
+  --warn-tag: var(--color-status-warning-bg);
+  --warn: var(--color-status-warning-text);
+  --attention-fill: var(--q-warning-300);
+  --danger-fg: var(--color-status-error-text);
+  --danger-bg: var(--color-status-error-bg-subtle);
+  --danger-mark: var(--color-status-error-text);
+  --danger-tag: var(--color-status-error-bg);
+  --info-fg: var(--color-status-info-text);
+  --info-bg: var(--color-status-info-bg-subtle);
+  --info-mark: var(--color-status-info-text);
+  --info-tag: var(--color-status-info-bg);
+
+  /* ---- Elevación ---- */
+  --shadow-xs: var(--elevation-1);
+  --shadow-sm: var(--elevation-1);
+  --shadow-md: var(--elevation-2);
+  --shadow-soft: var(--elevation-2);
+  --card-shadow: var(--elevation-1);
+  --overlay-shadow: var(--elevation-2);
+  --drawer-shadow: var(--elevation-3);
+  --scrim: var(--color-scrim);
+
+  /* ---- Geometría / layout ---- */
+  --radius-badge: var(--radius-tag);
+  --radius-card: var(--radius-region);
+  --radius-card-lg: var(--radius-dialog);
+  --sidebar-width: var(--nav-width);
+
+  /* ---- Tipografía ---- */
+  --font-sans: var(--font-text);
+  --font-mono: var(--font-text);
+
+  /* ---- Set legacy de src/index.css (.card, .btn, utilidades) ---- */
+  --bg-app: var(--color-canvas);
+  --bg-auth: var(--color-canvas);
+  --surface-sidebar: var(--nav-bg);
+  --surface-card: var(--color-surface);
+  --surface-card-subtle: var(--color-surface-sunken);
+  --surface-muted: var(--color-surface-elevated);
+  --border-subtle: var(--color-border);
+  --border-strong: var(--color-border-strong);
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-muted: var(--color-text-muted);
+  --brand: var(--color-action-primary-bg);
+  --brand-hover: var(--color-action-primary-bg-hover);
+  --brand-soft: var(--color-selection-bg);
+  --brand-border: var(--color-text-selection-bg);
+  --brand-logo: var(--color-text-primary);
+  --success-text: var(--color-status-success-text);
+  --success-border: var(--color-status-success-border);
+  --warning-bg: var(--color-status-warning-bg-subtle);
+  --warning-text: var(--color-status-warning-text);
+  --warning-border: var(--color-status-warning-border);
+  --error-bg: var(--color-status-error-bg-subtle);
+  --error-text: var(--color-status-error-text);
+  --error-border: var(--color-status-error-border);
+  --info-text: var(--color-status-info-text);
+  --info-border: var(--color-status-info-border);
+}

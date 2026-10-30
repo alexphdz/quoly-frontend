@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 export default function AuthStage({ children }: { children: ReactNode }) {
   return (
-    <div className="ds-auth">
+    <div className="ds-auth" data-theme="light">
       <span className="brand-mark ds-auth-watermark" aria-hidden="true" />
       <header className="ds-auth-top">
         <span className="brand-mark" aria-hidden="true" />

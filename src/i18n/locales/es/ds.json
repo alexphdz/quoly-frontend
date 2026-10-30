@@ -1,0 +1,499 @@
+{
+  "actions": {
+    "close": "Cerrar",
+    "moreOptions": "Más opciones"
+  },
+  "alert": {
+    "dismiss": "Cerrar aviso",
+    "howToResolve": "Cómo resolverlo"
+  },
+  "breadcrumbs": {
+    "label": "Ruta de navegación"
+  },
+  "chart": {
+    "col": {
+      "category": "Categoría",
+      "count": "Cantidad",
+      "interval": "Intervalo",
+      "period": "Periodo",
+      "share": "Proporción",
+      "supplier": "Proveedor",
+      "value": "Valor"
+    },
+    "compact": {
+      "countOf": "{{value}} de {{total}}",
+      "donutTitle": "Estado de las cotizaciones",
+      "gaugeDescriptor": "Resuelto",
+      "gaugeTitle": "Porcentaje resuelto",
+      "ofTotal": "{{pct}}% del total",
+      "segmentedTitle": "Valor de cotizaciones",
+      "unitLabel": "cotizaciones"
+    },
+    "dist": {
+      "caption": "{{caption}}. Mediana {{value}}",
+      "emptyText_one": "Se necesitan al menos {{min}} valores numéricos para agrupar en intervalos. Hay {{count}}.",
+      "emptyText_other": "Se necesitan al menos {{min}} valores numéricos para agrupar en intervalos. Hay {{count}}.",
+      "emptyTitle": "Datos insuficientes para mostrar una distribución",
+      "median": "Mediana",
+      "records": "registros",
+      "shareOf_one": "{{pct}}% de {{count}} valor",
+      "shareOf_other": "{{pct}}% de {{count}} valores"
+    },
+    "dot": {
+      "scaleNote": "{{label}} en {{unit}}. Escala común para todas las filas; la posición no indica preferencia."
+    },
+    "legend": "Leyenda",
+    "noComparable": "No comparable",
+    "noComparableValue": "Sin valor comparable",
+    "noData": "Sin datos",
+    "role": {
+      "bar": "gráfica de barras",
+      "compactBars": "gráfica de barras compacta",
+      "donut": "gráfica de anillo",
+      "dot": "gráfica de puntos",
+      "hbar": "gráfica de barras horizontales",
+      "histogram": "histograma",
+      "line": "gráfica de líneas",
+      "segmented": "barra de distribución"
+    },
+    "state": {
+      "clear": "Restablecer filtros",
+      "emptyText": "La gráfica aparecerá cuando existan solicitudes con respuestas registradas en el periodo.",
+      "emptyTitle": "Todavía no hay datos para esta gráfica",
+      "errorLabel": "Datos no disponibles",
+      "errorText": "La conexión se interrumpió. El periodo y los filtros se han conservado.",
+      "errorTitle": "No se pudo cargar la gráfica",
+      "loading": "Cargando gráfica",
+      "noResultsLabel": "Sin coincidencias",
+      "noResultsText": "Prueba con otro periodo o elimina los filtros activos.",
+      "noResultsTitle": "Sin datos para los filtros seleccionados",
+      "retry": "Reintentar carga"
+    },
+    "table": {
+      "hide": "Ocultar tabla de datos",
+      "show": "Ver como tabla"
+    },
+    "total": "total"
+  },
+  "chip": {
+    "remove": "Quitar {{label}}"
+  },
+  "cmp": {
+    "diff": {
+      "barLabel": "Precio relativo: {{pct}} % del mayor precio comparable",
+      "base": "Base",
+      "baseDetail": "Menor precio comparable del conjunto",
+      "noSet": "Sin conjunto de comparación: se necesita al menos otra cotización comparable.",
+      "normalized": "Precio normalizado: {{value}}",
+      "percent": "+{{pct}} % respecto al menor precio comparable"
+    },
+    "exception": {
+      "seeDetail": "ver detalle",
+      "unconfirmed": "Valor propuesto por IA, sin confirmar por el comprador"
+    },
+    "focus": {
+      "all": "Todos los grupos",
+      "label": "Grupo de atributos"
+    },
+    "matrix": {
+      "demoData": "Datos ficticios de demostración",
+      "label": "Matriz de comparación",
+      "next": "Más proveedores",
+      "previous": "Proveedores anteriores",
+      "requested": "Solicitado",
+      "scrollHint": "Desplázate horizontalmente para ver los {{count}} proveedores · la columna de atributos permanece fija",
+      "scrollable": "{{label}}, desplazable horizontalmente",
+      "showingTwo": "Mostrando 2 de {{count}} cotizaciones. Cambia los proveedores comparados con los selectores.",
+      "supplierA": "Proveedor A",
+      "supplierB": "Proveedor B"
+    },
+    "noSource": "Sin fuente asociada",
+    "notComparable": "No comparable",
+    "originalCurrency": "Moneda original · {{currency}}",
+    "overview": {
+      "comparable_one": "1 comparable",
+      "comparable_other": "{{count}} comparables",
+      "received_one": "Cotización recibida",
+      "received_other": "Cotizaciones recibidas",
+      "review_one": "1 requiere revisión",
+      "review_other": "{{count}} requieren revisión",
+      "title": "Comparación de cotizaciones"
+    },
+    "price": {
+      "noNormalized": "Sin precio normalizado",
+      "noNormalizedReason": "Sin precio normalizado para esta cotización",
+      "normalized": "Normalizado",
+      "normalizedDemo": "Normalizado · cifra de demostración",
+      "original": "Original:"
+    },
+    "sourceOf": "Fuente · {{supplier}}",
+    "status": {
+      "pending": "Sin revisar",
+      "review": "Requiere revisión",
+      "reviewed": "Revisada"
+    },
+    "viewSource": "Ver fuente"
+  },
+  "comp": {
+    "countOf": "{{value}} de {{total}}",
+    "ofTotal": "de {{total}} {{unit}}",
+    "view": "Vista"
+  },
+  "confirm": {
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
+  },
+  "currency": {
+    "amount": "Importe",
+    "currency": "Moneda"
+  },
+  "date": {
+    "formatDayFirst": "dd/mm/aaaa",
+    "formatMonthFirst": "mm/dd/aaaa",
+    "openCalendar": "Abrir calendario"
+  },
+  "dec": {
+    "base": "Base: {{value}}",
+    "changeSelection": "Cambiar selección",
+    "confirm": {
+      "description": "Se guardará la selección realizada por el comprador y sus datos comerciales asociados.",
+      "eyebrow": "Confirmar adjudicación",
+      "failed": "No se pudo registrar la adjudicación. No se guardó ningún cambio; puedes volver a intentarlo.",
+      "priceNotComparable": "Precio no comparable",
+      "record": "Registrar adjudicación",
+      "recording": "Registrando…",
+      "title": "¿Registrar esta adjudicación?"
+    },
+    "indicator": {
+      "pending": "Seleccionado para adjudicación",
+      "recorded": "Adjudicado",
+      "selected": "Seleccionado"
+    },
+    "notProvided": "— No indicado",
+    "original": "Original: {{value}}",
+    "rationale": {
+      "context": "Datos de la cotización · referencia, no forman parte del motivo",
+      "description": "Registra los factores comerciales que consideraste para tomar esta decisión.",
+      "field": "Explicación del comprador",
+      "note": "Texto escrito por el comprador. Quoly no lo genera ni lo completa.",
+      "optional": "Opcional",
+      "title": "Motivo de la selección"
+    },
+    "record": {
+      "ariaRecorded": "Adjudicación registrada: {{supplier}}",
+      "ariaSelected": "Seleccionado para adjudicación: {{supplier}}",
+      "notYet": "Adjudicación aún no registrada",
+      "price": "Precio adjudicado",
+      "rationale": "Motivo registrado",
+      "recorded": "Adjudicación registrada",
+      "recordedBy": "Registrado por {{name}}",
+      "recordedSub": "Decisión final registrada por el comprador",
+      "selected": "Seleccionado para adjudicación",
+      "selectedSub": "Pendiente de confirmar por el comprador"
+    },
+    "row": {
+      "ariaAwarded": "{{supplier}}, adjudicado",
+      "ariaSelected": "{{supplier}}, candidato a adjudicación, pendiente de confirmar",
+      "candidate": "Candidato a adjudicación",
+      "change": "Cambiar",
+      "confirm": "Confirmar adjudicación",
+      "finalRecord": "Registro final",
+      "incoterm": "Incoterm",
+      "leadTime": "Lead time",
+      "moq": "MOQ",
+      "pending": "Pendiente de confirmar",
+      "recordedAt": "Registrado · {{date}}",
+      "select": "Seleccionar",
+      "supplier": "Proveedor",
+      "unitPrice": "Precio unitario",
+      "viewRecord": "Ver registro"
+    },
+    "selectSupplier": "Seleccionar proveedor",
+    "summary": {
+      "label": "Resumen de la decisión",
+      "referencePrice": "Precio de referencia",
+      "selected": "Proveedor seleccionado"
+    },
+    "timeline": {
+      "emptyText": "Cuando el comprador seleccione un proveedor o registre una adjudicación, el evento aparecerá aquí.",
+      "emptyTitle": "Sin decisiones registradas",
+      "label": "Historial de la decisión"
+    },
+    "viewQuote": "Ver cotización"
+  },
+  "field": {
+    "optional": "opcional",
+    "readOnly": "Solo lectura"
+  },
+  "form": {
+    "drop": {
+      "button": "Seleccionar archivo",
+      "description": "O selecciónalo desde tu equipo.",
+      "label": "Archivo de especificaciones",
+      "release": "Suelta el archivo para adjuntarlo",
+      "remove": "Quitar {{name}}",
+      "selected": "Archivo seleccionado: {{name}}",
+      "title": "Arrastra un archivo aquí",
+      "uploading": "Subiendo",
+      "uploadingFile": "Subiendo archivo…",
+      "uploadingName": "Subiendo {{name}}"
+    },
+    "incoterm": {
+      "change": "Cambiar",
+      "desc": {
+        "CFR": "Costo y flete",
+        "CIF": "Costo, seguro y flete",
+        "CIP": "Transporte y seguro",
+        "CPT": "Transporte pagado",
+        "DAP": "Entrega en destino",
+        "DDP": "Derechos pagados",
+        "DPU": "Entregado y descargado",
+        "EXW": "En fábrica",
+        "FAS": "Junto al buque",
+        "FCA": "Entrega al transportista",
+        "FOB": "A bordo del buque"
+      },
+      "description": "Define cómo y dónde se entregará el producto.",
+      "group": "Incoterms 2020",
+      "hint": {
+        "CFR": "Ej. Puerto de Valencia",
+        "CIF": "Ej. Puerto de Valencia",
+        "CIP": "Ej. Ciudad de México",
+        "CPT": "Ej. Ciudad de México",
+        "DAP": "Ej. Ciudad de México",
+        "DDP": "Ej. Almacén del comprador, Guadalajara",
+        "DPU": "Ej. Almacén del comprador, Guadalajara",
+        "EXW": "Ej. Planta del proveedor, Querétaro",
+        "FAS": "Ej. Puerto de Manzanillo",
+        "FCA": "Ej. Centro de distribución del proveedor, Monterrey",
+        "FOB": "Ej. Puerto de Manzanillo"
+      },
+      "mode": {
+        "any": "Cualquier modo",
+        "sea": "Marítimo / vías navegables"
+      },
+      "place": {
+        "delivery": "Lugar de entrega",
+        "destination": "Lugar de destino",
+        "destinationPort": "Puerto de destino",
+        "loadingPort": "Puerto de embarque"
+      },
+      "remove": "Quitar",
+      "title": "Agregar Incoterm"
+    },
+    "nav": {
+      "label": "Secciones del formulario"
+    }
+  },
+  "nav": {
+    "account": "Cuenta y workspace: {{summary}}",
+    "close": "Cerrar navegación",
+    "collapse": "Contraer navegación",
+    "expand": "Expandir navegación",
+    "label": "Navegación",
+    "primary": "Principal",
+    "search": "Buscar",
+    "settings": "Configuración"
+  },
+  "qi": {
+    "completeness": {
+      "available": "{{available}} de {{total}} campos disponibles",
+      "availableShort": "disponibles",
+      "confirmed_one": "confirmado",
+      "confirmed_other": "confirmados",
+      "description": "Campos presentes en la fuente y su estado de revisión. No mide la exactitud.",
+      "missing_one": "no indicado",
+      "missing_other": "no indicados",
+      "noncomparable_one": "no comparable",
+      "noncomparable_other": "no comparables",
+      "pending_one": "por revisar",
+      "pending_other": "por revisar",
+      "title": "Completitud de información"
+    },
+    "editor": {
+      "add": "Añadir valor",
+      "confirm": "Confirmar",
+      "correct": "Corregir {{field}}",
+      "edit": "Editar",
+      "editing": "Editando · {{state}}",
+      "note": "Guardar registra una corrección del comprador; la confirmación es una acción aparte.",
+      "required": "Ingresa un valor o cancela la edición.",
+      "save": "Guardar cambio"
+    },
+    "evidence": {
+      "linked": "Fragmento asociado · {{field}}",
+      "noPassage": "La fuente no contiene un pasaje para este campo.",
+      "noneSelected": "Ningún campo seleccionado",
+      "notLinked": "Sin fragmento asociado · {{field}}",
+      "openOriginal": "Abrir original",
+      "region": "Evidencia: {{source}}",
+      "selectField": "Selecciona un campo para ver su pasaje.",
+      "subject": "Asunto: {{subject}}",
+      "view": "Ver evidencia"
+    },
+    "history": {
+      "extracted": "Valor extraído: {{value}}",
+      "original": "Original: {{value}}",
+      "originalExtracted": "Original extraído: {{value}}",
+      "originalMissing": "Original: no indicado en la fuente"
+    },
+    "noValue": "Sin valor",
+    "notInSource": "No indicado en la fuente",
+    "provenance": {
+      "corrected": "Corregido por comprador",
+      "proposed": "Propuesto por IA"
+    },
+    "source": {
+      "attachment": "Adjunto",
+      "document": "Documento",
+      "email": "Correo del proveedor",
+      "pdf": "PDF adjunto"
+    },
+    "state": {
+      "confirmed": "Confirmado",
+      "missing": "No indicado",
+      "noncomparable": "No comparable",
+      "toConfirm": "Por confirmar",
+      "toReview": "Por revisar"
+    },
+    "summary": {
+      "analyzing": "Analizando el mensaje y sus adjuntos",
+      "availableFields": "Campos disponibles",
+      "label": "Resumen de extracción",
+      "missing": "No indicado: {{fields}}",
+      "nothingToReview": "Sin campos por revisar",
+      "retry": "Reintentar extracción",
+      "review": "Revisar campos",
+      "status": {
+        "failed": "No se pudo extraer",
+        "partial": "Extracción parcial",
+        "processing": "Procesando",
+        "ready": "Lista para revisión",
+        "reviewed": "Revisada"
+      },
+      "toReview_one": "{{count}} por revisar",
+      "toReview_other": "{{count}} por revisar"
+    },
+    "workspace": {
+      "claimPending": "Se identificaron los datos comerciales de la oferta.",
+      "claimReviewed": "Los valores disponibles fueron revisados por el comprador.",
+      "emailFrom": "Correo de {{supplier}}",
+      "fieldOf": "Campo {{current}} de {{total}}",
+      "fields": "Campos extraídos",
+      "next": "Campo siguiente",
+      "previous": "Campo anterior",
+      "source": "Fuente original",
+      "summaryPending_one": "El comprador debe revisar 1 campo antes de utilizar la información.",
+      "summaryPending_other": "El comprador debe revisar {{count}} campos antes de utilizar la información.",
+      "summaryReviewed": "La confirmación registra la revisión humana; no valida el documento técnico.",
+      "title": "Datos interpretados"
+    }
+  },
+  "rfq": {
+    "created": "Creada el {{date}}",
+    "lifecycleLabel": "Etapa de la solicitud",
+    "question": {
+      "answerSent": "Respuesta enviada",
+      "answered": "Respondida",
+      "label": "Pregunta de {{sender}}",
+      "needsAnswer": "Requiere respuesta",
+      "respond": "Responder",
+      "respondTo": "a {{sender}}"
+    },
+    "stage": {
+      "closed": "Cerrada",
+      "draft": "Borrador",
+      "quotes": "Cotizaciones",
+      "sent": "Enviada"
+    },
+    "stageState": {
+      "current": ", etapa actual",
+      "done": ", completada",
+      "future": ", pendiente"
+    },
+    "summary": {
+      "currency": "Moneda base",
+      "deadline": "Plazo de respuesta",
+      "label": "Resumen comercial",
+      "leading": "Cotización líder",
+      "noComparable": "Sin cotizaciones comparables",
+      "noSuppliers": "Sin proveedores invitados",
+      "overdue": "Plazo vencido",
+      "quantity": "Cantidad solicitada",
+      "responded": "{{responded}} de {{total}} respondieron",
+      "suppliers": "Proveedores"
+    },
+    "supplier": {
+      "header": {
+        "activity": "Última actividad",
+        "participation": "Participación",
+        "quote": "Cotización",
+        "supplier": "Proveedor"
+      },
+      "noActivity": "Sin actividad registrada",
+      "noContact": "Sin contacto registrado",
+      "status": {
+        "declined": "No participa",
+        "invited": "Invitado",
+        "question": "Pregunta abierta",
+        "responded": "Respondió",
+        "viewed": "Pendiente de respuesta"
+      }
+    },
+    "tracker": {
+      "label": "Proveedores",
+      "pending_one": "pendiente",
+      "pending_other": "pendientes",
+      "responded_one": "respondió",
+      "responded_other": "respondieron",
+      "valueText": "{{responded}} de {{total}} proveedores respondieron"
+    }
+  },
+  "search": {
+    "clear": "Borrar búsqueda"
+  },
+  "select": {
+    "placeholder": "Seleccionar"
+  },
+  "status": {
+    "loading": "Cargando"
+  },
+  "table": {
+    "actions": "Acciones",
+    "ascending": ", ascendente",
+    "clearSelection": "Deseleccionar",
+    "descending": ", descendente",
+    "empty": {
+      "label": "Sin registros",
+      "title": "Todavía no hay registros"
+    },
+    "error": {
+      "failedAgain": "El intento de las {{time}} tampoco se completó. Los datos siguen sin estar disponibles.",
+      "label": "Datos no disponibles",
+      "retry": "Reintentar carga",
+      "retrying": "Reintentando…",
+      "text": "La conexión se interrumpió. Los filtros y criterios de búsqueda se han conservado.",
+      "title": "No se pudieron cargar los datos"
+    },
+    "nextPage": "Página siguiente",
+    "noResults": {
+      "clear": "Limpiar búsqueda",
+      "label": "Sin coincidencias",
+      "text": "Prueba con otro término o elimina los filtros activos.",
+      "title": "Sin resultados"
+    },
+    "notComparable": "No comparable",
+    "notProvided": "No indicado",
+    "of": "de",
+    "pageOf": "Página {{page}} de {{pages}}",
+    "pagination": "Paginación",
+    "previousPage": "Página anterior",
+    "results": "resultados",
+    "rowsPerPage": "Filas por página",
+    "selectAll": "Seleccionar todas las filas",
+    "selectRow": "Seleccionar {{label}}",
+    "selected_one": "{{count}} seleccionado",
+    "selected_other": "{{count}} seleccionados",
+    "selectionActions": "Acciones de selección"
+  }
+}

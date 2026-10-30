@@ -1,0 +1,445 @@
+@use '../shared' as *;
+
+$text-fade-in: opacity var(--nav-dur-text) var(--nav-ease-in) var(--nav-delay-text);
+$text-fade-out: opacity 100ms var(--nav-ease-out);
+
+// ---- Sidebar ----
+.q-sidebar {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--nav-width);
+  padding: 20px;
+  border-right: 1px solid var(--nav-divider);
+  background: var(--nav-bg);
+  transition:
+    width var(--nav-dur-expand) var(--nav-ease-in),
+    padding var(--nav-dur-expand) var(--nav-ease-in);
+
+  &.is-collapsed {
+    width: var(--nav-width-collapsed);
+    padding: 20px 12px;
+    transition:
+      width var(--nav-dur-collapse) var(--nav-ease-out),
+      padding var(--nav-dur-collapse) var(--nav-ease-out);
+  }
+}
+
+.q-nav-gap {
+  flex-shrink: 0;
+  height: 20px;
+
+  &.is-sm { height: 16px; }
+}
+
+.q-nav-flex { flex: 1; }
+
+.q-nav-list {
+  display: grid;
+  align-content: start;
+  gap: var(--nav-row-gap);
+
+  &.is-scroll {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
+
+.q-mark {
+  display: block;
+  flex-shrink: 0;
+}
+
+// Cabecera: isotipo + wordmark + control de contraer.
+.q-nav-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 44px;
+
+  &.is-collapsed {
+    position: relative;
+    width: 44px;
+  }
+
+  &.is-drawer {
+    flex-shrink: 0;
+    height: 52px;
+  }
+}
+
+.q-nav-logo {
+  display: flex;
+  color: var(--nav-fg-strong);
+}
+
+.q-nav-wordmark {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.008em;
+  color: var(--nav-fg-strong);
+  white-space: nowrap;
+}
+
+.q-nav-toggle,
+.q-nav-brand-toggle,
+.q-nav-drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--nav-fg);
+  cursor: pointer;
+  transition: color var(--nav-dur-color) ease-out;
+  @include focus-ring;
+
+  &:hover { color: var(--nav-fg-strong); }
+}
+
+.q-nav-toggle {
+  width: 36px;
+  height: 36px;
+  margin-right: -8px;
+}
+
+.q-nav-drawer-close {
+  width: 44px;
+  height: 44px;
+  margin-right: -12px;
+}
+
+.q-nav-brand-toggle {
+  width: 44px;
+  height: 44px;
+  color: var(--nav-fg-strong);
+
+  .q-nav-brand-icon { display: none; }
+
+  &:hover,
+  &:focus-visible {
+    .q-nav-brand-mark { display: none; }
+    .q-nav-brand-icon { display: flex; }
+  }
+}
+
+.q-nav-brand-mark,
+.q-nav-brand-icon { display: flex; }
+
+// Tooltip del modo contraído.
+.q-nav-tip {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 14px);
+  z-index: var(--layer-floating);
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-inverse);
+  font-family: var(--font-text);
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+  line-height: 18px;
+  color: var(--color-text-inverse);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: opacity var(--nav-dur-color) ease-out;
+}
+
+.q-nav-head.is-collapsed:hover .q-nav-tip,
+.q-nav-head.is-collapsed:focus-within .q-nav-tip,
+.q-nav-item.is-collapsed:hover .q-nav-tip,
+.q-nav-item.is-collapsed:focus-within .q-nav-tip,
+.q-nav-account.is-collapsed:hover .q-nav-tip,
+.q-nav-account.is-collapsed:focus-within .q-nav-tip { opacity: 1; }
+
+// ---- SidebarItem ----
+.q-nav-item {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  transition: width var(--nav-dur-expand) var(--nav-ease-in);
+
+  &.is-collapsed { width: 44px; }
+}
+
+.q-nav-item-hit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--nav-row);
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font: inherit;
+  color: var(--nav-fg);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    color var(--nav-dur-color) ease-out,
+    padding var(--nav-dur-expand) var(--nav-ease-in);
+  @include focus-ring;
+
+  .is-collapsed > & { padding: 0 12px; }
+  .is-drawer > & { height: 48px; }
+  .is-active > & { color: var(--nav-fg-strong); }
+  .is-disabled > & { color: var(--color-disabled-fg); cursor: not-allowed; }
+}
+
+.q-nav-item-icon {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--nav-fg);
+  transition: color var(--nav-dur-color) ease-out;
+
+  .is-active & { color: var(--nav-accent); }
+  .is-disabled & { color: var(--color-disabled-fg); }
+}
+
+.q-nav-item-body {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  transition: $text-fade-in;
+
+  .is-collapsed & {
+    opacity: 0;
+    transition: $text-fade-out;
+  }
+}
+
+.q-nav-item-label {
+  position: relative;
+  display: inline-grid;
+  min-width: 0;
+  font-family: var(--font-text);
+  font-size: 15px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+// Reserva el ancho del peso 600 para que nada se desplace al activarse.
+.q-nav-item-reserve {
+  grid-area: 1 / 1;
+  height: 0;
+  overflow: hidden;
+  font-weight: 600;
+  visibility: hidden;
+}
+
+.q-nav-item-text {
+  grid-area: 1 / 1;
+  overflow: hidden;
+  font-weight: var(--font-weight-regular);
+  text-overflow: ellipsis;
+
+  .is-active & { font-weight: 600; }
+}
+
+.q-nav-item-spacer { flex: 1; }
+
+.q-nav-item-meta {
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: var(--font-features-numeric);
+  line-height: 1;
+  color: var(--nav-fg);
+}
+
+// Línea animada (hover y activo): 75% del label, 2px, origen izquierdo.
+.q-nav-line {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  width: 75%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--nav-indicator-hover);
+  pointer-events: none;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition:
+    transform var(--nav-dur-line-out) var(--nav-ease-out),
+    opacity var(--nav-dur-line-out) linear;
+
+  &.is-active {
+    background: var(--nav-accent);
+    transition:
+      transform var(--nav-dur-line-switch) var(--nav-ease-out),
+      opacity var(--nav-dur-line-switch) linear;
+  }
+
+  &.is-mini {
+    top: 38px;
+    left: 15px;
+    width: 14px;
+  }
+}
+
+@mixin line-on($delay: 0ms) {
+  opacity: 1;
+  transform: scaleX(1);
+  transition:
+    transform var(--nav-dur-line-in) var(--nav-ease-in) $delay,
+    opacity var(--nav-dur-line-fade) linear $delay;
+}
+
+.q-nav-item:not(.is-collapsed) .q-nav-line.is-mini,
+.q-nav-item.is-collapsed .q-nav-item-label .q-nav-line { display: none; }
+
+.q-nav-item.is-active .q-nav-line.is-active { @include line-on(var(--nav-delay-line-switch)); }
+
+.q-nav-item.is-sidebar:not(.is-active, .is-disabled) {
+  &:hover {
+    .q-nav-item-hit,
+    .q-nav-item-icon { color: var(--nav-fg-strong); }
+
+    .q-nav-line.is-hover { @include line-on; }
+  }
+}
+
+// ---- Cuenta / workspace ----
+.q-nav-account {
+  position: relative;
+  width: 100%;
+  transition: width var(--nav-dur-expand) var(--nav-ease-in);
+
+  &.is-collapsed { width: 44px; }
+}
+
+.q-nav-account-hit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 56px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--nav-fg-strong);
+  text-align: left;
+  cursor: pointer;
+  transition: padding var(--nav-dur-expand) var(--nav-ease-in);
+  @include focus-ring;
+
+  .is-collapsed > & { padding: 0 6px; }
+}
+
+.q-nav-avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-elevated);
+  font: var(--type-label-sm);
+  color: var(--color-text-primary);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.q-nav-account-body {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  transition: $text-fade-in;
+
+  .is-collapsed & {
+    opacity: 0;
+    transition: $text-fade-out;
+  }
+}
+
+.q-nav-account-text {
+  display: grid;
+  flex: 1;
+  gap: 2px;
+  min-width: 0;
+}
+
+.q-nav-account-user,
+.q-nav-account-workspace {
+  overflow: hidden;
+  font-family: var(--font-text);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.q-nav-account-user { font-size: 14px; font-weight: 600; line-height: 20px; }
+.q-nav-account-workspace { font-size: 12px; line-height: 16px; color: var(--nav-fg); }
+
+.q-nav-account-caret {
+  display: flex;
+  color: var(--nav-fg);
+  transition: color var(--nav-dur-color) ease-out;
+
+  .q-nav-account-hit:hover & { color: var(--nav-fg-strong); }
+}
+
+// ---- MobileNavDrawer ----
+.q-drawer-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-overlay);
+  background: var(--color-scrim);
+
+  &[data-state='open'] { animation: q-fade-in var(--nav-dur-backdrop) linear; }
+  &[data-state='closed'] { animation: q-fade-out var(--nav-dur-backdrop) linear; }
+}
+
+.q-nav-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--layer-overlay);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: min(320px, calc(100% - 48px));
+  padding: 12px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+  border-right: 1px solid var(--nav-divider);
+  background: var(--nav-bg);
+  color: var(--nav-fg-strong);
+  outline: none;
+
+  &[data-state='open'] { animation: q-slide-in-left var(--nav-dur-drawer-in) var(--nav-ease-in); }
+  &[data-state='closed'] { animation: q-slide-out-left var(--nav-dur-drawer-out) var(--nav-ease-out); }
+
+  .q-nav-account-hit { height: auto; min-height: 56px; }
+}
+
+@keyframes q-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes q-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes q-slide-in-left { from { transform: translateX(-100%); } to { transform: none; } }
+@keyframes q-slide-out-left { from { transform: none; } to { transform: translateX(-100%); } }

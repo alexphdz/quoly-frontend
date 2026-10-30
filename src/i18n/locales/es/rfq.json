@@ -954,5 +954,167 @@
       "GBP": "GBP — Libra esterlina",
       "CNY": "CNY — Yuan chino"
     }
+  },
+  "inicio": {
+    "summary": {
+      "toReview_one": "{{count}} cotización por revisar",
+      "toReview_other": "{{count}} cotizaciones por revisar",
+      "awaiting_one": "{{count}} proveedor esperando tu respuesta",
+      "awaiting_other": "{{count}} proveedores esperando tu respuesta",
+      "both": "Tienes {{a}} y {{b}}.",
+      "one": "Tienes {{a}}.",
+      "clear": "No tienes cotizaciones ni preguntas pendientes por atender.",
+      "firstUse": "Aún no tienes solicitudes. Cuando crees la primera, aquí verás su avance."
+    },
+    "firstUse": {
+      "title": "Empieza con tu primera solicitud",
+      "text": "Una solicitud reúne el producto, la cantidad y la unidad que necesitas. Después eliges a qué proveedores enviarla. Cuando respondan por correo, verás aquí lo que necesita tu atención.",
+      "action": "Crear solicitud"
+    },
+    "attention": {
+      "title": "Necesitan tu atención",
+      "toReview": "Cotizaciones por revisar",
+      "toReviewCaption_one": "requiere revisión",
+      "toReviewCaption_other": "requieren revisión",
+      "awaiting": "Proveedores que esperan respuesta",
+      "awaitingCaption_one": "requiere tu respuesta",
+      "awaitingCaption_other": "requieren tu respuesta",
+      "viewQuotes": "Ver cotizaciones",
+      "viewRequests": "Ver solicitudes",
+      "reviewAria": "Revisar cotización de {{supplier}}, {{rfq}}",
+      "askAria": "Ver pregunta de {{name}}, {{rfq}}",
+      "suppliersWaiting_one": "{{count}} proveedor espera tu respuesta",
+      "suppliersWaiting_other": "{{count}} proveedores esperan tu respuesta"
+    },
+    "quoteContext": "{{rfq}} · Cotización",
+    "quoteContextNoPrice": "{{rfq}} · Cotización sin precio",
+    "askContext": "{{rfq}} · {{question}}",
+    "clear": {
+      "title": "Todo al día",
+      "text": "No tienes cotizaciones ni preguntas pendientes por atender. Cuando llegue una cotización o un proveedor te haga una pregunta, aparecerá aquí."
+    },
+    "status": {
+      "title": "Estado de solicitudes",
+      "sub": "Distribución por estado",
+      "draft": "Borrador",
+      "open": "Abierta",
+      "closed": "Cerrada",
+      "center": "solicitudes",
+      "legend": "Leyenda",
+      "aria": "Solicitudes por estado: {{list}}. Total {{total}}."
+    },
+    "dates": {
+      "title": "Próximas fechas",
+      "overdue": "Vencido",
+      "today": "Hoy",
+      "tomorrow": "Mañana",
+      "in_one": "En {{count}} día",
+      "in_other": "En {{count}} días",
+      "response": "Plazo de respuesta de proveedores",
+      "responseOverdue_one": "Plazo de respuesta · venció hace {{count}} día",
+      "responseOverdue_other": "Plazo de respuesta · venció hace {{count}} días",
+      "delivery": "Fecha de entrega deseada",
+      "undated_one": "{{list}} no tiene fechas definidas.",
+      "undated_other": "{{list}} no tienen fechas definidas.",
+      "empty": "Ninguna solicitud abierta tiene fechas definidas."
+    },
+    "activity": {
+      "title": "Actividad reciente",
+      "review": "La cotización de {{supplier}} necesita revisión",
+      "quote": "Llegó una cotización de {{supplier}}",
+      "ask": "Hay una pregunta pendiente en {{rfq}}",
+      "awarded": "Adjudicación registrada",
+      "created": "Creaste la solicitud {{rfq}}",
+      "createdContext": "Guardada como borrador",
+      "askContext": "{{supplier}}: {{question}}",
+      "noPrice": "{{rfq}} · El proveedor no indicó el precio.",
+      "missing_one": "{{rfq}} · {{count}} dato no indicado",
+      "missing_other": "{{rfq}} · {{count}} datos no indicados",
+      "empty": "Todavía no hay actividad."
+    },
+    "time": {
+      "minutes_one": "Hace {{count}} min",
+      "minutes_other": "Hace {{count}} min",
+      "hours_one": "Hace {{count}} h",
+      "hours_other": "Hace {{count}} h",
+      "yesterday": "Ayer"
+    },
+    "error": {
+      "label": "Datos no disponibles",
+      "title": "No pudimos cargar el inicio.",
+      "text": "La conexión se interrumpió. Puedes intentarlo de nuevo.",
+      "retry": "Reintentar",
+      "partialLabel": "Datos no disponibles",
+      "partialTitle": "No pudimos cargar las cotizaciones y preguntas.",
+      "partialText": "El resto del inicio está actualizado. Puedes intentarlo de nuevo."
+    }
+  },
+  "solicitudes": {
+    "title": "Solicitudes",
+    "lead": "Consulta tus solicitudes y revisa cuáles necesitan atención.",
+    "create": "Crear solicitud",
+    "summary": {
+      "total_one": "solicitud",
+      "total_other": "solicitudes",
+      "attention_one": "requiere atención",
+      "attention_other": "requieren atención",
+      "showing_one": "Se muestra {{count}} de {{total}}",
+      "showing_other": "Se muestran {{count}} de {{total}}"
+    },
+    "search": "Buscar por producto o referencia",
+    "searchLabel": "Buscar solicitudes",
+    "filterLabel": "Filtrar por estado",
+    "filters": {
+      "all": "Todas",
+      "draft": "Borrador",
+      "open": "Abierta",
+      "closed": "Cerrada",
+      "attention": "Requieren atención"
+    },
+    "status": {
+      "draft": "Borrador",
+      "open": "Abierta",
+      "closed": "Cerrada"
+    },
+    "columns": {
+      "request": "Solicitud",
+      "status": "Estado",
+      "quantity": "Cantidad",
+      "quotes": "Cotizaciones",
+      "attention": "Atención",
+      "actions": "Acciones"
+    },
+    "inComparison": "en comparación",
+    "attention": {
+      "required": "Requiere atención",
+      "waiting_one": "{{count}} proveedor espera respuesta",
+      "waiting_other": "{{count}} proveedores esperan respuesta",
+      "none": "Sin pendientes"
+    },
+    "compare": "Ver comparación",
+    "compareAria": "Ver comparación de {{name}}",
+    "openAria": "Abrir {{name}}",
+    "openStatusAria": "Abrir {{name}}, {{status}}",
+    "empty": {
+      "label": "Sin solicitudes",
+      "title": "Todavía no tienes solicitudes",
+      "text": "Crea una solicitud para comenzar a cotizar con tus proveedores."
+    },
+    "noResults": {
+      "label": "Sin coincidencias",
+      "searchTitle": "No encontramos solicitudes",
+      "searchText": "Prueba con otro nombre o referencia.",
+      "clearSearch": "Limpiar búsqueda",
+      "filterTitle": "No hay solicitudes con estos filtros",
+      "filterText": "Prueba con otro estado o quita los filtros.",
+      "clearFilters": "Quitar filtros"
+    },
+    "error": {
+      "label": "Datos no disponibles",
+      "title": "No pudimos cargar tus solicitudes.",
+      "text": "Se interrumpió la conexión. Tu búsqueda y tus filtros se conservan. Puedes intentarlo de nuevo.",
+      "retry": "Reintentar",
+      "retrying": "Reintentando…"
+    }
   }
 }

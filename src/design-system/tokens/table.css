@@ -1,0 +1,35 @@
+/* Quoly 2.0 · Editorial Data Grid (Fase 05B.1-R2) — alias de componente sobre tokens aprobados. Sin colores nuevos. */
+:root,[data-theme="light"]{
+--table-bg:var(--color-surface);/* @kind color */--table-border:var(--color-border);/* @kind color */
+--table-rule:var(--color-border-structural);/* @kind color */--table-rule-group:var(--color-border-strong);/* @kind color */
+--table-header-fg:var(--color-text-secondary);/* @kind color */--table-header-fg-hover:var(--color-text-primary);/* @kind color */--table-header-divider:var(--color-border);/* @kind color */
+--table-row-divider:var(--color-divider);/* @kind color */--table-row-hover:var(--color-surface-hover);/* @kind color */
+--table-row-selected:var(--q-brand-50);/* @kind color */--table-row-selected-fg:var(--color-text-primary);/* @kind color */
+--table-trace:var(--color-brand);/* @kind color */--table-trace-hover:var(--q-brand-300);/* @kind color */
+--table-missing-fg:var(--color-text-secondary);/* @kind color */--table-skeleton:var(--color-surface-elevated);/* @kind color */--table-skeleton-2:var(--color-divider);/* @kind color */
+}
+[data-theme="dark"]{
+--table-bg:var(--color-surface);/* @kind color */--table-border:var(--color-border);/* @kind color */
+--table-rule:var(--color-border-strong);/* @kind color */--table-rule-group:var(--color-border);/* @kind color */
+--table-header-fg:var(--color-text-secondary);/* @kind color */--table-header-fg-hover:var(--color-text-primary);/* @kind color */--table-header-divider:var(--color-border);/* @kind color */
+--table-row-divider:var(--color-divider);/* @kind color */--table-row-hover:var(--color-surface-hover);/* @kind color */
+--table-row-selected:color-mix(in oklab,var(--color-selection-bg) 55%,var(--color-surface));/* @kind color */--table-row-selected-fg:var(--color-text-primary);/* @kind color */
+--table-trace:var(--color-brand);/* @kind color */--table-trace-hover:var(--q-brand-700);/* @kind color */
+--table-missing-fg:var(--color-text-secondary);/* @kind color */--table-skeleton:var(--color-surface-elevated);/* @kind color */--table-skeleton-2:var(--color-surface-elevated);/* @kind color */
+}
+:root{
+--table-radius:var(--radius-md);
+--table-header-h:48px;--table-header-h-compact:44px;--table-group-h:32px;
+--table-row-comfortable:68px;--table-pad-y-comfortable:14px;--table-pad-x-comfortable:20px;
+--table-row-default:56px;--table-pad-y-default:12px;--table-pad-x-default:16px;
+--table-row-compact:44px;--table-pad-y-compact:8px;--table-pad-x-compact:12px;
+--table-trace-w:24px;--table-trace-gutter:36px;
+--table-col-select:44px;--table-col-identity-min:200px;--table-col-status:150px;--table-col-money:150px;--table-col-date:128px;--table-col-actions:96px;
+--table-toolbar-h:56px;--table-footer-h:48px;--table-gap-controls:8px;--table-gap-groups:20px;
+--table-ease-in:cubic-bezier(0.22,1,0.36,1);/* @kind other */--table-ease-out:cubic-bezier(0.4,0,0.2,1);/* @kind other */
+--table-dur-hover:140ms;/* @kind other */--table-dur-trace-in:200ms;/* @kind other */--table-dur-trace-fade:120ms;/* @kind other */--table-dur-trace-out:140ms;/* @kind other */--table-dur-actions:120ms;/* @kind other */--table-dur-sort:120ms;/* @kind other */
+--table-state-anim:q-table-state-in 160ms ease-out both;/* @kind other */--table-skel-anim:q-table-skel 1500ms ease-in-out infinite alternate;/* @kind other */
+}
+@keyframes q-table-state-in{from{opacity:0}to{opacity:1}}
+@keyframes q-table-skel{from{opacity:1}to{opacity:.45}}
+@media (prefers-reduced-motion:reduce){:root{--table-dur-hover:0ms;/* @kind other */--table-dur-trace-in:0ms;/* @kind other */--table-dur-trace-fade:0ms;/* @kind other */--table-dur-trace-out:0ms;/* @kind other */--table-dur-actions:0ms;/* @kind other */--table-dur-sort:0ms;/* @kind other */--table-state-anim:none;/* @kind other */--table-skel-anim:none;/* @kind other */}}

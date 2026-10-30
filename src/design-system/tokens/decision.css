@@ -1,0 +1,16 @@
+/* Quoly 2.0 · Decision & award (Fase 05C.4) — alias sobre tokens aprobados. Sin colores nuevos. Doc: guidelines/decision-award.md */
+:root,[data-theme="light"],[data-theme="dark"]{
+--dec-select:var(--color-brand);/* @kind color */--dec-recorded:var(--color-status-success-text);/* @kind color */
+--dec-line:var(--color-border);/* @kind color */--dec-node:var(--color-text-secondary);/* @kind color */--dec-node-latest:var(--color-brand);/* @kind color */
+}
+/* Award Highlight — alcance de componente, combinaciones de tokens existentes */
+:root,[data-theme="light"]{--dec-award-bg:color-mix(in oklab,var(--q-brand-100) 55%,var(--color-surface));/* @kind color */--dec-award-border:color-mix(in oklab,var(--q-brand-100) 50%,var(--color-border));/* @kind color */--dec-award-mark-bg:var(--q-brand-100);/* @kind color */--dec-award-icon:var(--q-error-700);/* @kind color */}
+[data-theme="dark"]{--dec-award-bg:color-mix(in oklab,var(--q-brand-950) 50%,var(--color-surface));/* @kind color */--dec-award-border:var(--color-border);/* @kind color */--dec-award-mark-bg:var(--q-brand-950);/* @kind color */--dec-award-icon:var(--q-error-400);/* @kind color */}
+:root{
+--dec-ease:cubic-bezier(0.22,1,0.36,1);/* @kind other */--dec-dur-line:200ms;/* @kind other */--dec-dur-color:150ms;/* @kind other */--dec-dur-in:180ms;/* @kind other */--dec-dur-out:140ms;/* @kind other */--dec-dur-award:260ms;/* @kind other */--dec-dur-icon:160ms;/* @kind other */
+}
+@media (prefers-reduced-motion:reduce){:root{--dec-dur-line:0ms;/* @kind other */--dec-dur-color:0ms;/* @kind other */--dec-dur-in:0ms;/* @kind other */--dec-dur-out:0ms;/* @kind other */--dec-dur-award:0ms;/* @kind other */--dec-dur-icon:0ms;/* @kind other */}}
+
+/* Decision row · alcance de componente */
+:root,[data-theme="light"]{--dec-row-selected-bg:color-mix(in oklab,var(--q-brand-100) 42%,var(--color-surface));/* @kind color */--dec-row-awarded-bg:var(--q-brand-100);/* @kind color */--dec-row-award-text:var(--dec-award-icon);/* @kind color */}
+[data-theme="dark"]{--dec-row-selected-bg:color-mix(in oklab,var(--q-brand-950) 45%,var(--color-surface));/* @kind color */--dec-row-awarded-bg:var(--q-brand-950);/* @kind color */--dec-row-award-text:var(--dec-award-icon);/* @kind color */}

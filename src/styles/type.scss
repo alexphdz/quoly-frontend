@@ -5,12 +5,12 @@ html {
 
 html,
 body {
-  font-family: var(--font-sans);
-  font-feature-settings: "tnum" 1;
+  font-family: var(--font-text);
+  font-feature-settings: var(--font-features-numeric);
   font-variant-numeric: tabular-nums;
-  font-weight: 400;
-  background: var(--bg-page);
-  color: var(--tx-1);
+  font-weight: var(--font-weight-regular);
+  background: var(--color-canvas);
+  color: var(--color-text-primary);
 }
 
 .qy-icon {
@@ -26,6 +26,7 @@ body {
 
 .ds-title {
   margin: 0;
+  font-family: var(--font-display);
   /* Fluid 22px (phones) → 28px (desktop), no hard jump at a breakpoint */
   font-size: clamp(22px, 4.5vw, 28px);
   line-height: 1.22;
@@ -36,6 +37,7 @@ body {
 
 .ds-detail-title {
   margin: 0;
+  font-family: var(--font-display);
   font-size: clamp(22px, 4.2vw, 26px);
   line-height: 1.23;
   font-weight: 500;

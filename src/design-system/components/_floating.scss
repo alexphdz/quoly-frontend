@@ -1,0 +1,11 @@
+// Superficie flotante (popover, listbox, menú) — elevación 2.
+.q-floating {
+  z-index: var(--layer-floating);
+  box-sizing: border-box;
+  padding: var(--inset-floating);
+  border: 1px solid var(--elevation-2-border);
+  border-radius: var(--radius-floating);
+  background: var(--elevation-2-bg);
+  box-shadow: var(--elevation-2);
+  color: var(--color-text-primary);
+}
