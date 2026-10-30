@@ -9,7 +9,8 @@ import { patchFromAnswers, quickAnswersForQuestion, type QuickChip } from '../..
 import { useResolveBuyerAction, useUpdateCommercialRFQ } from '../../hooks/useRFQs'
 import { suggestBuyerActionReply } from '../../api/rfqs'
 import { replyToInbound } from '../../api/inbound'
-import { Btn, SectionCard } from '../ds'
+import { Button, Chip, IntelligenceMark, StatusBadge, TextButton, Textarea } from '../../design-system'
+import { useRelativeTime } from '../../lib/relativeTime'
 import { toast } from '../ui'
 
 function compactAgo(iso: string, t: TFunction): string {
@@ -55,16 +56,12 @@ export default function SupplierQuestions({
   }, [open])
 
   return (
-    <SectionCard
-      id="needs-answer"
-      className="rd-sq-card"
-      title={t('buyerActions.questionsTitle')}
-      actions={open.length > 0 ? <span className="rd-sq-count">{t('buyerActions.openCount', { count: open.length })}</span> : undefined}
-      flush
-    >
-      {open.length === 0 && (
-        <p className="rd-sq-empty">{t('buyerActions.emptyLine')}</p>
-      )}
+    <section id="needs-answer" aria-labelledby="rd2-h-questions" className="rd2-block rp-questions">
+      <h3 id="rd2-h-questions" className="rd2-h2 is-sm">
+        {t('respuestas.questions.title')}
+        <span className="rd2-count">{actions.length}</span>
+      </h3>
+      {actions.length === 0 && <p className="rd2-muted rp-empty-line">{t('buyerActions.emptyLine')}</p>}
       {groups.map(group => (
         <SupplierBlock
           key={group.supplierId}
@@ -75,20 +72,26 @@ export default function SupplierQuestions({
           inbound={inbound.filter(msg => msg.supplier_id === group.supplierId)}
         />
       ))}
-      {resolved.length > 0 && (
-        <div className="rd-resolved">
-          <h3>{t('buyerActions.resolvedTitle')}</h3>
-          <ul>
-            {resolved.map(action => (
-              <li key={action.id}>
-                <span className="rd-resolved-q">{action.question}</span>
-                <span className="rd-ask-meta">{action.supplier_name ?? t('buyerActions.unknownSupplier')} · {t('buyerActions.resolvedByYou')}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </SectionCard>
+      {resolved.map(action => <ResolvedQuestion key={action.id} action={action} inbound={inbound} />)}
+    </section>
+  )
+}
+
+function ResolvedQuestion({ action, inbound }: { action: BuyerActionRead, inbound: InboundMessageRead[] }) {
+  const { t } = useTranslation('rfq')
+  const relative = useRelativeTime()
+  const message = inbound.find(msg => msg.id === action.inbound_message_id)
+  return (
+    <article className="rp-q is-resolved">
+      <header className="rp-q-head">
+        <span className="rp-q-name">{action.supplier_name ?? t('buyerActions.unknownSupplier')}</span>
+        <StatusBadge tone="success" variant="quiet" icon="check-circle">{t('respuestas.questions.resolved')}</StatusBadge>
+        <span className="rp-q-when">{relative(action.resolved_at ?? action.created_at)}</span>
+      </header>
+      <p className="rp-q-text">{`«${action.question}»`}</p>
+      {message?.reply_text && <p className="rp-q-answer">{message.reply_text}</p>}
+      <p className="rp-q-foot"><span>{message?.replied_at ? t('respuestas.questions.replySent') : t('buyerActions.resolvedByYou')}</span></p>
+    </article>
   )
 }
 
@@ -192,96 +195,66 @@ function SupplierBlock({
     }
   }
 
-  const textareaStyle = {
-    width: '100%',
-    minHeight: 120,
-    padding: '8px 12px',
-    border: '1px solid var(--line-strong)',
-    borderRadius: 6,
-    background: 'var(--bg-surface)',
-    color: 'var(--tx-1)',
-  } as const
-
   return (
-    <article className="rd-sq-block">
-      <header className="rd-sq-head">
-        <p className="rd-sq-supplier">
-          <span className="rd-sq-name">{name}</span>
-          <span className="rd-ask-meta">
-            {t('buyerActions.askedLine', { count: items.length, when: compactAgo(latest, t) })}
-          </span>
-        </p>
-        {blocking && (
-          <span className="rd-sq-block-flag">
-            <span className="rq-dot is-warn" />
-            {t('buyerActions.cantQuote')}
-          </span>
-        )}
+    <article className="rp-q">
+      <header className="rp-q-head">
+        <span className="rp-q-name">{name}</span>
+        <StatusBadge tone="warning" variant="quiet" icon="chat-text">{t('respuestas.questions.open')}</StatusBadge>
+        {blocking && <span className="rp-q-flag">{t('buyerActions.cantQuote')}</span>}
+        <span className="rp-q-when">{compactAgo(latest, t)}</span>
       </header>
 
-      <ul className="rd-sq-questions">
-        {items.map(item => (
-          <li key={item.id}>
-            <p className="rd-sq-q">{item.question}</p>
-          </li>
-        ))}
-      </ul>
-
-      {/* AI reply: generated automatically, used as-is / edited / replaced. */}
-      <div className="rd-sq-ai">
-        <p className="ds-meta rd-sq-ai-label">{t('buyerActions.suggestionLabel')}</p>
-
-        {loadingSuggestion ? (
-          <p className="ds-meta">{t('buyerActions.generatingSuggestion')}</p>
-        ) : mode === 'choose' && suggestion ? (
-          <div className="rd-sq-ai-card" style={{ border: '1px solid var(--line-strong)', borderRadius: 8, background: 'var(--bg-subtle)', padding: '10px 12px' }}>
-            <p style={{ whiteSpace: 'pre-wrap', margin: '0 0 10px', color: 'var(--tx-1)' }}>{suggestion}</p>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <button type="button" className="ds-btn ds-btn-primary" onClick={useSuggestion}>
-                {t('buyerActions.useSuggestion')}
-              </button>
-              <button type="button" className="ds-btn ds-btn-secondary" onClick={writeOwn}>
-                {t('buyerActions.writeOwn')}
-              </button>
-            </div>
-          </div>
-        ) : (
-          <>
-            {suggestionError && (
-              <p className="ds-meta" style={{ color: 'var(--danger-fg)', marginBottom: 6 }}>{t('buyerActions.suggestFailed')}</p>
-            )}
-            <p className="ds-meta" style={{ marginBottom: 6 }}>{t('buyerActions.editHint')}</p>
-            <textarea
-              value={draft}
-              onChange={event => setDraft(event.target.value)}
-              rows={5}
-              style={textareaStyle}
-            />
-          </>
-        )}
-      </div>
+      {items.map(item => <p key={item.id} className="rp-q-text">{`«${item.question}»`}</p>)}
 
       {allChips.length > 0 && (
-        <div className="rd-sq-chips" role="group" aria-label={t('buyerActions.quickAnswers')} style={{ marginTop: 8 }}>
-          {items.flatMap(item =>
-            (chipsById[item.id] ?? []).map(chip => (
-              <button key={`${item.id}-${chip.id}`} type="button" className="rd-sq-chip" onClick={() => addChip(chip)}>
-                {chip.label}
-              </button>
-            )),
-          )}
+        <div className="rp-q-quick">
+          <span className="rp-q-label">{t('respuestas.questions.quick')}</span>
+          <div className="rp-q-chips" role="group" aria-label={t('buyerActions.quickAnswers')}>
+            {items.flatMap(item => (chipsById[item.id] ?? []).map(chip => (
+              <Chip key={`${item.id}-${chip.id}`} selected={usedChips.some(c => c.id === chip.id)} onClick={() => addChip(chip)}>{chip.label}</Chip>
+            )))}
+          </div>
         </div>
       )}
 
-      <footer className="rd-sq-foot">
-        <p>{t('buyerActions.specHelper')}</p>
-        <div className="rd-sq-foot-actions">
-          <Btn variant="text" loading={resolve.isPending && !sending} onClick={() => void markResolved()}>
+      {loadingSuggestion
+        ? <p className="rd2-muted">{t('buyerActions.generatingSuggestion')}</p>
+        : mode === 'choose' && suggestion
+          ? (
+            <div className="rp-suggestion">
+              <span className="rp-suggestion-label">
+                <IntelligenceMark size={14} />
+                {t('respuestas.questions.suggestion')}
+                <span className="rp-suggestion-review">{t('respuestas.questions.toReview')}</span>
+              </span>
+              <p className="rp-suggestion-text">{suggestion}</p>
+              <div className="rp-suggestion-actions">
+                <Button variant="secondary" size="sm" icon="pencil-simple" onClick={useSuggestion}>{t('buyerActions.useSuggestion')}</Button>
+                <TextButton size="sm" onClick={writeOwn}>{t('buyerActions.writeOwn')}</TextButton>
+              </div>
+            </div>
+          )
+          : (
+            <Textarea
+              label={t('respuestas.questions.yourReply')}
+              description={suggestionError ? t('buyerActions.suggestFailed') : t('buyerActions.editHint')}
+              value={draft}
+              onChange={event => setDraft(event.target.value)}
+              rows={5}
+            />
+          )}
+
+      <footer className="rp-q-actions">
+        <p className="rd2-muted">{t('respuestas.questions.resolveNote')}</p>
+        <div className="rp-q-buttons">
+          <Button variant="secondary" icon="check" loading={resolve.isPending && !sending} onClick={() => void markResolved()}>
             {t('buyerActions.resolve')}
-          </Btn>
-          <Btn variant="primary" loading={sending} disabled={!draft.trim()} onClick={() => void sendReply()}>
-            {t('buyerActions.sendReply')}
-          </Btn>
+          </Button>
+          {mode === 'write' && (
+            <Button icon="paper-plane-tilt" loading={sending} disabled={!draft.trim()} onClick={() => void sendReply()}>
+              {t('buyerActions.sendReply')}
+            </Button>
+          )}
         </div>
       </footer>
     </article>

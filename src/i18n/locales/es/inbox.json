@@ -58,5 +58,7 @@
     "useSuggestion": "Usar esta sugerencia",
     "dismissSuggestion": "Descartar",
     "suggestFailed": "No se pudo generar la sugerencia. Escribe tu respuesta."
-  }
+  },
+  "original": "Mensaje original",
+  "documents": "Documentos"
 }

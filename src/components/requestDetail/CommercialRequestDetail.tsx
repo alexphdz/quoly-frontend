@@ -125,16 +125,23 @@ export default function CommercialRequestDetail(props: CommercialRequestDetailPr
           {tab === 'overview' && <OverviewTab {...props} onTab={setTab} />}
           {tab === 'suppliers' && <SuppliersTab {...props} onTab={setTab} />}
           {tab === 'replies' && (
-            <>
+            <div className="rd2-replies">
+              <div>
+                <h2 className="rd2-h2">{t('respuestas.title')}</h2>
+                <p className="rd2-lead">{t('respuestas.lead')}</p>
+                <div className="rd2-stat-row rp-stats">
+                  <div className="rd2-stat"><span className="rd2-stat-value">{props.inbound.length}</span><span className="rd2-muted">{t('respuestas.messages', { count: props.inbound.length })}</span></div>
+                  <div className={`rd2-stat${props.openAsks.length ? ' is-warning' : ''}`}><span className="rd2-stat-value">{props.openAsks.length}</span><span className="rd2-muted">{t('respuestas.openQuestions', { count: props.openAsks.length })}</span></div>
+                </div>
+              </div>
               <SupplierQuestions rfq={rfq} actions={props.buyerActions} suppliers={props.suppliers} quotes={quotes} inbound={props.inbound} />
-              <SectionCard icon="drafts" title={t('detail.tabs.inbox')} flush={props.inbound.length === 0}>
+              <section aria-labelledby="rd2-h-messages" className="rd2-block">
+                <h3 id="rd2-h-messages" className="rd2-h2 is-sm">{t('respuestas.messagesTitle')}<span className="rd2-count">{props.inbound.length}</span></h3>
                 {props.inboundLoading
-                  ? <p className="ds-meta">{t('detail.loadingInbound')}</p>
-                  : props.inbound.length === 0
-                    ? <Empty icon="mail" title={t('detail.replies.emptyTitle')} />
-                    : <InboundList messages={props.inbound} rfqId={rfq.id} suppliers={props.suppliers} />}
-              </SectionCard>
-            </>
+                  ? <p className="rd2-muted">{t('detail.loadingInbound')}</p>
+                  : <InboundList messages={props.inbound} rfqId={rfq.id} suppliers={props.suppliers} />}
+              </section>
+            </div>
           )}
           {tab === 'quotations' && (
             <SectionCard

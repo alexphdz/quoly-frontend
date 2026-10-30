@@ -1345,5 +1345,25 @@
       "copy": "Copiar dirección",
       "copied": "Dirección copiada"
     }
+  },
+  "respuestas": {
+    "title": "Respuestas",
+    "lead": "Correos de los proveedores. Quoly propone datos; nada se confirma ni se envía sin ti.",
+    "messages_one": "mensaje",
+    "messages_other": "mensajes",
+    "openQuestions_one": "pregunta abierta",
+    "openQuestions_other": "preguntas abiertas",
+    "messagesTitle": "Mensajes",
+    "questions": {
+      "title": "Preguntas del proveedor",
+      "open": "Abierta",
+      "resolved": "Resuelta",
+      "quick": "Respuestas rápidas · de los datos de la solicitud",
+      "suggestion": "Sugerencia de Quoly",
+      "toReview": "· para revisar",
+      "yourReply": "Tu respuesta",
+      "resolveNote": "Marcar resuelta no envía nada al proveedor.",
+      "replySent": "Respuesta enviada desde tu correo"
+    }
   }
 }

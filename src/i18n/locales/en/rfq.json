@@ -1345,5 +1345,25 @@
       "copy": "Copy address",
       "copied": "Address copied"
     }
+  },
+  "respuestas": {
+    "title": "Replies",
+    "lead": "Supplier emails. Quoly suggests data; nothing is confirmed or sent without you.",
+    "messages_one": "message",
+    "messages_other": "messages",
+    "openQuestions_one": "open question",
+    "openQuestions_other": "open questions",
+    "messagesTitle": "Messages",
+    "questions": {
+      "title": "Supplier questions",
+      "open": "Open",
+      "resolved": "Resolved",
+      "quick": "Quick replies · from the request data",
+      "suggestion": "Quoly suggestion",
+      "toReview": "· to review",
+      "yourReply": "Your reply",
+      "resolveNote": "Marking as resolved doesn't send anything to the supplier.",
+      "replySent": "Reply sent from your email"
+    }
   }
 }
