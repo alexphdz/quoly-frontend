@@ -27,7 +27,7 @@ export default function ForgotPasswordPage() {
   // so we always show the same "if it exists, we sent a link" confirmation.
   if (requestPasswordReset.isSuccess) {
     return (
-      <AuthStage>
+      <AuthStage titleKey="seo.forgotPassword" descriptionKey="seo.forgotPasswordDesc">
         <h1>{t('auth.forgot.sentTitle')}</h1>
         <p className="ds-auth-note">{t('auth.forgot.sentBody', { email: submittedEmail })}</p>
         <p className="ds-auth-switch">
@@ -38,7 +38,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <AuthStage>
+    <AuthStage titleKey="seo.forgotPassword" descriptionKey="seo.forgotPasswordDesc">
       <h1>{t('auth.forgot.title')}</h1>
       <p className="ds-auth-note">{t('auth.forgot.subtitle')}</p>
 

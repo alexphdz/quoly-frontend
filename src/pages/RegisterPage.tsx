@@ -29,7 +29,7 @@ export default function RegisterPage() {
   // Signup succeeded but no session returned → email confirmation is pending.
   if (registerMutation.isSuccess && !registerMutation.data?.access_token) {
     return (
-      <AuthStage>
+      <AuthStage titleKey="seo.register" descriptionKey="seo.registerDesc">
         <h1>{t('auth.register.checkEmail.title')}</h1>
         <p className="ds-auth-note">
           {t('auth.register.checkEmail.body', { email: submittedEmail })}
@@ -62,7 +62,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <AuthStage>
+    <AuthStage titleKey="seo.register" descriptionKey="seo.registerDesc">
       <div className="ds-auth-heading">
         <h1>{t('auth.register.title')}</h1>
         <p>{t('auth.register.subtitle')}</p>

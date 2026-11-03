@@ -26,7 +26,7 @@ export default function LoginPage() {
   })
 
   return (
-    <AuthStage>
+    <AuthStage titleKey="seo.login" descriptionKey="seo.loginDesc">
       <div className="ds-auth-heading">
         <h1>{t('auth.login.welcomeTitle')}</h1>
         <p>{t('auth.login.subtitle')}</p>

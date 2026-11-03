@@ -119,7 +119,7 @@ export function Sidebar({
         onClick={onSearch}
       />
       <div className="q-nav-gap" />
-      <nav aria-label={t('nav.primary')} className="q-nav-list">
+      <nav aria-label={t('nav.primary')} className="q-nav-list is-scroll">
         {items.map((it) => (
           <SidebarItem
             key={it.value}
@@ -135,8 +135,7 @@ export function Sidebar({
           />
         ))}
       </nav>
-      <span className="q-nav-flex" />
-      <div className="q-nav-list">
+      <div className="q-nav-list q-nav-footer">
         <SidebarItem icon="gear-six" label={t('nav.settings')} active={settingsActive} collapsed={collapsed} to={settingsTo} onClick={onSettings} />
         <NavAccount collapsed={collapsed} user={user} workspace={workspace} avatarSrc={avatarSrc} onAccount={onAccount} accountMenu={accountMenu} />
       </div>

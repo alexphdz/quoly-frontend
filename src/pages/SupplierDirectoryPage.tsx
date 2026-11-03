@@ -114,9 +114,9 @@ export default function SupplierDirectoryPage() {
         />
         <div className="sup-filters">
           <Select size="sm" label={t('suppliers.directory.filters.tag')} aria-label={t('suppliers.directory.filters.tag')} value={tag} onChange={event => setTag(event.target.value)} options={[{ value: ALL, label: t('suppliers.directory.filters.allTags') }, ...tags.map(value => ({ value, label: value }))]} />
-          {locations.length > 1 && <Select size="sm" label={t('suppliers.directory.filters.location')} aria-label={t('suppliers.directory.filters.location')} value={location} onChange={event => setLocation(event.target.value)} options={[{ value: ALL, label: t('suppliers.directory.filters.allLocations') }, ...locations.map(value => ({ value, label: value }))]} />}
+          {(isLoading || locations.length > 1) && <Select size="sm" disabled={isLoading} label={t('suppliers.directory.filters.location')} aria-label={t('suppliers.directory.filters.location')} value={location} onChange={event => setLocation(event.target.value)} options={[{ value: ALL, label: t('suppliers.directory.filters.allLocations') }, ...locations.map(value => ({ value, label: value }))]} />}
           <div className="sup-status-chips" role="group" aria-label={t('suppliers.directory.filters.status')}>
-            {(['all', 'active', 'archived'] as const).map(value => <Chip key={value} selected={status === value} count={value === 'all' ? suppliers?.length ?? 0 : value === 'active' ? active.length : archived.length} onClick={() => setStatus(value)}>{t(`suppliers.directory.status.${value}`)}</Chip>)}
+            {(['all', 'active', 'archived'] as const).map(value => <Chip key={value} selected={status === value} count={isLoading ? undefined : value === 'all' ? suppliers?.length ?? 0 : value === 'active' ? active.length : archived.length} onClick={() => setStatus(value)}>{t(`suppliers.directory.status.${value}`)}</Chip>)}
           </div>
         </div>
       </div>

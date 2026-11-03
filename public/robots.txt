@@ -1,0 +1,20 @@
+# Quoly — https://quoly.app
+# Quoly is a private, authenticated workspace. Only the public brand/auth
+# pages should be indexed. Everything behind login is disallowed and also
+# carries a <meta name="robots" content="noindex"> at runtime.
+
+User-agent: *
+Allow: /$
+Allow: /login
+Allow: /register
+Allow: /forgot-password
+
+Disallow: /requests
+Disallow: /rfqs
+Disallow: /quotes
+Disallow: /quotations
+Disallow: /suppliers
+Disallow: /settings
+Disallow: /reset-password
+
+Sitemap: https://quoly.app/sitemap.xml
