@@ -1014,8 +1014,10 @@
       "responseOverdue_one": "Response deadline · {{count}} day overdue",
       "responseOverdue_other": "Response deadline · {{count}} days overdue",
       "delivery": "Requested delivery date",
-      "undated_one": "{{list}} has no dates set.",
-      "undated_other": "{{list}} have no dates set.",
+      "undated_one": "{{list}} has no response or delivery date.",
+      "undated_other": "{{list}} have no response or delivery date.",
+      "undatedMany_one": "{{count}} open request has no response or delivery date.",
+      "undatedMany_other": "{{count}} open requests have no response or delivery date.",
       "empty": "No open request has dates set."
     },
     "activity": {

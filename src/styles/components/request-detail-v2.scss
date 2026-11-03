@@ -2,6 +2,7 @@
 
 .rd2-page {
   box-sizing: border-box;
+  // Tope + gutter como el prototipo (aire a la derecha; barra lateral expandida por defecto).
   max-width: 1312px;
   padding: 28px 32px 48px;
 
@@ -9,7 +10,29 @@
 }
 
 .rd2-header { margin-top: 8px; }
-.rd2-tabs { margin-top: 4px; overflow-x: auto; scrollbar-width: none; }
+
+// Barra de pestañas fija: en páginas largas (Comparación) sigue accesible sin volver arriba.
+// El documento es el contenedor de scroll, así que basta `sticky` sobre el flujo normal.
+.rd2-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin-top: 4px;
+  padding-top: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--color-canvas);
+}
+
+.rd2-page.is-mobile .rd2-tabs { top: calc(56px + var(--safe-top, 0px)); }
+
+// Esqueleto del detalle: calca la estructura real para que no haya salto al cargar.
+.rd2-skel-row { display: flex; gap: 12px; margin-top: 10px; }
+.rd2-skel-tabs { display: flex; gap: 24px; padding: 14px 0; }
+.rd2-skel-section { display: flex; flex-direction: column; gap: 12px; }
+.rd2-skel-line { display: flex; justify-content: space-between; gap: 16px; }
+.rd2-skel-kv { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
+.rd2-skel-kv-row { display: grid; gap: 6px; }
 
 .rd2-body {
   margin-top: 28px;

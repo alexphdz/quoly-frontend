@@ -404,16 +404,21 @@ export function PageSkeleton() {
   )
 }
 
-export function ErrorState({ title, message, onRetry }: { title?: string, message?: string, onRetry?: () => void }) {
+export function ErrorState({ title, message, onRetry, action }: { title?: string, message?: string, onRetry?: () => void, action?: ReactNode }) {
   const { t } = useTranslation('common')
   return (
     <div className="ds-empty">
       <h2>{title ?? t('states.error')}</h2>
       {message && <p>{message}</p>}
-      {onRetry && (
-        <button type="button" onClick={onRetry} className="ds-btn ds-btn-secondary" style={{ marginTop: 16 }}>
-          {t('actions.retry')}
-        </button>
+      {(onRetry || action) && (
+        <div style={{ marginTop: 16, display: 'flex', gap: 8, justifyContent: 'center' }}>
+          {onRetry && (
+            <button type="button" onClick={onRetry} className="ds-btn ds-btn-secondary">
+              {t('actions.retry')}
+            </button>
+          )}
+          {action}
+        </div>
       )}
     </div>
   )

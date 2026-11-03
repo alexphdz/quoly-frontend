@@ -13,6 +13,9 @@ import { useRelativeTime } from '../lib/relativeTime'
 import { homeActivity, quotesToReview, statusCounts, suppliersAwaiting, upcomingDates, type HomeEvent } from '../lib/homeFeed'
 
 const ATTENTION_LIMIT = 4
+// Hasta este número, la nota de solicitudes sin fecha lista los nombres (como el prototipo);
+// con más, se resume con el conteo («N solicitudes abiertas…») para no volcar un muro de texto.
+const UNDATED_PREVIEW = 3
 const STATUS = [
   { key: 'draft', color: 'violet' },
   { key: 'open', color: 'blue' },
@@ -313,7 +316,11 @@ export default function DashboardPage() {
             {!loading && dates.undated.length > 0 && (
               <p className="hm-note">
                 <Icon name="calendar-blank" size={16} />
-                <span>{t('inicio.dates.undated', { count: dates.undated.length, list: dates.undated.join(', ') })}</span>
+                <span>
+                  {dates.undated.length > UNDATED_PREVIEW
+                    ? t('inicio.dates.undatedMany', { count: dates.undated.length })
+                    : t('inicio.dates.undated', { count: dates.undated.length, list: dates.undated.join(', ') })}
+                </span>
               </p>
             )}
           </Section>

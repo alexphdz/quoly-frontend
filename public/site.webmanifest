@@ -1,0 +1,24 @@
+{
+  "name": "Quoly",
+  "short_name": "Quoly",
+  "description": "The workspace between asking suppliers and deciding. Turn supplier emails and quote files into structured data you can compare.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0D0E12",
+  "theme_color": "#0D0E12",
+  "icons": [
+    {
+      "src": "/quoly-mark.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/quoly.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useElementWidth } from '../../hooks'
 import { cx } from '../../utils'
 import { ChartLegend } from './ChartTooltip'
-import { Live, SrTable, chartColor, useChartFormat, useInspect } from './shared'
+import { Live, SrTable, chartColor, sharePct, useChartFormat, useInspect } from './shared'
 
 export type DonutSegment = { label: string, value: number, color?: string }
 
@@ -32,7 +32,9 @@ export function DonutChart({ segments, size = 'standard', centerLabel, activeInd
   const total = segments.reduce((a, s) => a + (s.value || 0), 0)
   const gap = segments.filter((s) => s.value > 0).length > 1 ? 2 : 0
   const { active, set, ring, bind } = useInspect(segments.length, activeIndex)
-  const pct = (v: number) => (total ? `${fmt((v / total) * 100, 0)}%` : '—')
+  // Reparto por resto mayor: los porcentajes enteros suman 100 (sin el 101% del redondeo independiente).
+  const shares = sharePct(segments.map((s) => s.value))
+  const pct = (i: number) => (total ? `${shares[i]}%` : '—')
   const below = w < D + 220
   const act = active != null ? segments[active] : undefined
   let cum = 0
@@ -76,7 +78,7 @@ export function DonutChart({ segments, size = 'standard', centerLabel, activeInd
           <div aria-hidden="true" className="q-chart-donut-center" style={{ inset: T + 6 }}>
             <span className={cx('q-chart-donut-value', compact && 'is-compact')}>{act ? fmt(act.value) : fmt(total)}</span>
             <span className="q-chart-donut-label" style={{ maxWidth: D - 2 * T - 24 }}>
-              {act ? `${act.label} · ${pct(act.value)}` : (centerLabel ?? t('chart.total'))}
+              {act ? `${act.label} · ${pct(active as number)}` : (centerLabel ?? t('chart.total'))}
             </span>
           </div>
         </div>
@@ -94,9 +96,9 @@ export function DonutChart({ segments, size = 'standard', centerLabel, activeInd
       <SrTable
         caption={ariaLabel}
         columns={[t('chart.col.category'), t('chart.col.count'), t('chart.col.share')]}
-        rows={segments.map((s) => [s.label, fmt(s.value), pct(s.value)])}
+        rows={segments.map((s, i) => [s.label, fmt(s.value), pct(i)])}
       />
-      <Live text={act ? `${act.label}: ${fmt(act.value)}, ${pct(act.value)}` : ''} />
+      <Live text={act ? `${act.label}: ${fmt(act.value)}, ${pct(active as number)}` : ''} />
     </div>
   )
 }

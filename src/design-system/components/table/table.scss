@@ -35,6 +35,10 @@
 }
 
 .q-table-scroll {
+  // Contexto de posicionamiento: contiene las etiquetas sr-only (position:absolute)
+  // de las celdas. Sin esto, su bloque contenedor es el viewport y escapan al
+  // overflow, estirando el ancho del documento y creando scroll horizontal fantasma.
+  position: relative;
   min-width: 0;
   overflow: auto;
 

@@ -7,6 +7,7 @@ import type { ShellLayout } from './useShellLayout'
 import { useAuth } from '../../hooks/useAuth'
 import { useRFQs } from '../../hooks/useRFQs'
 import { useAllQuotes } from '../../hooks/useQuotes'
+import { quoteNeedsReview } from '../../lib/quoteDisplay'
 import { displayNameFromEmail } from '../../lib/displayName'
 
 function countRequestsNeedingBuyer(rfqs: { status: string; supplier_stage_counts?: Record<string, number> }[]) {
@@ -42,7 +43,7 @@ export default function Navbar({ layout, collapsed, onToggle }: { layout: ShellL
   }, [location.pathname])
 
   const requestsAttention = useMemo(() => countRequestsNeedingBuyer(rfqs ?? []), [rfqs])
-  const toReviewCount = allQuotes?.filter(q => q.status === 'draft').length ?? 0
+  const toReviewCount = allQuotes?.filter(quoteNeedsReview).length ?? 0
   const workspaceOrg = useMemo(() => {
     for (const rfq of rfqs ?? []) {
       const company = rfq.header_data?.buyer_company?.trim()

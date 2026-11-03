@@ -10,3 +10,8 @@ test-results/
 playwright-report/
 *.tsbuildinfo
 /ReDesign/
+
+# Local audit/credential artifacts (never commit)
+access.txt
+vite.verify.config.ts
+.playwright-mcp/

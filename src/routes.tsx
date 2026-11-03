@@ -16,6 +16,8 @@ import SpecEvidenceRedirect from './components/comparison/SpecEvidenceRedirect'
 import SupplierDirectoryPage from './pages/SupplierDirectoryPage'
 import SupplierDetailPage from './pages/SupplierDetailPage'
 import SettingsPage from './pages/SettingsPage'
+import NotFoundPage from './pages/NotFoundPage'
+import RouteError from './pages/RouteError'
 import { getToken } from './api/client'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -73,20 +75,22 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
+    errorElement: <RouteError />,
     children: [
-      { index: true, element: <DashboardPage /> },
-      { path: 'requests', element: <RequestsPage /> },
-      { path: 'rfqs/new', element: <CommercialRFQPage /> },
+      { index: true, element: <DashboardPage />, handle: { titleKey: 'seo.dashboard' } },
+      { path: 'requests', element: <RequestsPage />, handle: { titleKey: 'seo.requests' } },
+      { path: 'rfqs/new', element: <CommercialRFQPage />, handle: { titleKey: 'seo.rfqNew' } },
       { path: 'rfqs/new/legacy', element: <Navigate to="/rfqs/new" replace /> },
-      { path: 'rfqs/:id/edit', element: <CommercialRFQPage /> },
-      { path: 'rfqs/:id', element: <RFQDetailPage /> },
-      { path: 'rfqs/:id/comparison', element: <ComparisonPage /> },
-      { path: 'quotes/:id', element: <QuoteDetailPage /> },
+      { path: 'rfqs/:id/edit', element: <CommercialRFQPage />, handle: { titleKey: 'seo.rfqEdit' } },
+      { path: 'rfqs/:id', element: <RFQDetailPage />, handle: { titleKey: 'seo.rfqDetail' } },
+      { path: 'rfqs/:id/comparison', element: <ComparisonPage />, handle: { titleKey: 'seo.comparison' } },
+      { path: 'quotes/:id', element: <QuoteDetailPage />, handle: { titleKey: 'seo.quoteDetail' } },
       { path: 'quotes/:id/spec-evidence', element: <SpecEvidenceRedirect /> },
-      { path: 'quotations', element: <QuotationsPage /> },
-      { path: 'suppliers', element: <SupplierDirectoryPage /> },
-      { path: 'suppliers/:id', element: <SupplierDetailPage /> },
-      { path: 'settings', element: <SettingsPage /> },
+      { path: 'quotations', element: <QuotationsPage />, handle: { titleKey: 'seo.quotations' } },
+      { path: 'suppliers', element: <SupplierDirectoryPage />, handle: { titleKey: 'seo.suppliers' } },
+      { path: 'suppliers/:id', element: <SupplierDetailPage />, handle: { titleKey: 'seo.supplierDetail' } },
+      { path: 'settings', element: <SettingsPage />, handle: { titleKey: 'seo.settings' } },
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ])
