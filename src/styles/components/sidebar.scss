@@ -1,7 +1,10 @@
 .ds-page {
-  width: min(1200px, calc(100vw - var(--sidebar-width) - 80px));
-  margin: 0 auto;
-  padding: 28px 0 64px;
+  // Tope + gutter + padding de 40px como el prototipo (09 Proveedores): deja aire a la derecha
+  // (el botón "Ver proveedor" no se pega al borde) y a la izquierda (el trazo de hover respira).
+  // Alineado a la izquierda (como el proto), con la barra lateral expandida por defecto.
+  max-width: 1312px;
+  margin: 0;
+  padding: 28px 40px 64px;
 }
 
 .app-sidebar {

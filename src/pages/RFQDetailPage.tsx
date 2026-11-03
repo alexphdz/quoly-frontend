@@ -26,7 +26,8 @@ import { useTranslation } from 'react-i18next'
 import { useEnumLabels } from '../i18n/labels'
 import { useFormat } from '../lib/format'
 import { useUnreadCount } from '../hooks/useInboundStream'
-import { Alert, Badge, Button, Card, Dialog, EmptyState, ErrorState, FormFeedback, PageSkeleton, ProgressBar, StatusBadge, toast } from '../components/ui'
+import { Alert, Badge, Button, Card, Dialog, EmptyState, ErrorState, FormFeedback, ProgressBar, StatusBadge, toast } from '../components/ui'
+import CommercialRequestDetailSkeleton from '../components/requestDetail/CommercialRequestDetailSkeleton'
 
 export default function RFQDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -77,8 +78,16 @@ export default function RFQDetailPage() {
     return { tone: 'info' as const, title: t('detail.next.waitingReplies'), text: t('detail.next.waitingRepliesText') }
   }, [rfq, confirmedQuotes, draftQuotes, pendingCount, t])
 
-  if (isLoading) return <div className="page page-wide"><PageSkeleton /></div>
-  if (error || !rfq) return <div className="page page-wide"><ErrorState title={t('detail.notFoundTitle')} message={t('detail.notFoundMessage')} /></div>
+  if (isLoading) return <CommercialRequestDetailSkeleton />
+  if (error || !rfq) return (
+    <div className="rd2-page">
+      <ErrorState
+        title={t('detail.notFoundTitle')}
+        message={t('detail.notFoundMessage')}
+        action={<Button variant="secondary" onClick={() => navigate('/requests')}>{t('detail.breadcrumbRfqs')}</Button>}
+      />
+    </div>
+  )
 
   const copyEmail = () => {
     navigator.clipboard.writeText(rfq.email_address)

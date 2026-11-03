@@ -2,6 +2,8 @@
 
 .hm-page {
   box-sizing: border-box;
+  // Tope + gutter como el prototipo: el contenido deja aire a la derecha (no se pega al borde).
+  // La barra lateral expandida por defecto evita el hueco lopsided en pantallas grandes.
   max-width: 1312px;
   padding: 32px 32px 48px;
   display: grid;

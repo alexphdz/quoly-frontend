@@ -9,11 +9,11 @@ import { useElementWidth } from '../design-system/hooks'
 import { useShellLayout } from '../components/layout/useShellLayout'
 import { useAllQuotes } from '../hooks/useQuotes'
 import { useFormat } from '../lib/format'
-import { quoteHasPrice } from '../lib/quoteDisplay'
+import { quoteReview, type QuoteReview } from '../lib/quoteDisplay'
 import { useUnitLabel } from '../lib/units'
 import type { QuoteOverviewItem } from '../types/quote'
 
-type Review = 'review' | 'confirmed' | 'partial' | 'rejected'
+type Review = QuoteReview
 type ReviewFilter = 'all' | Review
 
 const REVIEW: Record<Review, { tone: StatusTone, icon: IconName }> = {
@@ -23,12 +23,11 @@ const REVIEW: Record<Review, { tone: StatusTone, icon: IconName }> = {
   rejected: { tone: 'neutral', icon: 'x-circle' },
 }
 
-/** Estado de revisión: sin precio = parcial (nunca entra a comparar); el resto según su estado. */
-function reviewOf(q: QuoteOverviewItem): Review {
-  if (q.status === 'rejected') return 'rejected'
-  if (!quoteHasPrice(q)) return 'partial'
-  return q.status === 'confirmed' ? 'confirmed' : 'review'
-}
+/**
+ * Estado de revisión: sin precio = parcial (nunca entra a comparar); el resto según su estado.
+ * Fuente compartida con Inicio y la barra lateral para que «por revisar» cuadre en toda la app.
+ */
+const reviewOf = quoteReview
 
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
 
@@ -193,7 +192,7 @@ export default function QuotationsPage() {
             </div>
             <div role="group" aria-label={t('filters.statusLabel')} className="rq2-chips qt2-chips">
               {chips.map(c => (
-                <Chip key={c.key} selected={review === c.key} count={c.count} onClick={() => setParam('review', c.key === 'all' ? null : c.key)}>
+                <Chip key={c.key} selected={review === c.key} count={isLoading ? undefined : c.count} onClick={() => setParam('review', c.key === 'all' ? null : c.key)}>
                   {t(c.key === 'all' ? 'v2.all' : `v2.chip.${c.key}`)}
                 </Chip>
               ))}

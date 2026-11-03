@@ -2,7 +2,7 @@ import type { BuyerActionRead } from '../types/buyerAction'
 import type { QuoteOverviewItem } from '../types/quote'
 import type { RFQRead } from '../types/rfq'
 import { responseDeadlineDays } from './dashboardMetrics'
-import { quoteHasPrice, quoteListStatus } from './quoteDisplay'
+import { quoteHasPrice, quoteNeedsReview } from './quoteDisplay'
 import { rfqListBucket } from './rfqDisplay'
 
 /* Derivaciones de solo lectura para Inicio (01). No cambian datos: ordenan y agrupan lo que la app ya carga. */
@@ -24,10 +24,10 @@ export type HomeEvent = {
 
 const askTo = (rfqId: string) => `/rfqs/${rfqId}?tab=replies#needs-answer`
 
-/** Cotizaciones pendientes de revisión, más recientes primero. */
+/** Cotizaciones pendientes de revisión, más recientes primero. Misma definición que la barra lateral y la vista de Cotizaciones. */
 export function quotesToReview(quotes: QuoteOverviewItem[]): HomeQuoteItem[] {
   return quotes
-    .filter(q => quoteListStatus(q) === 'draft')
+    .filter(quoteNeedsReview)
     .sort((a, b) => b.created_at.localeCompare(a.created_at))
     .map(q => ({ id: q.id, supplier: q.supplier_name, rfqName: q.rfq_name, noPrice: !quoteHasPrice(q), to: `/quotes/${q.id}` }))
 }
@@ -39,7 +39,10 @@ export function suppliersAwaiting(rfqs: RFQRead[], actions: BuyerActionRead[]) {
   const covered = new Set<string>()
   const bySupplier = new Map<string, BuyerActionRead[]>()
   for (const a of actions) {
-    if (a.status !== 'open' || !byId.has(a.rfq_id)) continue
+    const rfq = byId.get(a.rfq_id)
+    // Solo solicitudes abiertas: una pregunta en una solicitud cerrada/adjudicada
+    // no se puede responder, así que no la ofrecemos como pendiente accionable.
+    if (a.status !== 'open' || !rfq || rfqListBucket(rfq) !== 'open') continue
     const k = `${a.rfq_id}:${a.supplier_id}`
     bySupplier.set(k, [...(bySupplier.get(k) ?? []), a])
   }
@@ -88,7 +91,7 @@ export function homeActivity(rfqs: RFQRead[], quotes: QuoteOverviewItem[], actio
   const byId = new Map(rfqs.map(r => [r.id, r]))
   const events: HomeEvent[] = []
   for (const q of quotes) {
-    const review = quoteListStatus(q) === 'draft'
+    const review = quoteNeedsReview(q)
     events.push({
       key: `q-${q.id}`, kind: review ? 'review' : 'quote', at: q.created_at, to: `/quotes/${q.id}`,
       supplier: q.supplier_name, rfqName: q.rfq_name, noPrice: !quoteHasPrice(q), missing: q.missing_fields_count,
@@ -96,7 +99,7 @@ export function homeActivity(rfqs: RFQRead[], quotes: QuoteOverviewItem[], actio
   }
   for (const a of actions) {
     const rfq = byId.get(a.rfq_id)
-    if (a.status !== 'open' || !rfq) continue
+    if (a.status !== 'open' || !rfq || rfqListBucket(rfq) !== 'open') continue
     events.push({ key: `a-${a.id}`, kind: 'ask', at: a.created_at, to: askTo(rfq.id), supplier: a.supplier_name?.trim() || undefined, rfqName: rfq.name, question: a.question?.trim() || undefined })
   }
   for (const r of rfqs) {

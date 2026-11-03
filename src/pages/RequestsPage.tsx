@@ -219,13 +219,13 @@ export default function RequestsPage() {
             <div className="rq2-filters">
               <div role="group" aria-label={t('solicitudes.filterLabel')} className="rq2-chips">
                 {chips.map(c => (
-                  <Chip key={c.key} selected={status === c.key} count={c.count} onClick={() => setParam('status', c.key === 'all' ? null : c.key)}>
+                  <Chip key={c.key} selected={status === c.key} count={isLoading ? undefined : c.count} onClick={() => setParam('status', c.key === 'all' ? null : c.key)}>
                     {t(`solicitudes.filters.${c.key}`)}
                   </Chip>
                 ))}
               </div>
               <span aria-hidden="true" className="rq2-filter-rule" />
-              <Chip selected={attnOnly} count={attnCount} onClick={() => setParam('attention', attnOnly ? null : '1')}>
+              <Chip selected={attnOnly} count={isLoading ? undefined : attnCount} onClick={() => setParam('attention', attnOnly ? null : '1')}>
                 {t('solicitudes.filters.attention')}
               </Chip>
             </div>

@@ -1,12 +1,21 @@
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import Seo from '../seo/Seo'
 
 const EDITORIAL_EXAMPLES: Array<[string, number]> = [['andina', 78], ['delta', 54], ['norte', 66], ['prisma', 41]]
 
-export default function AuthStage({ children }: { children: ReactNode }) {
+type AuthStageProps = {
+  children: ReactNode
+  titleKey?: string
+  descriptionKey?: string
+  noindex?: boolean
+}
+
+export default function AuthStage({ children, titleKey, descriptionKey, noindex }: AuthStageProps) {
   const { t } = useTranslation('common')
   return (
     <div className="ds-auth" data-theme="light">
+      {titleKey && <Seo titleKey={titleKey} descriptionKey={descriptionKey} noindex={noindex} />}
       <main className="ds-auth-form-region">
         <a className="ds-auth-brand" href="/" aria-label="Quoly"><span className="brand-mark" aria-hidden="true" /><span>Quoly</span></a>
         <div className="ds-auth-panel">{children}</div>

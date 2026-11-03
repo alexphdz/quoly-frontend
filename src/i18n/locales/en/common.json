@@ -1,4 +1,14 @@
 {
+  "notFound": {
+    "title": "Page not found",
+    "text": "The link may be broken, or the page may have moved.",
+    "action": "Go to Home"
+  },
+  "appError": {
+    "title": "Something went wrong",
+    "text": "An unexpected error occurred. Return home and try again.",
+    "action": "Go to Home"
+  },
   "actions": {
     "save": "Save",
     "cancel": "Cancel",
@@ -497,5 +507,29 @@
     "accessError": "The document could not be opened. Try again.",
     "popupBlocked": "Allow new tabs in your browser and try again.",
     "unnamedFile": "Attached file"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content"
+  },
+  "seo": {
+    "login": "Log in",
+    "loginDesc": "Log in to Quoly, the workspace between asking suppliers and deciding.",
+    "register": "Create your account",
+    "registerDesc": "Create a Quoly account and turn supplier replies into quotes you can compare.",
+    "forgotPassword": "Reset your password",
+    "forgotPasswordDesc": "Request a password reset link for your Quoly account.",
+    "resetPassword": "Set a new password",
+    "dashboard": "Dashboard",
+    "requests": "Requests",
+    "rfqNew": "New request",
+    "rfqEdit": "Edit request",
+    "rfqDetail": "Request",
+    "comparison": "Compare quotes",
+    "quoteDetail": "Quote",
+    "quotations": "Quotations",
+    "suppliers": "Suppliers",
+    "supplierDetail": "Supplier",
+    "settings": "Settings",
+    "notFound": "Page not found"
   }
 }

@@ -34,7 +34,13 @@ export function SidebarItem({
   const classes = cx('q-nav-item', `is-${variant}`, active && 'is-active', disabled && 'is-disabled', collapsed && 'is-collapsed')
   const content = (
     <>
-      {icon && <span className="q-nav-item-icon"><Icon name={icon} size={20} weight={active ? 'fill' : 'regular'} /></span>}
+      {icon && (
+        <span className="q-nav-item-icon">
+          <Icon name={icon} size={20} weight={active ? 'fill' : 'regular'} />
+          {/* Contraída: el contador se oculta, así que un punto conserva la señal de atención. */}
+          {collapsed && count != null && count > 0 && <span aria-hidden="true" className="q-nav-item-dot" />}
+        </span>
+      )}
       <span aria-hidden={collapsed || undefined} className="q-nav-item-body">
         <span className="q-nav-item-label">
           <span aria-hidden="true" className="q-nav-item-reserve">{label}</span>
@@ -53,7 +59,9 @@ export function SidebarItem({
   const common = {
     'aria-current': active ? ('page' as const) : undefined,
     'aria-disabled': disabled || undefined,
-    'aria-label': collapsed ? tooltip ?? label : undefined,
+    'aria-label': collapsed
+      ? (count != null && count > 0 ? `${tooltip ?? label} (${countLabel ?? count})` : tooltip ?? label)
+      : undefined,
     'aria-keyshortcuts': keyShortcuts,
     className: 'q-nav-item-hit',
   }
