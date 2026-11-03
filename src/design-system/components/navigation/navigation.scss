@@ -10,6 +10,9 @@ $text-fade-out: opacity 100ms var(--nav-ease-out);
   flex-shrink: 0;
   box-sizing: border-box;
   width: var(--nav-width);
+  // Nunca dejar que el contenido desborde la altura: la zona de navegación scrollea
+  // (ver `.q-nav-list.is-scroll`) y el pie (Configuración + cuenta) queda siempre visible.
+  overflow: hidden;
   padding: 20px;
   border-right: 1px solid var(--nav-divider);
   background: var(--nav-bg);
@@ -35,14 +38,21 @@ $text-fade-out: opacity 100ms var(--nav-ease-out);
 
 .q-nav-flex { flex: 1; }
 
+// Pie de la barra (Configuración + cuenta): altura natural, nunca se comprime ni se recorta.
+.q-nav-footer { flex-shrink: 0; margin-top: 8px; }
+
 .q-nav-list {
   display: grid;
   align-content: start;
   gap: var(--nav-row-gap);
 
   &.is-scroll {
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     overflow-y: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar { display: none; }
   }
 }
 
@@ -200,6 +210,7 @@ $text-fade-out: opacity 100ms var(--nav-ease-out);
 }
 
 .q-nav-item-icon {
+  position: relative;
   display: flex;
   flex-shrink: 0;
   color: var(--nav-fg);
@@ -207,6 +218,18 @@ $text-fade-out: opacity 100ms var(--nav-ease-out);
 
   .is-active & { color: var(--nav-accent); }
   .is-disabled & { color: var(--color-disabled-fg); }
+}
+
+// Punto de atención en modo contraído (el contador queda oculto).
+.q-nav-item-dot {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--nav-accent);
+  box-shadow: 0 0 0 2px var(--nav-bg);
 }
 
 .q-nav-item-body {

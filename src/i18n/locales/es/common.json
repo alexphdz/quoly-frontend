@@ -1,4 +1,14 @@
 {
+  "notFound": {
+    "title": "Página no encontrada",
+    "text": "El enlace puede estar roto o la página pudo haberse movido.",
+    "action": "Ir a Inicio"
+  },
+  "appError": {
+    "title": "Algo salió mal",
+    "text": "Ocurrió un error inesperado. Vuelve a Inicio e inténtalo de nuevo.",
+    "action": "Ir a Inicio"
+  },
   "actions": {
     "save": "Guardar",
     "cancel": "Cancelar",
@@ -497,5 +507,29 @@
     "accessError": "No se pudo abrir el documento. Inténtalo de nuevo.",
     "popupBlocked": "Permite abrir nuevas pestañas en el navegador e inténtalo de nuevo.",
     "unnamedFile": "Archivo adjunto"
+  },
+  "a11y": {
+    "skipToContent": "Saltar al contenido"
+  },
+  "seo": {
+    "login": "Iniciar sesión",
+    "loginDesc": "Inicia sesión en Quoly, el espacio entre pedir cotizaciones y decidir.",
+    "register": "Crea tu cuenta",
+    "registerDesc": "Crea una cuenta en Quoly y convierte las respuestas de tus proveedores en cotizaciones comparables.",
+    "forgotPassword": "Restablece tu contraseña",
+    "forgotPasswordDesc": "Solicita un enlace para restablecer la contraseña de tu cuenta de Quoly.",
+    "resetPassword": "Define una nueva contraseña",
+    "dashboard": "Inicio",
+    "requests": "Solicitudes",
+    "rfqNew": "Nueva solicitud",
+    "rfqEdit": "Editar solicitud",
+    "rfqDetail": "Solicitud",
+    "comparison": "Comparar cotizaciones",
+    "quoteDetail": "Cotización",
+    "quotations": "Cotizaciones",
+    "suppliers": "Proveedores",
+    "supplierDetail": "Proveedor",
+    "settings": "Ajustes",
+    "notFound": "Página no encontrada"
   }
 }

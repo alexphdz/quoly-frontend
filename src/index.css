@@ -27,6 +27,29 @@
   box-sizing: border-box;
 }
 
+/* Skip-to-content link: visually hidden until focused via keyboard (a11y). */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 10px 16px;
+  margin: 8px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--color-surface, #fff);
+  color: var(--color-text-primary, #0d0e12);
+  font: var(--type-body-sm, 14px/1.4 system-ui, sans-serif);
+  box-shadow: var(--shadow-md, 0 2px 8px rgb(0 0 0 / 0.2));
+  transform: translateY(-150%);
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--color-focus-ring, #2563eb);
+  outline-offset: 2px;
+}
+
 html {
   /* Stop iOS/Safari from auto-inflating text in landscape */
   -webkit-text-size-adjust: 100%;
@@ -45,8 +68,11 @@ body {
   color: var(--text-primary);
   /* Avoid rubber-band chaining to parent scroll on mobile */
   overscroll-behavior-y: none;
-  /* Never allow accidental horizontal scroll on small screens */
-  overflow-x: hidden;
+  /* Never allow accidental horizontal scroll on small screens.
+     `clip` (not `hidden`) so body stays a non-scroll container: with `hidden`,
+     overflow-y computes to `auto`, making body the scroll context and breaking
+     every `position: sticky` (sidebar, detail tabs) that should pin to the viewport. */
+  overflow-x: clip;
 }
 
 button,
@@ -92,6 +118,10 @@ a {
   min-height: 100vh;
   min-height: 100dvh;
   background: var(--color-canvas);
+  /* El documento nunca debe scrollear en horizontal: el contenido ancho (tablas)
+     scrollea dentro de su propio contenedor. `clip` contiene sin crear un scroll
+     container, así el scroll vertical del documento y los `sticky` siguen igual. */
+  overflow-x: clip;
 }
 
 .app-shell.is-mobile {
@@ -150,6 +180,15 @@ a {
 .app-main {
   flex: 1;
   min-width: 0;
+}
+
+/* 404 / error de ruta: centrado y con aire, dentro o fuera del shell. */
+.nf-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 48px 24px;
 }
 
 .page {

@@ -45,7 +45,7 @@ export default function ResetPasswordPage() {
   // No/invalid token in the link.
   if (!accessToken) {
     return (
-      <AuthStage>
+      <AuthStage titleKey="seo.resetPassword" noindex>
         <h1>{t('auth.reset.invalidTitle')}</h1>
         <p className="ds-auth-note">{error || t('auth.reset.invalidBody')}</p>
         <p className="ds-auth-switch">
@@ -58,7 +58,7 @@ export default function ResetPasswordPage() {
   // Password updated.
   if (confirmPasswordReset.isSuccess) {
     return (
-      <AuthStage>
+      <AuthStage titleKey="seo.resetPassword" noindex>
         <h1>{t('auth.reset.successTitle')}</h1>
         <p className="ds-auth-note">{t('auth.reset.successBody')}</p>
         <p className="ds-auth-switch">
@@ -69,7 +69,7 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <AuthStage>
+    <AuthStage titleKey="seo.resetPassword" noindex>
       <h1>{t('auth.reset.title')}</h1>
 
       <form

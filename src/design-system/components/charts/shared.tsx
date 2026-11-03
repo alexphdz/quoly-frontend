@@ -102,16 +102,21 @@ export function useReveal() {
 
 /** Tabla de datos solo para lectores de pantalla. */
 export function SrTable({ caption, columns, rows }: { caption?: ReactNode, columns: ReactNode[], rows: ReactNode[][] }) {
+  // Envuelto en un bloque `q-sr-only`: una <table> se dimensiona a su contenido
+  // aunque tenga width:1px, así que sin el wrapper filtra ancho y provoca scroll
+  // horizontal. El contenedor en bloque sí colapsa a 1px y recorta la tabla.
   return (
-    <table className="q-sr-only">
-      {caption && <caption>{caption}</caption>}
-      <thead><tr>{columns.map((c, i) => <th key={i} scope="col">{c}</th>)}</tr></thead>
-      <tbody>
-        {rows.map((r, i) => (
-          <tr key={i}>{r.map((v, j) => (j === 0 ? <th key={j} scope="row">{v}</th> : <td key={j}>{v}</td>))}</tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="q-sr-only">
+      <table>
+        {caption && <caption>{caption}</caption>}
+        <thead><tr>{columns.map((c, i) => <th key={i} scope="col">{c}</th>)}</tr></thead>
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={i}>{r.map((v, j) => (j === 0 ? <th key={j} scope="row">{v}</th> : <td key={j}>{v}</td>))}</tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }
 

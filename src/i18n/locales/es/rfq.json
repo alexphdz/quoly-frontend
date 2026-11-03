@@ -1014,8 +1014,10 @@
       "responseOverdue_one": "Plazo de respuesta · venció hace {{count}} día",
       "responseOverdue_other": "Plazo de respuesta · venció hace {{count}} días",
       "delivery": "Fecha de entrega deseada",
-      "undated_one": "{{list}} no tiene fechas definidas.",
-      "undated_other": "{{list}} no tienen fechas definidas.",
+      "undated_one": "{{list}} no tiene fecha de respuesta ni de entrega.",
+      "undated_other": "{{list}} no tienen fecha de respuesta ni de entrega.",
+      "undatedMany_one": "{{count}} solicitud abierta no tiene fecha de respuesta ni de entrega.",
+      "undatedMany_other": "{{count}} solicitudes abiertas no tienen fecha de respuesta ni de entrega.",
       "empty": "Ninguna solicitud abierta tiene fechas definidas."
     },
     "activity": {
