@@ -28,7 +28,11 @@ export function getMe(): Promise<UserProfile> {
   return get<UserProfile>('/auth/me')
 }
 
-export function updateMe(data: Pick<UserProfile, 'default_email_locale'>): Promise<UserProfile> {
+type UpdateMePayload = Partial<
+  Pick<UserProfile, 'default_email_locale' | 'first_name' | 'last_name' | 'account_type' | 'company_name'>
+>
+
+export function updateMe(data: UpdateMePayload): Promise<UserProfile> {
   return patch<UserProfile>('/auth/me', data)
 }
 

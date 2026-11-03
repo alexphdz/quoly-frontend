@@ -1,7 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import * as authApi from '../api/auth'
-import { getToken, setToken, clearToken } from '../api/client'
+import {
+  getToken, setToken, clearToken,
+  setRefreshToken, clearRefreshToken, setTokenExpiry,
+} from '../api/client'
 import type { UserProfile } from '../types/auth'
 
 export function useAuth() {
@@ -22,6 +25,8 @@ export function useAuth() {
       authApi.login(email, password),
     onSuccess: (data) => {
       setToken(data.access_token)
+      if (data.refresh_token) setRefreshToken(data.refresh_token)
+      if (data.expires_in) setTokenExpiry(data.expires_in)
       queryClient.invalidateQueries({ queryKey: ['me'] })
       navigate('/')
     },
@@ -37,6 +42,8 @@ export function useAuth() {
       // a session with an empty token.
       if (data.access_token) {
         setToken(data.access_token)
+        if (data.refresh_token) setRefreshToken(data.refresh_token)
+        if (data.expires_in) setTokenExpiry(data.expires_in)
         queryClient.invalidateQueries({ queryKey: ['me'] })
         navigate('/')
       }
@@ -58,6 +65,7 @@ export function useAuth() {
 
   const logout = () => {
     clearToken()
+    clearRefreshToken()
     queryClient.clear()
     navigate('/login')
   }

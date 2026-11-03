@@ -530,6 +530,22 @@
     "suppliers": "Proveedores",
     "supplierDetail": "Proveedor",
     "settings": "Ajustes",
-    "notFound": "Página no encontrada"
+    "notFound": "Página no encontrada",
+    "onboarding": "Configura tu perfil"
+  },
+  "onboarding": {
+    "title": "Bienvenido a Quoly",
+    "subtitle": "Configuremos tu perfil antes de comenzar.",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "accountType": "Tipo de cuenta",
+    "personal": "Personal",
+    "organization": "Organización",
+    "companyName": "Nombre de empresa / organización",
+    "photoLabel": "Foto de perfil",
+    "photoSkip": "Omitir por ahora",
+    "submit": "Comenzar",
+    "submitting": "Guardando…",
+    "note": "Puedes actualizar esto en Configuración."
   }
 }
