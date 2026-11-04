@@ -1,10 +1,11 @@
-import { useState, type CSSProperties } from 'react'
+import { useState, useEffect, type CSSProperties } from 'react'
 import { Outlet, useMatches } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Navbar from './Navbar'
 import Seo from '../seo/Seo'
 import { useShellLayout } from './useShellLayout'
 import { useInboundStream } from '../../hooks/useInboundStream'
+import { ensureFreshToken } from '../../api/client'
 
 const COLLAPSE_KEY = 'quoly.nav.collapsed'
 
@@ -30,6 +31,7 @@ function useRouteTitleKey(): string | undefined {
 
 export default function AppLayout() {
   useInboundStream()
+  useEffect(() => { ensureFreshToken() }, [])
   const { t } = useTranslation('common')
   const titleKey = useRouteTitleKey()
   const layout = useShellLayout()

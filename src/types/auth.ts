@@ -12,6 +12,10 @@ export interface UserProfile {
   outlook_connected: boolean
   default_email_locale: 'en' | 'es'
   avatar_url: string | null
+  first_name: string | null
+  last_name: string | null
+  account_type: 'personal' | 'organization'
+  company_name: string | null
   created_at: string
   updated_at: string
 }

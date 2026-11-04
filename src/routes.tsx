@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
+import OnboardingPage from './pages/OnboardingPage'
 import DashboardPage from './pages/DashboardPage'
 import RequestsPage from './pages/RequestsPage'
 import CommercialRFQPage from './pages/CommercialRFQPage'
@@ -19,10 +20,25 @@ import SettingsPage from './pages/SettingsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import RouteError from './pages/RouteError'
 import { getToken } from './api/client'
+import { useAuth } from './hooks/useAuth'
+
+// Only checks token — used for /onboarding itself to avoid an infinite redirect loop.
+function ProtectedRouteBase({ children }: { children: React.ReactNode }) {
+  if (!getToken()) return <Navigate to="/login" replace />
+  return <>{children}</>
+}
+
+// Checks token + whether onboarding is complete.
+function OnboardingGate({ children }: { children: React.ReactNode }) {
+  const { user, userLoading } = useAuth()
+  if (userLoading) return null
+  if (user && !user.first_name) return <Navigate to="/onboarding" replace />
+  return <>{children}</>
+}
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   if (!getToken()) return <Navigate to="/login" replace />
-  return <>{children}</>
+  return <OnboardingGate>{children}</OnboardingGate>
 }
 
 function PublicOnly({ children }: { children: React.ReactNode }) {
@@ -54,6 +70,10 @@ const devRoutes: RouteObject[] = DesignSystemShowcase && DesignSystemParity
 
 export const router = createBrowserRouter([
   ...devRoutes,
+  {
+    path: '/onboarding',
+    element: <ProtectedRouteBase><OnboardingPage /></ProtectedRouteBase>,
+  },
   {
     path: '/login',
     element: <PublicOnly><LoginPage /></PublicOnly>,
