@@ -118,7 +118,7 @@
   },
   "nav": {
     "main": "Principal",
-    "dashboard": "Inicio",
+    "dashboard": "Dashboard",
     "rfqs": "Solicitudes",
     "quotations": "Cotizaciones",
     "suppliers": "Proveedores",
@@ -138,7 +138,8 @@
     "switchToDark": "Cambiar a oscuro",
     "system": "Sistema",
     "newRequest": "Nueva solicitud",
-    "brand": "Quoly"
+    "brand": "Quoly",
+    "asistente": "Agente"
   },
   "auth": {
     "editorial": {
@@ -341,7 +342,11 @@
         "active": "Activos",
         "archived": "Archivados"
       },
-      "status": { "all": "Todos", "active": "Activos", "archived": "Archivados" },
+      "status": {
+        "all": "Todos",
+        "active": "Activos",
+        "archived": "Archivados"
+      },
       "columns": {
         "company": "Empresa",
         "contact": "Contacto principal",
@@ -519,6 +524,7 @@
     "forgotPassword": "Restablece tu contraseña",
     "forgotPasswordDesc": "Solicita un enlace para restablecer la contraseña de tu cuenta de Quoly.",
     "resetPassword": "Define una nueva contraseña",
+    "asistente": "Agente · Quoly",
     "dashboard": "Inicio",
     "requests": "Solicitudes",
     "rfqNew": "Nueva solicitud",

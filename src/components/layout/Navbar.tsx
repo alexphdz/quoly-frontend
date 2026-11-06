@@ -20,7 +20,8 @@ function countRequestsNeedingBuyer(rfqs: { status: string; supplier_stage_counts
 
 /** Destino activo del menú según la ruta. */
 function activeFor(pathname: string) {
-  if (pathname === '/') return 'home'
+  if (pathname.startsWith('/asistente')) return 'asistente'
+  if (pathname === '/' || pathname.startsWith('/dashboard')) return 'home'
   if (pathname.startsWith('/requests') || pathname.startsWith('/rfqs')) return 'rfq'
   if (pathname.startsWith('/quotations') || pathname.startsWith('/quotes')) return 'quotes'
   if (pathname.startsWith('/suppliers')) return 'suppliers'
@@ -45,22 +46,26 @@ export default function Navbar({ layout, collapsed, onToggle }: { layout: ShellL
   const requestsAttention = useMemo(() => countRequestsNeedingBuyer(rfqs ?? []), [rfqs])
   const toReviewCount = allQuotes?.filter(quoteNeedsReview).length ?? 0
   const workspaceOrg = useMemo(() => {
+    const fromProfile = user?.company_name?.trim()
+    if (fromProfile) return fromProfile
     for (const rfq of rfqs ?? []) {
       const company = rfq.header_data?.buyer_company?.trim()
       if (company) return company
     }
     return undefined
-  }, [rfqs])
+  }, [rfqs, user?.company_name])
 
   const items: NavItem[] = [
-    { value: 'home', label: t('nav.dashboard'), icon: 'house', to: '/' },
+    { value: 'asistente', label: t('nav.asistente'), icon: 'chat-circle-text', to: '/asistente' },
+    { value: 'home', label: t('nav.dashboard'), icon: 'house', to: '/dashboard' },
     { value: 'rfq', label: t('nav.rfqs'), icon: 'files', to: '/requests', count: requestsAttention || undefined },
     { value: 'quotes', label: t('nav.quotations'), icon: 'quotes', to: '/quotations', count: toReviewCount || undefined },
     { value: 'suppliers', label: t('nav.suppliers'), icon: 'users-three', to: '/suppliers' },
   ]
   const active = activeFor(location.pathname)
   const settingsActive = location.pathname.startsWith('/settings')
-  const displayName = user ? displayNameFromEmail(user.email) : ''
+  const profileName = [user?.first_name, user?.last_name].filter(Boolean).join(' ').trim()
+  const displayName = profileName || (user ? displayNameFromEmail(user.email) : '')
   const accountMenu = (
     <>
       <MenuItem icon="gear-six" onSelect={() => navigate('/settings')}>{t('nav.settings')}</MenuItem>

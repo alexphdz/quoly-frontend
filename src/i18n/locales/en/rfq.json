@@ -540,7 +540,12 @@
     "sendRequests": "Send request",
     "sendRequestsCount": "Send request ({{count}})",
     "sentTo": "Sent to {{name}} ({{email}})",
-    "failed": "Couldn't send the request. Try again."
+    "failed": "Couldn't send the request. Try again.",
+    "channel": {
+      "label": "Send from",
+      "gmail": "Gmail",
+      "outlook": "Outlook"
+    }
   },
   "sync": {
     "syncing": "Syncing…",
@@ -1039,7 +1044,8 @@
       "minutes_other": "{{count}} min ago",
       "hours_one": "{{count}} h ago",
       "hours_other": "{{count}} h ago",
-      "yesterday": "Yesterday"
+      "yesterday": "Yesterday",
+      "now": "Just now"
     },
     "error": {
       "label": "Data unavailable",

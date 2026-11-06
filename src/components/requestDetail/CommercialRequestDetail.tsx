@@ -7,7 +7,7 @@ import type { InboundMessageRead } from '../../types/inbound'
 import type { QuoteListItem } from '../../types/quote'
 import type { ComparisonResponse, DecisionRead } from '../../types/comparison'
 import type { SupplierCompanyRead } from '../../types/supplierDirectory'
-import { Breadcrumbs, Button, RfqHeader, Tabs } from '../../design-system'
+import { Breadcrumbs, Button, RfqHeader, Tabs, TextButton } from '../../design-system'
 import { useShellLayout } from '../layout/useShellLayout'
 import { useElementWidth } from '../../design-system/hooks'
 import InboundList from '../rfq/InboundList'
@@ -34,10 +34,11 @@ export interface CommercialRequestDetailProps {
   draftQuotes: number
   googleConnected: boolean
   outlookConnected?: boolean
+  defaultChannel?: 'google' | 'outlook' | null
   sendPending: boolean
   sendError: Error | null
   sendResult?: SendRequestsResponse
-  onSend: () => void
+  onSend: (channel?: 'google' | 'outlook') => void
   onCloseSupplier: (supplierId: string) => void
   closingSupplierId: string | null
   showAddSupplier: boolean
@@ -69,6 +70,7 @@ export interface CommercialRequestDetailProps {
 export default function CommercialRequestDetail(props: CommercialRequestDetailProps) {
   const { rfq, quotes, comparison, decision } = props
   const { t } = useTranslation('rfq')
+  const { t: tChat } = useTranslation('chat')
   const navigate = useNavigate()
   const location = useLocation()
   const layout = useShellLayout()
@@ -98,6 +100,13 @@ export default function CommercialRequestDetail(props: CommercialRequestDetailPr
   return (
     <div className={`rd2-page is-${layout}`}>
       <Breadcrumbs items={[{ label: t('detail.breadcrumbRfqs'), to: '/requests' }, { label: rfq.name }]} />
+      {rfq.created_via === 'chat' && rfq.conversation_id && (
+        <div className="rd2-chat-origin">
+          <TextButton size="sm" onClick={() => navigate(`/asistente/${rfq.conversation_id}`)}>
+            {tChat('rfq.created_via_chat')}
+          </TextButton>
+        </div>
+      )}
       <RfqHeader
         className="rd2-header"
         title={rfq.name}

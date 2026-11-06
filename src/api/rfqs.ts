@@ -65,8 +65,11 @@ export function suggestBuyerActionReply(rfqId: string, actionId: string): Promis
   return post<{ suggested_reply: string }>(`/rfqs/${rfqId}/buyer-actions/${actionId}/suggest-reply`)
 }
 
-export function sendRequests(rfqId: string): Promise<SendRequestsResponse> {
-  return post<SendRequestsResponse>(`/rfqs/${rfqId}/send`)
+export function sendRequests(
+  rfqId: string,
+  channel?: 'google' | 'outlook',
+): Promise<SendRequestsResponse> {
+  return post<SendRequestsResponse>(`/rfqs/${rfqId}/send`, channel ? { channel } : undefined)
 }
 
 export function syncRFQ(rfqId: string): Promise<InboundMessageRead[]> {
