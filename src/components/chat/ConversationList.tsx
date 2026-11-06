@@ -59,23 +59,8 @@ export default function ConversationList({ activeId }: ConversationListProps) {
   const active = conversations?.filter(c => c.phase !== 'archivada' && !isEmpty(c)) ?? []
   const archived = conversations?.filter(c => c.phase === 'archivada') ?? []
 
-  // "New request" returns to the welcome screen; the conversation is created
-  // only when the user sends the first message (no empty rows in the list).
-  function handleNew() {
-    navigate('/asistente')
-  }
-
   return (
     <aside className="conv-list-panel">
-      <div className="conv-list-header">
-        <button type="button" className="conv-list-new-btn" onClick={handleNew}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-          </svg>
-          {t('list.newConversation', { defaultValue: 'Nueva solicitud de cotización' })}
-        </button>
-      </div>
-
       <div className="conv-list-section-label">
         {t('list.sectionLabel', { defaultValue: 'CONVERSACIONES' })}
       </div>

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import i18n from '../../i18n'
 import { IntelligenceMark } from '../../design-system'
 import type { AgentMessage } from '../../types/agent'
@@ -188,24 +187,16 @@ export default function MessageBubble({ message, prevMessage, conversationId, on
   )
 }
 
-const THINKING_STEP_KEYS = ['thinkingSteps.reading', 'thinkingSteps.reviewing', 'thinkingSteps.preparing']
-
 export function ThinkingIndicator({ text }: { text?: string }) {
-  const [step, setStep] = useState(0)
-  useEffect(() => {
-    if (text) return
-    const id = window.setInterval(() => {
-      setStep(s => Math.min(s + 1, THINKING_STEP_KEYS.length - 1))
-    }, 1600)
-    return () => window.clearInterval(id)
-  }, [text])
-  const rotated = i18n.t(THINKING_STEP_KEYS[step], { ns: 'chat', defaultValue: 'Revisando los datos...' })
+  // Just the Quoly Intelligence mark + a single neutral label — no fixed rotating
+  // phrases that wrongly implied every turn was "preparing a summary".
+  const label = text ?? i18n.t('thinking', { ns: 'chat', defaultValue: 'Pensando…' })
   return (
     <div className="chat-thinking">
       <span className="chat-thinking-mark">
         <IntelligenceMark size={16} processing />
       </span>
-      <span className="chat-thinking-text">{text ?? rotated}</span>
+      <span className="chat-thinking-text">{label}</span>
     </div>
   )
 }

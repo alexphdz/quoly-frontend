@@ -85,7 +85,7 @@
     },
     "notIndicated": "No indicado",
     "createRfq": "Crear solicitud de cotización",
-    "rfqCreated": "✓ Solicitud creada",
+    "rfqCreated": "Solicitud creada",
     "corrected": "Corregido"
   },
   "supplierPicker": {
@@ -99,7 +99,7 @@
     "dismiss": "Cancelar",
     "directoryLabel": "PROVEEDORES DE TU DIRECTORIO",
     "fromGmail": "Desde tu Gmail",
-    "sent": "✓ Enviado",
+    "sent": "Enviado",
     "chosen": "{{count}} de {{total}} elegidos"
   },
   "undo": {
