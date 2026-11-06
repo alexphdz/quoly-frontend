@@ -540,7 +540,12 @@
     "sendRequests": "Enviar solicitud",
     "sendRequestsCount": "Enviar solicitud ({{count}})",
     "sentTo": "Enviado a {{name}} ({{email}})",
-    "failed": "No se pudo enviar la solicitud. Inténtalo de nuevo."
+    "failed": "No se pudo enviar la solicitud. Inténtalo de nuevo.",
+    "channel": {
+      "label": "Enviar desde",
+      "gmail": "Gmail",
+      "outlook": "Outlook"
+    }
   },
   "sync": {
     "syncing": "Sincronizando…",
@@ -1039,7 +1044,8 @@
       "minutes_other": "Hace {{count}} min",
       "hours_one": "Hace {{count}} h",
       "hours_other": "Hace {{count}} h",
-      "yesterday": "Ayer"
+      "yesterday": "Ayer",
+      "now": "Ahora"
     },
     "error": {
       "label": "Datos no disponibles",

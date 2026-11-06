@@ -7,6 +7,8 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import OnboardingPage from './pages/OnboardingPage'
 import DashboardPage from './pages/DashboardPage'
+import AsistentePage from './pages/AsistentePage'
+import ChatConversationPage from './pages/ChatConversationPage'
 import RequestsPage from './pages/RequestsPage'
 import CommercialRFQPage from './pages/CommercialRFQPage'
 import RFQDetailPage from './pages/RFQDetailPage'
@@ -97,7 +99,10 @@ export const router = createBrowserRouter([
     element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
     errorElement: <RouteError />,
     children: [
-      { index: true, element: <DashboardPage />, handle: { titleKey: 'seo.dashboard' } },
+      { index: true, element: <Navigate to="/asistente" replace /> },
+      { path: 'dashboard', element: <DashboardPage />, handle: { titleKey: 'seo.dashboard' } },
+      { path: 'asistente', element: <AsistentePage />, handle: { titleKey: 'seo.asistente' } },
+      { path: 'asistente/:conversationId', element: <ChatConversationPage />, handle: { titleKey: 'seo.asistente' } },
       { path: 'requests', element: <RequestsPage />, handle: { titleKey: 'seo.requests' } },
       { path: 'rfqs/new', element: <CommercialRFQPage />, handle: { titleKey: 'seo.rfqNew' } },
       { path: 'rfqs/new/legacy', element: <Navigate to="/rfqs/new" replace /> },

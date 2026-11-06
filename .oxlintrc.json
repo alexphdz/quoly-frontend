@@ -4,7 +4,7 @@
   "rules": {
     "react/jsx-no-literals": [
       "error",
-      { "allowedStrings": ["Quoly", "Gmail", "›", "·", "%", ":"] }
+      { "allowedStrings": ["Quoly", "Gmail", "Asistente", "›", "·", "%", ":"] }
     ]
   },
   "overrides": [

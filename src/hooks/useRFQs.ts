@@ -122,7 +122,7 @@ export function useCloseSupplier(rfqId: string) {
 export function useSendRequests(rfqId: string) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: () => rfqApi.sendRequests(rfqId),
+    mutationFn: (channel?: 'google' | 'outlook') => rfqApi.sendRequests(rfqId, channel),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['rfq', rfqId] })
       queryClient.invalidateQueries({ queryKey: ['rfqs'] })

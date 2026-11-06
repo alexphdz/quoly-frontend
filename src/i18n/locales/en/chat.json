@@ -1,0 +1,167 @@
+{
+  "nav": {
+    "new": "New request"
+  },
+  "empty": {
+    "title": "What do you need to source?",
+    "subtitle": "Describe what you need and I'll help you create an RFQ.",
+    "prompt1": "I need 5,000 corrugated boxes for Monterrey delivery",
+    "prompt2": "Quote kraft bags, 2 kg capacity, CDMX",
+    "prompt3": "Looking for cardboard tubes, 500 units, 3-inch diameter",
+    "inputPlaceholder": "E.g. 5,000 corrugated cardboard boxes for Monterrey in December",
+    "useForm": "Use the classic form",
+    "card1Title": "Cardboard boxes",
+    "card1Desc": "5,000 corrugated cardboard boxes for delivery in Monterrey before December 15",
+    "card2Title": "Printed labels",
+    "card2Desc": "20,000 BOPP labels 8 × 5 cm; I'll attach the design",
+    "card3Title": "Wooden pallets",
+    "card3Desc": "300 wooden pallets 1200 × 1000 delivered to Querétaro",
+    "greeting": "Hi, {{name}}"
+  },
+  "input": {
+    "placeholder": "Write a message...",
+    "send": "Send",
+    "attach": "Attach file",
+    "attachUnavailable": "File upload coming soon",
+    "blocked": "Respond above to continue",
+    "blockedHint": "Select suppliers above to continue",
+    "closeSelection": "Close selection"
+  },
+  "thinking": "Thinking…",
+  "list": {
+    "empty": "No conversations yet",
+    "emptySubtitle": "Start your first request",
+    "newRequest": "New request",
+    "pendingArrow": "→",
+    "panelTitle": "Assistant",
+    "newConversation": "New agent conversation",
+    "sectionLabel": "CONVERSATIONS",
+    "emptyText": "Here you'll see what you quote from the chat.",
+    "archived": "Archived",
+    "statusLabel": {
+      "armando": "Building request",
+      "por_enviar": "Ready to send",
+      "en_espera": "Awaiting replies",
+      "por_decidir": "To decide",
+      "decidida": "Decided",
+      "archivada": "Archived"
+    },
+    "pendingLabel": {
+      "question_pending": "Question to answer",
+      "summary_ready": "Summary to confirm",
+      "approval_needed": "Draft to approve"
+    },
+    "sentCount": "Sent · {{responded}} of {{total}} replied"
+  },
+  "phase": {
+    "armando": "building",
+    "por_enviar": "ready to send",
+    "en_espera": "waiting",
+    "por_decidir": "ready to decide",
+    "decidida": "decided",
+    "archivada": "archived"
+  },
+  "summary": {
+    "title": "REQUEST SUMMARY",
+    "confirm": "Confirm",
+    "edit": "Edit",
+    "dismiss": "Dismiss",
+    "assumed": "Suggested",
+    "assumedTooltip": "Assumed — correct if wrong",
+    "outdated": "Outdated",
+    "dismissed": "Dismissed",
+    "fields": {
+      "name": "Name",
+      "description": "Description",
+      "quantity": "Quantity",
+      "base_unit": "Unit",
+      "base_currency": "Currency",
+      "delivery_point": "Delivery point",
+      "response_deadline": "Response deadline",
+      "requested_delivery_date": "Desired delivery",
+      "technical_requirements": "Technical requirements",
+      "request_kind": "Type",
+      "attachments": "Files"
+    },
+    "notIndicated": "Not indicated",
+    "createRfq": "Create quote request",
+    "rfqCreated": "✓ Request created",
+    "corrected": "Corrected"
+  },
+  "supplierPicker": {
+    "title": "Select suppliers",
+    "sendN": "Send to {{count}} suppliers",
+    "addSupplier": "Add supplier",
+    "addConfirm": "Add",
+    "addCancel": "Cancel",
+    "namePlaceholder": "Company name",
+    "emailPlaceholder": "Email",
+    "dismiss": "Cancel",
+    "directoryLabel": "YOUR DIRECTORY SUPPLIERS",
+    "fromGmail": "From your Gmail",
+    "sent": "✓ Sent",
+    "chosen": "{{count}} of {{total}} selected"
+  },
+  "undo": {
+    "banner": "Sending to {{count}} suppliers · {{seconds}}s to undo",
+    "action": "Undo"
+  },
+  "file": {
+    "sizeError": "File exceeds 10 MB. Try compressing it.",
+    "typeError": "Only PDF, DOCX, PNG, JPG, JPEG, and WEBP are supported.",
+    "pagesError": "PDF has more than 20 pages. Upload only the relevant section.",
+    "extractionFailed": "Couldn't read this file. Describe its contents in the message."
+  },
+  "limit": {
+    "approaching": "{{count}} requests left this month.",
+    "reached": "You've reached your monthly limit.",
+    "useForm": "Use the classic form instead →"
+  },
+  "card": {
+    "outdated": "outdated",
+    "dismissed": "dismissed"
+  },
+  "systemEvent": {
+    "rfqCreated": "Request created",
+    "rfqSent": "Sent to {{count}} suppliers",
+    "sendCancelled": "Send cancelled"
+  },
+  "errors": {
+    "turnFailed": "Something went wrong. Try again.",
+    "conversationNotFound": "Conversation not found.",
+    "tryAgain": "Try again",
+    "cardExpired": "The summary has changed. Please review again.",
+    "agentError": "Could not respond. Your message is still here."
+  },
+  "approval": {
+    "whereFrom": "Where does this come from?",
+    "approve": "Approve and send",
+    "edit": "Edit",
+    "sendEdited": "Send edited reply",
+    "discard": "Discard",
+    "outlookNote": "Sending via Outlook isn't supported yet. Copy the reply and send from your inbox.",
+    "copyReply": "Copy reply",
+    "source": "Source: {{field}}",
+    "sensitiveNote": "This reply touches commitments — review carefully before sending.",
+    "sources": "View sources",
+    "draftHeader": "Draft for approval",
+    "draftLabel": "Draft",
+    "askedAt": "{{supplier}} asked · {{time}}",
+    "sourcesWithCount": "View sources ({{count}})"
+  },
+  "rfq": {
+    "created_via_chat": "Created with Asistente"
+  },
+  "turnsRemaining": "{{count}} turns remaining",
+  "loadingConversation": "Loading conversation…",
+  "conv": {
+    "viewRfq": "View in Requests"
+  },
+  "dateToday": "Today",
+  "thinkingSteps": {
+    "reading": "Reading your message...",
+    "reviewing": "Reviewing the details...",
+    "preparing": "Preparing the summary..."
+  },
+  "agentName": "Agent"
+}

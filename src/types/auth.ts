@@ -11,6 +11,7 @@ export interface UserProfile {
   google_connected: boolean
   outlook_connected: boolean
   default_email_locale: 'en' | 'es'
+  default_send_channel?: 'google' | 'outlook' | null
   avatar_url: string | null
   first_name: string | null
   last_name: string | null
