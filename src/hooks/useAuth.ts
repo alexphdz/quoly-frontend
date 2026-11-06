@@ -100,8 +100,12 @@ export function useAuth() {
 
   const updateProfileMutation = useMutation({
     mutationFn: authApi.updateMe,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['me'] })
+    // Write the returned profile straight into the cache (like the avatar
+    // mutations) so callers that navigate right after saving — e.g. the
+    // onboarding gate, which redirects while user.first_name is empty — see the
+    // fresh value immediately instead of a stale one from a pending refetch.
+    onSuccess: (profile) => {
+      queryClient.setQueryData(['me'], profile)
     },
   })
 
