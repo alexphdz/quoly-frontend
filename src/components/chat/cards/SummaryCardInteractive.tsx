@@ -1,3 +1,4 @@
+import { CheckCircle } from '@phosphor-icons/react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, IntelligenceMark } from '../../../design-system'
@@ -53,7 +54,10 @@ export default function SummaryCardInteractive({ card, messageId, conversationId
         <div className="chat-card-header">
           <span className="chat-card-title">{t('summary.title', { defaultValue: 'RESUMEN DE LA SOLICITUD' })}</span>
         </div>
-        <div className="chat-card-resolved-label">{t('summary.rfqCreated', { defaultValue: '✓ Solicitud creada' })}</div>
+        <div className="chat-card-resolved-label" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+          <CheckCircle size={16} weight="fill" color="var(--accent)" aria-hidden />
+          {t('summary.rfqCreated', { defaultValue: 'Solicitud creada' })}
+        </div>
       </div>
     )
   }
