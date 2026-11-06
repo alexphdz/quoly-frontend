@@ -1,5 +1,6 @@
 import i18n from '../../i18n'
 import { IntelligenceMark } from '../../design-system'
+import ChatMarkdown from './ChatMarkdown'
 import type { AgentMessage } from '../../types/agent'
 import SummaryCard from './SummaryCard'
 import SummaryCardInteractive from './cards/SummaryCardInteractive'
@@ -140,7 +141,9 @@ function AgentMessageView({ message, conversationId, onUndoExpired }: MessageBub
           {time && <span className="chat-agent-time">{time}</span>}
         </div>
         {message.content && (
-          <p className="chat-agent-text">{message.content}</p>
+          <div className="chat-agent-text">
+            <ChatMarkdown text={message.content} />
+          </div>
         )}
         <CardRenderer
           message={message}
