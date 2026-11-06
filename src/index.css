@@ -1789,19 +1789,21 @@ textarea.input {
   line-height: 1.5;
 }
 
+/* Every row is an inset card with equal air on both sides. */
 .conv-list-row {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  width: 100%;
-  padding: 11px 16px;
-  border: none;
+  width: auto;
+  margin: 3px 10px;
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
   background: transparent;
   cursor: pointer;
   text-align: left;
-  border-bottom: 1px solid var(--color-divider);
   gap: 4px;
-  transition: background 150ms ease;
+  transition: background 150ms ease, border-color 150ms ease;
   position: relative;
 }
 
@@ -1809,13 +1811,10 @@ textarea.input {
   background: var(--color-surface-elevated);
 }
 
-/* Active conversation = bordered, rounded, inset card with a coral left accent. */
+/* Active conversation = bordered card with a coral left accent. */
 .conv-list-row.is-active {
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  margin: 2px 8px;
-  padding: 11px 14px;
+  border-color: var(--color-border);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
@@ -2036,18 +2035,29 @@ textarea.input {
   font-size: 0.9375rem;
   line-height: 1.65;
   color: var(--color-text-primary);
-  white-space: pre-wrap;
   margin: 0;
+}
+
+.chat-agent-text p {
+  margin: 0 0 0.5rem;
+}
+
+.chat-agent-text p:last-child {
+  margin-bottom: 0;
 }
 
 .chat-agent-text ol,
 .chat-agent-text ul {
   padding-left: 1.25rem;
-  margin: 4px 0;
+  margin: 0.25rem 0 0.5rem;
 }
 
 .chat-agent-text li {
   margin: 2px 0;
+}
+
+.chat-agent-text strong {
+  font-weight: 600;
 }
 
 /* ── Error state in agent message ─────────────────────────────────────────── */
