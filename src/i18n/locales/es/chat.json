@@ -1,0 +1,167 @@
+{
+  "nav": {
+    "new": "Nueva solicitud"
+  },
+  "empty": {
+    "title": "¿Qué necesitas cotizar?",
+    "subtitle": "Describe lo que necesitas y te ayudo a crear una solicitud.",
+    "prompt1": "Necesito 5,000 cajas de cartón corrugado para Monterrey",
+    "prompt2": "Cotizar bolsas kraft, 2 kg, CDMX",
+    "prompt3": "Tubos de cartón, 500 piezas, 3 pulgadas de diámetro",
+    "inputPlaceholder": "Ej. 5,000 cajas de cartón corrugado para Monterrey en diciembre",
+    "useForm": "Cotizar con el formulario",
+    "card1Title": "Cajas de cartón",
+    "card1Desc": "5,000 cajas de cartón corrugado para entrega en Monterrey antes del 15 de diciembre",
+    "card2Title": "Etiquetas con diseño",
+    "card2Desc": "20,000 etiquetas BOPP de 8 × 5 cm; te adjunto el diseño",
+    "card3Title": "Pallets de madera",
+    "card3Desc": "300 pallets de madera 1200 × 1000 puestos en Querétaro",
+    "greeting": "Hola, {{name}}"
+  },
+  "input": {
+    "placeholder": "Escribe un mensaje...",
+    "send": "Enviar",
+    "attach": "Adjuntar archivo",
+    "attachUnavailable": "Carga de archivos próximamente",
+    "blocked": "Responde arriba para continuar",
+    "blockedHint": "Elige proveedores arriba para seguir",
+    "closeSelection": "Cerrar selección"
+  },
+  "thinking": "Pensando…",
+  "list": {
+    "empty": "Sin conversaciones",
+    "emptySubtitle": "Inicia tu primera solicitud",
+    "newRequest": "Nueva solicitud",
+    "pendingArrow": "→",
+    "panelTitle": "Asistente",
+    "newConversation": "Nueva conversación con el agente",
+    "sectionLabel": "CONVERSACIONES",
+    "emptyText": "Aquí verás lo que cotices desde el chat.",
+    "archived": "Archivadas",
+    "statusLabel": {
+      "armando": "Armando solicitud",
+      "por_enviar": "Lista para enviar",
+      "en_espera": "Esperando respuestas",
+      "por_decidir": "Por decidir",
+      "decidida": "Decidida",
+      "archivada": "Archivada"
+    },
+    "pendingLabel": {
+      "question_pending": "Pregunta por responder",
+      "summary_ready": "Resumen por confirmar",
+      "approval_needed": "Borrador por aprobar"
+    },
+    "sentCount": "Enviada · {{responded}} de {{total}} respondieron"
+  },
+  "phase": {
+    "armando": "armando",
+    "por_enviar": "por enviar",
+    "en_espera": "en espera",
+    "por_decidir": "por decidir",
+    "decidida": "decidida",
+    "archivada": "archivada"
+  },
+  "summary": {
+    "title": "RESUMEN DE LA SOLICITUD",
+    "confirm": "Confirmar",
+    "edit": "Editar",
+    "dismiss": "Descartar",
+    "assumed": "Sugerido",
+    "assumedTooltip": "Asumido — corrige si está mal",
+    "outdated": "Desactualizado",
+    "dismissed": "Descartado",
+    "fields": {
+      "name": "Nombre",
+      "description": "Descripción",
+      "quantity": "Cantidad",
+      "base_unit": "Unidad",
+      "base_currency": "Moneda",
+      "delivery_point": "Lugar de entrega",
+      "response_deadline": "Plazo de respuesta",
+      "requested_delivery_date": "Entrega deseada",
+      "technical_requirements": "Requisitos técnicos",
+      "request_kind": "Tipo",
+      "attachments": "Archivos"
+    },
+    "notIndicated": "No indicado",
+    "createRfq": "Crear solicitud de cotización",
+    "rfqCreated": "✓ Solicitud creada",
+    "corrected": "Corregido"
+  },
+  "supplierPicker": {
+    "title": "Selecciona proveedores",
+    "sendN": "Enviar a {{count}} proveedores",
+    "addSupplier": "Agregar proveedor",
+    "addConfirm": "Agregar",
+    "addCancel": "Cancelar",
+    "namePlaceholder": "Nombre de la empresa",
+    "emailPlaceholder": "Correo electrónico",
+    "dismiss": "Cancelar",
+    "directoryLabel": "PROVEEDORES DE TU DIRECTORIO",
+    "fromGmail": "Desde tu Gmail",
+    "sent": "✓ Enviado",
+    "chosen": "{{count}} de {{total}} elegidos"
+  },
+  "undo": {
+    "banner": "Enviando a {{count}} proveedores · {{seconds}}s para deshacer",
+    "action": "Deshacer"
+  },
+  "file": {
+    "sizeError": "El archivo supera 10 MB. Intenta comprimirlo.",
+    "typeError": "Solo se admiten PDF, DOCX, PNG, JPG, JPEG y WEBP.",
+    "pagesError": "El PDF tiene más de 20 páginas. Sube solo la sección relevante.",
+    "extractionFailed": "No pude leer este archivo. Describe su contenido en el mensaje."
+  },
+  "limit": {
+    "approaching": "Te quedan {{count}} solicitudes este mes.",
+    "reached": "Llegaste al límite mensual.",
+    "useForm": "Usa el formulario clásico →"
+  },
+  "card": {
+    "outdated": "desactualizado",
+    "dismissed": "descartado"
+  },
+  "systemEvent": {
+    "rfqCreated": "Solicitud creada",
+    "rfqSent": "Enviada a {{count}} proveedores",
+    "sendCancelled": "Envío cancelado"
+  },
+  "errors": {
+    "turnFailed": "Algo salió mal. Intenta de nuevo.",
+    "conversationNotFound": "Conversación no encontrada.",
+    "tryAgain": "Reintentar",
+    "cardExpired": "El resumen ha cambiado. Por favor revísalo de nuevo.",
+    "agentError": "No pude responder. Tu mensaje sigue aquí."
+  },
+  "approval": {
+    "whereFrom": "¿De dónde viene esto?",
+    "approve": "Aprobar y enviar",
+    "edit": "Editar",
+    "sendEdited": "Enviar respuesta editada",
+    "discard": "Descartar",
+    "outlookNote": "El envío por Outlook aún no está soportado. Copia la respuesta y envíala desde tu bandeja.",
+    "copyReply": "Copiar respuesta",
+    "source": "Fuente: {{field}}",
+    "sensitiveNote": "Esta respuesta involucra compromisos — revísala con cuidado antes de enviar.",
+    "sources": "Ver fuentes",
+    "draftHeader": "Borrador por aprobar",
+    "draftLabel": "Borrador",
+    "askedAt": "{{supplier}} preguntó · {{time}}",
+    "sourcesWithCount": "Ver fuentes ({{count}})"
+  },
+  "rfq": {
+    "created_via_chat": "Creada con el Asistente"
+  },
+  "turnsRemaining": "{{count}} turnos restantes",
+  "loadingConversation": "Cargando conversación…",
+  "conv": {
+    "viewRfq": "Ver en Solicitudes"
+  },
+  "dateToday": "Hoy",
+  "thinkingSteps": {
+    "reading": "Leyendo tu mensaje...",
+    "reviewing": "Revisando los datos...",
+    "preparing": "Preparando el resumen..."
+  },
+  "agentName": "Agente"
+}

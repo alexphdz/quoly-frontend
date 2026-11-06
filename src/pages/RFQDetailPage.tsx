@@ -27,11 +27,13 @@ import { useEnumLabels } from '../i18n/labels'
 import { useFormat } from '../lib/format'
 import { useUnreadCount } from '../hooks/useInboundStream'
 import { Alert, Badge, Button, Card, Dialog, EmptyState, ErrorState, FormFeedback, ProgressBar, StatusBadge, toast } from '../components/ui'
+import { TextButton } from '../design-system'
 import CommercialRequestDetailSkeleton from '../components/requestDetail/CommercialRequestDetailSkeleton'
 
 export default function RFQDetailPage() {
   const { id } = useParams<{ id: string }>()
   const { t, i18n } = useTranslation('rfq')
+  const { t: tChat } = useTranslation('chat')
   const labels = useEnumLabels()
   const fmt = useFormat()
   const { data: rfq, isLoading, error } = useRFQ(id!)
@@ -118,10 +120,11 @@ export default function RFQDetailPage() {
         draftQuotes={draftQuotes}
         googleConnected={!!user?.google_connected}
         outlookConnected={!!user?.outlook_connected}
+        defaultChannel={user?.default_send_channel ?? undefined}
         sendPending={sendRequests.isPending}
         sendError={sendRequests.error}
         sendResult={sendRequests.data}
-        onSend={() => sendRequests.mutate(undefined, {
+        onSend={(channel) => sendRequests.mutate(channel, {
           onSuccess: (data) => {
             for (const item of data) {
               if ('gmail_message_id' in item || 'outlook_message_id' in item) {
@@ -192,6 +195,11 @@ export default function RFQDetailPage() {
             {rfq.base_unit}
             {rfq.delivery_point ? ` · ${rfq.delivery_point}` : ''}
           </p>
+          {rfq.created_via === 'chat' && rfq.conversation_id && (
+            <TextButton size="sm" onClick={() => navigate(`/asistente/${rfq.conversation_id}`)}>
+              {tChat('rfq.created_via_chat')}
+            </TextButton>
+          )}
         </div>
       </div>
 
@@ -314,7 +322,7 @@ export default function RFQDetailPage() {
             </div>
             <div className="flex gap-2">
               <Button variant="secondary" onClick={() => setShowAddSupplier(true)}><Icon name="person_add" size={16} /> {t('detail.addSuppliers')}</Button>
-              <SendButton pendingCount={pendingCount} googleConnected={!!user?.google_connected} outlookConnected={!!user?.outlook_connected} isPending={sendRequests.isPending} error={sendRequests.error} result={sendRequests.data} onSend={() => sendRequests.mutate()} />
+              <SendButton pendingCount={pendingCount} googleConnected={!!user?.google_connected} outlookConnected={!!user?.outlook_connected} defaultChannel={user?.default_send_channel ?? undefined} isPending={sendRequests.isPending} error={sendRequests.error} result={sendRequests.data} onSend={(channel) => sendRequests.mutate(channel)} />
             </div>
           </div>
           <SupplierList

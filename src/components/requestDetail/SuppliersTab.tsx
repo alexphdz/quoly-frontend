@@ -32,6 +32,18 @@ export default function SuppliersTab(props: CommercialRequestDetailProps & { onT
   const [confirmOpen, setConfirmOpen] = useState(false)
   const readOnly = rfq.status === 'decided' || rfq.status === 'closed'
   const mailbox = props.googleConnected || !!props.outlookConnected
+  const bothConnected = props.googleConnected && !!props.outlookConnected
+  const [channel, setChannel] = useState<'google' | 'outlook'>(
+    props.defaultChannel ?? (props.outlookConnected && !props.googleConnected ? 'outlook' : 'google'),
+  )
+  // Single mailbox → implicit; both → honor the selector; none → undefined (JSON fallback).
+  const effectiveChannel: 'google' | 'outlook' | undefined = bothConnected
+    ? channel
+    : props.googleConnected
+      ? 'google'
+      : props.outlookConnected
+        ? 'outlook'
+        : undefined
   const payloads = (props.sendResult ?? []).filter((item): item is EmailPayload => 'body' in item)
 
   useEffect(() => {
@@ -222,13 +234,31 @@ export default function SuppliersTab(props: CommercialRequestDetailProps & { onT
       <ConfirmDialog
         open={confirmOpen}
         title={t('detalle.suppliers.confirmTitle', { count: pendingCount })}
-        description={mailbox ? t('detalle.suppliers.confirmMailbox') : t('detalle.suppliers.confirmNoMailbox')}
+        description={(
+          <>
+            {mailbox ? t('detalle.suppliers.confirmMailbox') : t('detalle.suppliers.confirmNoMailbox')}
+            {bothConnected && (
+              <div style={{ marginTop: '0.75rem' }}>
+                <SegmentedControl
+                  label={t('send.channel.label')}
+                  size="sm"
+                  value={channel}
+                  onChange={setChannel}
+                  options={[
+                    { value: 'google', label: t('send.channel.gmail') },
+                    { value: 'outlook', label: t('send.channel.outlook') },
+                  ]}
+                />
+              </div>
+            )}
+          </>
+        )}
         details={suppliers.filter(s => stageOf(s.status).key === 'not_contacted').map(s => ({ label: s.name, value: s.email }))}
         confirmLabel={t('detalle.suppliers.confirmAction', { count: pendingCount })}
         cancelLabel={t('crear.actions.cancel')}
         pending={props.sendPending}
         onCancel={() => setConfirmOpen(false)}
-        onConfirm={props.onSend}
+        onConfirm={() => props.onSend(effectiveChannel)}
       />
     </div>
   )

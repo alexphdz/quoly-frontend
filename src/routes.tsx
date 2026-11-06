@@ -5,7 +5,10 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
+import OnboardingPage from './pages/OnboardingPage'
 import DashboardPage from './pages/DashboardPage'
+import AsistentePage from './pages/AsistentePage'
+import ChatConversationPage from './pages/ChatConversationPage'
 import RequestsPage from './pages/RequestsPage'
 import CommercialRFQPage from './pages/CommercialRFQPage'
 import RFQDetailPage from './pages/RFQDetailPage'
@@ -19,10 +22,25 @@ import SettingsPage from './pages/SettingsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import RouteError from './pages/RouteError'
 import { getToken } from './api/client'
+import { useAuth } from './hooks/useAuth'
+
+// Only checks token — used for /onboarding itself to avoid an infinite redirect loop.
+function ProtectedRouteBase({ children }: { children: React.ReactNode }) {
+  if (!getToken()) return <Navigate to="/login" replace />
+  return <>{children}</>
+}
+
+// Checks token + whether onboarding is complete.
+function OnboardingGate({ children }: { children: React.ReactNode }) {
+  const { user, userLoading } = useAuth()
+  if (userLoading) return null
+  if (user && !user.first_name) return <Navigate to="/onboarding" replace />
+  return <>{children}</>
+}
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   if (!getToken()) return <Navigate to="/login" replace />
-  return <>{children}</>
+  return <OnboardingGate>{children}</OnboardingGate>
 }
 
 function PublicOnly({ children }: { children: React.ReactNode }) {
@@ -55,6 +73,10 @@ const devRoutes: RouteObject[] = DesignSystemShowcase && DesignSystemParity
 export const router = createBrowserRouter([
   ...devRoutes,
   {
+    path: '/onboarding',
+    element: <ProtectedRouteBase><OnboardingPage /></ProtectedRouteBase>,
+  },
+  {
     path: '/login',
     element: <PublicOnly><LoginPage /></PublicOnly>,
   },
@@ -77,7 +99,10 @@ export const router = createBrowserRouter([
     element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
     errorElement: <RouteError />,
     children: [
-      { index: true, element: <DashboardPage />, handle: { titleKey: 'seo.dashboard' } },
+      { index: true, element: <Navigate to="/asistente" replace /> },
+      { path: 'dashboard', element: <DashboardPage />, handle: { titleKey: 'seo.dashboard' } },
+      { path: 'asistente', element: <AsistentePage />, handle: { titleKey: 'seo.asistente' } },
+      { path: 'asistente/:conversationId', element: <ChatConversationPage />, handle: { titleKey: 'seo.asistente' } },
       { path: 'requests', element: <RequestsPage />, handle: { titleKey: 'seo.requests' } },
       { path: 'rfqs/new', element: <CommercialRFQPage />, handle: { titleKey: 'seo.rfqNew' } },
       { path: 'rfqs/new/legacy', element: <Navigate to="/rfqs/new" replace /> },

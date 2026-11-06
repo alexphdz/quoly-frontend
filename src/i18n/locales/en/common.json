@@ -98,9 +98,9 @@
     "quote_not_confirmed": "That quote is not in the comparison.",
     "decision_not_found": "No award recorded for this request.",
     "invalid_token": "Invalid or expired token.",
-  "otp_expired": "This link has expired. Request a new one.",
-  "password_reset_failed": "Couldn't reset the password. Try again.",
-  "resend_failed": "Couldn't resend the email. Try again.",
+    "otp_expired": "This link has expired. Request a new one.",
+    "password_reset_failed": "Couldn't reset the password. Try again.",
+    "resend_failed": "Couldn't resend the email. Try again.",
     "invalid_token_payload": "Invalid token payload.",
     "network_error": "Can't reach Quoly. Try again.",
     "volume_tiers_required": "At least one volume tier is required.",
@@ -118,7 +118,7 @@
   },
   "nav": {
     "main": "Main",
-    "dashboard": "Home",
+    "dashboard": "Dashboard",
     "rfqs": "Requests",
     "quotations": "Quotes",
     "suppliers": "Suppliers",
@@ -138,7 +138,8 @@
     "switchToDark": "Switch to dark",
     "system": "System",
     "newRequest": "New request",
-    "brand": "Quoly"
+    "brand": "Quoly",
+    "asistente": "Agent"
   },
   "auth": {
     "editorial": {
@@ -342,7 +343,11 @@
         "active": "Active",
         "archived": "Archived"
       },
-      "status": { "all": "All", "active": "Active", "archived": "Archived" },
+      "status": {
+        "all": "All",
+        "active": "Active",
+        "archived": "Archived"
+      },
       "columns": {
         "company": "Company",
         "contact": "Primary contact",
@@ -519,6 +524,7 @@
     "forgotPassword": "Reset your password",
     "forgotPasswordDesc": "Request a password reset link for your Quoly account.",
     "resetPassword": "Set a new password",
+    "asistente": "Agent · Quoly",
     "dashboard": "Dashboard",
     "requests": "Requests",
     "rfqNew": "New request",
@@ -530,6 +536,22 @@
     "suppliers": "Suppliers",
     "supplierDetail": "Supplier",
     "settings": "Settings",
-    "notFound": "Page not found"
+    "notFound": "Page not found",
+    "onboarding": "Set up your profile"
+  },
+  "onboarding": {
+    "title": "Welcome to Quoly",
+    "subtitle": "Let's set up your profile before we get started.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "accountType": "Account type",
+    "personal": "Personal",
+    "organization": "Organization",
+    "companyName": "Company / organization name",
+    "photoLabel": "Profile photo",
+    "photoSkip": "Skip for now",
+    "submit": "Get started",
+    "submitting": "Saving…",
+    "note": "You can update this anytime in Settings."
   }
 }

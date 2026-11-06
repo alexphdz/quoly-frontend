@@ -136,6 +136,9 @@ export interface RFQRead {
   supplier_stage_counts?: Record<string, number>
   created_at: string
   updated_at: string
+  created_via?: 'form' | 'chat' | null
+  agent_state?: string | null
+  conversation_id?: string | null
 }
 
 export interface RFQDetail extends RFQRead {
