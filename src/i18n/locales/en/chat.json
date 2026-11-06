@@ -85,7 +85,7 @@
     },
     "notIndicated": "Not indicated",
     "createRfq": "Create quote request",
-    "rfqCreated": "✓ Request created",
+    "rfqCreated": "Request created",
     "corrected": "Corrected"
   },
   "supplierPicker": {
@@ -99,7 +99,7 @@
     "dismiss": "Cancel",
     "directoryLabel": "YOUR DIRECTORY SUPPLIERS",
     "fromGmail": "From your Gmail",
-    "sent": "✓ Sent",
+    "sent": "Sent",
     "chosen": "{{count}} of {{total}} selected"
   },
   "undo": {

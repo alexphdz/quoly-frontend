@@ -1,3 +1,4 @@
+import { CheckCircle } from '@phosphor-icons/react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, TextButton } from '../../../design-system'
@@ -50,7 +51,10 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
         <div className="chat-card-header">
           <span className="chat-card-title">{t('supplierPicker.directoryLabel', { defaultValue: 'PROVEEDORES DE TU DIRECTORIO' })}</span>
         </div>
-        <div className="chat-card-resolved-label">{t('supplierPicker.sent', { defaultValue: '✓ Enviado' })}</div>
+        <div className="chat-card-resolved-label" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+          <CheckCircle size={16} weight="fill" color="var(--accent)" aria-hidden />
+          {t('supplierPicker.sent', { defaultValue: 'Enviado' })}
+        </div>
       </div>
     )
   }
