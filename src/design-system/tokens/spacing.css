@@ -33,7 +33,7 @@
 /* 5b · Bordes y foco compuestos — redeclarados en cada ámbito de tema para resolver con los colores locales */
 :root,[data-theme]{
 --border-divider:1px solid var(--color-divider);--border-default:1px solid var(--color-border);--border-control:1px solid var(--color-border-strong);--border-structural:1px solid var(--color-border-structural);--border-emphasis:2px solid var(--color-border-structural);--border-selected:2px solid var(--color-selection-indicator);
---focus-ring-width:2px;--focus-ring-offset:2px;--focus-ring:0 0 0 2px var(--color-focus-ring-offset),0 0 0 4px var(--color-focus-ring);
+--focus-ring-width:2px;--focus-ring-offset:2px;--focus-ring:0 0 0 2px var(--color-focus-ring-offset),0 0 0 4px var(--color-focus-ring);--focus-ring-input:0 0 0 1px var(--color-focus-ring);/* anillo contiguo de 2px (borde+sombra) para campos de texto — nunca el halo */
 }
 /* 8 · Superficies y elevación — light */
 :root,[data-theme="light"]{

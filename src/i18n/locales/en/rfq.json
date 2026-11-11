@@ -1245,6 +1245,7 @@
   },
   "detalle": {
     "editRequest": "Edit request",
+    "pickSuppliers": "Choose suppliers & send",
     "viewComparison": "View comparison",
     "tabs": {
       "overview": "Summary",

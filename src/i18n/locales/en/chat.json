@@ -35,7 +35,7 @@
     "pendingArrow": "→",
     "panelTitle": "Assistant",
     "newConversation": "New agent conversation",
-    "sectionLabel": "CONVERSATIONS",
+    "sectionLabel": "Conversations",
     "emptyText": "Here you'll see what you quote from the chat.",
     "archived": "Archived",
     "statusLabel": {
@@ -62,7 +62,7 @@
     "archivada": "archived"
   },
   "summary": {
-    "title": "REQUEST SUMMARY",
+    "title": "Request summary",
     "confirm": "Confirm",
     "edit": "Edit",
     "dismiss": "Dismiss",
@@ -97,25 +97,31 @@
     "namePlaceholder": "Company name",
     "emailPlaceholder": "Email",
     "dismiss": "Cancel",
-    "directoryLabel": "YOUR DIRECTORY SUPPLIERS",
+    "directoryLabel": "Suppliers from your directory",
     "fromGmail": "From your Gmail",
     "sent": "Sent",
-    "chosen": "{{count}} of {{total}} selected"
+    "chosen": "{{count}} of {{total}} selected",
+    "emptyHint": "You don't have saved suppliers yet. Add the first one with their email to send them the request.",
+    "sendN_one": "Send to 1 supplier",
+    "sendN_other": "Send to {{count}} suppliers"
   },
   "undo": {
     "banner": "Sending to {{count}} suppliers · {{seconds}}s to undo",
-    "action": "Undo"
+    "action": "Undo",
+    "banner_one": "Sending to 1 supplier · {{seconds}}s to undo",
+    "banner_other": "Sending to {{count}} suppliers · {{seconds}}s to undo"
   },
   "file": {
     "sizeError": "File exceeds 10 MB. Try compressing it.",
     "typeError": "Only PDF, DOCX, PNG, JPG, JPEG, and WEBP are supported.",
     "pagesError": "PDF has more than 20 pages. Upload only the relevant section.",
-    "extractionFailed": "Couldn't read this file. Describe its contents in the message."
+    "extractionFailed": "Couldn't read this file. Describe its contents in the message.",
+    "remove": "Remove file"
   },
   "limit": {
     "approaching": "{{count}} requests left this month.",
     "reached": "You've reached your monthly limit.",
-    "useForm": "Use the classic form instead →"
+    "useForm": "Use the classic form instead"
   },
   "card": {
     "outdated": "outdated",
@@ -147,7 +153,8 @@
     "draftHeader": "Draft for approval",
     "draftLabel": "Draft",
     "askedAt": "{{supplier}} asked · {{time}}",
-    "sourcesWithCount": "View sources ({{count}})"
+    "sourcesWithCount": "View sources ({{count}})",
+    "cancelEdit": "Cancel"
   },
   "rfq": {
     "created_via_chat": "Created with Asistente"

@@ -91,9 +91,14 @@ export default function CommercialRequestDetail(props: CommercialRequestDetailPr
     target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [location.hash, props.openAsks.length, tab])
 
+  // Un borrador creado por el CHAT ya está completo (solo falta elegir proveedores
+  // y enviar), así que su acción principal lleva a la pestaña de proveedores, NO al
+  // formulario de edición. Un borrador creado por FORMULARIO sí se termina editando.
   const action = head.key === 'draft'
-    ? <Button icon="pencil-simple" onClick={() => navigate(`/rfqs/${rfq.id}/edit`)}>{t('detalle.editRequest')}</Button>
-    : decision
+    ? rfq.created_via === 'chat'
+      ? <Button icon="paper-plane-tilt" onClick={() => setTab('suppliers')}>{t('detalle.pickSuppliers')}</Button>
+      : <Button icon="pencil-simple" onClick={() => navigate(`/rfqs/${rfq.id}/edit`)}>{t('detalle.editRequest')}</Button>
+    : (head.key === 'closed' || decision)
       ? <Button variant="secondary" icon="columns" onClick={() => setTab('comparison')}>{t('detalle.viewComparison')}</Button>
       : undefined
 

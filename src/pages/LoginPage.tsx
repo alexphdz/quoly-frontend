@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import { authErrorMessage } from '../lib/authError'
 import { FormFeedback, FormField } from '../components/ui'
-import { Icon } from '../components/ds'
+import { Icon } from '../design-system'
 import AuthStage from '../components/auth/AuthStage'
 
 const schema = z.object({
@@ -43,10 +43,14 @@ export default function LoginPage() {
           />
         </FormField>
 
-        <div className="ds-auth-password-group">
-          <FormField label={t('auth.login.password')} error={errors.password?.message && t(errors.password.message as 'auth.passwordMin')}>
-            <div className="ds-auth-pass">
+        <div className="field">
+          <div className="ds-auth-label-row">
+            <label className="field-label" htmlFor="login-password">{t('auth.login.password')}</label>
+            <Link to="/forgot-password" className="ds-link">{t('auth.login.forgotPassword')}</Link>
+          </div>
+          <div className="ds-auth-pass">
             <input
+              id="login-password"
               type={showPassword ? 'text' : 'password'}
               autoComplete="current-password"
               {...register('password')}
@@ -60,13 +64,12 @@ export default function LoginPage() {
               aria-label={showPassword ? t('auth.login.hidePassword') : t('auth.login.showPassword')}
               onClick={() => setShowPassword(value => !value)}
             >
-              <Icon name={showPassword ? 'visibility_off' : 'visibility'} size={16} />
+              <Icon name={showPassword ? 'eye-slash' : 'eye'} size={16} />
             </button>
-            </div>
-          </FormField>
-          <p className="ds-auth-forgot">
-            <Link to="/forgot-password" className="ds-link">{t('auth.login.forgotPassword')}</Link>
-          </p>
+          </div>
+          {errors.password?.message && (
+            <div className="field-error" role="alert">{t(errors.password.message as 'auth.passwordMin')}</div>
+          )}
         </div>
 
         {login.error && (

@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useState, type CSSProperties, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Icon, Skel } from '../components/ds'
 import { Button, ConfirmDialog, IconButton, Select, StatusBadge, Tabs, TextButton, TextInput } from '../design-system'
@@ -13,7 +13,7 @@ import { getToken, post, type ApiError } from '../api/client'
 import { SUPPORTED_LOCALES, type Locale } from '../i18n'
 import { useFormat } from '../lib/format'
 import { Avatar, FormFeedback, toast } from '../components/ui'
-import { useTheme, type ThemePreference } from '../components/ui/theme'
+import { ACCENTS, ACCENT_SWATCH, useTheme, type ThemePreference } from '../components/ui/theme'
 import ProfilePhotoDialog from '../components/settings/ProfilePhotoDialog'
 import { displayNameFromEmail } from '../lib/displayName'
 import GmailIcon from '../components/icons/GmailIcon'
@@ -136,6 +136,35 @@ function AppearanceSection() {
   )
 }
 
+function AccentSection() {
+  const { t } = useTranslation('common')
+  const { accent, setAccent } = useTheme()
+
+  return (
+    <div className="st-preference-row">
+      <div className="st-preference-copy">
+        <strong>{t('settings.accent.title', { defaultValue: 'Color de acento' })}</strong>
+        <span>{t('settings.accent.description', { defaultValue: 'Cambia el color principal de botones y señales en toda la app.' })}</span>
+      </div>
+      <div className="st-accent-control" role="radiogroup" aria-label={t('settings.accent.title', { defaultValue: 'Color de acento' })}>
+        {ACCENTS.map(name => (
+          <button
+            key={name}
+            type="button"
+            role="radio"
+            aria-checked={accent === name}
+            aria-label={t(`settings.accent.names.${name}`, { defaultValue: name })}
+            title={t(`settings.accent.names.${name}`, { defaultValue: name })}
+            className={`st-accent-swatch${accent === name ? ' is-active' : ''}`}
+            style={{ '--swatch': ACCENT_SWATCH[name] } as CSSProperties}
+            onClick={() => setAccent(name)}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function SecuritySection() {
   const { t } = useTranslation('common')
   const { changePassword } = useAuth()
@@ -200,6 +229,7 @@ function PreferencesSection() {
       <header className="st-settings-heading"><h2>{t('settings.preferences.title')}</h2><p>{t('settings.preferences.subtitle')}</p></header>
       <div className="st-preference-list">
         <AppearanceSection />
+        <AccentSection />
         <div className="st-preference-row"><div className="st-preference-copy"><strong>{t('settings.preferences.interfaceLanguage')}</strong><span>{t('settings.preferences.interfaceLanguageHelper')}</span></div>
           <div className="st-preference-select"><Select aria-label={t('settings.preferences.interfaceLanguage')} value={i18n.resolvedLanguage}
             onChange={event => changeLanguage(event.target.value as Locale)} options={SUPPORTED_LOCALES.map(locale => ({ value: locale, label: t(`language.${locale}`) }))}

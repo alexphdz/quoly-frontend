@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, type KeyboardEvent, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { IntelligenceMark, InlineAlert, TextButton } from '../../design-system'
+import { Icon, IntelligenceMark, InlineAlert, TextButton } from '../../design-system'
 import FileUploadButton from './FileUploadButton'
 import AttachmentPreview from './AttachmentPreview'
 import type { PendingAttachment } from '../../types/agent'
@@ -118,8 +118,11 @@ export default function ChatInput({
     })
   }
 
-  const isInputDisabled = disabled || loading || blocked
-  const canSend = (value.trim().length > 0 || attachments.some(a => a.state === 'done')) && !isInputDisabled
+  // La caja de texto NUNCA se bloquea mientras el agente responde: el comprador
+  // puede ir escribiendo la siguiente respuesta (p. ej. la segunda pregunta de
+  // un turno). Solo el ENVÍO espera a que termine el turno en vuelo.
+  const isInputDisabled = disabled || blocked
+  const canSend = (value.trim().length > 0 || attachments.some(a => a.state === 'done')) && !isInputDisabled && !loading
 
   const inputPlaceholder = placeholder ?? (blocked ? t('input.blocked') : t('input.placeholder'))
 
@@ -151,15 +154,11 @@ export default function ChatInput({
 
       {turnError && (
         <div className="chat-turn-error">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-          </svg>
+          <Icon name="warning-circle" size={16} weight="fill" />
           <span>{t('errors.agentError')}</span>
           {onRetry && (
             <button type="button" className="chat-retry-btn" onClick={onRetry}>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
-              </svg>
+              <Icon name="arrow-clockwise" size={12} />
               {t('errors.tryAgain')}
             </button>
           )}
@@ -199,9 +198,7 @@ export default function ChatInput({
                   disabled={!canSend}
                   aria-label={t('input.send')}
                 >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                  </svg>
+                  <Icon name="paper-plane-tilt" size={16} weight="fill" />
                 </button>
               )}
           </div>

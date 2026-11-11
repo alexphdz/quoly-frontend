@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { IconButton, MenuItem, MenuSeparator, MobileNavDrawer, QuolyMark, Sidebar, type NavItem } from '../../design-system'
 import CommandPalette, { useCommandPalette } from './CommandPalette'
+import NavConversations from './NavConversations'
 import type { ShellLayout } from './useShellLayout'
 import { useAuth } from '../../hooks/useAuth'
 import { useRFQs } from '../../hooks/useRFQs'
@@ -63,6 +64,8 @@ export default function Navbar({ layout, collapsed, onToggle }: { layout: ShellL
     { value: 'suppliers', label: t('nav.suppliers'), icon: 'users-three', to: '/suppliers' },
   ]
   const active = activeFor(location.pathname)
+  // Conversaciones del Agente dentro del propio sidebar, solo con el tab activo.
+  const section = active === 'asistente' ? <NavConversations /> : undefined
   const settingsActive = location.pathname.startsWith('/settings')
   const profileName = [user?.first_name, user?.last_name].filter(Boolean).join(' ').trim()
   const displayName = profileName || (user ? displayNameFromEmail(user.email) : '')
@@ -92,6 +95,7 @@ export default function Navbar({ layout, collapsed, onToggle }: { layout: ShellL
               onOpenChange={setDrawerOpen}
               items={items}
               active={active}
+              section={section}
               settingsActive={settingsActive}
               settingsTo="/settings"
               onSearch={() => palette.setOpen(true)}
@@ -106,6 +110,7 @@ export default function Navbar({ layout, collapsed, onToggle }: { layout: ShellL
               onToggle={onToggle}
               items={items}
               active={active}
+              section={section}
               settingsActive={settingsActive}
               settingsTo="/settings"
               onSearch={() => palette.setOpen(true)}

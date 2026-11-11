@@ -2,7 +2,7 @@
   "notFound": {
     "title": "Página no encontrada",
     "text": "El enlace puede estar roto o la página pudo haberse movido.",
-    "action": "Ir a Inicio"
+    "action": "Ir al inicio"
   },
   "appError": {
     "title": "Algo salió mal",
@@ -142,18 +142,6 @@
     "asistente": "Agente"
   },
   "auth": {
-    "editorial": {
-      "eyebrow": "Espacio de compras",
-      "title": "Compras más claras. Mejores decisiones.",
-      "body": "Organiza solicitudes, revisa cotizaciones y compara proveedores en un solo lugar.",
-      "footnote": "Datos ilustrativos",
-      "examples": {
-        "andina": "Andina Supply",
-        "delta": "Delta Insumos",
-        "norte": "Norte Global",
-        "prisma": "Prisma Co."
-      }
-    },
     "connectError": "No se pudo conectar con el servidor. Revisa la conexión e inténtalo de nuevo.",
     "invalidEmail": "Ingresa un correo electrónico válido",
     "invalidWorkEmail": "Ingresa un correo electrónico corporativo válido",
@@ -161,7 +149,7 @@
     "login": {
       "title": "Iniciar sesión",
       "welcomeTitle": "Bienvenido de nuevo",
-      "subtitle": "Ingresa a tu cuenta para continuar.",
+      "subtitle": "Entra para seguir con tus cotizaciones.",
       "email": "Correo electrónico",
       "emailPlaceholder": "tu@empresa.com",
       "password": "Contraseña",
@@ -307,6 +295,19 @@
       "removeError": "No se pudo quitar la foto. Inténtalo de nuevo.",
       "removeTitle": "¿Quitar la foto de perfil?",
       "removeHelp": "Se mostrarán tus iniciales."
+    },
+    "accent": {
+      "title": "Color de acento",
+      "description": "Cambia el color principal de botones y señales en toda la app.",
+      "names": {
+        "brand": "Rosa Quoly",
+        "violet": "Violeta",
+        "blue": "Azul",
+        "teal": "Turquesa",
+        "mint": "Menta",
+        "pink": "Rosa suave",
+        "olive": "Oliva"
+      }
     }
   },
   "suppliers": {

@@ -41,6 +41,19 @@ $text-fade-out: opacity 100ms var(--nav-ease-out);
 // Pie de la barra (Configuración + cuenta): altura natural, nunca se comprime ni se recorta.
 .q-nav-footer { flex-shrink: 0; margin-top: 8px; }
 
+// Sección contextual (p. ej. conversaciones del Agente): toma el espacio
+// flexible con scroll propio; la lista principal pasa a tamaño de contenido.
+.q-nav-section {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--nav-divider);
+  overflow: hidden;
+}
+
 .q-nav-list {
   display: grid;
   align-content: start;

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useIsMutating } from '@tanstack/react-query'
 import { useResolveAction } from '../../../hooks/useConversationTurn'
 import type { AgentCard } from '../../../types/agent'
 
@@ -16,6 +17,9 @@ interface QuickOptionsCardProps {
 export default function QuickOptionsCard({ card, messageId, conversationId }: QuickOptionsCardProps) {
   const { t: _t } = useTranslation('chat')
   const resolveAction = useResolveAction(conversationId)
+  // Con un turno de texto en vuelo, elegir un chip crearía una carrera (la
+  // invalidación pisa el mensaje optimista del turno): se espera a que termine.
+  const turnInFlight = useIsMutating({ mutationKey: ['agent-turn', conversationId] }) > 0
   const options: QuickOption[] = (card.payload?.options as QuickOption[]) ?? []
   const groupLabel = typeof card.payload?.label === 'string' ? card.payload.label : null
 
@@ -50,7 +54,7 @@ export default function QuickOptionsCard({ card, messageId, conversationId }: Qu
           type="button"
           className="chat-quick-option-btn"
           onClick={() => handleSelect(opt.value)}
-          disabled={resolveAction.isPending}
+          disabled={resolveAction.isPending || turnInFlight}
           >
             {opt.label}
           </button>

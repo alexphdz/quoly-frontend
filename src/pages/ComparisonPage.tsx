@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useParams, Link, Navigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useComparison, useDecision, useCreateDecision } from '../hooks/useComparison'
-import { exportDecisionPdf } from '../api/comparisons'
+import { useComparison, useCloseRfq } from '../hooks/useComparison'
 import { useRFQ } from '../hooks/useRFQs'
 import LineComparisonTable from '../components/comparison/LineComparisonTable'
 import SpecQuickView from '../components/comparison/SpecQuickView'
@@ -10,10 +9,11 @@ import RecommendationCard from '../components/comparison/RecommendationCard'
 import ReviewBeforeChoosing from '../components/comparison/ReviewBeforeChoosing'
 import SupplierRanking from '../components/comparison/SupplierRanking'
 import CostLineMatrix from '../components/comparison/CostLineMatrix'
+import ExportComparisonDialog from '../components/comparison/ExportComparisonDialog'
 import { useCmpFormat } from '../components/comparison/useCmpFormat'
-import type { ComparisonResponse, ComparisonRow, DecisionRead } from '../types/comparison'
+import type { ComparisonResponse, ComparisonRow } from '../types/comparison'
 import type { ApiError } from '../api/client'
-import { buildComparisonModel, comparablePrice } from '../lib/comparisonModel'
+import { buildComparisonModel } from '../lib/comparisonModel'
 import { rfqDisplayNumber } from '../lib/rfqDisplay'
 import { Breadcrumbs, Btn, ConfirmDialog, Empty, Icon, KeyFacts, Skel, type Fact } from '../components/ds'
 import { RequestStatusChip } from '../components/ds/StatusChips'
@@ -26,7 +26,6 @@ export default function ComparisonPage() {
   const comparisonLocale = i18n.resolvedLanguage === 'es' ? 'es' : 'en'
   const { data: comparison, isLoading, error } = useComparison(id!, comparisonLocale)
   const { data: rfq } = useRFQ(id!)
-  const { data: decision } = useDecision(id!)
 
   if (rfq?.request_kind === 'commercial') return <Navigate to={`/rfqs/${id}?tab=comparison${location.search}`} replace />
   if (isLoading) return <ComparisonSkeleton />
@@ -53,7 +52,17 @@ export default function ComparisonPage() {
   }
 
   if (!comparison) return null
-  return <ComparisonView id={id!} comparison={comparison} rfqName={rfq?.name} rfqStatus={rfq?.status} rfqNumber={rfq ? rfqDisplayNumber(rfq) : null} supplierCount={rfq?.supplier_count} quantity={rfq?.quantity} decision={decision ?? null} />
+  return <ComparisonView
+    id={id!}
+    comparison={comparison}
+    rfqName={rfq?.name}
+    rfqStatus={rfq?.status}
+    rfqNumber={rfq ? rfqDisplayNumber(rfq) : null}
+    supplierCount={rfq?.supplier_count}
+    quantity={rfq?.quantity}
+    closedAt={rfq?.closed_at ?? null}
+    closedReason={rfq?.closed_reason ?? null}
+  />
 }
 
 function ComparisonView({
@@ -64,7 +73,8 @@ function ComparisonView({
   rfqNumber,
   supplierCount,
   quantity,
-  decision,
+  closedAt,
+  closedReason,
 }: {
   id: string
   comparison: ComparisonResponse
@@ -73,14 +83,14 @@ function ComparisonView({
   rfqNumber: string | null
   supplierCount?: number
   quantity?: number
-  decision: DecisionRead | null
+  closedAt?: string | null
+  closedReason?: string | null
 }) {
-  const { t } = useTranslation(['comparison', 'common'])
+  const { t, i18n } = useTranslation(['comparison', 'common'])
+  const comparisonLocale = i18n.resolvedLanguage === 'es' ? 'es' : 'en'
   const f = useCmpFormat(comparison.base_unit, comparison.base_currency)
   const model = useMemo(() => buildComparisonModel(comparison, quantity), [comparison, quantity])
-  const createDecision = useCreateDecision(id)
-  const [picking, setPicking] = useState<string | null>(null)
-  const [reason, setReason] = useState('')
+  const closeRfq = useCloseRfq(id)
   const [searchParams, setSearchParams] = useSearchParams()
   const specRow = comparison.rows.find(row => row.quote_id === searchParams.get('spec'))
   const setSpecRow = (row: ComparisonRow | null) => {
@@ -89,12 +99,15 @@ function ComparisonView({
     else next.delete('spec')
     setSearchParams(next, { replace: true, preventScrollReset: true })
   }
-  const [isExporting, setIsExporting] = useState(false)
+  const [closeOpen, setCloseOpen] = useState(false)
+  const [closeReason, setCloseReason] = useState('')
+  const [exportOpen, setExportOpen] = useState(false)
 
   const allIn = comparison.ranking_basis === 'all_in'
-  const canSelect = !decision
-  const pickedRow = comparison.rows.find(row => row.quote_id === picking)
-  const pickedPrice = pickedRow ? comparablePrice(pickedRow) : null
+  const closed = rfqStatus === 'decided' || !!closedAt
+  const closedAtText = closedAt
+    ? new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(closedAt))
+    : null
 
   const rates = Object.entries(comparison.fx_rates ?? {})
   const fxLine = rates.length > 0 && comparison.fx_as_of
@@ -134,36 +147,15 @@ function ComparisonView({
     return list
   }, [comparison, model, f, rates, supplierCount, t])
 
-  const handleExport = async () => {
-    setIsExporting(true)
-    try {
-      const { blob, filename } = await exportDecisionPdf(id)
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = filename || `quoly-decision-${id}.pdf`
-      a.click()
-      URL.revokeObjectURL(url)
-    } catch (err) {
-      toast((err as ApiError).detail || t('export.error'), 'error')
-    } finally {
-      setIsExporting(false)
-    }
-  }
-
-  const confirmPick = () => {
-    if (!picking || !pickedRow) return
-    createDecision.mutate(
-      { quote_id: picking, reasoning: reason.trim() || null },
-      {
-        onSuccess: () => {
-          toast(t('cmp.decision.toast', { name: pickedRow.supplier_name }))
-          setPicking(null)
-          setReason('')
-        },
-        onError: err => toast((err as ApiError).detail || t('decision.failed'), 'error'),
+  const confirmClose = () => {
+    closeRfq.mutate(closeReason.trim() || null, {
+      onSuccess: () => {
+        toast(t('redesign.closedToast'))
+        setCloseOpen(false)
+        setCloseReason('')
       },
-    )
+      onError: err => toast((err as ApiError).detail || t('redesign.closeFailed'), 'error'),
+    })
   }
 
   const title = rfqName ?? comparison.rfq_name
@@ -191,8 +183,16 @@ function ComparisonView({
 
       <KeyFacts facts={facts} label={t('cmp.facts.label')} />
 
-      {decision && (
-        <WinnerBanner decision={decision} rows={comparison.rows} f={f} exporting={isExporting} onExport={handleExport} />
+      {closed && (
+        <section className="qy-card cmp-closed" aria-label={t('redesign.closedTitle')}>
+          <span className="cmp-closed-icon"><Icon name="check_circle" size={22} /></span>
+          <div className="cmp-closed-copy">
+            <h2>{t('redesign.closedTitle')}</h2>
+            {closedAtText && <p>{t('redesign.closedAt', { date: closedAtText })}</p>}
+            {closedReason && <blockquote>“{closedReason}”</blockquote>}
+          </div>
+          <Btn variant="primary" icon="download" onClick={() => setExportOpen(true)}>{t('redesign.exportExcel')}</Btn>
+        </section>
       )}
 
       <RecommendationCard
@@ -200,8 +200,8 @@ function ComparisonView({
         allIn={allIn}
         summary={comparison.summary}
         f={f}
-        canSelect={canSelect}
-        onSelect={setPicking}
+        canSelect={false}
+        onSelect={() => {}}
       />
 
       <ReviewBeforeChoosing issues={model.issues} f={f} />
@@ -212,9 +212,8 @@ function ComparisonView({
         f={f}
         allIn={allIn}
         fxLine={fxLine}
-        canSelect={canSelect}
-        awardedQuoteId={decision?.quote_id}
-        onSelect={setPicking}
+        canSelect={false}
+        onSelect={() => {}}
         onViewSpec={setSpecRow}
       />
 
@@ -224,68 +223,50 @@ function ComparisonView({
         <LineComparisonTable rows={comparison.line_item_rows} ranking={comparison.line_item_ranking} baseCurrency={comparison.base_currency} />
       )}
 
+      <section className="qy-card cmp-close-export" aria-labelledby="cmp-close-title">
+        <h2 id="cmp-close-title">{t('redesign.closeExportTitle')}</h2>
+        <p>{closed ? t('redesign.closeExportDoneIntro') : t('redesign.closeExportIntro')}</p>
+        <div className="cmp-close-actions">
+          <Btn variant="primary" icon="download" onClick={() => setExportOpen(true)}>{t('redesign.exportExcel')}</Btn>
+          {!closed && <Btn variant="secondary" icon="check_circle" onClick={() => setCloseOpen(true)}>{t('redesign.closeRequest')}</Btn>}
+        </div>
+        <small>{t('redesign.closeExportFootnote')}</small>
+      </section>
+
       {specRow && <SpecQuickView row={specRow} onClose={() => setSpecRow(null)} />}
 
       <ConfirmDialog
-        open={!!picking && !!pickedRow}
-        onOpenChange={open => { if (!open) setPicking(null) }}
-        icon="emoji_events"
-        title={t('cmp.decision.title', { name: pickedRow?.supplier_name ?? '' })}
-        consequence={t('cmp.decision.consequence', {
-          name: pickedRow?.supplier_name ?? '',
-          price: pickedPrice != null ? f.unitPrice(pickedPrice) : '—',
-          unit: f.unit,
-        })}
-        confirmLabel={t('cmp.decision.confirm')}
-        loading={createDecision.isPending}
-        onConfirm={confirmPick}
+        open={closeOpen}
+        onOpenChange={open => { if (!open) { setCloseOpen(false); setCloseReason('') } }}
+        icon="check_circle"
+        title={t('redesign.closeConfirmTitle')}
+        consequence={t('redesign.closeConfirmDescription')}
+        confirmLabel={t('redesign.closeConfirm')}
+        loading={closeRfq.isPending}
+        onConfirm={confirmClose}
       >
         <label className="field" style={{ marginTop: 16 }}>
           <span className="field-label">
-            {t('cmp.decision.reason')} <span className="font-normal">{t('common:field.optional')}</span>
+            {t('redesign.closeReasonLabel')} <span className="font-normal">{t('common:field.optional')}</span>
           </span>
           <textarea
             className="input"
             rows={3}
-            value={reason}
-            onChange={event => setReason(event.target.value)}
-            placeholder={t('cmp.decision.reasonPlaceholder')}
+            value={closeReason}
+            onChange={event => setCloseReason(event.target.value)}
+            placeholder={t('redesign.closeReasonPlaceholder')}
           />
         </label>
       </ConfirmDialog>
-    </div>
-  )
-}
 
-function WinnerBanner({ decision, rows, f, exporting, onExport }: {
-  decision: DecisionRead
-  rows: ComparisonRow[]
-  f: ReturnType<typeof useCmpFormat>
-  exporting: boolean
-  onExport: () => void
-}) {
-  const { t } = useTranslation('comparison')
-  const winner = rows.find(row => row.quote_id === decision.quote_id)
-  const price = winner ? comparablePrice(winner) : null
-  return (
-    <section className="qy-card cmp-winner" aria-label={t('decision.recordedTitle')}>
-      <span className="cmp-winner-icon"><Icon name="emoji_events" size={22} filled /></span>
-      <div className="cmp-winner-copy">
-        <h2>{t('cmp.decision.banner', { name: winner?.supplier_name ?? t('decision.unknown') })}</h2>
-        <p>
-          <Icon name="event_available" size={14} />
-          {t('cmp.decision.bannerMeta', {
-            date: f.fmt.date(decision.decided_at, { dateStyle: 'medium' }),
-            price: price != null ? f.unitPrice(price) : '—',
-            unit: f.unit,
-          })}
-        </p>
-        {decision.reasoning && <blockquote>“{decision.reasoning}”</blockquote>}
-      </div>
-      <Btn variant="primary" icon="download" loading={exporting} onClick={onExport}>
-        {exporting ? t('export.preparing') : t('cmp.decision.download')}
-      </Btn>
-    </section>
+      <ExportComparisonDialog
+        open={exportOpen}
+        onClose={() => setExportOpen(false)}
+        rfqId={id}
+        locale={comparisonLocale}
+        rows={comparison.rows.map(row => ({ quote_id: row.quote_id, supplier_name: row.supplier_name }))}
+      />
+    </div>
   )
 }
 

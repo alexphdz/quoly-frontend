@@ -1,8 +1,5 @@
 import type { ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
 import Seo from '../seo/Seo'
-
-const EDITORIAL_EXAMPLES: Array<[string, number]> = [['andina', 78], ['delta', 54], ['norte', 66], ['prisma', 41]]
 
 type AuthStageProps = {
   children: ReactNode
@@ -11,31 +8,42 @@ type AuthStageProps = {
   noindex?: boolean
 }
 
+/**
+ * Escenario compartido de las páginas de auth (login, registro, recuperación,
+ * onboarding). Tarjeta centrada con la marca dentro, sobre la atmósfera Quoly:
+ * glow de acento, velo del polo opuesto, eje de comparación roto y marca de
+ * agua. Sigue el tema activo (light/dark) y el acento elegido.
+ */
 export default function AuthStage({ children, titleKey, descriptionKey, noindex }: AuthStageProps) {
-  const { t } = useTranslation('common')
   return (
-    <div className="ds-auth" data-theme="light">
+    <div className="ds-auth">
       {titleKey && <Seo titleKey={titleKey} descriptionKey={descriptionKey} noindex={noindex} />}
-      <main className="ds-auth-form-region">
-        <a className="ds-auth-brand" href="/" aria-label="Quoly"><span className="brand-mark" aria-hidden="true" /><span>Quoly</span></a>
-        <div className="ds-auth-panel">{children}</div>
-      </main>
-      <aside className="ds-auth-editorial" data-theme="dark" aria-hidden="true">
-        <div className="ds-auth-editorial-brand"><span className="ds-auth-editorial-dot" aria-hidden="true" />{t('auth.editorial.eyebrow')}</div>
-        <div className="ds-auth-editorial-copy">
-          <h2>{t('auth.editorial.title')}</h2>
-          <p>{t('auth.editorial.body')}</p>
-          <ul className="ds-auth-editorial-data">
-            {EDITORIAL_EXAMPLES.map(([name, width]) => (
-              <li key={name}>
-                <span>{t(`auth.editorial.examples.${name}`)}</span>
-                <i><b className={name === 'andina' ? 'is-highlight' : undefined} style={{ width: `${width}%` }} /></i>
-              </li>
-            ))}
-          </ul>
+
+      <div className="ds-auth-backdrop" aria-hidden="true">
+        <span className="ds-auth-glow" />
+        <span className="ds-auth-veil" />
+        <span className="ds-auth-watermark" />
+        <span className="ds-auth-axis" />
+        <span className="ds-auth-ghost is-left">
+          <i /><i /><i /><i />
+        </span>
+        <span className="ds-auth-ghost is-right">
+          <i /><i /><i className="is-accent" /><i />
+        </span>
+      </div>
+
+      <main className="ds-auth-stage">
+        <div className="ds-auth-panel">
+          <a className="ds-auth-brand" href="/" aria-label="Quoly">
+            <span className="brand-mark" aria-hidden="true" />
+            <span>Quoly</span>
+          </a>
+          {children}
         </div>
-        <span className="ds-auth-editorial-footnote">{t('auth.editorial.footnote')}</span>
-      </aside>
+        <footer className="ds-auth-footer">
+          {`© ${new Date().getFullYear()} Quoly`}
+        </footer>
+      </main>
     </div>
   )
 }

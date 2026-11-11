@@ -42,7 +42,7 @@
 /* Marca */
 --color-brand:var(--q-brand-500);--color-brand-strong:var(--q-brand-600);--color-brand-subtle:var(--q-brand-100);
 /* Acciones */
---color-action-primary-bg:var(--q-brand-500);--color-action-primary-bg-hover:var(--q-brand-400);--color-action-primary-bg-active:var(--q-brand-550);--color-action-primary-fg:var(--q-neutral-950);--color-action-secondary-bg:var(--q-neutral-0);--color-action-secondary-bg-hover:var(--q-neutral-50);--color-action-secondary-bg-active:var(--q-neutral-100);--color-action-secondary-fg:var(--q-neutral-950);--color-action-secondary-border:var(--q-neutral-400);--color-action-ghost-bg-hover:var(--q-neutral-50);--color-action-destructive-bg:var(--q-error-700);--color-action-destructive-bg-hover:var(--q-error-800);--color-action-destructive-fg:var(--q-neutral-0);
+--color-action-primary-bg:var(--q-brand-700);--color-action-primary-bg-hover:var(--q-brand-800);--color-action-primary-bg-active:var(--q-brand-900);--color-action-primary-fg:var(--q-neutral-0);--color-action-secondary-bg:var(--q-neutral-0);--color-action-secondary-bg-hover:var(--q-neutral-50);--color-action-secondary-bg-active:var(--q-neutral-100);--color-action-secondary-fg:var(--q-neutral-950);--color-action-secondary-border:var(--q-neutral-400);--color-action-ghost-bg-hover:var(--q-neutral-50);--color-action-destructive-bg:var(--q-error-700);--color-action-destructive-bg-hover:var(--q-error-800);--color-action-destructive-fg:var(--q-neutral-0);
 /* Enlaces */
 --color-link:var(--q-neutral-950);--color-link-decoration:var(--q-brand-500);--color-link-decoration-hover:var(--q-brand-600);--color-link-visited-decoration:var(--q-neutral-400);
 /* Bordes y divisores */

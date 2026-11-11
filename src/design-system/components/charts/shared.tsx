@@ -57,7 +57,9 @@ export function axisWidth(labels: string[], min = 24) {
 /* Modalidad de entrada: el foco por teclado activa la inspección, el clic no. */
 let modality: 'pointer' | 'keyboard' = 'pointer'
 if (typeof window !== 'undefined') {
-  window.addEventListener('keydown', (e) => { if (e.key === 'Tab' || e.key.startsWith('Arrow')) modality = 'keyboard' }, true)
+  // e.key puede llegar undefined en keydown sintéticos (autofill de Chrome,
+  // gestores de contraseñas, IME) — este listener es global, así que protege.
+  window.addEventListener('keydown', (e) => { if (e.key === 'Tab' || e.key?.startsWith('Arrow')) modality = 'keyboard' }, true)
   window.addEventListener('pointerdown', () => { modality = 'pointer' }, true)
 }
 

@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { useParams, useLocation, useNavigate, Link } from 'react-router-dom'
+import { useIsMutating } from '@tanstack/react-query'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { InlineAlert, TextButton } from '../design-system'
-import ConversationList from '../components/chat/ConversationList'
 import ChatInput from '../components/chat/ChatInput'
 import MessageBubble, { ThinkingIndicator } from '../components/chat/MessageBubble'
 import { useConversation } from '../hooks/useConversations'
 import { useConversationTurn, useResolveAction } from '../hooks/useConversationTurn'
 import { useConversationUpdates } from '../hooks/useConversationUpdates'
-import { useShellLayout } from '../components/layout/useShellLayout'
 import type { AgentMessage } from '../types/agent'
+
+// Conversaciones cuyo mensaje inicial ya se envió (sobrevive remounts de StrictMode).
+const initialTurnSent = new Set<string>()
 
 function hasActiveBlockingCard(messages: AgentMessage[]): string | null {
   for (let i = messages.length - 1; i >= 0; i--) {
@@ -24,8 +26,6 @@ function hasActiveBlockingCard(messages: AgentMessage[]): string | null {
 export default function ChatConversationPage() {
   const { conversationId } = useParams<{ conversationId: string }>()
   const { t } = useTranslation('chat')
-  const layout = useShellLayout()
-  const isMobile = layout === 'mobile'
   const navigate = useNavigate()
   const location = useLocation()
   // True right after the user started a conversation from the welcome screen:
@@ -38,19 +38,36 @@ export default function ChatConversationPage() {
 
   const { triggerFastPoll } = useConversationUpdates(conversationId, turn.isPending)
 
+  // Acciones de tarjeta en vuelo (chips, confirmar, enviar) desde CUALQUIER
+  // componente: tras un clic en chip el backend genera la siguiente pregunta
+  // con el LLM — el comprador debe ver "Pensando…" también ahí.
+  const actionPending = useIsMutating({ mutationKey: ['agent-action', conversationId ?? ''] }) > 0
+
   // Send the message typed on the welcome screen, once, via this component's
   // turn instance so the thinking indicator + optimistic bubble show here.
-  const initialSentRef = useRef(false)
+  // CRÍTICO: el guard vive a nivel módulo (no useRef) porque StrictMode en dev
+  // desmonta/remonta el componente y un ref se resetea → DOS POST /turns con el
+  // mismo mensaje (turno duplicado = thinking fantasma + respuestas dobles).
+  // Además se limpia location.state: si no, un F5 re-enviaba el mensaje.
   useEffect(() => {
     const initialMessage = (location.state as { initialMessage?: string } | null)?.initialMessage
-    if (!initialSentRef.current && conversationId && initialMessage) {
-      initialSentRef.current = true
+    if (conversationId && initialMessage && !initialTurnSent.has(conversationId)) {
+      initialTurnSent.add(conversationId)
       turn.mutate({ message: initialMessage })
+      navigate(location.pathname, { replace: true, state: {} })
     }
   }, [conversationId]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const messages: AgentMessage[] = conversation?.messages ?? []
+
+  // "Pensando…" se deriva del estado REAL de la conversación, no de un flag que
+  // se puede quedar colgado: se muestra mientras un turno corre y el último
+  // mensaje sigue siendo del usuario (el agente aún no respondió), o mientras
+  // se procesa una acción de tarjeta. En cuanto llega CUALQUIER mensaje del
+  // agente, el último deja de ser del usuario y el indicador desaparece solo.
+  const lastMsg = messages[messages.length - 1]
+  const showThinking = (turn.isPending && lastMsg?.role === 'user') || actionPending
 
   const blockingCardId = hasActiveBlockingCard(messages)
   const isBlocked = blockingCardId !== null
@@ -59,7 +76,7 @@ export default function ChatConversationPage() {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages.length, turn.isPending])
+  }, [messages.length, showThinking])
 
   async function handleSend(message: string, attachmentIds: string[]) {
     const result = await turn.mutateAsync({ message, attachments: attachmentIds })
@@ -90,7 +107,6 @@ export default function ChatConversationPage() {
   if (isLoading && !startingNew && messages.length === 0) {
     return (
       <div className="asistente-layout">
-        {!isMobile && <ConversationList activeId={conversationId} />}
         <div className="asistente-chat-area">
           <div className="chat-loading">{t('loadingConversation')}</div>
         </div>
@@ -101,38 +117,9 @@ export default function ChatConversationPage() {
   const limitReached = turn.error?.message?.includes('cost_cap_reached') ||
     turn.error?.message?.includes('chat_rfqs_per_month_limit')
 
-  const rfqId = conversation?.rfq_id
-  const phase = conversation?.phase ?? 'armando'
-  const draftName = conversation?.draft_data?.name ? String(conversation.draft_data.name) : null
-  const rfqName = draftName
-    ?? messages.find(m => m.role === 'agent' && m.content)?.content?.slice(0, 50)
-    ?? null
-
   return (
     <div className="asistente-layout">
-      {!isMobile && <ConversationList activeId={conversationId} />}
-
       <div className="asistente-chat-area">
-        {/* Conversation header */}
-        <div className="chat-conv-header">
-          <div className="chat-conv-header-left">
-            {rfqName && (
-              <span className="chat-conv-header-title">{rfqName}</span>
-            )}
-            <span className="chat-conv-header-phase">
-              {t(`list.statusLabel.${phase}`, { defaultValue: phase })}
-            </span>
-          </div>
-          {rfqId && (
-            <Link to={`/rfqs/${rfqId}`} className="chat-conv-header-link">
-              {t('conv.viewRfq', { defaultValue: 'Ver en Solicitudes' })}
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
-              </svg>
-            </Link>
-          )}
-        </div>
-
         <div className="chat-messages-scroll">
           <div className="chat-messages-inner">
             {messages.map((msg, idx) => (
@@ -145,7 +132,7 @@ export default function ChatConversationPage() {
               />
             ))}
 
-            {turn.isPending && <ThinkingIndicator />}
+            {showThinking && <ThinkingIndicator />}
 
             <div ref={messagesEndRef} />
           </div>
@@ -166,7 +153,7 @@ export default function ChatConversationPage() {
         <ChatInput
           conversationId={conversationId ?? ''}
           onSend={handleSend}
-          loading={turn.isPending}
+          loading={showThinking}
           disabled={false}
           blocked={isBlocked}
           onDismissBlock={isBlocked ? handleDismissBlock : undefined}

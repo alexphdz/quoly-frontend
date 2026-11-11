@@ -27,7 +27,10 @@ export function getConversation(id: string): Promise<ConversationDetail> {
 }
 
 export function sendTurn(conversationId: string, message: string, attachments: string[] = []): Promise<TurnResponse> {
-  return post(`/agent/conversations/${conversationId}/turns`, { message, attachments })
+  // El turno agéntico puede tardar (hasta 5 llamadas al LLM). 90 s de tope:
+  // pasado eso el request aborta y la UI ofrece reintentar — nunca un
+  // "Pensando…" eterno.
+  return post(`/agent/conversations/${conversationId}/turns`, { message, attachments }, { signal: AbortSignal.timeout(90_000) })
 }
 
 export function getConversationUpdates(conversationId: string, since: string): Promise<ConversationUpdates> {
@@ -54,5 +57,5 @@ export function resolveAction(
     payload?: Record<string, unknown>
   },
 ): Promise<ActionResponse> {
-  return post(`/agent/conversations/${conversationId}/actions`, payload)
+  return post(`/agent/conversations/${conversationId}/actions`, payload, { signal: AbortSignal.timeout(45_000) })
 }
