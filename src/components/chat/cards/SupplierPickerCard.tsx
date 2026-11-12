@@ -4,6 +4,7 @@ import { Button, Icon, TextButton } from '../../../design-system'
 import ChannelSelect, { type SendChannel } from '../../rfq/ChannelSelect'
 import { useResolveAction } from '../../../hooks/useConversationTurn'
 import { useAuth } from '../../../hooks/useAuth'
+import type { ApiError } from '../../../api/client'
 import type { AgentCard, SupplierCandidate, SupplierPickerCardPayload } from '../../../types/agent'
 
 interface SupplierPickerCardProps {
@@ -97,8 +98,13 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
           ...(effectiveChannel ? { channel: effectiveChannel } : {}),
         },
       })
-    } catch {
-      setError(t('errors.turnFailed'))
+    } catch (err) {
+      const detail = (err as ApiError).detail
+      setError(
+        detail === 'no_mailbox_connected' || detail === 'channel_not_connected'
+          ? t('errors.noMailbox')
+          : t('errors.turnFailed'),
+      )
     }
   }
 

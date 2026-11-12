@@ -40,6 +40,17 @@ function parse(src: string): Block[] {
     if (ordered) { flushP(); flushUl(); ol.push(ordered[1].trim()); continue }
     const bullet = /^[-*•]\s+(.*)$/.exec(line)
     if (bullet) { flushP(); flushOl(); ul.push(bullet[1].trim()); continue }
+    // Fallback para tablas de Markdown (el prompt las prohíbe, pero si el modelo
+    // emite una, degradamos cada fila a una viñeta "Etiqueta: valor" en vez de
+    // mostrar los pipes crudos). Las filas separadoras (|---|---|) se descartan.
+    if (line.startsWith('|')) {
+      const cells = line.split('|').map(c => c.trim()).filter(Boolean)
+      if (cells.length === 0 || cells.every(c => /^[-: ]+$/.test(c))) continue
+      flushP(); flushOl()
+      const clean = cells.map(c => c.replace(/\*\*/g, ''))
+      ul.push(cells.length >= 2 ? `**${clean[0]}**: ${clean.slice(1).join(' · ')}` : clean[0])
+      continue
+    }
     flushUl(); flushOl(); para.push(line)
   }
   flushP(); flushUl(); flushOl()

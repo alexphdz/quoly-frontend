@@ -134,6 +134,7 @@
   },
   "errors": {
     "turnFailed": "Algo salió mal. Intenta de nuevo.",
+    "noMailbox": "No tienes un buzón de correo conectado. Conecta Gmail u Outlook en Ajustes → Correo para poder enviar.",
     "conversationNotFound": "Conversación no encontrada.",
     "tryAgain": "Reintentar",
     "cardExpired": "El resumen ha cambiado. Por favor revísalo de nuevo.",
