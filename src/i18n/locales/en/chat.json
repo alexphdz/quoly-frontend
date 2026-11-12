@@ -157,7 +157,9 @@
     "cancelEdit": "Cancel"
   },
   "rfq": {
-    "created_via_chat": "Created with Asistente"
+    "created_via_chat": "Created with Asistente",
+    "ask_assistant": "Ask the assistant",
+    "ask_assistant_error": "Couldn't open the assistant. Please try again."
   },
   "turnsRemaining": "{{count}} turns remaining",
   "loadingConversation": "Loading conversation…",

@@ -157,7 +157,9 @@
     "cancelEdit": "Cancelar"
   },
   "rfq": {
-    "created_via_chat": "Creada con el Asistente"
+    "created_via_chat": "Creada con el Asistente",
+    "ask_assistant": "Preguntar al asistente",
+    "ask_assistant_error": "No se pudo abrir el asistente. Intenta de nuevo."
   },
   "turnsRemaining": "{{count}} turnos restantes",
   "loadingConversation": "Cargando conversación…",
