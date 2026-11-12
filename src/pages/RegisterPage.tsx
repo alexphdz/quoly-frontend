@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import { authErrorMessage } from '../lib/authError'
 import { FormFeedback, FormField } from '../components/ui'
-import { Icon } from '../components/ds'
+import { Icon } from '../design-system'
 import AuthStage from '../components/auth/AuthStage'
 
 const schema = z.object({
@@ -100,7 +100,7 @@ export default function RegisterPage() {
               aria-label={showPassword ? t('auth.login.hidePassword') : t('auth.login.showPassword')}
               onClick={() => setShowPassword(value => !value)}
             >
-              <Icon name={showPassword ? 'visibility_off' : 'visibility'} size={16} />
+              <Icon name={showPassword ? 'eye-slash' : 'eye'} size={16} />
             </button>
           </div>
         </FormField>

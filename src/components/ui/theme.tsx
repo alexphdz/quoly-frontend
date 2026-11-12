@@ -3,11 +3,30 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 export type ThemePreference = 'light' | 'dark' | 'system'
 type ResolvedTheme = 'light' | 'dark'
 
+/** Acentos disponibles. 'brand' = rosa Quoly (sin atributo data-accent).
+    Las rampas alternativas viven en design-system/tokens/accent.css; el tono
+    700 de todas pasa AA con texto blanco (botón primario en claro). */
+export const ACCENTS = ['brand', 'violet', 'blue', 'teal', 'mint', 'pink', 'olive'] as const
+export type AccentName = (typeof ACCENTS)[number]
+
+/** Swatch representativo por acento (tono 500 light) para los selectores. */
+export const ACCENT_SWATCH: Record<AccentName, string> = {
+  brand: '#F34D64',
+  violet: '#9A83EC',
+  blue: '#649BEB',
+  teal: '#45A8AB',
+  mint: '#4DAA90',
+  pink: '#C37CAA',
+  olive: '#8AA249',
+}
+
 const ThemeContext = createContext<{
   theme: ResolvedTheme
   preference: ThemePreference
+  accent: AccentName
   toggleTheme: () => void
   setTheme: (theme: ThemePreference) => void
+  setAccent: (accent: AccentName) => void
 } | null>(null)
 
 function readPreference(): ThemePreference {
@@ -18,6 +37,11 @@ function readPreference(): ThemePreference {
   return 'light'
 }
 
+function readAccent(): AccentName {
+  const stored = window.localStorage.getItem('quoly_accent')
+  return (ACCENTS as readonly string[]).includes(stored ?? '') ? (stored as AccentName) : 'brand'
+}
+
 function resolveTheme(preference: ThemePreference): ResolvedTheme {
   if (preference === 'light' || preference === 'dark') return preference
   return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
@@ -26,6 +50,7 @@ function resolveTheme(preference: ThemePreference): ResolvedTheme {
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [preference, setPreference] = useState<ThemePreference>(() => readPreference())
   const [theme, setResolved] = useState<ResolvedTheme>(() => resolveTheme(readPreference()))
+  const [accent, setAccentState] = useState<AccentName>(() => readAccent())
 
   useEffect(() => {
     const next = resolveTheme(preference)
@@ -33,6 +58,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     document.documentElement.dataset.theme = next
     window.localStorage.setItem('quoly_theme', preference)
   }, [preference])
+
+  useEffect(() => {
+    if (accent === 'brand') delete document.documentElement.dataset.accent
+    else document.documentElement.dataset.accent = accent
+    window.localStorage.setItem('quoly_accent', accent)
+  }, [accent])
 
   useEffect(() => {
     if (preference !== 'system') return
@@ -49,9 +80,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const value = useMemo(() => ({
     theme,
     preference,
+    accent,
     setTheme: setPreference,
+    setAccent: setAccentState,
     toggleTheme: () => setPreference(theme === 'dark' ? 'light' : 'dark'),
-  }), [theme, preference])
+  }), [theme, preference, accent])
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }

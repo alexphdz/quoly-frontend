@@ -1,0 +1,60 @@
+/* Quoly 2.0 · Acento intercambiable.
+   `data-accent` en <html> remapea la rama --q-brand-* hacia una rampa Colorfield
+   existente; todos los tokens semánticos (acciones, focos, selección, glow del
+   login) la heredan sin tocarse, en light y dark. Sin atributo → rosa de marca.
+   Contraste verificado: el tono 700 de todas estas rampas pasa AA (≥4.5:1) con
+   texto blanco, que es lo que usa el botón primario en claro. */
+
+[data-accent='violet'] {
+  --q-brand-50: var(--q-cf-violet-50); --q-brand-100: var(--q-cf-violet-100);
+  --q-brand-200: var(--q-cf-violet-200); --q-brand-300: var(--q-cf-violet-300);
+  --q-brand-400: var(--q-cf-violet-400); --q-brand-500: var(--q-cf-violet-500);
+  --q-brand-550: var(--q-cf-violet-600); --q-brand-600: var(--q-cf-violet-600);
+  --q-brand-700: var(--q-cf-violet-700); --q-brand-800: var(--q-cf-violet-800);
+  --q-brand-900: var(--q-cf-violet-900); --q-brand-950: var(--q-cf-violet-950);
+}
+
+[data-accent='blue'] {
+  --q-brand-50: var(--q-cf-blue-50); --q-brand-100: var(--q-cf-blue-100);
+  --q-brand-200: var(--q-cf-blue-200); --q-brand-300: var(--q-cf-blue-300);
+  --q-brand-400: var(--q-cf-blue-400); --q-brand-500: var(--q-cf-blue-500);
+  --q-brand-550: var(--q-cf-blue-600); --q-brand-600: var(--q-cf-blue-600);
+  --q-brand-700: var(--q-cf-blue-700); --q-brand-800: var(--q-cf-blue-800);
+  --q-brand-900: var(--q-cf-blue-900); --q-brand-950: var(--q-cf-blue-950);
+}
+
+[data-accent='teal'] {
+  --q-brand-50: var(--q-cf-teal-50); --q-brand-100: var(--q-cf-teal-100);
+  --q-brand-200: var(--q-cf-teal-200); --q-brand-300: var(--q-cf-teal-300);
+  --q-brand-400: var(--q-cf-teal-400); --q-brand-500: var(--q-cf-teal-500);
+  --q-brand-550: var(--q-cf-teal-600); --q-brand-600: var(--q-cf-teal-600);
+  --q-brand-700: var(--q-cf-teal-700); --q-brand-800: var(--q-cf-teal-800);
+  --q-brand-900: var(--q-cf-teal-900); --q-brand-950: var(--q-cf-teal-950);
+}
+
+[data-accent='mint'] {
+  --q-brand-50: var(--q-cf-mint-50); --q-brand-100: var(--q-cf-mint-100);
+  --q-brand-200: var(--q-cf-mint-200); --q-brand-300: var(--q-cf-mint-300);
+  --q-brand-400: var(--q-cf-mint-400); --q-brand-500: var(--q-cf-mint-500);
+  --q-brand-550: var(--q-cf-mint-600); --q-brand-600: var(--q-cf-mint-600);
+  --q-brand-700: var(--q-cf-mint-700); --q-brand-800: var(--q-cf-mint-800);
+  --q-brand-900: var(--q-cf-mint-900); --q-brand-950: var(--q-cf-mint-950);
+}
+
+[data-accent='pink'] {
+  --q-brand-50: var(--q-cf-pink-50); --q-brand-100: var(--q-cf-pink-100);
+  --q-brand-200: var(--q-cf-pink-200); --q-brand-300: var(--q-cf-pink-300);
+  --q-brand-400: var(--q-cf-pink-400); --q-brand-500: var(--q-cf-pink-500);
+  --q-brand-550: var(--q-cf-pink-600); --q-brand-600: var(--q-cf-pink-600);
+  --q-brand-700: var(--q-cf-pink-700); --q-brand-800: var(--q-cf-pink-800);
+  --q-brand-900: var(--q-cf-pink-900); --q-brand-950: var(--q-cf-pink-950);
+}
+
+[data-accent='olive'] {
+  --q-brand-50: var(--q-cf-olive-50); --q-brand-100: var(--q-cf-olive-100);
+  --q-brand-200: var(--q-cf-olive-200); --q-brand-300: var(--q-cf-olive-300);
+  --q-brand-400: var(--q-cf-olive-400); --q-brand-500: var(--q-cf-olive-500);
+  --q-brand-550: var(--q-cf-olive-600); --q-brand-600: var(--q-cf-olive-600);
+  --q-brand-700: var(--q-cf-olive-700); --q-brand-800: var(--q-cf-olive-800);
+  --q-brand-900: var(--q-cf-olive-900); --q-brand-950: var(--q-cf-olive-950);
+}

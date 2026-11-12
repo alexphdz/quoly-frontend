@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { Dialog } from 'radix-ui'
 import { useTranslation } from 'react-i18next'
 import { cx } from '../../utils'
@@ -11,6 +11,8 @@ export type MobileNavDrawerProps = NavAccountProps & {
   open: boolean
   onOpenChange: (open: boolean) => void
   items: NavItem[]
+  /** Sección contextual bajo la navegación (p. ej. conversaciones del Agente). */
+  section?: ReactNode
   active?: string
   onNavigate?: (value: string) => void
   onSearch?: () => void
@@ -24,7 +26,7 @@ export type MobileNavDrawerProps = NavAccountProps & {
 /** Cajón lateral móvil: misma anatomía que el sidebar, filas de 48px, foco atrapado y devuelto. */
 export function MobileNavDrawer({
   open, onOpenChange, items, active, onNavigate, onSearch, settingsActive = false, settingsTo, onSettings,
-  user, workspace, avatarSrc, onAccount, accountMenu, className, style,
+  section, user, workspace, avatarSrc, onAccount, accountMenu, className, style,
 }: MobileNavDrawerProps) {
   const { t } = useTranslation('ds')
   const close = () => onOpenChange(false)
@@ -52,7 +54,7 @@ export function MobileNavDrawer({
             }}
           />
           <div className="q-nav-gap is-sm" />
-          <nav aria-label={t('nav.primary')} className="q-nav-list is-scroll">
+          <nav aria-label={t('nav.primary')} className={cx('q-nav-list', !section && 'is-scroll')}>
             {items.map((it) => (
               <SidebarItem
                 key={it.value}
@@ -71,6 +73,7 @@ export function MobileNavDrawer({
               />
             ))}
           </nav>
+          {section && <div className="q-nav-section">{section}</div>}
           <div className="q-nav-list">
             <SidebarItem
               variant="drawer"

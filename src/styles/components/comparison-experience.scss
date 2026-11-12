@@ -58,9 +58,32 @@
 .cx-pdf-preview p, .cx-pdf-preview blockquote { margin: 0; }
 .cx-pdf-preview small { color: var(--color-text-secondary); }
 
+/* Cerrar y exportar (reemplazo de la adjudicación) */
+.cx-close-export h3 { margin: 0; font: 500 23px/30px var(--font-display); letter-spacing: -.012em; }
+.cx-close-export > p { margin: 4px 0 0; color: var(--color-text-secondary); font-size: 13px; line-height: 20px; }
+.cx-close-export > small { display: block; margin-top: 10px; color: var(--color-text-secondary); font-size: 12px; line-height: 18px; }
+.cx-close-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.cx-close-dialog-actions, .cx-export-actions { display: flex; justify-content: flex-end; gap: 10px; }
+
+/* Banner de solicitud cerrada */
+.cx-closed-banner { display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--color-divider); border-radius: 12px; background: var(--color-surface-sunken, var(--color-surface-muted)); }
+.cx-closed-icon { display: inline-flex; color: var(--color-status-success-text, #16a34a); }
+.cx-closed-copy { flex: 1; min-width: 0; }
+.cx-closed-copy h3 { margin: 0; font: 500 16px/22px var(--font-display); }
+.cx-closed-copy p { margin: 2px 0 0; color: var(--color-text-secondary); font-size: 13px; }
+.cx-closed-copy blockquote { margin: 6px 0 0; color: var(--color-text-secondary); font-size: 13px; font-style: italic; }
+
+/* Diálogo de exportación con filtros */
+.cx-export-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.cx-export-group { display: grid; gap: 8px; border: 0; margin: 0; padding: 0; min-width: 0; }
+.cx-export-group legend { padding: 0; margin-bottom: 4px; font-weight: 600; font-size: 13px; }
+.cx-export-warn { color: var(--color-status-warning-text, #b45309); font-size: 12px; }
+
 @media (max-width: 760px) {
   .cx-analysis { grid-template-columns: 1fr; gap: 24px; }
   .cx-request-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cx-tech-list > div { grid-template-columns: 1fr 1fr; }
   .cx-tech-list > div strong { grid-column: 1 / -1; }
+  .cx-export-grid { grid-template-columns: 1fr; }
+  .cx-closed-banner { flex-wrap: wrap; }
 }

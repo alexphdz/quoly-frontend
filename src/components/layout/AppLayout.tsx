@@ -1,5 +1,5 @@
 import { useState, useEffect, type CSSProperties } from 'react'
-import { Outlet, useMatches } from 'react-router-dom'
+import { Outlet, useLocation, useMatches } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Navbar from './Navbar'
 import Seo from '../seo/Seo'
@@ -35,10 +35,16 @@ export default function AppLayout() {
   const { t } = useTranslation('common')
   const titleKey = useRouteTitleKey()
   const layout = useShellLayout()
+  const location = useLocation()
   const [pref, setPref] = useState<boolean | null>(readCollapsed)
   // En tablet (< 1200) no hay espacio para la barra expandida + contenido usable:
-  // se contrae siempre (responsivo). La preferencia del usuario sólo aplica en escritorio.
-  const collapsed = layout === 'tablet' ? true : (pref ?? false)
+  // se contrae siempre (responsivo). Excepción: en el Agente la lista de
+  // conversaciones vive dentro del sidebar, así que ahí el usuario puede
+  // expandirlo (por defecto contraído; su preferencia aplica).
+  const onAsistente = location.pathname.startsWith('/asistente')
+  const collapsed = layout === 'tablet'
+    ? (onAsistente ? (pref ?? true) : true)
+    : (pref ?? false)
   const toggle = () => {
     const next = !collapsed
     setPref(next)

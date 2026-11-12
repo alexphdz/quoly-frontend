@@ -31,6 +31,9 @@ export type NavAccountProps = {
 export type SidebarProps = NavAccountProps & {
   collapsed?: boolean
   items: NavItem[]
+  /** Sección contextual bajo la navegación (p. ej. conversaciones del Agente).
+      Solo visible expandido; recibe el espacio flexible con scroll propio. */
+  section?: ReactNode
   active?: string
   onNavigate?: (value: string) => void
   onSearch?: () => void
@@ -82,7 +85,7 @@ export function NavAccount({ collapsed = false, variant = 'sidebar', user, works
 export function Sidebar({
   collapsed = false, items, active, onNavigate, onSearch, searchShortcut = '⌘K',
   workspace, user, avatarSrc, onAccount, accountMenu, onToggle, settingsActive = false, settingsTo, onSettings,
-  height = '100dvh', className, style,
+  section, height = '100dvh', className, style,
 }: SidebarProps) {
   const { t } = useTranslation('ds')
   return (
@@ -119,7 +122,7 @@ export function Sidebar({
         onClick={onSearch}
       />
       <div className="q-nav-gap" />
-      <nav aria-label={t('nav.primary')} className="q-nav-list is-scroll">
+      <nav aria-label={t('nav.primary')} className={cx('q-nav-list', (!section || collapsed) && 'is-scroll')}>
         {items.map((it) => (
           <SidebarItem
             key={it.value}
@@ -135,6 +138,7 @@ export function Sidebar({
           />
         ))}
       </nav>
+      {section && !collapsed && <div className="q-nav-section">{section}</div>}
       <div className="q-nav-list q-nav-footer">
         <SidebarItem icon="gear-six" label={t('nav.settings')} active={settingsActive} collapsed={collapsed} to={settingsTo} onClick={onSettings} />
         <NavAccount collapsed={collapsed} user={user} workspace={workspace} avatarSrc={avatarSrc} onAccount={onAccount} accountMenu={accountMenu} />

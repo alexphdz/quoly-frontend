@@ -185,10 +185,64 @@ a {
 /* 404 / error de ruta: centrado y con aire, dentro o fuera del shell. */
 .nf-page {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 60vh;
+  gap: 8px;
+  min-height: 100vh;
   padding: 48px 24px;
+  background: var(--color-canvas);
+  text-align: center;
+}
+
+.nf-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+}
+
+/* La cifra en display, partida por el eje central del logotipo. */
+.nf-code {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 14vw, 8.5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-feature-settings: var(--font-features-numeric);
+  color: var(--color-text-primary);
+  background: linear-gradient(
+    to right,
+    var(--color-text-primary) 0 48%,
+    color-mix(in srgb, var(--color-text-primary) 24%, transparent) 48% 52%,
+    var(--color-text-primary) 52% 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nf-title {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  color: var(--color-text-primary);
+}
+
+.nf-text {
+  max-width: 44ch;
+  margin: 0 0 20px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .page {
@@ -701,8 +755,9 @@ textarea.input {
 }
 
 .input:focus {
-  border-color: var(--brand);
-  box-shadow: var(--ring);
+  outline: none;
+  border-color: var(--color-focus-ring);
+  box-shadow: var(--focus-ring-input);
 }
 
 .input-icon-wrap {
@@ -1689,6 +1744,13 @@ textarea.input {
   overflow: hidden;
 }
 
+/* Shell móvil (columna): el contenedor no tiene altura definida, así que el
+   `height: 100%` de arriba colapsa a 0 y el chat desaparece. Aquí la altura
+   es explícita: viewport menos la topbar (56px + safe area). */
+.app-shell.is-mobile .asistente-layout {
+  height: calc(100dvh - 56px - var(--safe-top));
+}
+
 .asistente-chat-area {
   display: flex;
   flex-direction: column;
@@ -1699,81 +1761,80 @@ textarea.input {
   background: var(--color-canvas);
 }
 
-/* ── Conversation list panel ──────────────────────────────────────────────── */
+/* ── Conversaciones del Agente en el sidebar (q-nav-section) ─────────────── */
 
-.conv-list-panel {
+.nav-convs {
   display: flex;
   flex-direction: column;
-  width: 272px;
-  flex-shrink: 0;
-  border-right: 1px solid var(--color-border);
-  background: var(--color-surface);
-  overflow: hidden;
+  flex: 1 1 0;
+  min-height: 0;
+  padding: 0 4px;
 }
 
-.conv-list-heading {
-  padding: 16px 16px 4px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  letter-spacing: -0.01em;
-  flex-shrink: 0;
-}
-
-.conv-list-header {
-  padding: 16px 12px 10px;
-  flex-shrink: 0;
-}
-
-.conv-list-new-btn {
+.nav-convs-head {
   display: flex;
   align-items: center;
-  gap: 6px;
-  width: 100%;
-  padding: 7px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 150ms ease, border-color 150ms ease;
-  text-align: left;
-}
-
-.conv-list-new-btn:hover {
-  background: var(--color-surface-elevated);
-  border-color: var(--color-border-strong);
-}
-
-.conv-list-section-label {
-  padding: 4px 16px 6px;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 8px 8px;
   flex-shrink: 0;
 }
 
-.conv-list-scroll {
-  flex: 1 1 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+.nav-convs-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--nav-fg);
 }
 
-.conv-list-loading {
+.nav-convs-new {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--nav-fg);
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.nav-convs-new:hover {
+  background: color-mix(in srgb, var(--nav-fg-strong) 8%, transparent);
+  color: var(--nav-fg-strong);
+}
+
+.nav-convs-new:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.nav-convs-scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 8px 12px;
+  gap: 2px;
 }
 
-.conv-list-skeleton {
-  height: 52px;
+.nav-convs-scroll::-webkit-scrollbar { display: none; }
+
+.nav-convs-empty {
+  margin: 0;
+  padding: 2px 8px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--nav-fg);
+}
+
+.nav-convs-skeleton {
+  height: 40px;
+  margin: 0 4px;
   border-radius: 8px;
-  background: var(--color-surface-elevated);
+  background: color-mix(in srgb, var(--nav-fg-strong) 6%, transparent);
   animation: skeleton-pulse 1.4s ease-in-out infinite;
 }
 
@@ -1782,113 +1843,107 @@ textarea.input {
   50% { opacity: 0.5; }
 }
 
-.conv-list-empty {
-  padding: 16px 16px;
-  color: var(--color-text-secondary);
-  font-size: 0.875rem;
-  line-height: 1.5;
+/* Fila: botón principal + link opcional a la RFQ, misma anatomía que q-nav. */
+.nav-convs-row {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border-radius: 8px;
 }
 
-/* Every row is an inset card with equal air on both sides. */
-.conv-list-row {
+.nav-convs-row:hover {
+  background: color-mix(in srgb, var(--nav-fg-strong) 6%, transparent);
+}
+
+.nav-convs-row.is-active {
+  background: color-mix(in srgb, var(--nav-fg-strong) 8%, transparent);
+}
+
+/* Indicador activo: la línea de acento del sistema de navegación. */
+.nav-convs-row.is-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--nav-accent);
+}
+
+.nav-convs-row-main {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  width: auto;
-  margin: 3px 10px;
-  padding: 10px 14px;
-  border: 1px solid transparent;
-  border-radius: 10px;
+  gap: 2px;
+  padding: 8px 8px 8px 12px;
+  border: 0;
   background: transparent;
   cursor: pointer;
   text-align: left;
-  gap: 4px;
-  transition: background 150ms ease, border-color 150ms ease;
-  position: relative;
 }
 
-.conv-list-row:hover {
-  background: var(--color-surface-elevated);
+.nav-convs-row-title {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--nav-fg-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Active conversation = bordered card with a coral left accent. */
-.conv-list-row.is-active {
-  background: var(--color-surface);
-  border-color: var(--color-border);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-
-.conv-list-row.is-active:hover {
-  background: var(--color-surface);
-}
-
-.conv-list-row.is-active::before {
-  content: '';
-  position: absolute;
-  left: 1px;
-  top: 9px;
-  bottom: 9px;
-  width: 3px;
-  background: var(--color-brand);
-  border-radius: 2px;
-}
-
-.conv-list-row-top {
+.nav-convs-row-meta {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
-}
-
-.conv-list-row-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex: 1;
   min-width: 0;
 }
 
-.conv-list-row-time {
+.nav-convs-row-status {
   font-size: 0.75rem;
-  color: var(--color-text-muted);
+  color: var(--nav-fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-convs-row-time {
+  font-size: 0.6875rem;
+  color: var(--nav-fg);
   flex-shrink: 0;
 }
 
-.conv-list-row-status {
+/* Acción pendiente = el agente espera algo de ti → violeta de propuesta. */
+.nav-convs-row-pending {
   font-size: 0.75rem;
-  color: var(--color-text-secondary);
-  line-height: 1.45;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.conv-list-row-action {
-  font-size: 0.75rem;
-  color: var(--color-text-primary);
   font-weight: 500;
+  color: var(--color-status-ai-text);
 }
 
-.conv-list-archived-toggle {
-  display: flex;
+.nav-convs-row-link {
+  display: none;
   align-items: center;
-  gap: 6px;
-  width: 100%;
-  padding: 10px 16px;
-  border: none;
+  padding: 0 10px;
+  border: 0;
   background: transparent;
-  color: var(--color-text-secondary);
-  font-size: 0.8125rem;
+  color: var(--nav-fg);
   cursor: pointer;
-  text-align: left;
 }
 
-.conv-list-archived-toggle:hover {
-  color: var(--color-text-primary);
+.nav-convs-row:hover .nav-convs-row-link,
+.nav-convs-row.is-active .nav-convs-row-link,
+.nav-convs-row-link:focus-visible {
+  display: inline-flex;
+}
+
+.nav-convs-row-link:hover { color: var(--nav-fg-strong); }
+
+.nav-convs-row-link:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: 6px;
 }
 
 /* ── Messages scroll area ─────────────────────────────────────────────────── */
@@ -1915,60 +1970,6 @@ textarea.input {
   flex: 1;
   color: var(--color-text-secondary);
   font-size: 0.875rem;
-}
-
-/* ── Conversation header ──────────────────────────────────────────────────── */
-
-.chat-conv-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 32px 10px;
-  border-bottom: 1px solid var(--color-border);
-  flex-shrink: 0;
-  background: var(--color-surface);
-  gap: 12px;
-  min-height: 52px;
-}
-
-.chat-conv-header-left {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  min-width: 0;
-}
-
-.chat-conv-header-title {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.chat-conv-header-phase {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
-}
-
-.chat-conv-header-link {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.8125rem;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  flex-shrink: 0;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 4px 10px;
-  transition: color 150ms, border-color 150ms;
-}
-
-.chat-conv-header-link:hover {
-  color: var(--color-text-primary);
-  border-color: var(--color-border-strong);
 }
 
 /* ── Date separator ───────────────────────────────────────────────────────── */
@@ -1998,7 +1999,7 @@ textarea.input {
 .chat-agent-message {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
 }
 
 .chat-agent-mark {
@@ -2009,7 +2010,7 @@ textarea.input {
 .chat-agent-content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   min-width: 0;
   flex: 1;
 }
@@ -2099,7 +2100,7 @@ textarea.input {
   background: var(--color-surface-elevated);
   color: var(--color-text-primary);
   border-radius: 18px 18px 4px 18px;
-  padding: 10px 14px;
+  padding: 12px 16px;
   font-size: 0.9375rem;
   line-height: 1.55;
   white-space: pre-wrap;
@@ -2115,7 +2116,7 @@ textarea.input {
 .chat-system-event {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 2px 0;
 }
 
@@ -2157,8 +2158,21 @@ textarea.input {
   opacity: 0.4;
 }
 
+/* Anatomía de propuesta: toda tarjeta pendiente del agente lleva la regla
+   violeta de procedencia (mismo lenguaje que los datos "propuestos" en
+   Quote Intelligence). Violeta = el agente propone; coral = el usuario actúa. */
 .chat-card.is-pending {
   border-color: var(--color-border);
+  border-left: 2px solid var(--color-data-proposed-border);
+}
+
+/* Tarjeta resuelta: colapsa a una línea de confirmación, sin caja. */
+.chat-card-collapsed {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
 }
 
 .chat-card-divider {
@@ -2169,16 +2183,14 @@ textarea.input {
 .chat-card-header {
   display: flex;
   align-items: center;
-  padding: 11px 16px 8px;
+  padding: 12px 16px 8px;
   gap: 8px;
 }
 
 .chat-card-title {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  color: var(--color-text-primary);
 }
 
 .chat-card-resolved-label,
@@ -2201,7 +2213,7 @@ textarea.input {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px 14px;
+  padding: 12px 16px 16px;
 }
 
 /* ── Summary card ─────────────────────────────────────────────────────────── */
@@ -2210,7 +2222,7 @@ textarea.input {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 6px 16px 10px;
+  padding: 6px 16px 12px;
   font-size: 0.8125rem;
   color: var(--color-text-muted);
   border-bottom: 1px solid var(--color-divider);
@@ -2219,7 +2231,7 @@ textarea.input {
 .chat-summary-legend-item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 
 .chat-summary-legend-sep {
@@ -2264,13 +2276,14 @@ textarea.input {
 .chat-summary-value-text {
   color: var(--color-text-primary);
   font-size: 0.875rem;
+  font-feature-settings: var(--font-features-numeric);
 }
 
 .chat-summary-assumed-badge {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  padding: 2px 7px;
+  gap: 4px;
+  padding: 2px 8px;
   border-radius: 20px;
   background: var(--color-data-proposed-bg);
   border: 1px solid var(--color-data-proposed-border);
@@ -2293,18 +2306,19 @@ textarea.input {
 }
 
 .chat-summary-edit-input:focus {
-  border-color: var(--color-brand);
+  border-color: var(--color-focus-ring);
+  box-shadow: var(--focus-ring-input);
 }
 
 .chat-summary-footer {
-  padding: 14px 16px 16px;
+  padding: 16px 16px 16px;
   border-top: 1px solid var(--color-divider);
 }
 
 .chat-summary-turns-hint {
   font-size: 0.8125rem;
   color: var(--color-text-secondary);
-  margin-top: 10px;
+  margin-top: 12px;
   text-align: center;
 }
 
@@ -2330,7 +2344,7 @@ textarea.input {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  padding: 12px 14px 10px;
+  padding: 12px 16px 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -2430,7 +2444,7 @@ textarea.input {
 .chat-turn-error {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 0.8125rem;
   color: var(--color-status-error-text);
   padding: 6px 0;
@@ -2511,10 +2525,11 @@ textarea.input {
 }
 
 .chat-welcome-title {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 1.875rem;
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.016em;
   margin: -12px 0 0;
   text-align: center;
 }
@@ -2524,11 +2539,11 @@ textarea.input {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 14px;
-  padding: 14px 14px 10px;
+  padding: 16px 16px 12px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  gap: 12px;
+  box-shadow: var(--elevation-1);
   transition: border-color 200ms ease;
 }
 
@@ -2564,14 +2579,14 @@ textarea.input {
 .chat-welcome-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 12px;
   width: 100%;
 }
 
 .chat-welcome-card {
   border: 1px solid var(--color-border);
   border-radius: 10px;
-  padding: 14px 14px 16px;
+  padding: 16px 16px 16px;
   background: var(--color-surface);
   cursor: pointer;
   text-align: left;
@@ -2599,7 +2614,7 @@ textarea.input {
 .chat-welcome-form-link {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   font-size: 0.8125rem;
   color: var(--color-text-secondary);
   text-decoration: none;
@@ -2625,10 +2640,10 @@ textarea.input {
 }
 
 .chat-quick-option-btn {
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: 20px;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border: 1px solid var(--color-data-proposed-border);
+  background: var(--color-data-proposed-bg);
   color: var(--color-text-primary);
   font-size: 0.875rem;
   cursor: pointer;
@@ -2637,8 +2652,13 @@ textarea.input {
 }
 
 .chat-quick-option-btn:hover:not(:disabled) {
-  background: var(--color-surface-elevated);
-  border-color: var(--color-border-strong);
+  background: var(--color-status-ai-bg);
+  border-color: var(--color-status-ai-text);
+}
+
+.chat-quick-option-btn:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
 }
 
 .chat-quick-option-btn:disabled {
@@ -2650,6 +2670,7 @@ textarea.input {
 
 .chat-supplier-card {
   border: 1px solid var(--color-border);
+  border-left: 2px solid var(--color-data-proposed-border);
   border-radius: 10px;
   overflow: hidden;
   background: var(--color-surface);
@@ -2660,16 +2681,22 @@ textarea.input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--color-divider);
 }
 
 .chat-supplier-card-label {
-  font-size: 0.6875rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-text-muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+/* Estado vacío del directorio: invitación a actuar, no decoración. */
+.chat-supplier-empty {
+  padding: 12px 16px 6px;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
 }
 
 .chat-supplier-card-count {
@@ -2685,8 +2712,8 @@ textarea.input {
 .chat-supplier-row {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 10px 16px;
+  gap: 12px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--color-divider);
   cursor: pointer;
   transition: background 100ms;
@@ -2738,7 +2765,7 @@ textarea.input {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 16px;
+  padding: 12px 16px;
   font-size: 0.875rem;
   color: var(--color-text-secondary);
   cursor: pointer;
@@ -2755,7 +2782,7 @@ textarea.input {
 }
 
 .chat-supplier-add-form {
-  padding: 10px 16px;
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -2764,7 +2791,7 @@ textarea.input {
 
 .chat-supplier-add-input {
   width: 100%;
-  padding: 7px 10px;
+  padding: 8px 12px;
   border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 0.875rem;
@@ -2775,7 +2802,8 @@ textarea.input {
 }
 
 .chat-supplier-add-input:focus {
-  border-color: var(--color-brand);
+  border-color: var(--color-focus-ring);
+  box-shadow: var(--focus-ring-input);
 }
 
 .chat-supplier-add-actions {
@@ -2788,7 +2816,7 @@ textarea.input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
+  padding: 12px 16px;
   border-top: 1px solid var(--color-divider);
 }
 
@@ -2808,7 +2836,7 @@ textarea.input {
 .chat-undo-banner {
   border: 1px solid var(--color-border);
   border-radius: 10px;
-  padding: 12px 16px 14px;
+  padding: 12px 16px 16px;
   background: var(--color-surface);
   display: flex;
   flex-direction: column;
@@ -2910,7 +2938,7 @@ textarea.input {
 }
 
 .chat-approval-header {
-  padding: 10px 16px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--color-divider);
   font-size: 0.6875rem;
   font-weight: 600;
@@ -2936,7 +2964,7 @@ textarea.input {
 
 .chat-approval-sensitive-note,
 .chat-approval-outlook-note {
-  margin: 0 16px 10px;
+  margin: 0 16px 12px;
   font-size: 0.8125rem;
   color: var(--color-status-warning-text);
 }
@@ -2945,8 +2973,8 @@ textarea.input {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  margin: 0 16px 10px;
-  padding: 5px 10px;
+  margin: 0 16px 12px;
+  padding: 4px 12px;
   border: 1px solid var(--color-border);
   border-radius: 6px;
   background: var(--color-surface);
@@ -2958,8 +2986,8 @@ textarea.input {
 .chat-approval-draft-label {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 10px 16px 4px;
+  gap: 4px;
+  padding: 12px 16px 4px;
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--color-text-secondary);
@@ -2977,7 +3005,7 @@ textarea.input {
 
 .chat-approval-edit-area {
   width: 100%;
-  padding: 10px 16px;
+  padding: 12px 16px;
   border: none;
   background: var(--color-canvas);
   font-size: 0.875rem;
@@ -2995,7 +3023,7 @@ textarea.input {
 }
 
 .chat-approval-grounding {
-  padding: 10px 16px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--color-divider);
 }
 
@@ -3071,13 +3099,6 @@ textarea.input {
     flex-direction: column;
   }
 
-  .conv-list-panel {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid var(--color-border);
-    max-height: 50vh;
-  }
-
   .chat-messages-inner,
   .chat-input-wrapper {
     padding-left: 16px;
@@ -3091,10 +3112,6 @@ textarea.input {
 
   .chat-welcome-cards {
     grid-template-columns: 1fr;
-  }
-
-  .chat-conv-header {
-    padding: 10px 16px;
   }
 
   .chat-approval-actions {
@@ -3126,7 +3143,7 @@ textarea.input {
 .chat-thinking {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .chat-thinking-mark {
@@ -3134,12 +3151,15 @@ textarea.input {
   display: inline-flex;
 }
 
-/* Quick options: optional group label above the chips (ref 12f "Moneda") */
+/* Quick options: optional group label above the chips (ref 12f "Moneda").
+   Lleva la misma regla violeta que las tarjetas de propuesta del agente. */
 .chat-quick-options-group {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
   margin-top: 2px;
+  border-left: 2px solid var(--color-data-proposed-border);
+  padding-left: 12px;
 }
 
 .chat-quick-options-label {

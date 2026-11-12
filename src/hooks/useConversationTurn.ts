@@ -10,6 +10,7 @@ export function useConversationTurn(conversationId: string) {
   const key = ['agent-conversation', conversationId] as const
 
   return useMutation<TurnResponse, Error, TurnVars, TurnContext>({
+    mutationKey: ['agent-turn', conversationId],
     mutationFn: ({ message, attachments = [] }) =>
       agentApi.sendTurn(conversationId, message, attachments),
     // Show the user's message immediately so the chat feels instant (no waiting
@@ -50,6 +51,7 @@ export function useResolveAction(conversationId: string) {
   const queryClient = useQueryClient()
 
   return useMutation({
+    mutationKey: ['agent-action', conversationId],
     mutationFn: (payload: Parameters<typeof agentApi.resolveAction>[1]) =>
       agentApi.resolveAction(conversationId, payload),
     onSuccess: () => {

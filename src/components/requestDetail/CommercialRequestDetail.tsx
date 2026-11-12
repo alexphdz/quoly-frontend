@@ -1,6 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { createConversation } from '../../api/agent'
+import { toast } from '../ui'
 import type { RFQDetail, SendRequestsResponse, SupplierCreate, SupplierRead } from '../../types/rfq'
 import type { BuyerActionRead } from '../../types/buyerAction'
 import type { InboundMessageRead } from '../../types/inbound'
@@ -72,6 +74,25 @@ export default function CommercialRequestDetail(props: CommercialRequestDetailPr
   const { t } = useTranslation('rfq')
   const { t: tChat } = useTranslation('chat')
   const navigate = useNavigate()
+  // Abrir/retomar la conversación del asistente ligada a esta RFQ (E2): si no
+  // existe, se crea una atada al rfq_id (el backend siembra el estado real).
+  const openingChat = useRef(false)
+  const openAssistant = async () => {
+    if (openingChat.current) return
+    if (rfq.conversation_id) {
+      navigate(`/asistente/${rfq.conversation_id}`)
+      return
+    }
+    openingChat.current = true
+    try {
+      const conv = await createConversation(rfq.id)
+      navigate(`/asistente/${conv.id}`)
+    } catch {
+      toast(tChat('rfq.ask_assistant_error'), 'error')
+    } finally {
+      openingChat.current = false
+    }
+  }
   const location = useLocation()
   const layout = useShellLayout()
   const [bodyRef, bodyW] = useElementWidth<HTMLDivElement>(1200)
@@ -91,22 +112,25 @@ export default function CommercialRequestDetail(props: CommercialRequestDetailPr
     target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [location.hash, props.openAsks.length, tab])
 
+  // Un borrador creado por el CHAT ya está completo (solo falta elegir proveedores
+  // y enviar), así que su acción principal lleva a la pestaña de proveedores, NO al
+  // formulario de edición. Un borrador creado por FORMULARIO sí se termina editando.
   const action = head.key === 'draft'
-    ? <Button icon="pencil-simple" onClick={() => navigate(`/rfqs/${rfq.id}/edit`)}>{t('detalle.editRequest')}</Button>
-    : decision
+    ? rfq.created_via === 'chat'
+      ? <Button icon="paper-plane-tilt" onClick={() => setTab('suppliers')}>{t('detalle.pickSuppliers')}</Button>
+      : <Button icon="pencil-simple" onClick={() => navigate(`/rfqs/${rfq.id}/edit`)}>{t('detalle.editRequest')}</Button>
+    : (head.key === 'closed' || decision)
       ? <Button variant="secondary" icon="columns" onClick={() => setTab('comparison')}>{t('detalle.viewComparison')}</Button>
       : undefined
 
   return (
     <div className={`rd2-page is-${layout}`}>
       <Breadcrumbs items={[{ label: t('detail.breadcrumbRfqs'), to: '/requests' }, { label: rfq.name }]} />
-      {rfq.created_via === 'chat' && rfq.conversation_id && (
-        <div className="rd2-chat-origin">
-          <TextButton size="sm" onClick={() => navigate(`/asistente/${rfq.conversation_id}`)}>
-            {tChat('rfq.created_via_chat')}
-          </TextButton>
-        </div>
-      )}
+      <div className="rd2-chat-origin">
+        <TextButton size="sm" onClick={openAssistant}>
+          {rfq.created_via === 'chat' ? tChat('rfq.created_via_chat') : tChat('rfq.ask_assistant')}
+        </TextButton>
+      </div>
       <RfqHeader
         className="rd2-header"
         title={rfq.name}

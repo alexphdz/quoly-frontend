@@ -2,79 +2,60 @@ import { useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { toast } from '../../components/ui'
-import { exportDecisionPdf } from '../../api/comparisons'
-import { useCreateDecision } from '../../hooks/useComparison'
-import { buildComparisonModel, comparablePrice } from '../../lib/comparisonModel'
-import type { ComparisonResponse, ComparisonRow, DecisionRead } from '../../types/comparison'
+import { useCloseRfq } from '../../hooks/useComparison'
+import { buildComparisonModel } from '../../lib/comparisonModel'
+import type { ComparisonResponse, ComparisonRow } from '../../types/comparison'
 import type { RFQDetail } from '../../types/rfq'
 import type { BuyerActionRead } from '../../types/buyerAction'
+import type { ApiError } from '../../api/client'
 import CostLineMatrix from '../comparison/CostLineMatrix'
 import LineComparisonTable from '../comparison/LineComparisonTable'
 import ReviewBeforeChoosing from '../comparison/ReviewBeforeChoosing'
 import SpecQuickView from '../comparison/SpecQuickView'
 import SupplierRanking from '../comparison/SupplierRanking'
+import ExportComparisonDialog from '../comparison/ExportComparisonDialog'
 import {
-  AwardConfirmation, AwardRecord, Button, ContentSection, DecisionCandidate, Expandable,
-  Icon, IntelligenceMark, InlineAlert, SideSheet, StatusBadge, Textarea,
+  Button, ContentSection, Dialog, Expandable,
+  Icon, IntelligenceMark, InlineAlert, StatusBadge, Textarea,
 } from '../../design-system'
 import { useCmpFormat } from '../comparison/useCmpFormat'
 
 type Props = {
   rfq: RFQDetail
   comparison: ComparisonResponse | undefined
-  decision: DecisionRead | null | undefined
+  // `decision` ya no se usa (la adjudicación se reemplazó por cerrar + exportar);
+  // se mantiene en la firma por compatibilidad con el llamador.
+  decision?: unknown
   openAsks: BuyerActionRead[]
 }
 
-export default function ComparisonExperience({ rfq, comparison, decision, openAsks }: Props) {
+export default function ComparisonExperience({ rfq, comparison, openAsks }: Props) {
   const { t, i18n } = useTranslation(['comparison', 'rfq', 'common', 'specEvidence'])
   const navigate = useNavigate()
-  const createDecision = useCreateDecision(rfq.id)
-  const [selected, setSelected] = useState<string | null>(null)
-  const [reason, setReason] = useState('')
-  const [confirmOpen, setConfirmOpen] = useState(false)
-  const [previewOpen, setPreviewOpen] = useState(false)
-  const [exporting, setExporting] = useState(false)
+  const closeRfq = useCloseRfq(rfq.id)
+  const [closeOpen, setCloseOpen] = useState(false)
+  const [closeReason, setCloseReason] = useState('')
+  const [exportOpen, setExportOpen] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
 
   const model = useMemo(() => comparison ? buildComparisonModel(comparison, rfq.quantity) : null, [comparison, rfq.quantity])
   const format = useCmpFormat(comparison?.base_unit ?? rfq.base_unit, comparison?.base_currency ?? 'USD')
-  const selectable = comparison?.rows ?? []
-  const winner = decision ? selectable.find(row => row.quote_id === decision.quote_id) : undefined
-  const snapshot = decision?.comparison_snapshot as Partial<ComparisonResponse> | null | undefined
-  const recordedWinner = snapshot?.rows?.find(row => row.quote_id === decision?.quote_id) ?? winner
-  const recordedFormat = useCmpFormat(snapshot?.base_unit ?? comparison?.base_unit ?? rfq.base_unit, snapshot?.base_currency ?? comparison?.base_currency ?? 'USD')
-  const comparableRows = model?.rows.filter(row => row.comparable != null) ?? []
-  const suggested = model && comparableRows.length > 1 && comparableRows.some(item => !item.row.spec_evidence_lines?.some(line => line.verdict === 'deviation')) ? model.leader : null
-  const selectedRow = selectable.find(row => row.quote_id === selected)
+  const locale = i18n.resolvedLanguage === 'es' ? 'es' : 'en'
 
-  const recordDecision = async () => {
-    if (!selected) return
-    try {
-      await createDecision.mutateAsync({ quote_id: selected, reasoning: reason.trim() || null })
-      setConfirmOpen(false)
-      setSelected(null)
-      setReason('')
-      toast(t('toastRecorded'))
-    } catch {
-      throw new Error(t('decision.failed'))
-    }
-  }
+  // Una solicitud "cerrada" (status decided) da por terminada la comparación.
+  const closed = rfq.status === 'decided' || !!rfq.closed_at
+  const closedAtText = rfq.closed_at
+    ? new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(rfq.closed_at))
+    : null
 
-  const downloadPdf = async () => {
-    setExporting(true)
+  const confirmClose = async () => {
     try {
-      const { blob, filename } = await exportDecisionPdf(rfq.id)
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = filename || `quoly-decision-${rfq.id}.pdf`
-      link.click()
-      URL.revokeObjectURL(url)
-    } catch {
-      toast(t('export.error'), 'error')
-    } finally {
-      setExporting(false)
+      await closeRfq.mutateAsync(closeReason.trim() || null)
+      setCloseOpen(false)
+      setCloseReason('')
+      toast(t('redesign.closedToast'))
+    } catch (err) {
+      toast((err as ApiError).detail || t('redesign.closeFailed'), 'error')
     }
   }
 
@@ -85,6 +66,7 @@ export default function ComparisonExperience({ rfq, comparison, decision, openAs
   }
 
   const prices = model.rows.filter(item => item.comparable != null)
+  const suggested = model && prices.length > 1 && prices.some(item => !item.row.spec_evidence_lines?.some(line => line.verdict === 'deviation')) ? model.leader : null
   const statusTone = (row: ComparisonRow) => row.spec_evidence_lines?.some(line => line.verdict === 'deviation')
     ? 'warning' as const
     : row.spec_evidence_lines?.some(line => line.verdict === 'needs_review') ? 'info' as const : 'success' as const
@@ -106,19 +88,14 @@ export default function ComparisonExperience({ rfq, comparison, decision, openAs
         </Expandable>
       </header>
 
-      {decision && recordedWinner && <div className="cx-award-record">
-        <AwardRecord
-          supplier={recordedWinner.supplier_name}
-          quotation={recordedWinner.quote_id}
-          rfq={rfq.name}
-          price={comparablePrice(recordedWinner) == null ? null : { amount: comparablePrice(recordedWinner)!, currency: snapshot?.base_currency ?? comparison?.base_currency ?? 'USD', unit: recordedFormat.unit }}
-          priceText={comparablePrice(recordedWinner) == null ? recordedWinner.raw_price == null ? t('redesign.notComparable') : `${recordedWinner.raw_currency ?? ''} ${recordedWinner.raw_price} · ${recordedWinner.raw_unit ?? ''}` : undefined}
-          recordedAt={new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(decision.decided_at))}
-          rationale={decision.reasoning ?? undefined}
-          summary={t('redesign.snapshot')}
-          onViewQuote={() => navigate(`/rfqs/${rfq.id}?tab=quotations&quote=${recordedWinner.quote_id}`)}
-          links={<Button size="sm" variant="secondary" icon="file-pdf" onClick={() => setPreviewOpen(true)}>{t('redesign.viewPdf')}</Button>}
-        />
+      {closed && <div className="cx-closed-banner">
+        <span className="cx-closed-icon"><Icon name="check-circle" size={22} weight="fill" /></span>
+        <div className="cx-closed-copy">
+          <h3>{t('redesign.closedTitle')}</h3>
+          {closedAtText && <p>{t('redesign.closedAt', { date: closedAtText })}</p>}
+          {rfq.closed_reason && <blockquote>“{rfq.closed_reason}”</blockquote>}
+        </div>
+        <Button icon="file-xls" onClick={() => setExportOpen(true)}>{t('redesign.exportExcel')}</Button>
       </div>}
 
       <div className="cx-counts" aria-label={t('redesign.countLabel')}>
@@ -179,9 +156,8 @@ export default function ComparisonExperience({ rfq, comparison, decision, openAs
             f={format}
             allIn={comparison.ranking_basis === 'all_in'}
             fxLine={null}
-            canSelect={!decision}
-            awardedQuoteId={decision?.quote_id}
-            onSelect={setSelected}
+            canSelect={false}
+            onSelect={() => {}}
             onViewSpec={row => { const next = new URLSearchParams(searchParams); next.set('spec', row.quote_id); setSearchParams(next, { replace: true }) }}
           />
         </Expandable>
@@ -197,40 +173,57 @@ export default function ComparisonExperience({ rfq, comparison, decision, openAs
         <aside className="cx-suggestion">
           <span className="cx-suggestion-eyebrow"><IntelligenceMark size={14} variant="proposed" />{t('redesign.suggested')}</span>
           {suggested ? <><h3>{suggested.row.supplier_name}</h3><p>{t('redesign.suggestionReason', { price: format.unitPrice(suggested.comparable!), unit: format.unit })}</p>
-            {!decision && <Button size="sm" variant="secondary" icon="check-circle" onClick={() => { setSelected(suggested.row.quote_id); document.getElementById('cx-decision')?.scrollIntoView({ behavior: 'smooth' }) }}>{t('redesign.selectSuggested')}</Button>}
           </> : <><h3>{t('redesign.noSuggestion')}</h3><p>{t('redesign.noSuggestionReason')}</p></>}
           <small>{t('redesign.suggestionDisclaimer')}</small>
         </aside>
       </div>
 
-      <section id="cx-decision" className="cx-decision" aria-labelledby="cx-decision-title">
-        <h3 id="cx-decision-title">{t('redesign.decisionTitle')}</h3>
-        <p>{decision ? t('redesign.decisionRecorded') : t('redesign.decisionIntro')}</p>
-        {!decision && model.rows.map(item => <DecisionCandidate
-          key={item.row.quote_id}
-          name={item.row.supplier_name}
-          reference={item.row.quote_id}
-          price={item.comparable == null ? null : { amount: item.comparable, currency: comparison.base_currency, unit: format.unit }}
-          original={item.row.raw_price == null ? undefined : `${item.row.raw_currency ?? ''} ${item.row.raw_price} / ${item.row.raw_unit ?? ''}`}
-          priceReason={item.row.missing_fields.join(', ')}
-          facts={[{ label: t('redesign.leadTime'), value: item.leadDays == null ? null : t('redesign.days', { count: item.leadDays }) }, { label: 'MOQ', value: item.row.raw_quantity_moq?.toLocaleString(i18n.resolvedLanguage) ?? null }, { label: t('redesign.payment'), value: item.row.raw_payment_terms }]}
-          selection={selected === item.row.quote_id ? 'selected' : 'none'}
-          onSelect={() => setSelected(item.row.quote_id)}
-          onChangeSelection={() => setSelected(null)}
-          onViewQuote={() => navigate(`/rfqs/${rfq.id}?tab=quotations&quote=${item.row.quote_id}`)}
-        />)}
-        {selectedRow && !decision && <div className="cx-award-form">
-          <Textarea label={t('redesign.reason')} optionalLabel={t('common:field.optional')} rows={3} value={reason} onChange={event => setReason(event.target.value)} placeholder={t('redesign.reasonPlaceholder')} />
-          <div><Button onClick={() => setConfirmOpen(true)}>{t('redesign.award')}</Button><Button variant="secondary" onClick={() => { setSelected(null); setReason('') }}>{t('common:cancel')}</Button></div>
-          <small>{t('redesign.awardFootnote')}</small>
-        </div>}
+      <section id="cx-decision" className="cx-close-export" aria-labelledby="cx-close-title">
+        <h3 id="cx-close-title">{t('redesign.closeExportTitle')}</h3>
+        <p>{closed ? t('redesign.closeExportDoneIntro') : t('redesign.closeExportIntro')}</p>
+        <div className="cx-close-actions">
+          <Button icon="file-xls" onClick={() => setExportOpen(true)}>{t('redesign.exportExcel')}</Button>
+          {!closed && <Button variant="secondary" icon="check-circle" onClick={() => setCloseOpen(true)}>{t('redesign.closeRequest')}</Button>}
+        </div>
+        <small>{t('redesign.closeExportFootnote')}</small>
       </section>
 
-      <AwardConfirmation open={confirmOpen} onCancel={() => setConfirmOpen(false)} onConfirm={recordDecision} supplier={selectedRow?.supplier_name ?? ''} reference={selectedRow?.quote_id} price={selectedRow && comparablePrice(selectedRow) != null ? { amount: comparablePrice(selectedRow)!, currency: comparison.base_currency, unit: format.unit } : null} original={selectedRow?.raw_price == null ? undefined : `${selectedRow.raw_currency ?? ''} ${selectedRow.raw_price}`} context={[t('redesign.awardFootnote')]} />
+      <Dialog
+        open={closeOpen}
+        onClose={closeRfq.isPending ? undefined : () => { setCloseOpen(false); setCloseReason('') }}
+        title={t('redesign.closeConfirmTitle')}
+        description={t('redesign.closeConfirmDescription')}
+        size="sm"
+        footer={
+          <div className="cx-close-dialog-actions">
+            <Button variant="secondary" disabled={closeRfq.isPending} onClick={() => { setCloseOpen(false); setCloseReason('') }}>
+              {t('common:cancel', { defaultValue: 'Cancelar' })}
+            </Button>
+            <Button icon="check-circle" loading={closeRfq.isPending} onClick={confirmClose}>
+              {t('redesign.closeConfirm')}
+            </Button>
+          </div>
+        }
+      >
+        <Textarea
+          label={t('redesign.closeReasonLabel')}
+          optionalLabel={t('common:field.optional')}
+          rows={3}
+          value={closeReason}
+          onChange={event => setCloseReason(event.target.value)}
+          placeholder={t('redesign.closeReasonPlaceholder')}
+        />
+      </Dialog>
+
+      <ExportComparisonDialog
+        open={exportOpen}
+        onClose={() => setExportOpen(false)}
+        rfqId={rfq.id}
+        locale={locale}
+        rows={comparison.rows.map(row => ({ quote_id: row.quote_id, supplier_name: row.supplier_name }))}
+      />
+
       {searchParams.get('spec') && comparison.rows.find(row => row.quote_id === searchParams.get('spec')) && <SpecQuickView row={comparison.rows.find(row => row.quote_id === searchParams.get('spec'))!} onClose={() => { const next = new URLSearchParams(searchParams); next.delete('spec'); setSearchParams(next, { replace: true }) }} />}
-      <SideSheet open={previewOpen} onClose={() => setPreviewOpen(false)} title={t('redesign.pdfTitle')} description={t('redesign.pdfDescription')} footer={<Button onClick={downloadPdf} loading={exporting}>{t('redesign.downloadPdf')}</Button>}>
-        <div className="cx-pdf-preview"><span>{'QUOLY · '}{t('redesign.pdfTitle')}</span><h3>{rfq.name}</h3><p>{t('redesign.snapshot')}</p>{recordedWinner && <strong>{recordedWinner.supplier_name}</strong>}<div>{recordedWinner && comparablePrice(recordedWinner) != null ? recordedFormat.unitPrice(comparablePrice(recordedWinner)!) : t('redesign.notComparable')}</div>{decision?.reasoning && <blockquote>{decision.reasoning}</blockquote>}<small>{decision?.decided_at ? new Date(decision.decided_at).toLocaleString(i18n.resolvedLanguage) : ''}</small></div>
-      </SideSheet>
     </div>
   )
 }

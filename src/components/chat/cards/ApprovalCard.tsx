@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, TextButton, IconButton, InlineAlert, IntelligenceMark } from '../../../design-system'
+import { Button, Icon, TextButton, IconButton, InlineAlert, IntelligenceMark } from '../../../design-system'
 import { useAuth } from '../../../hooks/useAuth'
 import { useResolveAction } from '../../../hooks/useConversationTurn'
 import type { AgentCard, ApprovalCardPayload, GroundingEntry } from '../../../types/agent'
@@ -27,7 +27,7 @@ function GroundingCollapsible({ grounding }: { grounding: GroundingEntry[] }) {
       >
         <span>{t('approval.sourcesWithCount', { count: grounding.length, defaultValue: `Ver fuentes (${grounding.length})` })}</span>
         <span className="chat-approval-grounding-chevron" aria-hidden>
-          {open ? '▲' : '▼'}
+          <Icon name={open ? 'caret-up' : 'caret-down'} size={12} />
         </span>
       </button>
       {open && (
@@ -214,7 +214,7 @@ export default function ApprovalCard({ card, messageId, conversationId }: Approv
                 size="sm"
                 onClick={() => { setEditing(false); setEditedBody(payload?.draft_body ?? '') }}
               >
-                {t('approval.edit')}
+                {t('approval.cancelEdit', { defaultValue: 'Cancelar' })}
               </Button>
             </>
           ) : (
@@ -222,23 +222,19 @@ export default function ApprovalCard({ card, messageId, conversationId }: Approv
               <Button
                 variant="primary"
                 size="sm"
+                icon="paper-plane-tilt"
                 onClick={handleApprove}
                 disabled={resolveAction.isPending}
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden style={{ marginRight: 4 }}>
-                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                </svg>
                 {t('approval.approve')}
               </Button>
               <Button
                 variant="secondary"
                 size="sm"
+                icon="pencil-simple"
                 onClick={() => setEditing(true)}
                 disabled={resolveAction.isPending}
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden style={{ marginRight: 4 }}>
-                  <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                </svg>
                 {t('approval.edit')}
               </Button>
               <TextButton

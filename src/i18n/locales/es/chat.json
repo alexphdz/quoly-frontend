@@ -35,7 +35,7 @@
     "pendingArrow": "→",
     "panelTitle": "Asistente",
     "newConversation": "Nueva conversación con el agente",
-    "sectionLabel": "CONVERSACIONES",
+    "sectionLabel": "Conversaciones",
     "emptyText": "Aquí verás lo que cotices desde el chat.",
     "archived": "Archivadas",
     "statusLabel": {
@@ -62,7 +62,7 @@
     "archivada": "archivada"
   },
   "summary": {
-    "title": "RESUMEN DE LA SOLICITUD",
+    "title": "Resumen de la solicitud",
     "confirm": "Confirmar",
     "edit": "Editar",
     "dismiss": "Descartar",
@@ -97,25 +97,31 @@
     "namePlaceholder": "Nombre de la empresa",
     "emailPlaceholder": "Correo electrónico",
     "dismiss": "Cancelar",
-    "directoryLabel": "PROVEEDORES DE TU DIRECTORIO",
+    "directoryLabel": "Proveedores de tu directorio",
     "fromGmail": "Desde tu Gmail",
     "sent": "Enviado",
-    "chosen": "{{count}} de {{total}} elegidos"
+    "chosen": "{{count}} de {{total}} elegidos",
+    "emptyHint": "Aún no tienes proveedores guardados. Agrega el primero con su correo para enviarle la solicitud.",
+    "sendN_one": "Enviar a 1 proveedor",
+    "sendN_other": "Enviar a {{count}} proveedores"
   },
   "undo": {
     "banner": "Enviando a {{count}} proveedores · {{seconds}}s para deshacer",
-    "action": "Deshacer"
+    "action": "Deshacer",
+    "banner_one": "Enviando a 1 proveedor · {{seconds}}s para deshacer",
+    "banner_other": "Enviando a {{count}} proveedores · {{seconds}}s para deshacer"
   },
   "file": {
     "sizeError": "El archivo supera 10 MB. Intenta comprimirlo.",
     "typeError": "Solo se admiten PDF, DOCX, PNG, JPG, JPEG y WEBP.",
     "pagesError": "El PDF tiene más de 20 páginas. Sube solo la sección relevante.",
-    "extractionFailed": "No pude leer este archivo. Describe su contenido en el mensaje."
+    "extractionFailed": "No pude leer este archivo. Describe su contenido en el mensaje.",
+    "remove": "Quitar archivo"
   },
   "limit": {
     "approaching": "Te quedan {{count}} solicitudes este mes.",
     "reached": "Llegaste al límite mensual.",
-    "useForm": "Usa el formulario clásico →"
+    "useForm": "Usa el formulario clásico"
   },
   "card": {
     "outdated": "desactualizado",
@@ -147,10 +153,13 @@
     "draftHeader": "Borrador por aprobar",
     "draftLabel": "Borrador",
     "askedAt": "{{supplier}} preguntó · {{time}}",
-    "sourcesWithCount": "Ver fuentes ({{count}})"
+    "sourcesWithCount": "Ver fuentes ({{count}})",
+    "cancelEdit": "Cancelar"
   },
   "rfq": {
-    "created_via_chat": "Creada con el Asistente"
+    "created_via_chat": "Creada con el Asistente",
+    "ask_assistant": "Preguntar al asistente",
+    "ask_assistant_error": "No se pudo abrir el asistente. Intenta de nuevo."
   },
   "turnsRemaining": "{{count}} turnos restantes",
   "loadingConversation": "Cargando conversación…",

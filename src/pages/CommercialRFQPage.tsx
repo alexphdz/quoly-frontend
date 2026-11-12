@@ -72,7 +72,8 @@ export default function CommercialRFQPage() {
       <header className="cr2-head">
         <nav aria-label={t('crear.breadcrumb')}>
           <ol className="q-crumbs">
-            <BreadcrumbItem to="/requests" last>{t('detail.breadcrumbRfqs')}</BreadcrumbItem>
+            <BreadcrumbItem to="/requests" last={!editing}>{t('detail.breadcrumbRfqs')}</BreadcrumbItem>
+            {editing && <BreadcrumbItem to={`/rfqs/${existing.data!.id}`} last>{existing.data!.name}</BreadcrumbItem>}
           </ol>
         </nav>
         <h1 className="cr2-h1">{editing ? t('crear.editTitle') : t('crear.title')}</h1>

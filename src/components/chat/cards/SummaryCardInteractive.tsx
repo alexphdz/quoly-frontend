@@ -1,7 +1,6 @@
-import { CheckCircle } from '@phosphor-icons/react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, IntelligenceMark } from '../../../design-system'
+import { Button, Icon, IntelligenceMark } from '../../../design-system'
 import { useResolveAction } from '../../../hooks/useConversationTurn'
 import { useFormat } from '../../../lib/format'
 import type { AgentCard, RfqSummaryCard } from '../../../types/agent'
@@ -49,15 +48,12 @@ export default function SummaryCardInteractive({ card, messageId, conversationId
   const [error, setError] = useState<string | null>(null)
 
   if (card.state === 'resolved') {
+    // A resolved card collapses to a single confirmation line — the chat keeps
+    // its history without replaying the full summary box.
     return (
-      <div className="chat-card is-resolved">
-        <div className="chat-card-header">
-          <span className="chat-card-title">{t('summary.title', { defaultValue: 'RESUMEN DE LA SOLICITUD' })}</span>
-        </div>
-        <div className="chat-card-resolved-label" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-          <CheckCircle size={16} weight="fill" color="var(--accent)" aria-hidden />
-          {t('summary.rfqCreated', { defaultValue: 'Solicitud creada' })}
-        </div>
+      <div className="chat-card-collapsed">
+        <Icon name="check-circle" size={16} weight="fill" color="var(--color-status-success-text)" />
+        {t('summary.rfqCreated', { defaultValue: 'Solicitud creada' })}
       </div>
     )
   }
@@ -125,7 +121,7 @@ export default function SummaryCardInteractive({ card, messageId, conversationId
     <div className="chat-card is-pending">
       <div className="chat-card-header">
         <span className="chat-card-title">
-          {t('summary.title', { defaultValue: 'RESUMEN DE LA SOLICITUD' })}
+          {t('summary.title', { defaultValue: 'Resumen de la solicitud' })}
         </span>
       </div>
 
@@ -181,13 +177,11 @@ export default function SummaryCardInteractive({ card, messageId, conversationId
         <Button
           variant="primary"
           size="sm"
+          icon="check"
           onClick={handleConfirm}
           loading={resolveAction.isPending}
           disabled={resolveAction.isPending}
         >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden style={{ marginRight: 4 }}>
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-          </svg>
           {t('summary.createRfq', { defaultValue: 'Crear solicitud de cotización' })}
         </Button>
       </div>

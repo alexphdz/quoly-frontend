@@ -315,6 +315,32 @@
 
 .cmp-winner-copy { flex: 1; min-width: 0; }
 
+// ---------- Closed banner (cierre sin adjudicar) ----------
+.cmp-closed {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-color: var(--success-tag);
+  background: var(--success-bg);
+
+  h2 { margin: 0; color: var(--tx-1); font-size: 16px; font-weight: 500; }
+  p { margin: 2px 0 0; color: var(--tx-body); font-size: 13px; }
+  blockquote { margin: 6px 0 0; color: var(--tx-body); font-size: 13px; font-style: italic; }
+}
+.cmp-closed-icon { display: inline-flex; flex: none; align-items: center; color: var(--success-tag); }
+.cmp-closed-copy { flex: 1; min-width: 0; }
+
+// ---------- Cerrar y exportar ----------
+.cmp-close-export {
+  padding: 20px;
+
+  h2 { margin: 0; color: var(--tx-1); font-size: 16px; font-weight: 500; }
+  > p { margin: 4px 0 0; color: var(--tx-body); font-size: 13px; }
+  > small { display: block; margin-top: 10px; color: var(--tx-2); font-size: 12px; }
+}
+.cmp-close-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+
 // ---------- Review ----------
 .cmp-review {
   margin: 0;

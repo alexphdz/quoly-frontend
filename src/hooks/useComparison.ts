@@ -29,3 +29,14 @@ export function useCreateDecision(rfqId: string) {
     },
   })
 }
+
+export function useCloseRfq(rfqId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (reason?: string | null) => compApi.closeRfq(rfqId, reason),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['rfq', rfqId] })
+      queryClient.invalidateQueries({ queryKey: ['rfqs'] })
+    },
+  })
+}

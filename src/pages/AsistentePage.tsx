@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRef, useState, type KeyboardEvent, type FormEvent } from 'react'
-import ConversationList from '../components/chat/ConversationList'
+import { Icon } from '../design-system'
 import FileUploadButton from '../components/chat/FileUploadButton'
 import * as agentApi from '../api/agent'
 import { useAuth } from '../hooks/useAuth'
@@ -108,9 +108,7 @@ function WelcomeArea() {
               disabled={!canSend}
               aria-label={t('input.send')}
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-              </svg>
+              <Icon name="paper-plane-tilt" size={16} weight="fill" />
             </button>
           </div>
         </form>
@@ -138,9 +136,7 @@ function WelcomeArea() {
           className="chat-welcome-form-link"
           onClick={() => navigate('/rfqs/new')}
         >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-          </svg>
+          <Icon name="clipboard-text" size={16} />
           {t('empty.useForm', { defaultValue: 'Cotizar con el formulario' })}
         </button>
       </div>
@@ -151,7 +147,6 @@ function WelcomeArea() {
 export default function AsistentePage() {
   return (
     <div className="asistente-layout">
-      <ConversationList />
       <div className="asistente-chat-area">
         <WelcomeArea />
       </div>

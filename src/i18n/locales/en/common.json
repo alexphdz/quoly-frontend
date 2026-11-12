@@ -2,7 +2,7 @@
   "notFound": {
     "title": "Page not found",
     "text": "The link may be broken, or the page may have moved.",
-    "action": "Go to Home"
+    "action": "Go to home"
   },
   "appError": {
     "title": "Something went wrong",
@@ -142,18 +142,6 @@
     "asistente": "Agent"
   },
   "auth": {
-    "editorial": {
-      "eyebrow": "Sourcing workspace",
-      "title": "Clearer buying. Better decisions.",
-      "body": "Organize requests, review quotes, and compare suppliers in one place.",
-      "footnote": "Illustrative data",
-      "examples": {
-        "andina": "Andina Supply",
-        "delta": "Delta Insumos",
-        "norte": "Norte Global",
-        "prisma": "Prisma Co."
-      }
-    },
     "connectError": "Can't reach the server. Check the connection and try again.",
     "invalidEmail": "Enter a valid email address",
     "invalidWorkEmail": "Enter a valid work email address",
@@ -161,7 +149,7 @@
     "login": {
       "title": "Sign in",
       "welcomeTitle": "Welcome back",
-      "subtitle": "Sign in to your account to continue.",
+      "subtitle": "Sign in to pick up your quotes where you left off.",
       "email": "Email",
       "emailPlaceholder": "you@company.com",
       "password": "Password",
@@ -307,6 +295,19 @@
       "removeError": "The photo could not be removed. Try again.",
       "removeTitle": "Remove profile photo?",
       "removeHelp": "Your initials will appear instead."
+    },
+    "accent": {
+      "title": "Accent color",
+      "description": "Changes the main color of buttons and signals across the app.",
+      "names": {
+        "brand": "Quoly pink",
+        "violet": "Violet",
+        "blue": "Blue",
+        "teal": "Teal",
+        "mint": "Mint",
+        "pink": "Soft pink",
+        "olive": "Olive"
+      }
     }
   },
   "suppliers": {

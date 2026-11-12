@@ -1,7 +1,6 @@
-import { CheckCircle } from '@phosphor-icons/react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, TextButton } from '../../../design-system'
+import { Button, Icon, TextButton } from '../../../design-system'
 import ChannelSelect, { type SendChannel } from '../../rfq/ChannelSelect'
 import { useResolveAction } from '../../../hooks/useConversationTurn'
 import { useAuth } from '../../../hooks/useAuth'
@@ -37,24 +36,22 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
     ? channel
     : googleConnected ? 'google' : outlookConnected ? 'outlook' : undefined
 
+  const isEmptyDirectory = candidates.length === 0
+
   const [selected, setSelected] = useState<Set<string>>(
     () => new Set(candidates.filter(c => c.preselected).map(c => c.supplier_id))
   )
-  const [showAddForm, setShowAddForm] = useState(false)
+  // Empty directory → the add form IS the card: open it from the start.
+  const [showAddForm, setShowAddForm] = useState(isEmptyDirectory)
   const [newSupplier, setNewSupplier] = useState<NewSupplier>({ name: '', email: '' })
   const [newSuppliers, setNewSuppliers] = useState<NewSupplier[]>([])
   const [error, setError] = useState<string | null>(null)
 
   if (card.state === 'resolved') {
     return (
-      <div className="chat-card is-resolved">
-        <div className="chat-card-header">
-          <span className="chat-card-title">{t('supplierPicker.directoryLabel', { defaultValue: 'PROVEEDORES DE TU DIRECTORIO' })}</span>
-        </div>
-        <div className="chat-card-resolved-label" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-          <CheckCircle size={16} weight="fill" color="var(--accent)" aria-hidden />
-          {t('supplierPicker.sent', { defaultValue: 'Enviado' })}
-        </div>
+      <div className="chat-card-collapsed">
+        <Icon name="check-circle" size={16} weight="fill" color="var(--color-status-success-text)" />
+        {t('supplierPicker.sent', { defaultValue: 'Enviado' })}
       </div>
     )
   }
@@ -109,12 +106,22 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
     <div className="chat-supplier-card">
       <div className="chat-supplier-card-header">
         <span className="chat-supplier-card-label">
-          {t('supplierPicker.directoryLabel', { defaultValue: 'PROVEEDORES DE TU DIRECTORIO' })}
+          {t('supplierPicker.title', { defaultValue: 'Selecciona proveedores' })}
         </span>
-        <span className="chat-supplier-card-count">
-          {t('supplierPicker.chosen', { count: totalCount, total: candidates.length + newSuppliers.length })}
-        </span>
+        {!isEmptyDirectory && (
+          <span className="chat-supplier-card-count">
+            {t('supplierPicker.chosen', { count: totalCount, total: candidates.length + newSuppliers.length })}
+          </span>
+        )}
       </div>
+
+      {isEmptyDirectory && newSuppliers.length === 0 && (
+        <p className="chat-supplier-empty">
+          {t('supplierPicker.emptyHint', {
+            defaultValue: 'Aún no tienes proveedores guardados. Agrega el primero con su correo para enviarle la solicitud.',
+          })}
+        </p>
+      )}
 
       <div className="chat-supplier-list">
         {candidates.slice(0, 8).map(c => (
@@ -177,9 +184,7 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
         )
         : (
           <button type="button" className="chat-supplier-add-row" onClick={() => setShowAddForm(true)}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-              <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-            </svg>
+            <Icon name="user-plus" size={16} />
             {t('supplierPicker.addSupplier')}
           </button>
         )}
@@ -207,13 +212,11 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
         <Button
           variant="primary"
           size="sm"
+          icon="paper-plane-tilt"
           onClick={handleSend}
           disabled={totalCount === 0 || resolveAction.isPending}
           loading={resolveAction.isPending}
         >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden style={{ marginRight: 4 }}>
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-          </svg>
           {t('supplierPicker.sendN', { count: totalCount })}
         </Button>
       </div>

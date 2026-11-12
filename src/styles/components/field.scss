@@ -79,8 +79,9 @@ textarea.input {
 }
 
 .input:focus {
-  border-color: var(--accent-line);
-  box-shadow: var(--ring);
+  outline: none;
+  border-color: var(--color-focus-ring);
+  box-shadow: var(--focus-ring-input);
 }
 
 input[type='checkbox'] {
@@ -184,7 +185,7 @@ input[type='checkbox'] {
   border-radius: 6px;
   background: var(--bg-surface);
 
-  &:focus-within { border-color: var(--accent-line); box-shadow: var(--ring); }
+  &:focus-within { border-color: var(--color-focus-ring); box-shadow: var(--focus-ring-input); }
 
   input {
     flex: 1;

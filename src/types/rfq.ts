@@ -139,6 +139,8 @@ export interface RFQRead {
   created_via?: 'form' | 'chat' | null
   agent_state?: string | null
   conversation_id?: string | null
+  closed_at?: string | null
+  closed_reason?: string | null
 }
 
 export interface RFQDetail extends RFQRead {

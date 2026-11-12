@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import { createConversation } from '../api/agent'
 import { Icon } from '../components/ds'
 import { useAuth } from '../hooks/useAuth'
 import { useRFQ, useAddSupplier, useAddSupplierFromDirectory, useSendRequests, useInbound, useCloseSupplier, useBuyerActions, useResolveBuyerAction } from '../hooks/useRFQs'
@@ -195,11 +196,23 @@ export default function RFQDetailPage() {
             {rfq.base_unit}
             {rfq.delivery_point ? ` · ${rfq.delivery_point}` : ''}
           </p>
-          {rfq.created_via === 'chat' && rfq.conversation_id && (
-            <TextButton size="sm" onClick={() => navigate(`/asistente/${rfq.conversation_id}`)}>
-              {tChat('rfq.created_via_chat')}
-            </TextButton>
-          )}
+          <TextButton
+            size="sm"
+            onClick={async () => {
+              if (rfq.conversation_id) {
+                navigate(`/asistente/${rfq.conversation_id}`)
+                return
+              }
+              try {
+                const conv = await createConversation(rfq.id)
+                navigate(`/asistente/${conv.id}`)
+              } catch {
+                toast(tChat('rfq.ask_assistant_error'), 'error')
+              }
+            }}
+          >
+            {rfq.created_via === 'chat' ? tChat('rfq.created_via_chat') : tChat('rfq.ask_assistant')}
+          </TextButton>
         </div>
       </div>
 

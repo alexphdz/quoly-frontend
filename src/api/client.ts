@@ -196,14 +196,15 @@ export async function getBlob(path: string): Promise<{ blob: Blob; filename: str
   return { blob: await res.blob(), filename: match ? match[1] : null }
 }
 
-export async function post<T>(path: string, body?: unknown): Promise<T> {
+export async function post<T>(path: string, body?: unknown, opts?: { signal?: AbortSignal }): Promise<T> {
   const { headers, hadAuth } = buildHeaders(true, path)
   const res = await apiFetch(`${BASE_URL}${path}`, {
     method: 'POST',
     headers,
     body: body !== undefined ? JSON.stringify(body) : undefined,
+    signal: opts?.signal,
   })
-  return handleResponse<T>(res, hadAuth, () => post<T>(path, body))
+  return handleResponse<T>(res, hadAuth, () => post<T>(path, body, opts))
 }
 
 export async function patch<T>(path: string, body: unknown): Promise<T> {
