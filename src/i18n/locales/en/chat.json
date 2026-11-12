@@ -133,6 +133,7 @@
     "sendCancelled": "Send cancelled"
   },
   "errors": {
+    "noMailbox": "You don't have a mailbox connected. Connect Gmail or Outlook in Settings → Email to be able to send.",
     "turnFailed": "Something went wrong. Try again.",
     "conversationNotFound": "Conversation not found.",
     "tryAgain": "Try again",
