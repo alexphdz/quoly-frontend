@@ -82,7 +82,7 @@ export default function DashboardPage() {
   const workError = !!quotesQuery.error || !!actionsQuery.error
   const retryWork = () => Promise.all([quotesQuery.refetch(), actionsQuery.refetch()])
 
-  const name = greetingFirstName(user?.email)
+  const name = user?.first_name?.trim() || greetingFirstName(user?.email)
   const part = dayPart()
   const greeting = t(`home.greeting.${part}${name ? 'Named' : ''}`, { name })
 
@@ -106,7 +106,7 @@ export default function DashboardPage() {
 
   const segments = STATUS.map(s => ({ label: t(`inicio.status.${s.key}`), value: counts[s.key], color: s.color }))
   const eventIcon: Record<HomeEvent['kind'], IconName> = {
-    review: 'file-magnifying-glass', quote: 'envelope-simple', ask: 'question', awarded: 'trophy', created: 'file-text',
+    review: 'file-magnifying-glass', quote: 'envelope-simple', ask: 'question', awarded: 'lock-simple', created: 'file-text',
   }
   const eventTitle = (e: HomeEvent) => {
     if (e.kind === 'review') return t('inicio.activity.review', { supplier: e.supplier })
