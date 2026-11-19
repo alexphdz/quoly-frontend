@@ -46,14 +46,38 @@ export class ApiError extends Error {
   detail: string
   /** Raw backend error code (`detail` may already be translated for display). */
   code?: string
+  /** Extra fields of the error body besides `detail` (e.g. `sent`, `total`, `failed_to` on a send failure). */
+  extra: Record<string, unknown>
 
-  constructor(status: number, detail: string, code?: string) {
+  constructor(status: number, detail: string, code?: string, extra: Record<string, unknown> = {}) {
     super(detail)
     this.name = 'ApiError'
     this.status = status
     this.detail = detail
     this.code = code
+    this.extra = extra
   }
+}
+
+/** Progress of a send that failed (`send_partially_failed` / `send_failed`), when the backend reports it. */
+export interface SendFailureProgress {
+  sent: number
+  total: number
+  failedTo: string | null
+}
+
+export function sendFailureProgress(error: unknown): SendFailureProgress | null {
+  if (!(error instanceof ApiError)) return null
+  const { sent, total, failed_to: failedTo } = error.extra
+  if (typeof sent !== 'number' || typeof total !== 'number') return null
+  return { sent, total, failedTo: typeof failedTo === 'string' && failedTo ? failedTo : null }
+}
+
+function errorExtra(body: unknown): Record<string, unknown> {
+  if (!body || typeof body !== 'object') return {}
+  const rest: Record<string, unknown> = { ...(body as Record<string, unknown>) }
+  delete rest.detail
+  return rest
 }
 
 function apiErrorDetail(detail: unknown, fallback: string): string {
@@ -138,7 +162,7 @@ async function handleResponse<T>(
   if (!res.ok) {
     const body = await res.json().catch(() => ({}))
     const detail = apiErrorDetail(body.detail, 'Request failed')
-    throw new ApiError(res.status, detail, typeof body.detail === 'string' ? body.detail : undefined)
+    throw new ApiError(res.status, detail, typeof body.detail === 'string' ? body.detail : undefined, errorExtra(body))
   }
 
   return res.json() as Promise<T>

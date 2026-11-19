@@ -33,3 +33,15 @@ export function defaultMailbox(
 ): ConnectedMailbox | undefined {
   return mailboxes.find(m => m.channel === preferred) ?? mailboxes[0]
 }
+
+/** Where the buyer connects Gmail or Outlook (Settings → Email). */
+export const MAILBOX_SETTINGS_PATH = '/settings?seccion=correo'
+
+/**
+ * Connected mailboxes that can actually send: connected AND with a known
+ * address (same rule as the backend's `sender_address`). Nothing goes out to
+ * suppliers without one of these.
+ */
+export function usableMailboxes(user: Partial<MailboxFields> | null | undefined): ConnectedMailbox[] {
+  return connectedMailboxes(user).filter(m => m.email !== null)
+}

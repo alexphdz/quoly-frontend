@@ -5,12 +5,12 @@ import {
   Button, ConfirmDialog, DataTable, IconButton, InlineAlert, Menu, MenuItem, ResponseTracker, SegmentedControl, SideSheet,
   StatusBadge, TextButton, type DataTableColumn,
 } from '../../design-system'
-import type { ApiError } from '../../api/client'
-import type { EmailPayload, SupplierRead } from '../../types/rfq'
+import { sendFailureProgress, type ApiError } from '../../api/client'
+import { MAILBOX_SETTINGS_PATH, connectedMailboxes, defaultMailbox, usableMailboxes } from '../../lib/mailbox'
+import type { SupplierRead } from '../../types/rfq'
 import AddSupplierForm from '../rfq/AddSupplierForm'
 import AddSupplierFromDirectory from '../rfq/AddSupplierFromDirectory'
 import ChannelSelect from '../rfq/ChannelSelect'
-import EmailPayloadDisplay from '../rfq/EmailPayloadDisplay'
 import type { CommercialRequestDetailProps, DetailTab } from './CommercialRequestDetail'
 import { CLOSABLE, stageOf } from './stages'
 import { useStageMeta } from './useStageMeta'
@@ -23,7 +23,7 @@ const TABLE_STYLE = {
   '--table-row-comfortable': '84px',
 } as CSSProperties
 
-/** 04B · Proveedores: quién recibió la solicitud y su etapa. Agregar nunca envía; enviar pide confirmación. */
+/** 04B · Proveedores: quién recibió la solicitud y su etapa. Agregar nunca envía; enviar exige buzón usable y pide confirmación (no se puede deshacer). */
 export default function SuppliersTab(props: CommercialRequestDetailProps & { onTab: (tab: DetailTab, hash?: string) => void }) {
   const { rfq, suppliers, quotes, pendingCount, onTab } = props
   const { t } = useTranslation('rfq')
@@ -32,22 +32,21 @@ export default function SuppliersTab(props: CommercialRequestDetailProps & { onT
   const [addMode, setAddMode] = useState<'directory' | 'once'>('directory')
   const [confirmOpen, setConfirmOpen] = useState(false)
   const readOnly = rfq.status === 'decided' || rfq.status === 'closed'
-  const mailbox = props.googleConnected || !!props.outlookConnected
-  const bothConnected = props.googleConnected && !!props.outlookConnected
+  const mailboxFields = {
+    google_connected: props.googleConnected,
+    outlook_connected: !!props.outlookConnected,
+    google_email: props.googleEmail,
+    outlook_email: props.outlookEmail,
+  }
+  // Nothing is sent without a usable mailbox (connected + known address).
+  const usable = usableMailboxes(mailboxFields)
+  const canSend = usable.length > 0
+  const needsReconnect = !canSend && connectedMailboxes(mailboxFields).length > 0
   // Starts at the default mailbox; `picked` is the override for this request.
   // Derived (not seeded into state) so it stays right when the profile loads late.
   const [picked, setChannel] = useState<'google' | 'outlook' | null>(null)
-  const channel: 'google' | 'outlook' =
-    picked ?? props.defaultChannel ?? (props.outlookConnected && !props.googleConnected ? 'outlook' : 'google')
-  // Single mailbox → implicit; both → honor the selector; none → undefined (JSON fallback).
-  const effectiveChannel: 'google' | 'outlook' | undefined = bothConnected
-    ? channel
-    : props.googleConnected
-      ? 'google'
-      : props.outlookConnected
-        ? 'outlook'
-        : undefined
-  const payloads = (props.sendResult ?? []).filter((item): item is EmailPayload => 'body' in item)
+  const sender = usable.find(m => m.channel === picked) ?? defaultMailbox(usable, props.defaultChannel)
+  const sendFailure = sendFailureProgress(props.sendError)
 
   useEffect(() => {
     if (!props.sendPending) setConfirmOpen(false)
@@ -62,7 +61,7 @@ export default function SuppliersTab(props: CommercialRequestDetailProps & { onT
   const rowAction = (s: SupplierRead) => {
     const stage = stageOf(s.status).key
     const quote = quoteOf(s)
-    if (stage === 'not_contacted' && !readOnly) return { label: t('detalle.suppliers.send'), run: () => setConfirmOpen(true) }
+    if (stage === 'not_contacted' && !readOnly && canSend) return { label: t('detalle.suppliers.send'), run: () => setConfirmOpen(true) }
     if (stage === 'buyer_action_required') return { label: t('detalle.summary.viewQuestion'), run: () => onTab('replies', 'needs-answer') }
     if (quote && quote.status === 'draft') return { label: t('detalle.suppliers.reviewResponse'), run: () => navigate(`/quotes/${quote.id}`) }
     if (quote) return { label: t('detalle.suppliers.viewQuote'), run: () => navigate(`/quotes/${quote.id}`) }
@@ -141,7 +140,7 @@ export default function SuppliersTab(props: CommercialRequestDetailProps & { onT
         {!readOnly && (
           <div className="rd2-head-actions">
             {pendingCount > 0 && (
-              <Button icon="paper-plane-tilt" loading={props.sendPending} onClick={() => setConfirmOpen(true)}>
+              <Button icon="paper-plane-tilt" loading={props.sendPending} disabled={!canSend} onClick={() => setConfirmOpen(true)}>
                 {t('detalle.suppliers.sendCount', { count: pendingCount })}
               </Button>
             )}
@@ -152,21 +151,32 @@ export default function SuppliersTab(props: CommercialRequestDetailProps & { onT
         )}
       </div>
 
+      {!readOnly && !canSend && pendingCount > 0 && (
+        <InlineAlert
+          tone="warning"
+          title={needsReconnect ? t('detalle.suppliers.reconnectMailboxTitle') : t('detalle.suppliers.noMailboxTitle')}
+          actions={(
+            <Button variant="secondary" size="sm" icon="envelope-simple" onClick={() => navigate(MAILBOX_SETTINGS_PATH)}>
+              {needsReconnect ? t('detalle.suppliers.reconnectMailbox') : t('detalle.suppliers.connectMailbox')}
+            </Button>
+          )}
+        >
+          {needsReconnect ? t('detalle.suppliers.reconnectMailboxText') : t('detalle.suppliers.noMailboxText')}
+        </InlineAlert>
+      )}
       {props.sendError && (
         <InlineAlert
           prominence="blocking"
           tone="error"
           title={t('detalle.suppliers.sendFailed')}
-          actions={<Button variant="secondary" size="sm" onClick={() => setConfirmOpen(true)}>{t('detalle.suppliers.retrySend')}</Button>}
+          actions={canSend && <Button variant="secondary" size="sm" onClick={() => setConfirmOpen(true)}>{t('detalle.suppliers.retrySend')}</Button>}
         >
-          {(props.sendError as ApiError).detail || t('send.failed')}
+          {sendFailure && sendFailure.sent > 0
+            ? sendFailure.failedTo
+              ? t('send.partial', { sent: sendFailure.sent, total: sendFailure.total, failedTo: sendFailure.failedTo })
+              : t('send.partialNoAddress', { sent: sendFailure.sent, total: sendFailure.total })
+            : (props.sendError as ApiError).detail || t('send.failed')}
         </InlineAlert>
-      )}
-      {payloads.length > 0 && (
-        <div className="rd2-payloads">
-          <InlineAlert tone="info" title={t('detalle.suppliers.noMailboxTitle')}>{t('detalle.suppliers.noMailboxText')}</InlineAlert>
-          <EmailPayloadDisplay payloads={payloads} />
-        </div>
       )}
 
       {suppliers.length > 0 && (
@@ -235,21 +245,23 @@ export default function SuppliersTab(props: CommercialRequestDetailProps & { onT
       </SideSheet>
 
       <ConfirmDialog
-        open={confirmOpen}
-        title={t('detalle.suppliers.confirmTitle', { count: pendingCount })}
+        open={confirmOpen && !!sender}
+        title={t('detalle.suppliers.confirmTitle', { count: pendingCount, email: sender?.email ?? '' })}
         description={(
           <>
-            {mailbox ? t('detalle.suppliers.confirmMailbox') : t('detalle.suppliers.confirmNoMailbox')}
-            <ChannelSelect
-              className="mt-3"
-              googleConnected={props.googleConnected}
-              outlookConnected={!!props.outlookConnected}
-              googleEmail={props.googleEmail}
-              outlookEmail={props.outlookEmail}
-              value={channel}
-              onChange={setChannel}
-              disabled={props.sendPending}
-            />
+            {t('detalle.suppliers.confirmNoUndo')}
+            {usable.length > 1 && sender && (
+              <ChannelSelect
+                className="mt-3"
+                googleConnected={usable.some(m => m.channel === 'google')}
+                outlookConnected={usable.some(m => m.channel === 'outlook')}
+                googleEmail={props.googleEmail}
+                outlookEmail={props.outlookEmail}
+                value={sender.channel}
+                onChange={setChannel}
+                disabled={props.sendPending}
+              />
+            )}
           </>
         )}
         details={suppliers.filter(s => stageOf(s.status).key === 'not_contacted').map(s => ({ label: s.name, value: s.email }))}
@@ -257,7 +269,7 @@ export default function SuppliersTab(props: CommercialRequestDetailProps & { onT
         cancelLabel={t('crear.actions.cancel')}
         pending={props.sendPending}
         onCancel={() => setConfirmOpen(false)}
-        onConfirm={() => props.onSend(effectiveChannel)}
+        onConfirm={() => sender && props.onSend(sender.channel)}
       />
     </div>
   )

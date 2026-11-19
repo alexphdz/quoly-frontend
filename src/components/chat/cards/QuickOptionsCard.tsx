@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useIsMutating } from '@tanstack/react-query'
+import { Button, TextButton } from '../../../design-system'
 import { useResolveAction } from '../../../hooks/useConversationTurn'
+import { useAuth } from '../../../hooks/useAuth'
+import { connectedMailboxes } from '../../../lib/mailbox'
 import type { ApiError } from '../../../api/client'
 import type { AgentCard, QuickOption, QuickOptionsCardPayload } from '../../../types/agent'
 
@@ -13,6 +16,7 @@ interface QuickOptionsCardProps {
 
 export default function QuickOptionsCard({ card, messageId, conversationId }: QuickOptionsCardProps) {
   const { t } = useTranslation('chat')
+  const { user } = useAuth()
   const resolveAction = useResolveAction(conversationId)
   // Con un turno de texto en vuelo, elegir un chip crearía una carrera (la
   // invalidación pisa el mensaje optimista del turno): se espera a que termine.
@@ -21,6 +25,10 @@ export default function QuickOptionsCard({ card, messageId, conversationId }: Qu
   const options: QuickOption[] = Array.isArray(payload?.options) ? payload.options : []
   const groupLabel = typeof payload?.label === 'string' ? payload.label : null
   const [error, setError] = useState<string | null>(null)
+  // Mailbox card ("send_channel"): picking a mailbox sends right away, and an
+  // email can't be unsent → the chosen option waits here for a confirmation.
+  const isMailboxChoice = payload?.field === 'send_channel'
+  const [confirmValue, setConfirmValue] = useState<string | null>(null)
 
   if (card.state !== 'pending') {
     const result = card.card_result as { label?: string } | null
@@ -36,6 +44,7 @@ export default function QuickOptionsCard({ card, messageId, conversationId }: Qu
 
   async function handleSelect(value: string) {
     setError(null)
+    setConfirmValue(null)
     try {
       await resolveAction.mutateAsync({
         card_id: messageId,
@@ -58,6 +67,15 @@ export default function QuickOptionsCard({ card, messageId, conversationId }: Qu
     }
   }
 
+  const confirmOption = confirmValue ? options.find(o => o.value === confirmValue) : undefined
+  const confirmEmail = confirmOption
+    ? connectedMailboxes(user).find(m => m.channel === confirmOption.value)?.email ?? confirmOption.label
+    : ''
+  const supplierCount = typeof payload?.supplier_count === 'number' ? payload.supplier_count : 0
+  const confirmTitle = supplierCount > 0
+    ? t('sendConfirm.title', { count: supplierCount, email: confirmEmail })
+    : t('sendConfirm.titleNoCount', { email: confirmEmail })
+
   return (
     <div className="chat-quick-options-group">
       {groupLabel && <span className="chat-quick-options-label">{groupLabel}</span>}
@@ -67,8 +85,9 @@ export default function QuickOptionsCard({ card, messageId, conversationId }: Qu
             key={opt.value}
             type="button"
             className={`chat-quick-option-btn${opt.default ? ' is-default' : ''}`}
-            onClick={() => handleSelect(opt.value)}
+            onClick={() => (isMailboxChoice ? setConfirmValue(opt.value) : handleSelect(opt.value))}
             disabled={resolveAction.isPending || turnInFlight}
+            aria-pressed={isMailboxChoice ? confirmValue === opt.value : undefined}
           >
             {opt.label}
             {opt.default && (
@@ -77,6 +96,30 @@ export default function QuickOptionsCard({ card, messageId, conversationId }: Qu
           </button>
         ))}
       </div>
+      {confirmOption && (
+        <div className="chat-send-confirm is-inline" role="alertdialog" aria-label={confirmTitle}>
+          <span className="chat-supplier-footer-label">
+            <strong>{confirmTitle}</strong>
+            {' '}
+            {t('sendConfirm.noUndo')}
+          </span>
+          <span className="chat-send-confirm-actions">
+            <TextButton size="sm" onClick={() => setConfirmValue(null)} disabled={resolveAction.isPending}>
+              {t('sendConfirm.cancel')}
+            </TextButton>
+            <Button
+              variant="primary"
+              size="sm"
+              icon="paper-plane-tilt"
+              onClick={() => handleSelect(confirmOption.value)}
+              disabled={resolveAction.isPending || turnInFlight}
+              loading={resolveAction.isPending}
+            >
+              {t('sendConfirm.send')}
+            </Button>
+          </span>
+        </div>
+      )}
       {error && <span className="chat-quick-options-error" role="alert">{error}</span>}
     </div>
   )

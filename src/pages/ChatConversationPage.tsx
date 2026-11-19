@@ -58,6 +58,15 @@ export default function ChatConversationPage() {
     }
   }, [conversationId]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Right after the final send (phase → en_espera) the worker sends in the
+  // background and reports back with a message: poll faster so it shows soon.
+  const phase = conversation?.phase
+  const prevPhase = useRef(phase)
+  useEffect(() => {
+    if (phase === 'en_espera' && prevPhase.current && prevPhase.current !== 'en_espera') triggerFastPoll()
+    prevPhase.current = phase
+  }, [phase]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const messages: AgentMessage[] = conversation?.messages ?? []
 
@@ -100,10 +109,6 @@ export default function ChatConversationPage() {
     })
   }
 
-  function handleUndoExpired() {
-    triggerFastPoll()
-  }
-
   if (isLoading && !startingNew && messages.length === 0) {
     return (
       <div className="asistente-layout">
@@ -128,7 +133,6 @@ export default function ChatConversationPage() {
                 message={msg}
                 prevMessage={messages[idx - 1]}
                 conversationId={conversationId ?? ''}
-                onUndoExpired={handleUndoExpired}
               />
             ))}
 

@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { createConversation } from '../../api/agent'
 import { toast } from '../ui'
-import type { RFQDetail, SendRequestsResponse, SupplierCreate, SupplierRead } from '../../types/rfq'
+import type { RFQDetail, SupplierCreate, SupplierRead } from '../../types/rfq'
 import type { BuyerActionRead } from '../../types/buyerAction'
 import type { InboundMessageRead } from '../../types/inbound'
 import type { QuoteListItem } from '../../types/quote'
@@ -41,7 +41,6 @@ export interface CommercialRequestDetailProps {
   defaultChannel?: 'google' | 'outlook' | null
   sendPending: boolean
   sendError: Error | null
-  sendResult?: SendRequestsResponse
   onSend: (channel?: 'google' | 'outlook') => void
   onCloseSupplier: (supplierId: string) => void
   closingSupplierId: string | null

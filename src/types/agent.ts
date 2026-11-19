@@ -9,7 +9,9 @@ export type ConversationPhase =
 export type CardState = 'pending' | 'resolved' | 'outdated' | 'dismissed'
 
 export interface AgentCard {
-  type: 'rfq_summary' | 'supplier_picker' | 'quick_options' | 'undo' | 'approval'
+  // 'undo' is legacy (the undo window was removed): old conversations may still
+  // hold one, and it renders as a static "sent" line.
+  type: 'rfq_summary' | 'supplier_picker' | 'quick_options' | 'mailbox_required' | 'undo' | 'approval'
   payload: Record<string, unknown>
   version: string
   state: CardState
@@ -73,6 +75,9 @@ export interface ActionResponse {
   card?: AgentCard
   message?: string
   status?: string
+  // Final send (phase 'en_espera'): how many suppliers it went to and from which address.
+  sent_to?: number
+  sent_from?: string
 }
 
 export interface RfqSummaryCard {
@@ -133,6 +138,8 @@ export interface QuickOptionsCardPayload {
   field?: string
   label?: string
   options: QuickOption[]
+  // Only on the 'send_channel' card: how many suppliers the send goes to.
+  supplier_count?: number
 }
 
 export interface SupplierPickerCardPayload {
@@ -140,10 +147,18 @@ export interface SupplierPickerCardPayload {
   confirm_token: string
 }
 
+/** Posted instead of the supplier picker when the request is ready but there is no usable mailbox. */
+export interface MailboxRequiredCardPayload {
+  rfq_id: string
+  /** none = no mailbox connected; address_unknown = connected but its address isn't stored. */
+  reason: 'none' | 'address_unknown'
+}
+
+/** Legacy: undo cards from before the undo window was removed. */
 export interface UndoCardPayload {
   sent_to: number
-  expires_at: string
-  idempotency_key: string
+  expires_at?: string
+  idempotency_key?: string
 }
 
 export interface GroundingEntry {

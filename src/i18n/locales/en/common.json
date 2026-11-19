@@ -112,7 +112,11 @@
     "incoterm_place_required": "Named place is required when an Incoterm is set.",
     "response_checklist_required": "At least one required response field must be selected.",
     "invalid_enum_value": "One or more fields have an invalid value.",
-    "mailbox_address_unknown": "Reconnect your mailbox in Settings → Email: we don't have its address on file to send from."
+    "mailbox_address_unknown": "Reconnect your mailbox in Settings → Email: we don't have its address on file to send from.",
+    "no_mailbox_connected": "Connect Gmail or Outlook in Settings → Email to send. Requests always go out from your own mailbox.",
+    "channel_not_connected": "That mailbox isn't connected anymore. Connect it again in Settings → Email, or choose another one.",
+    "send_partially_failed": "Part of the request went out, but the rest couldn't be sent. Retrying only sends to the suppliers still missing.",
+    "send_failed": "Your mailbox couldn't send the request. Nothing went out; try again."
   },
   "field": {
     "optional": "optional"
