@@ -217,6 +217,7 @@
     "priceBlocked": {
       "moq_above_requested_quantity": "The supplier's MOQ exceeds the requested quantity.",
       "cost_line_amount_missing": "A separately stated cost has no amount, so the total is incomplete.",
+      "cost_line_conversion": "A charge is in a currency or unit that can’t be converted yet, so the total is incomplete.",
       "unquoted_freight": "Freight was itemized by another supplier but not addressed here.",
       "unquoted_plates": "Plates were itemized by another supplier but not addressed here.",
       "unquoted_tooling": "Tooling was itemized by another supplier but not addressed here.",

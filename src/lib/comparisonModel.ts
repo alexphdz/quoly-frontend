@@ -14,6 +14,7 @@ function isComparabilityFlag(field: string): boolean {
   return CONVERSION_FLAGS.includes(field)
     || field === 'moq_above_requested_quantity'
     || field === 'cost_line_amount_missing'
+    || field === 'cost_line_conversion'
     || field.startsWith('unquoted_')
 }
 
@@ -27,7 +28,7 @@ export type NotComparableReason = 'conversion' | 'unquoted' | 'cost_line_amount'
 function notComparableReasons(row: ComparisonRow): NotComparableReason[] {
   const fields = row.missing_fields
   const reasons: NotComparableReason[] = []
-  if (fields.some(field => CONVERSION_FLAGS.includes(field))) reasons.push('conversion')
+  if (fields.some(field => CONVERSION_FLAGS.includes(field) || field === 'cost_line_conversion')) reasons.push('conversion')
   if (fields.some(field => field.startsWith('unquoted_'))) reasons.push('unquoted')
   if (fields.includes('cost_line_amount_missing')) reasons.push('cost_line_amount')
   if (fields.includes('moq_above_requested_quantity')) reasons.push('moq')
@@ -85,7 +86,8 @@ export interface ComparisonModel {
 
 export function comparablePrice(row: ComparisonRow): number | null {
   if (row.missing_fields.some(field => field === 'moq_above_requested_quantity'
-    || field === 'cost_line_amount_missing' || field.startsWith('unquoted_'))) return null
+    || field === 'cost_line_amount_missing' || field === 'cost_line_conversion'
+    || field.startsWith('unquoted_'))) return null
   return row.all_in_price ?? row.normalized_price ?? null
 }
 

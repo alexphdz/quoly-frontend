@@ -22,7 +22,7 @@ interface Props {
   awardedQuoteId?: string | null
 }
 
-const COMPARISON_BLOCK_FLAGS = ['currency_conversion', 'unit_conversion', 'moq_above_requested_quantity', 'cost_line_amount_missing']
+const COMPARISON_BLOCK_FLAGS = ['currency_conversion', 'unit_conversion', 'moq_above_requested_quantity', 'cost_line_amount_missing', 'cost_line_conversion']
 
 function priceBlocked(row: ComparisonRow) {
   return row.missing_fields.some(field => COMPARISON_BLOCK_FLAGS.includes(field) || field.startsWith('unquoted_'))

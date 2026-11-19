@@ -47,6 +47,7 @@
     "payment_terms": "Payment terms",
     "moq_above_requested_quantity": "Minimum order above the requested quantity",
     "cost_line_amount_missing": "Amount for a charge",
+    "cost_line_conversion": "Conversion of a charge",
     "unquoted_product": "Product",
     "unquoted_plates": "Printing plates",
     "unquoted_tooling": "Die / tooling",

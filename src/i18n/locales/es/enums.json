@@ -47,6 +47,7 @@
     "payment_terms": "Condiciones de pago",
     "moq_above_requested_quantity": "Mínimo de compra mayor a la cantidad solicitada",
     "cost_line_amount_missing": "Monto de algún cargo",
+    "cost_line_conversion": "Conversión de algún cargo",
     "unquoted_product": "Producto",
     "unquoted_plates": "Grabados",
     "unquoted_tooling": "Suaje / herramental",

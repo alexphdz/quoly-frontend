@@ -217,6 +217,7 @@
     "priceBlocked": {
       "moq_above_requested_quantity": "El pedido mínimo del proveedor supera la cantidad solicitada.",
       "cost_line_amount_missing": "Un costo mencionado no tiene monto, así que el total está incompleto.",
+      "cost_line_conversion": "Un cargo está en una moneda o unidad que aún no se puede convertir, así que el total está incompleto.",
       "unquoted_freight": "Otro proveedor indicó el flete por separado y esta oferta no lo aclara.",
       "unquoted_plates": "Otro proveedor indicó las placas por separado y esta oferta no lo aclara.",
       "unquoted_tooling": "Otro proveedor indicó el herramental por separado y esta oferta no lo aclara.",
