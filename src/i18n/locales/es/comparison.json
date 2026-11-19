@@ -244,8 +244,7 @@
   },
   "line": {
     "title": "Comparación por línea",
-    "subtitle": "La adjudicación cubre toda la solicitud.",
-    "splitAward": "Adjudicación dividida · próximamente",
+    "subtitle": "Precios de cada línea de la solicitud, lado a lado.",
     "lineItem": "Línea",
     "bestForLine": "Mejor para la línea",
     "headers": {

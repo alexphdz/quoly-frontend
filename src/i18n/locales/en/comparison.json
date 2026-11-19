@@ -244,8 +244,7 @@
   },
   "line": {
     "title": "Per-line comparison",
-    "subtitle": "The award covers the whole request.",
-    "splitAward": "Split award · coming soon",
+    "subtitle": "Prices for each line of the request, side by side.",
     "lineItem": "Line item",
     "bestForLine": "Best for line",
     "headers": {

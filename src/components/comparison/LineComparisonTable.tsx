@@ -29,7 +29,6 @@ export default function LineComparisonTable({
     <section className="ds-section">
       <h2>{t('line.title')}</h2>
       <p className="ds-meta">{t('line.subtitle')}</p>
-      <p className="ds-meta">{t('line.splitAward')}</p>
       {Object.entries(groups).map(([lineItemId, lineRows]) => {
         const rankedQuoteIds = ranking[lineItemId] ?? []
         const sorted = [...lineRows].sort((a, b) => {
