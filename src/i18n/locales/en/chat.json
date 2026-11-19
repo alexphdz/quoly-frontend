@@ -98,12 +98,15 @@
     "emailPlaceholder": "Email",
     "dismiss": "Cancel",
     "directoryLabel": "Suppliers from your directory",
-    "fromGmail": "From your Gmail",
-    "sent": "Sent",
     "chosen": "{{count}} of {{total}} selected",
     "emptyHint": "You don't have saved suppliers yet. Add the first one with their email to send them the request.",
     "sendN_one": "Send to 1 supplier",
-    "sendN_other": "Send to {{count}} suppliers"
+    "sendN_other": "Send to {{count}} suppliers",
+    "resolved": "Suppliers chosen",
+    "sentFrom": "Will be sent from {{email}} ({{provider}})",
+    "sentFromUnknown": "Will be sent from your {{provider}}. Reconnect the mailbox in Settings → Email.",
+    "mailboxNext": "Next you'll choose which email it's sent from.",
+    "noMailbox": "No mailbox connected"
   },
   "undo": {
     "banner": "Sending to {{count}} suppliers · {{seconds}}s to undo",
@@ -133,11 +136,13 @@
     "sendCancelled": "Send cancelled"
   },
   "errors": {
+    "noMailbox": "You don't have a mailbox connected. Connect Gmail or Outlook in Settings → Email to be able to send.",
     "turnFailed": "Something went wrong. Try again.",
     "conversationNotFound": "Conversation not found.",
     "tryAgain": "Try again",
     "cardExpired": "The summary has changed. Please review again.",
-    "agentError": "Could not respond. Your message is still here."
+    "agentError": "Could not respond. Your message is still here.",
+    "mailboxAddressUnknown": "We don't know the address of your connected mailbox. Reconnect it in Settings → Email to be able to send."
   },
   "approval": {
     "whereFrom": "Where does this come from?",
@@ -172,5 +177,8 @@
     "reviewing": "Reviewing the details...",
     "preparing": "Preparing the summary..."
   },
-  "agentName": "Agent"
+  "agentName": "Agent",
+  "quickOptions": {
+    "default": "default"
+  }
 }

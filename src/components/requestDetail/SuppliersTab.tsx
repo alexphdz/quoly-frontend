@@ -9,6 +9,7 @@ import type { ApiError } from '../../api/client'
 import type { EmailPayload, SupplierRead } from '../../types/rfq'
 import AddSupplierForm from '../rfq/AddSupplierForm'
 import AddSupplierFromDirectory from '../rfq/AddSupplierFromDirectory'
+import ChannelSelect from '../rfq/ChannelSelect'
 import EmailPayloadDisplay from '../rfq/EmailPayloadDisplay'
 import type { CommercialRequestDetailProps, DetailTab } from './CommercialRequestDetail'
 import { CLOSABLE, stageOf } from './stages'
@@ -33,9 +34,11 @@ export default function SuppliersTab(props: CommercialRequestDetailProps & { onT
   const readOnly = rfq.status === 'decided' || rfq.status === 'closed'
   const mailbox = props.googleConnected || !!props.outlookConnected
   const bothConnected = props.googleConnected && !!props.outlookConnected
-  const [channel, setChannel] = useState<'google' | 'outlook'>(
-    props.defaultChannel ?? (props.outlookConnected && !props.googleConnected ? 'outlook' : 'google'),
-  )
+  // Starts at the default mailbox; `picked` is the override for this request.
+  // Derived (not seeded into state) so it stays right when the profile loads late.
+  const [picked, setChannel] = useState<'google' | 'outlook' | null>(null)
+  const channel: 'google' | 'outlook' =
+    picked ?? props.defaultChannel ?? (props.outlookConnected && !props.googleConnected ? 'outlook' : 'google')
   // Single mailbox → implicit; both → honor the selector; none → undefined (JSON fallback).
   const effectiveChannel: 'google' | 'outlook' | undefined = bothConnected
     ? channel
@@ -237,20 +240,16 @@ export default function SuppliersTab(props: CommercialRequestDetailProps & { onT
         description={(
           <>
             {mailbox ? t('detalle.suppliers.confirmMailbox') : t('detalle.suppliers.confirmNoMailbox')}
-            {bothConnected && (
-              <div style={{ marginTop: '0.75rem' }}>
-                <SegmentedControl
-                  label={t('send.channel.label')}
-                  size="sm"
-                  value={channel}
-                  onChange={setChannel}
-                  options={[
-                    { value: 'google', label: t('send.channel.gmail') },
-                    { value: 'outlook', label: t('send.channel.outlook') },
-                  ]}
-                />
-              </div>
-            )}
+            <ChannelSelect
+              className="mt-3"
+              googleConnected={props.googleConnected}
+              outlookConnected={!!props.outlookConnected}
+              googleEmail={props.googleEmail}
+              outlookEmail={props.outlookEmail}
+              value={channel}
+              onChange={setChannel}
+              disabled={props.sendPending}
+            />
           </>
         )}
         details={suppliers.filter(s => stageOf(s.status).key === 'not_contacted').map(s => ({ label: s.name, value: s.email }))}

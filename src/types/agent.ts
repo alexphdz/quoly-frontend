@@ -67,7 +67,10 @@ export interface ConversationUpdates {
 
 export interface ActionResponse {
   rfq_id?: string
-  phase: ConversationPhase
+  // 'eligiendo_buzon': the supplier picker was accepted but the request is not
+  // queued yet — the backend answers with the `send_channel` quick_options card.
+  phase: ConversationPhase | 'eligiendo_buzon'
+  card?: AgentCard
   message?: string
   status?: string
 }
@@ -117,6 +120,19 @@ export interface PendingAttachment {
   fileType: 'pdf' | 'docx' | 'image'
   state: AttachmentUploadState
   objectUrl?: string      // for image thumbnails
+}
+
+export interface QuickOption {
+  value: string
+  label: string
+  default?: boolean
+}
+
+export interface QuickOptionsCardPayload {
+  // 'send_channel' = which connected mailbox the request goes out from.
+  field?: string
+  label?: string
+  options: QuickOption[]
 }
 
 export interface SupplierPickerCardPayload {

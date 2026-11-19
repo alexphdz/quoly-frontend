@@ -52,7 +52,7 @@ export function resolveAction(
   payload: {
     card_id: string
     card_version: string
-    action: 'confirm' | 'edit' | 'dismiss' | 'discard' | 'submit' | 'undo' | 'approve'
+    action: 'confirm' | 'edit' | 'dismiss' | 'discard' | 'submit' | 'undo' | 'approve' | 'select'
     confirm_token?: string
     payload?: Record<string, unknown>
   },

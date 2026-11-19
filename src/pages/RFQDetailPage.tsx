@@ -121,6 +121,8 @@ export default function RFQDetailPage() {
         draftQuotes={draftQuotes}
         googleConnected={!!user?.google_connected}
         outlookConnected={!!user?.outlook_connected}
+        googleEmail={user?.google_email}
+        outlookEmail={user?.outlook_email}
         defaultChannel={user?.default_send_channel ?? undefined}
         sendPending={sendRequests.isPending}
         sendError={sendRequests.error}
@@ -335,7 +337,7 @@ export default function RFQDetailPage() {
             </div>
             <div className="flex gap-2">
               <Button variant="secondary" onClick={() => setShowAddSupplier(true)}><Icon name="person_add" size={16} /> {t('detail.addSuppliers')}</Button>
-              <SendButton pendingCount={pendingCount} googleConnected={!!user?.google_connected} outlookConnected={!!user?.outlook_connected} defaultChannel={user?.default_send_channel ?? undefined} isPending={sendRequests.isPending} error={sendRequests.error} result={sendRequests.data} onSend={(channel) => sendRequests.mutate(channel)} />
+              <SendButton pendingCount={pendingCount} googleConnected={!!user?.google_connected} outlookConnected={!!user?.outlook_connected} googleEmail={user?.google_email} outlookEmail={user?.outlook_email} defaultChannel={user?.default_send_channel ?? undefined} isPending={sendRequests.isPending} error={sendRequests.error} result={sendRequests.data} onSend={(channel) => sendRequests.mutate(channel)} />
             </div>
           </div>
           <SupplierList

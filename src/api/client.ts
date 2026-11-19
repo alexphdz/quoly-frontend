@@ -44,12 +44,15 @@ export function tokenExpiresWithin(ms: number): boolean {
 export class ApiError extends Error {
   status: number
   detail: string
+  /** Raw backend error code (`detail` may already be translated for display). */
+  code?: string
 
-  constructor(status: number, detail: string) {
+  constructor(status: number, detail: string, code?: string) {
     super(detail)
     this.name = 'ApiError'
     this.status = status
     this.detail = detail
+    this.code = code
   }
 }
 
@@ -135,7 +138,7 @@ async function handleResponse<T>(
   if (!res.ok) {
     const body = await res.json().catch(() => ({}))
     const detail = apiErrorDetail(body.detail, 'Request failed')
-    throw new ApiError(res.status, detail)
+    throw new ApiError(res.status, detail, typeof body.detail === 'string' ? body.detail : undefined)
   }
 
   return res.json() as Promise<T>

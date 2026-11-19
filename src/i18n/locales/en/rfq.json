@@ -545,6 +545,13 @@
       "label": "Send from",
       "gmail": "Gmail",
       "outlook": "Outlook"
+    },
+    "from": {
+      "label": "Will be sent from:",
+      "unknownAddress": "Will be sent from your {{provider}}.",
+      "reconnectHint": "Reconnect your mailbox in Settings → Email to see and use its address.",
+      "change": "Change",
+      "chooseLabel": "Send this request from"
     }
   },
   "sync": {

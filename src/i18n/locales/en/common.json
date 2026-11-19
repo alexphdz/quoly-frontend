@@ -111,7 +111,8 @@
     "invalid_dimensions": "Dimensions must be greater than zero.",
     "incoterm_place_required": "Named place is required when an Incoterm is set.",
     "response_checklist_required": "At least one required response field must be selected.",
-    "invalid_enum_value": "One or more fields have an invalid value."
+    "invalid_enum_value": "One or more fields have an invalid value.",
+    "mailbox_address_unknown": "Reconnect your mailbox in Settings → Email: we don't have its address on file to send from."
   },
   "field": {
     "optional": "optional"
@@ -265,7 +266,13 @@
       "connecting": "Connecting…",
       "disconnect": "Disconnect",
       "disconnecting": "Disconnecting…",
-      "comingSoon": "Coming soon"
+      "comingSoon": "Coming soon",
+      "connectedAs": "Connected as",
+      "reconnectHint": "Reconnect to see and use the address.",
+      "defaultMailbox": "Default mailbox for sending requests",
+      "defaultMailboxHelper": "Requests go out from this email. You can change it on each request.",
+      "defaultMailboxSaved": "Default mailbox saved",
+      "defaultMailboxError": "Could not save the default mailbox."
     },
     "demo": {
       "title": "Demo data",

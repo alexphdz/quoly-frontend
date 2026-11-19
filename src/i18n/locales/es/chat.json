@@ -98,12 +98,15 @@
     "emailPlaceholder": "Correo electrónico",
     "dismiss": "Cancelar",
     "directoryLabel": "Proveedores de tu directorio",
-    "fromGmail": "Desde tu Gmail",
-    "sent": "Enviado",
     "chosen": "{{count}} de {{total}} elegidos",
     "emptyHint": "Aún no tienes proveedores guardados. Agrega el primero con su correo para enviarle la solicitud.",
     "sendN_one": "Enviar a 1 proveedor",
-    "sendN_other": "Enviar a {{count}} proveedores"
+    "sendN_other": "Enviar a {{count}} proveedores",
+    "resolved": "Proveedores elegidos",
+    "sentFrom": "Se enviará desde {{email}} ({{provider}})",
+    "sentFromUnknown": "Se enviará desde tu {{provider}}. Reconecta el buzón en Ajustes → Correo.",
+    "mailboxNext": "Después eliges desde qué correo se envía.",
+    "noMailbox": "Sin buzón conectado"
   },
   "undo": {
     "banner": "Enviando a {{count}} proveedores · {{seconds}}s para deshacer",
@@ -134,10 +137,12 @@
   },
   "errors": {
     "turnFailed": "Algo salió mal. Intenta de nuevo.",
+    "noMailbox": "No tienes un buzón de correo conectado. Conecta Gmail u Outlook en Ajustes → Correo para poder enviar.",
     "conversationNotFound": "Conversación no encontrada.",
     "tryAgain": "Reintentar",
     "cardExpired": "El resumen ha cambiado. Por favor revísalo de nuevo.",
-    "agentError": "No pude responder. Tu mensaje sigue aquí."
+    "agentError": "No pude responder. Tu mensaje sigue aquí.",
+    "mailboxAddressUnknown": "No conocemos la dirección de tu buzón conectado. Reconéctalo en Ajustes → Correo para poder enviar."
   },
   "approval": {
     "whereFrom": "¿De dónde viene esto?",
@@ -172,5 +177,8 @@
     "reviewing": "Revisando los datos...",
     "preparing": "Preparando el resumen..."
   },
-  "agentName": "Agente"
+  "agentName": "Agente",
+  "quickOptions": {
+    "default": "predeterminado"
+  }
 }
