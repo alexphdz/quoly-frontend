@@ -17,6 +17,7 @@ import { ACCENTS, ACCENT_SWATCH, useTheme, type ThemePreference } from '../compo
 import ProfilePhotoDialog from '../components/settings/ProfilePhotoDialog'
 import { displayNameFromEmail } from '../lib/displayName'
 import GmailIcon from '../components/icons/GmailIcon'
+import { connectedMailboxes, defaultMailbox, type SendChannel } from '../lib/mailbox'
 
 const passwordSchema = z
   .object({
@@ -256,12 +257,15 @@ function IntegrationRow({
   name,
   description,
   connected,
+  email,
   action,
 }: {
   mark: ReactNode
   name: string
   description: string
   connected: boolean
+  /** Address of the connected mailbox; null when it was connected before Quoly stored it. */
+  email?: string | null
   action: ReactNode
 }) {
   const { t } = useTranslation('common')
@@ -274,6 +278,11 @@ function IntegrationRow({
           <StatusBadge tone={connected ? 'success' : 'neutral'}>{connected ? t('settings.integrations.connected') : t('settings.integrations.notConnected')}</StatusBadge>
         </div>
         {description ? <p className="ds-meta">{description}</p> : null}
+        {connected && (
+          email
+            ? <p className="ds-meta">{t('settings.integrations.connectedAs')} <strong className="st-integration-email">{email}</strong></p>
+            : <p className="ds-meta st-integration-reconnect">{t('settings.integrations.reconnectHint')}</p>
+        )}
       </div>
       <div className="st-integration-action">{action}</div>
     </div>
@@ -311,6 +320,52 @@ function MailboxAction({
   )
 }
 
+// Which connected mailbox new quote requests go out from. Saved on the profile
+// (PATCH /me default_send_channel); each request can still override it.
+function DefaultMailboxRow() {
+  const { t } = useTranslation('common')
+  const { user, updateProfile } = useAuth()
+  const mailboxes = connectedMailboxes(user)
+  if (mailboxes.length === 0) return null
+
+  const providerName = (channel: SendChannel) =>
+    channel === 'outlook' ? t('settings.integrations.outlook') : t('settings.integrations.gmail')
+  const current = defaultMailbox(mailboxes, user?.default_send_channel)
+
+  const change = (channel: SendChannel) => {
+    updateProfile.mutate(
+      { default_send_channel: channel },
+      { onSuccess: () => toast(t('settings.integrations.defaultMailboxSaved')) },
+    )
+  }
+
+  return (
+    <div className="st-default-mailbox">
+      <div className="st-preference-row">
+        <div className="st-preference-copy">
+          <strong>{t('settings.integrations.defaultMailbox')}</strong>
+          <span>{t('settings.integrations.defaultMailboxHelper')}</span>
+        </div>
+        <div className="st-preference-select st-default-mailbox-select">
+          <Select
+            aria-label={t('settings.integrations.defaultMailbox')}
+            value={current?.channel ?? 'google'}
+            onChange={event => change(event.target.value as SendChannel)}
+            disabled={updateProfile.isPending}
+            options={mailboxes.map(m => ({
+              value: m.channel,
+              label: m.email ? `${providerName(m.channel)} · ${m.email}` : providerName(m.channel),
+            }))}
+          />
+        </div>
+      </div>
+      {updateProfile.error && (
+        <FormFeedback>{t('settings.integrations.defaultMailboxError')}</FormFeedback>
+      )}
+    </div>
+  )
+}
+
 function IntegrationsSection() {
   const { t } = useTranslation('common')
   const {
@@ -323,6 +378,7 @@ function IntegrationsSection() {
   } = useAuth()
   const gmailConnected = !!user?.google_connected
   const outlookConnected = !!user?.outlook_connected
+  const mailboxes = connectedMailboxes(user)
 
   return (
     <section id="integrations" className="st-settings-section st-integrations-section">
@@ -334,6 +390,7 @@ function IntegrationsSection() {
             name={t('settings.integrations.gmail')}
             description={t('settings.integrations.gmailDescription')}
             connected={gmailConnected}
+            email={mailboxes.find(m => m.channel === 'google')?.email}
             action={(
               <MailboxAction
                 loading={userLoading}
@@ -350,6 +407,7 @@ function IntegrationsSection() {
             name={t('settings.integrations.outlook')}
             description={t('settings.integrations.outlookDescription')}
             connected={outlookConnected}
+            email={mailboxes.find(m => m.channel === 'outlook')?.email}
             action={(
               <MailboxAction
                 loading={userLoading}
@@ -362,6 +420,7 @@ function IntegrationsSection() {
             )}
           />
         </div>
+        <DefaultMailboxRow />
         <p className="st-integration-note">{t('settings.integrations.note')}</p>
       </div>
     </section>
