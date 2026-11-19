@@ -111,7 +111,8 @@
     "invalid_dimensions": "Las dimensiones deben ser mayores que cero.",
     "incoterm_place_required": "El lugar nombrado es obligatorio cuando hay Incoterm.",
     "response_checklist_required": "Debes seleccionar al menos un campo de respuesta obligatorio.",
-    "invalid_enum_value": "Uno o más campos tienen un valor inválido."
+    "invalid_enum_value": "Uno o más campos tienen un valor inválido.",
+    "mailbox_address_unknown": "Reconecta tu buzón en Ajustes → Correo: no tenemos guardada su dirección para enviar."
   },
   "field": {
     "optional": "opcional"
@@ -265,7 +266,13 @@
       "connecting": "Conectando…",
       "disconnect": "Desconectar",
       "disconnecting": "Desconectando…",
-      "comingSoon": "Próximamente"
+      "comingSoon": "Próximamente",
+      "connectedAs": "Conectado como",
+      "reconnectHint": "Reconecta para ver y usar la dirección.",
+      "defaultMailbox": "Buzón por defecto para enviar solicitudes",
+      "defaultMailboxHelper": "Las solicitudes salen de este correo. Puedes cambiarlo en cada solicitud.",
+      "defaultMailboxSaved": "Buzón por defecto guardado",
+      "defaultMailboxError": "No se pudo guardar el buzón por defecto."
     },
     "demo": {
       "title": "Datos de demostración",

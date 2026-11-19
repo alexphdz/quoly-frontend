@@ -545,6 +545,13 @@
       "label": "Enviar desde",
       "gmail": "Gmail",
       "outlook": "Outlook"
+    },
+    "from": {
+      "label": "Se enviará desde:",
+      "unknownAddress": "Se enviará desde tu {{provider}}.",
+      "reconnectHint": "Reconecta tu buzón en Ajustes → Correo para ver y usar la dirección.",
+      "change": "Cambiar",
+      "chooseLabel": "Enviar esta solicitud desde"
     }
   },
   "sync": {
