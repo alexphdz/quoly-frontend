@@ -36,7 +36,7 @@
 .cx-tech-list > div > span { color: var(--color-text-secondary); }
 .cx-analysis { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr); gap: 40px; align-items: start; }
 .cx-analysis-title { color: var(--color-text-primary); }
-.cx-analysis > :first-child > p { margin: 12px 0; max-width: 68ch; font-size: 14px; line-height: 22px; }
+.cx-analysis > :first-child > p { margin: 12px 0; max-width: 68ch; font-size: 14px; line-height: 22px; white-space: pre-line; }
 .cx-analysis ul { display: grid; gap: 10px; margin: 12px 0; padding: 0; list-style: none; }
 .cx-analysis li { display: flex; gap: 8px; font-size: 12px; line-height: 18px; }
 .cx-analysis li svg { flex: none; color: var(--color-status-warning-text); }

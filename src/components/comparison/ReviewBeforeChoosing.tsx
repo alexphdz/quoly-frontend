@@ -15,10 +15,16 @@ const ICONS: Record<IssueKind, string> = {
   fx: 'balance',
 }
 
+/** Lowercase a label for use mid-sentence, but keep acronyms such as "MOQ". */
+function lowerFirst(text: string): string {
+  if (text.length > 1 && text[1] === text[1].toUpperCase() && text[1] !== text[1].toLowerCase()) return text
+  return text.charAt(0).toLowerCase() + text.slice(1)
+}
+
 export default function ReviewBeforeChoosing({ issues, f }: { issues: ReviewIssue[], f: CmpFormat }) {
   const { t } = useTranslation('comparison')
   const labels = useEnumLabels()
-  const list = (items: string[]) => new Intl.ListFormat(f.fmt.locale, { type: 'conjunction' }).format(items)
+  const list = (items: string[]) => new Intl.ListFormat(f.fmt.locale, { type: 'conjunction' }).format([...new Set(items)])
 
   const message = (issue: ReviewIssue) => {
     const amount = issue.impact != null ? f.total(issue.impact) : null
@@ -40,10 +46,14 @@ export default function ReviewBeforeChoosing({ issues, f }: { issues: ReviewIssu
       case 'missing_fields':
         return t('cmp.review.missing_fields', {
           supplier: issue.supplier,
-          fields: list((issue.fields ?? []).map(field => labels.missingField(field).toLowerCase())),
+          fields: list((issue.fields ?? []).map(field => lowerFirst(labels.missingField(field)))),
         })
       case 'not_comparable':
-        return t('cmp.review.not_comparable', { supplier: issue.supplier, currency: f.currency, unit: f.unit })
+        return t('cmp.review.not_comparable', {
+          supplier: issue.supplier,
+          reasons: list((issue.reasons?.length ? issue.reasons : ['conversion' as const])
+            .map(reason => t(`cmp.review.reasons.${reason}`, { currency: f.currency, unit: f.unit }))),
+        })
       case 'fx':
         return t('cmp.review.fx', {
           supplier: issue.supplier,

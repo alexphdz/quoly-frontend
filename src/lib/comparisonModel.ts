@@ -5,6 +5,36 @@ const CONVERSION_FLAGS = ['currency_conversion', 'unit_conversion']
 const EXTRA_KINDS: CostKind[] = ['plates', 'tooling', 'freight', 'other']
 const FX_SWING = 0.02
 
+/**
+ * Flags that explain why a price is not comparable. They are reported through
+ * the `not_comparable` issue (with a readable reason), so they are kept out of
+ * the generic "missing details" list.
+ */
+function isComparabilityFlag(field: string): boolean {
+  return CONVERSION_FLAGS.includes(field)
+    || field === 'moq_above_requested_quantity'
+    || field === 'cost_line_amount_missing'
+    || field === 'cost_line_conversion'
+    || field.startsWith('unquoted_')
+}
+
+/** Missing-field codes that are real gaps (price, lead time, checklist items…). */
+export function detailGaps(row: ComparisonRow): string[] {
+  return row.missing_fields.filter(field => !isComparabilityFlag(field))
+}
+
+export type NotComparableReason = 'conversion' | 'unquoted' | 'cost_line_amount' | 'moq'
+
+function notComparableReasons(row: ComparisonRow): NotComparableReason[] {
+  const fields = row.missing_fields
+  const reasons: NotComparableReason[] = []
+  if (fields.some(field => CONVERSION_FLAGS.includes(field) || field === 'cost_line_conversion')) reasons.push('conversion')
+  if (fields.some(field => field.startsWith('unquoted_'))) reasons.push('unquoted')
+  if (fields.includes('cost_line_amount_missing')) reasons.push('cost_line_amount')
+  if (fields.includes('moq_above_requested_quantity')) reasons.push('moq')
+  return reasons
+}
+
 export interface RankedRow {
   row: ComparisonRow
   /** 1-based; null when the quote has no comparable price. */
@@ -41,6 +71,7 @@ export interface ReviewIssue {
   percent?: number
   currency?: string
   rate?: number
+  reasons?: NotComparableReason[]
 }
 
 export interface ComparisonModel {
@@ -55,7 +86,8 @@ export interface ComparisonModel {
 
 export function comparablePrice(row: ComparisonRow): number | null {
   if (row.missing_fields.some(field => field === 'moq_above_requested_quantity'
-    || field === 'cost_line_amount_missing' || field.startsWith('unquoted_'))) return null
+    || field === 'cost_line_amount_missing' || field === 'cost_line_conversion'
+    || field.startsWith('unquoted_'))) return null
   return row.all_in_price ?? row.normalized_price ?? null
 }
 
@@ -95,8 +127,7 @@ export function buildComparisonModel(cmp: ComparisonResponse, requestedQuantity?
   let rank = 0
   const ranked: RankedRow[] = sorted.map(row => {
     const comparable = comparablePrice(row)
-    const blocked = row.missing_fields.some(field => [...CONVERSION_FLAGS, 'moq_above_requested_quantity', 'cost_line_amount_missing'].includes(field)
-      || field.startsWith('unquoted_'))
+    const blocked = row.missing_fields.some(isComparabilityFlag)
     const itemized = (row.cost_breakdown ?? []).length > 0
     const mine = quotedKinds(row)
     const unquotedKinds = kindsQuoted.filter(kind => !mine.has(kind) && (itemized || kind !== 'other'))
@@ -104,7 +135,7 @@ export function buildComparisonModel(cmp: ComparisonResponse, requestedQuantity?
     const moq = row.raw_quantity_moq
     const surplus = moq != null && quantity != null && moq > quantity ? moq - quantity : null
     const leadDays = leadTimeRankDays(row.commercial_offer, row.raw_delivery_lead_time_days)
-    const missingFields = row.missing_fields.filter(field => !CONVERSION_FLAGS.includes(field))
+    const missingFields = detailGaps(row)
     return {
       row,
       rank: comparable != null ? ++rank : null,
@@ -139,7 +170,7 @@ export function buildComparisonModel(cmp: ComparisonResponse, requestedQuantity?
     const { row } = item
     const base = { quoteId: row.quote_id, supplier: row.supplier_name }
     if (item.blocked) {
-      issues.push({ ...base, id: `${row.quote_id}-conv`, kind: 'not_comparable', impact: null })
+      issues.push({ ...base, id: `${row.quote_id}-conv`, kind: 'not_comparable', impact: null, reasons: notComparableReasons(row) })
     }
     if (item.unquotedKinds.length > 0) {
       issues.push({ ...base, id: `${row.quote_id}-lines`, kind: 'unquoted_lines', impact: item.unquotedEstimate, kinds: item.unquotedKinds })
@@ -156,7 +187,7 @@ export function buildComparisonModel(cmp: ComparisonResponse, requestedQuantity?
         percent: item.advancePercent,
       })
     }
-    const missing = row.missing_fields.filter(field => !CONVERSION_FLAGS.includes(field))
+    const missing = detailGaps(row)
     if (missing.length > 0) {
       issues.push({ ...base, id: `${row.quote_id}-fields`, kind: 'missing_fields', impact: null, fields: missing })
     }

@@ -934,7 +934,8 @@
       "pallet": "pallets",
       "container": "containers",
       "set": "sets",
-      "pack": "packs"
+      "pack": "packs",
+      "thousand": "thousand pieces"
     },
     "validation": {
       "required": "Required",

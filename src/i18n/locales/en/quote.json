@@ -244,7 +244,7 @@
     "aiNote_one": "Quoly read {{count}} detail. Review it before confirming.",
     "aiNote_other": "Quoly read {{count}} details. Review them before confirming.",
     "confirm": "Confirm quote",
-    "confirmNote": "Confirming doesn't award: the quote enters the comparison.",
+    "confirmNote": "Confirming doesn't close the request: the quote enters the comparison.",
     "confirmNoPrice": "You can confirm it without a price; it won't enter the price comparison.",
     "confirmedNoPrice": "Quote confirmed without a price: it doesn't enter the price comparison.",
     "priceStated": "Price stated by the supplier",

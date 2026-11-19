@@ -934,7 +934,8 @@
       "pallet": "tarimas",
       "container": "contenedores",
       "set": "juegos",
-      "pack": "paquetes"
+      "pack": "paquetes",
+      "thousand": "millares"
     },
     "validation": {
       "required": "Obligatorio",
