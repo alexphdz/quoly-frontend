@@ -10,6 +10,8 @@ interface Props {
   pendingCount: number
   googleConnected: boolean
   outlookConnected?: boolean
+  googleEmail?: string | null
+  outlookEmail?: string | null
   defaultChannel?: SendChannel | null
   isPending: boolean
   error: Error | null
@@ -27,6 +29,8 @@ export default function SendButton({
   pendingCount,
   googleConnected,
   outlookConnected = false,
+  googleEmail,
+  outlookEmail,
   defaultChannel,
   isPending,
   error,
@@ -36,12 +40,14 @@ export default function SendButton({
   const { t } = useTranslation('rfq')
   const payloads = result?.filter(isEmailPayload) ?? []
 
-  const [channel, setChannel] = useState<SendChannel>(
-    defaultChannel ?? (outlookConnected && !googleConnected ? 'outlook' : 'google'),
-  )
+  // Starts at the default mailbox; `picked` is the override for this request.
+  // Derived (not seeded into state) so it stays right when the profile loads late.
+  const [picked, setChannel] = useState<SendChannel | null>(null)
+  const channel: SendChannel =
+    picked ?? defaultChannel ?? (outlookConnected && !googleConnected ? 'outlook' : 'google')
 
   // When a single mailbox is connected the channel is implicit; when both are,
-  // honor the selector. When none, send undefined so the backend uses its JSON
+  // honor the choice (starts at the default mailbox). When none, send undefined so the backend uses its JSON
   // fallback.
   const effectiveChannel: SendChannel | undefined =
     googleConnected && outlookConnected
@@ -57,6 +63,8 @@ export default function SendButton({
       <ChannelSelect
         googleConnected={googleConnected}
         outlookConnected={outlookConnected}
+        googleEmail={googleEmail}
+        outlookEmail={outlookEmail}
         value={channel}
         onChange={setChannel}
         disabled={isPending}

@@ -36,6 +36,8 @@ export interface CommercialRequestDetailProps {
   draftQuotes: number
   googleConnected: boolean
   outlookConnected?: boolean
+  googleEmail?: string | null
+  outlookEmail?: string | null
   defaultChannel?: 'google' | 'outlook' | null
   sendPending: boolean
   sendError: Error | null
