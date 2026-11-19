@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, Icon, TextButton } from '../../../design-system'
-import ChannelSelect, { type SendChannel } from '../../rfq/ChannelSelect'
+import { connectedMailboxes, defaultMailbox } from '../../../lib/mailbox'
 import { useResolveAction } from '../../../hooks/useConversationTurn'
 import { useAuth } from '../../../hooks/useAuth'
 import type { ApiError } from '../../../api/client'
@@ -26,16 +26,11 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
   const candidates: SupplierCandidate[] = payload?.candidates ?? []
   const confirmToken: string = payload?.confirm_token ?? ''
 
-  const googleConnected = !!user?.google_connected
-  const outlookConnected = !!user?.outlook_connected
-  const bothConnected = googleConnected && outlookConnected
-  const [channel, setChannel] = useState<SendChannel>(
-    user?.default_send_channel ?? (outlookConnected && !googleConnected ? 'outlook' : 'google'),
-  )
-  // Single mailbox → implicit; both → selector; none → undefined (backend fallback).
-  const effectiveChannel: SendChannel | undefined = bothConnected
-    ? channel
-    : googleConnected ? 'google' : outlookConnected ? 'outlook' : undefined
+  // The picker no longer chooses the mailbox: with two connected the backend
+  // asks next with a `send_channel` quick_options card; with one it sends from it.
+  const mailboxes = connectedMailboxes(user)
+  const onlyMailbox = mailboxes.length === 1 ? defaultMailbox(mailboxes, user?.default_send_channel) : undefined
+  const onlyMailboxProvider = onlyMailbox?.channel === 'outlook' ? 'Outlook' : 'Gmail'
 
   const isEmptyDirectory = candidates.length === 0
 
@@ -52,7 +47,7 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
     return (
       <div className="chat-card-collapsed">
         <Icon name="check-circle" size={16} weight="fill" color="var(--color-status-success-text)" />
-        {t('supplierPicker.sent', { defaultValue: 'Enviado' })}
+        {t('supplierPicker.resolved')}
       </div>
     )
   }
@@ -95,15 +90,17 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
         payload: {
           selected_supplier_ids: Array.from(selected),
           new_suppliers: newSuppliers,
-          ...(effectiveChannel ? { channel: effectiveChannel } : {}),
         },
       })
     } catch (err) {
-      const detail = (err as ApiError).detail
+      const apiError = err as ApiError
+      const code = apiError.code ?? apiError.detail
       setError(
-        detail === 'no_mailbox_connected' || detail === 'channel_not_connected'
-          ? t('errors.noMailbox')
-          : t('errors.turnFailed'),
+        code === 'mailbox_address_unknown'
+          ? t('errors.mailboxAddressUnknown')
+          : code === 'no_mailbox_connected' || code === 'channel_not_connected'
+            ? t('errors.noMailbox')
+            : t('errors.turnFailed'),
       )
     }
   }
@@ -198,23 +195,15 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
       {error && <div className="chat-supplier-card-error">{error}</div>}
 
       <div className="chat-supplier-card-footer">
-        {bothConnected
-          ? (
-            <ChannelSelect
-              googleConnected={googleConnected}
-              outlookConnected={outlookConnected}
-              value={channel}
-              onChange={setChannel}
-              disabled={resolveAction.isPending}
-            />
-          )
-          : (
-            <span className="chat-supplier-footer-label">
-              {effectiveChannel === 'outlook'
-                ? t('supplierPicker.fromOutlook', { defaultValue: 'Desde tu Outlook' })
-                : t('supplierPicker.fromGmail', { defaultValue: 'Desde tu Gmail' })}
-            </span>
-          )}
+        <span className="chat-supplier-footer-label">
+          {mailboxes.length > 1
+            ? t('supplierPicker.mailboxNext')
+            : onlyMailbox
+              ? onlyMailbox.email
+                ? t('supplierPicker.sentFrom', { email: onlyMailbox.email, provider: onlyMailboxProvider })
+                : t('supplierPicker.sentFromUnknown', { provider: onlyMailboxProvider })
+              : t('supplierPicker.noMailbox')}
+        </span>
         <Button
           variant="primary"
           size="sm"

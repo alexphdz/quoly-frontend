@@ -3171,6 +3171,22 @@ textarea.input {
   margin-top: 0;
 }
 
+/* Opción predeterminada (p. ej. el buzón por defecto en la card send_channel). */
+.chat-quick-option-btn.is-default {
+  border-color: var(--color-status-ai-text);
+  font-weight: 600;
+}
+
+.chat-quick-option-default {
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.chat-quick-options-error {
+  font-size: 0.8125rem;
+  color: var(--color-status-error-text);
+}
+
 /* Summary: corrected field (ref 12m "Corregido") */
 .chat-summary-value-text.is-corrected {
   font-weight: 600;
