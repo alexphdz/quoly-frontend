@@ -8,7 +8,7 @@
   "toastRecorded": "Award recorded",
   "title": "Comparison",
   "redesign": {
-    "subtitle": "Compare the offers and record your decision.",
+    "subtitle": "Compare the offers side by side.",
     "requestData": "Request details",
     "quantity": "Requested quantity",
     "delivery": "Delivery point",
@@ -55,7 +55,7 @@
     "suggestionReason": "Lowest comparable price at {{price}} per {{unit}} among the included offers.",
     "noSuggestion": "No suggestion",
     "noSuggestionReason": "There is not enough comparable price data to suggest an offer.",
-    "suggestionDisclaimer": "This is a suggestion, not an award.",
+    "suggestionDisclaimer": "This is only a suggestion; the decision is yours.",
     "selectSuggested": "Select supplier",
     "decisionTitle": "Purchase decision",
     "decisionRecorded": "The award is recorded. It does not close the request or notify the supplier.",
@@ -333,7 +333,7 @@
       }
     },
     "review": {
-      "title": "Before the award",
+      "title": "Before closing",
       "empty": "Nothing to review. Every quote in the comparison is complete and comparable.",
       "impact": "At stake",
       "unquoted_lines": "{{supplier}} did not quote {{items}}. The lowest other quote for them is {{amount}}.",
@@ -343,9 +343,15 @@
       "advance": "{{supplier}} asks for {{percent}}% in advance: {{amount}} before delivery.",
       "advanceNoAmount": "{{supplier}} asks for {{percent}}% in advance.",
       "missing_fields": "{{supplier}} left out {{fields}}.",
-      "not_comparable": "{{supplier}}'s price can't be converted to {{currency}} per {{unit}} yet.",
+      "not_comparable": "{{supplier}}'s price can't be compared yet: {{reasons}}.",
       "fx": "{{supplier}} quoted in {{currency}} (1 {{currency}} = {{rate}} {{base}}). A {{swing}}% currency move changes its total by {{amount}}.",
-      "openQuote": "Open quote"
+      "openQuote": "Open quote",
+      "reasons": {
+        "conversion": "its price couldn't be converted to {{currency}} per {{unit}}",
+        "unquoted": "it is missing charges that other suppliers quoted",
+        "cost_line_amount": "some of its charges have no amount",
+        "moq": "its minimum order is above the requested quantity"
+      }
     },
     "table": {
       "title": "By supplier",
@@ -418,7 +424,17 @@
       "set": "set",
       "pack": "pack",
       "container": "container",
-      "m": "meter"
+      "m": "meter",
+      "thousand": "thousand pieces"
+    },
+    "issues": {
+      "unquoted_lines": "Unquoted charges",
+      "moq": "Minimum order above the requested quantity",
+      "advance": "Large advance payment",
+      "missing_fields": "Missing details",
+      "not_comparable": "Price not comparable yet",
+      "fx": "Exposed to the exchange rate",
+      "other": "Needs review"
     }
   }
 }

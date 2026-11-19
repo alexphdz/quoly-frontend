@@ -244,7 +244,7 @@
     "aiNote_one": "Quoly leyó {{count}} dato. Revísalo antes de confirmar.",
     "aiNote_other": "Quoly leyó {{count}} datos. Revísalos antes de confirmar.",
     "confirm": "Confirmar cotización",
-    "confirmNote": "Confirmar no adjudica: la cotización entra en la comparación.",
+    "confirmNote": "Confirmar no cierra la solicitud: la cotización entra en la comparación.",
     "confirmNoPrice": "Puedes confirmarla sin precio; no entrará en la comparación de precios.",
     "confirmedNoPrice": "Cotización confirmada sin precio: no entra en la comparación de precios.",
     "priceStated": "Precio indicado por el proveedor",
