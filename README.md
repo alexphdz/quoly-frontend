@@ -28,7 +28,7 @@ Stitching all of that together by hand, in a spreadsheet, is slow and fragile. *
 ```
 Create the request  →  Pick suppliers and send  →  Suppliers reply by email
 →  Quoly reads it  →  You review  →  Quotes pile up
-→  Compare  →  You decide (award)
+→  Compare  →  You close the request
 ```
 
 Your suppliers **change nothing**: they keep answering by email, with no account and no portal to learn. A single request can hold several suppliers at different stages at once — one has quoted, another is still silent, another is waiting on your answer.
@@ -42,10 +42,10 @@ Your suppliers **change nothing**: they keep answering by email, with no account
 - Review and correct what the AI extracted before it counts.
 - Answer supplier questions with an AI-drafted reply you can use, edit, or rewrite.
 - Compare every supplier side by side on the same basis, with a recommended option.
-- Record who you award and why, and export the decision as a PDF.
+- Close the request when you're done and export the comparison to Excel.
 - Keep a private directory of your suppliers, with contacts and tags.
 
-Nothing is awarded or sent automatically. The AI proposes; you decide.
+Nothing is sent automatically. The AI proposes; you decide.
 
 ---
 
@@ -53,9 +53,13 @@ Nothing is awarded or sent automatically. The AI proposes; you decide.
 
 A tour of the product, module by module.
 
+### Assistant
+
+The app opens on a chat assistant: describe what you need, and it drafts the request, asks only for what's missing, lets you pick suppliers and the mailbox to send from, and sends it. The classic form is still available.
+
 ### Home
 
-Your starting point. A quick read of what already needs you: quotes to review, suppliers waiting on your answer, the pipeline across your requests, upcoming dates and recent activity. When nothing is pending, it says so — no busywork.
+An overview. A quick read of what already needs you: quotes to review, suppliers waiting on your answer, the pipeline across your requests, upcoming dates and recent activity. When nothing is pending, it says so — no busywork.
 
 ### Requests
 
@@ -100,9 +104,9 @@ The heart of the product. Every supplier on one request, side by side.
 - A recommended supplier and a short written analysis, plus useful alerts (for example, when a supplier's MOQ exceeds the quantity you asked for).
 - Open questions stay on the comparison, so a cheap-looking offer that's still blocked never passes as finished.
 
-### Decision and record
+### Close and export
 
-You choose the supplier and record the award — an explicit action, never automatic. Write your reason, and export a one-page PDF with the figures, the comparison and your decision, ready for your records or to share.
+When you're done, close the request — an explicit action, never automatic. Export the comparison to Excel, filtered by the columns and suppliers you choose, for your records or to share.
 
 ### Quotes across requests
 
@@ -122,7 +126,7 @@ Your profile and photo, light / dark / system appearance, workspace language (En
 
 Quoly's AI removes the manual work: it reads messy replies, proposes the commercial structure, pulls the technical evidence, summarizes each offer, writes the comparison analysis, and drafts a reply when you ask for one.
 
-It **does not** answer or award on its own, invent data a supplier didn't give, fill gaps so an incomplete quote looks complete, or assign a magic score. The AI proposes; you decide.
+It **does not** answer or decide on its own, invent data a supplier didn't give, fill gaps so an incomplete quote looks complete, or assign a magic score. The AI proposes; you decide.
 
 ---
 
@@ -137,3 +141,7 @@ It **does not** answer or award on its own, invent data a supplier didn't give, 
 ---
 
 <p align="center"><b>Turn the chaos of supplier quotes into a decision you can defend.</b></p>
+
+---
+
+Technical documentation lives in the workspace `Docs/` folder (outside this repo): `Docs/frontend/<feature>/` and `Docs/overview/`.

@@ -2825,50 +2825,49 @@ textarea.input {
   color: var(--color-text-secondary);
 }
 
+/* Inline send confirmation (supplier picker / mailbox choice): an email can't
+   be unsent, so the final send asks once before going out. */
+.chat-send-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+}
+
+.chat-send-confirm.is-inline {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface);
+}
+
+.chat-send-confirm strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.chat-send-confirm-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 .chat-supplier-card-error {
   padding: 4px 16px 8px;
   font-size: 0.8125rem;
   color: var(--color-status-error-text);
 }
 
-/* ── Undo card ────────────────────────────────────────────────────────────── */
+/* ── Mailbox required card ───────────────────────────────────────────────── */
 
-.chat-undo-banner {
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  padding: 12px 16px 16px;
-  background: var(--color-surface);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.chat-undo-text {
+.chat-mailbox-card-text {
+  margin: 0;
+  padding: 0 16px 4px;
   font-size: 0.875rem;
-  color: var(--color-text-primary);
-}
-
-.chat-undo-progress-track {
-  height: 3px;
-  border-radius: 2px;
-  background: var(--color-surface-elevated);
-  overflow: hidden;
-}
-
-.chat-undo-progress-fill {
-  height: 100%;
-  width: 100%;
-  background: var(--color-brand);
-  border-radius: 2px;
-  transform-origin: left center;
-  transition: transform 1s linear;
-}
-
-.chat-undo-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  color: var(--color-text-secondary);
 }
 
 /* ── Attachment chips ─────────────────────────────────────────────────────── */

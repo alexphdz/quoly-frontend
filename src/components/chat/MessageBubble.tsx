@@ -6,14 +6,13 @@ import SummaryCard from './SummaryCard'
 import SummaryCardInteractive from './cards/SummaryCardInteractive'
 import SupplierPickerCard from './cards/SupplierPickerCard'
 import QuickOptionsCard from './cards/QuickOptionsCard'
-import UndoCard from './cards/UndoCard'
+import MailboxRequiredCard from './cards/MailboxRequiredCard'
 import ApprovalCard from './cards/ApprovalCard'
 
 interface MessageBubbleProps {
   message: AgentMessage
   prevMessage?: AgentMessage
   conversationId: string
-  onUndoExpired?: () => void
 }
 
 function formatTime(isoStr: string): string {
@@ -71,7 +70,7 @@ function SystemEvent({ content }: { content: string }) {
   )
 }
 
-function CardRenderer({ message, conversationId, onUndoExpired }: MessageBubbleProps) {
+function CardRenderer({ message, conversationId }: MessageBubbleProps) {
   const { card } = message
   if (!card) return null
 
@@ -100,15 +99,19 @@ function CardRenderer({ message, conversationId, onUndoExpired }: MessageBubbleP
           conversationId={conversationId}
         />
       )
-    case 'undo':
+    case 'mailbox_required':
       return (
-        <UndoCard
+        <MailboxRequiredCard
           card={card}
           messageId={message.id}
           conversationId={conversationId}
-          onExpired={onUndoExpired}
         />
       )
+    case 'undo':
+      // Legacy: the undo window was removed. Old undo cards were never resolved
+      // (an undone one looks the same), so they render nothing; the message
+      // text and the system events around it tell what happened.
+      return null
     case 'approval':
       return (
         <ApprovalCard
@@ -128,7 +131,7 @@ function CardRenderer({ message, conversationId, onUndoExpired }: MessageBubbleP
   }
 }
 
-function AgentMessageView({ message, conversationId, onUndoExpired }: MessageBubbleProps) {
+function AgentMessageView({ message, conversationId }: MessageBubbleProps) {
   const time = formatTime(message.created_at)
   return (
     <div className="chat-agent-message">
@@ -148,7 +151,6 @@ function AgentMessageView({ message, conversationId, onUndoExpired }: MessageBub
         <CardRenderer
           message={message}
           conversationId={conversationId}
-          onUndoExpired={onUndoExpired}
         />
       </div>
     </div>
@@ -167,7 +169,7 @@ function UserMessageView({ message }: { message: AgentMessage }) {
   )
 }
 
-export default function MessageBubble({ message, prevMessage, conversationId, onUndoExpired }: MessageBubbleProps) {
+export default function MessageBubble({ message, prevMessage, conversationId }: MessageBubbleProps) {
   const showDate = isDifferentDay(prevMessage, message)
 
   return (
@@ -180,7 +182,6 @@ export default function MessageBubble({ message, prevMessage, conversationId, on
         <AgentMessageView
           message={message}
           conversationId={conversationId}
-          onUndoExpired={onUndoExpired}
         />
       )}
       {message.role === 'user' && (

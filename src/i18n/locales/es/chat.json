@@ -108,12 +108,6 @@
     "mailboxNext": "Después eliges desde qué correo se envía.",
     "noMailbox": "Sin buzón conectado"
   },
-  "undo": {
-    "banner": "Enviando a {{count}} proveedores · {{seconds}}s para deshacer",
-    "action": "Deshacer",
-    "banner_one": "Enviando a 1 proveedor · {{seconds}}s para deshacer",
-    "banner_other": "Enviando a {{count}} proveedores · {{seconds}}s para deshacer"
-  },
   "file": {
     "sizeError": "El archivo supera 10 MB. Intenta comprimirlo.",
     "typeError": "Solo se admiten PDF, DOCX, PNG, JPG, JPEG y WEBP.",
@@ -180,5 +174,24 @@
   "agentName": "Agente",
   "quickOptions": {
     "default": "predeterminado"
+  },
+  "mailboxRequired": {
+    "title": "Conecta un buzón para enviar",
+    "titleReconnect": "Reconecta tu buzón para enviar",
+    "text": "Tu solicitud está lista. Sale desde tu propio Gmail u Outlook: conecta uno en Ajustes → Correo y vuelve aquí para continuar.",
+    "textReconnect": "Tu solicitud está lista. No tenemos la dirección de tu buzón conectado: reconéctalo en Ajustes → Correo y vuelve aquí para continuar.",
+    "connect": "Conectar buzón",
+    "reconnect": "Reconectar buzón",
+    "recheck": "Ya lo conecté",
+    "stillMissing": "Todavía no hay un buzón conectado. Conéctalo en Ajustes → Correo y vuelve a intentarlo.",
+    "resolved": "Buzón conectado"
+  },
+  "sendConfirm": {
+    "title_one": "¿Enviar a {{count}} proveedor desde {{email}}?",
+    "title_other": "¿Enviar a {{count}} proveedores desde {{email}}?",
+    "titleNoCount": "¿Enviar la solicitud desde {{email}}?",
+    "noUndo": "Los correos no se pueden deshacer.",
+    "send": "Enviar",
+    "cancel": "Cancelar"
   }
 }

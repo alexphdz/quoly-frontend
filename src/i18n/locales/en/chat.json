@@ -108,12 +108,6 @@
     "mailboxNext": "Next you'll choose which email it's sent from.",
     "noMailbox": "No mailbox connected"
   },
-  "undo": {
-    "banner": "Sending to {{count}} suppliers · {{seconds}}s to undo",
-    "action": "Undo",
-    "banner_one": "Sending to 1 supplier · {{seconds}}s to undo",
-    "banner_other": "Sending to {{count}} suppliers · {{seconds}}s to undo"
-  },
   "file": {
     "sizeError": "File exceeds 10 MB. Try compressing it.",
     "typeError": "Only PDF, DOCX, PNG, JPG, JPEG, and WEBP are supported.",
@@ -180,5 +174,24 @@
   "agentName": "Agent",
   "quickOptions": {
     "default": "default"
+  },
+  "mailboxRequired": {
+    "title": "Connect a mailbox to send",
+    "titleReconnect": "Reconnect your mailbox to send",
+    "text": "Your request is ready. It goes out from your own Gmail or Outlook, so connect one in Settings → Email and come back here to continue.",
+    "textReconnect": "Your request is ready. We don't have the address of your connected mailbox, so reconnect it in Settings → Email and come back here to continue.",
+    "connect": "Connect mailbox",
+    "reconnect": "Reconnect mailbox",
+    "recheck": "I've connected it",
+    "stillMissing": "Still no mailbox connected. Connect it in Settings → Email, then try again.",
+    "resolved": "Mailbox connected"
+  },
+  "sendConfirm": {
+    "title_one": "Send to {{count}} supplier from {{email}}?",
+    "title_other": "Send to {{count}} suppliers from {{email}}?",
+    "titleNoCount": "Send the request from {{email}}?",
+    "noUndo": "Emails can't be unsent.",
+    "send": "Send",
+    "cancel": "Cancel"
   }
 }

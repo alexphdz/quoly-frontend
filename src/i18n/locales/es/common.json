@@ -112,7 +112,11 @@
     "incoterm_place_required": "El lugar nombrado es obligatorio cuando hay Incoterm.",
     "response_checklist_required": "Debes seleccionar al menos un campo de respuesta obligatorio.",
     "invalid_enum_value": "Uno o más campos tienen un valor inválido.",
-    "mailbox_address_unknown": "Reconecta tu buzón en Ajustes → Correo: no tenemos guardada su dirección para enviar."
+    "mailbox_address_unknown": "Reconecta tu buzón en Ajustes → Correo: no tenemos guardada su dirección para enviar.",
+    "no_mailbox_connected": "Conecta Gmail u Outlook en Ajustes → Correo para enviar. Las solicitudes siempre salen desde tu propio buzón.",
+    "channel_not_connected": "Ese buzón ya no está conectado. Vuelve a conectarlo en Ajustes → Correo o elige otro.",
+    "send_partially_failed": "Parte de la solicitud salió, pero el resto no se pudo enviar. Al reintentar solo se envía a los proveedores que faltan.",
+    "send_failed": "Tu buzón no pudo enviar la solicitud. No salió nada; inténtalo de nuevo."
   },
   "field": {
     "optional": "opcional"
