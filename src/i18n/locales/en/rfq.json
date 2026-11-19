@@ -74,9 +74,9 @@
     },
     "activity": {
       "title": "Recent activity",
-      "empty": "No recent quotes or awards.",
+      "empty": "No recent quotes or closed requests.",
       "quote": "Quote received",
-      "decided": "Award recorded",
+      "decided": "Request closed",
       "sent": "Request sent"
     }
   },
@@ -1031,7 +1031,7 @@
       "review": "The quote from {{supplier}} needs review",
       "quote": "A quote arrived from {{supplier}}",
       "ask": "There's a pending question in {{rfq}}",
-      "awarded": "Award recorded",
+      "awarded": "Request closed",
       "created": "You created the request {{rfq}}",
       "createdContext": "Saved as draft",
       "askContext": "{{supplier}}: {{question}}",

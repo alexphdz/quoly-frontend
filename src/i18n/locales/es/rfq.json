@@ -74,9 +74,9 @@
     },
     "activity": {
       "title": "Actividad reciente",
-      "empty": "No hay cotizaciones ni adjudicaciones recientes.",
+      "empty": "No hay cotizaciones ni cierres recientes.",
       "quote": "Cotización recibida",
-      "decided": "Adjudicación registrada",
+      "decided": "Solicitud cerrada",
       "sent": "Solicitud enviada"
     }
   },
@@ -1031,7 +1031,7 @@
       "review": "La cotización de {{supplier}} necesita revisión",
       "quote": "Llegó una cotización de {{supplier}}",
       "ask": "Hay una pregunta pendiente en {{rfq}}",
-      "awarded": "Adjudicación registrada",
+      "awarded": "Solicitud cerrada",
       "created": "Creaste la solicitud {{rfq}}",
       "createdContext": "Guardada como borrador",
       "askContext": "{{supplier}}: {{question}}",
