@@ -259,7 +259,7 @@
     "integrations": {
       "title": "Connected email",
       "subtitle": "Connect your email to send requests and reply from Quoly.",
-      "note": "Connecting your mailbox is optional. Quoly still works without it: you can send a request by copying it and sending it from your email. Only Gmail and Microsoft Outlook are supported.",
+      "note": "Quoly sends your requests from the mailbox you connect here, so you need one connected before sending. Gmail and Microsoft Outlook are supported.",
       "gmail": "Gmail",
       "gmailDescription": "",
       "outlook": "Outlook",

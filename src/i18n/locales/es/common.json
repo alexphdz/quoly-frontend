@@ -259,7 +259,7 @@
     "integrations": {
       "title": "Correo conectado",
       "subtitle": "Conecta tu correo para enviar solicitudes y responder desde Quoly.",
-      "note": "Conectar el buzón es opcional. Sin él, Quoly sigue funcionando: puedes enviar una solicitud copiándola y mandándola desde tu correo. Solo se admiten Gmail y Microsoft Outlook.",
+      "note": "Quoly envía tus solicitudes desde el buzón que conectes aquí, así que necesitas uno conectado antes de enviar. Se admiten Gmail y Microsoft Outlook.",
       "gmail": "Gmail",
       "gmailDescription": "",
       "outlook": "Outlook",
