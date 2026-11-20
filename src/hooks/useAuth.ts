@@ -5,7 +5,7 @@ import {
   getToken, setToken, clearToken,
   setRefreshToken, clearRefreshToken, setTokenExpiry,
 } from '../api/client'
-import type { UserProfile } from '../types/auth'
+import type { TokenResponse, UserProfile } from '../types/auth'
 
 export function useAuth() {
   const queryClient = useQueryClient()
@@ -20,14 +20,18 @@ export function useAuth() {
     retry: false,
   })
 
+  const storeSession = (data: TokenResponse) => {
+    setToken(data.access_token)
+    if (data.refresh_token) setRefreshToken(data.refresh_token)
+    if (data.expires_in) setTokenExpiry(data.expires_in)
+    queryClient.invalidateQueries({ queryKey: ['me'] })
+  }
+
   const loginMutation = useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       authApi.login(email, password),
     onSuccess: (data) => {
-      setToken(data.access_token)
-      if (data.refresh_token) setRefreshToken(data.refresh_token)
-      if (data.expires_in) setTokenExpiry(data.expires_in)
-      queryClient.invalidateQueries({ queryKey: ['me'] })
+      storeSession(data)
       navigate('/')
     },
   })
@@ -35,18 +39,25 @@ export function useAuth() {
   const registerMutation = useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       authApi.register(email, password),
-    onSuccess: (data) => {
-      // Email confirmation is required: signup returns no session until the
-      // user confirms. Only log in if Supabase actually returned a token;
-      // otherwise RegisterPage shows a "check your email" screen. Never fake
-      // a session with an empty token.
+    onSuccess: (data, { email }) => {
+      // Signup returns no session until the email is confirmed with the code
+      // sent to it: go to the confirmation screen instead of faking a session
+      // with an empty token.
       if (data.access_token) {
-        setToken(data.access_token)
-        if (data.refresh_token) setRefreshToken(data.refresh_token)
-        if (data.expires_in) setTokenExpiry(data.expires_in)
-        queryClient.invalidateQueries({ queryKey: ['me'] })
+        storeSession(data)
         navigate('/')
+      } else {
+        navigate('/confirm-email', { state: { email } })
       }
+    },
+  })
+
+  const confirmEmailMutation = useMutation({
+    mutationFn: ({ email, code }: { email: string; code: string }) =>
+      authApi.confirmEmail(email, code),
+    onSuccess: (data) => {
+      storeSession(data)
+      navigate('/')
     },
   })
 
@@ -55,15 +66,22 @@ export function useAuth() {
   })
 
   const confirmPasswordResetMutation = useMutation({
-    mutationFn: ({ accessToken, newPassword }: { accessToken: string; newPassword: string }) =>
-      authApi.confirmPasswordReset(accessToken, newPassword),
+    mutationFn: ({ email, code, newPassword }: { email: string; code: string; newPassword: string }) =>
+      authApi.confirmPasswordReset(email, code, newPassword),
   })
 
   const resendConfirmationMutation = useMutation({
     mutationFn: (email: string) => authApi.resendConfirmation(email),
   })
 
-  const logout = () => {
+  // Best-effort server-side revocation of the refresh tokens; the local
+  // session is cleared whether or not the call succeeds.
+  const logout = async () => {
+    try {
+      await authApi.logout()
+    } catch {
+      // Already signed out server-side, offline, or the token expired: nothing to do.
+    }
     clearToken()
     clearRefreshToken()
     queryClient.clear()
@@ -114,6 +132,17 @@ export function useAuth() {
       authApi.changePassword(currentPassword, newPassword),
   })
 
+  const requestEmailChangeMutation = useMutation({
+    mutationFn: (newEmail: string) => authApi.requestEmailChange(newEmail),
+  })
+
+  const confirmEmailChangeMutation = useMutation({
+    mutationFn: (code: string) => authApi.confirmEmailChange(code),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['me'] })
+    },
+  })
+
   const uploadAvatarMutation = useMutation({
     mutationFn: (blob: Blob) => authApi.uploadAvatar(blob),
     onSuccess: (profile) => {
@@ -134,6 +163,7 @@ export function useAuth() {
     isAuthenticated,
     login: loginMutation,
     register: registerMutation,
+    confirmEmail: confirmEmailMutation,
     requestPasswordReset: requestPasswordResetMutation,
     confirmPasswordReset: confirmPasswordResetMutation,
     resendConfirmation: resendConfirmationMutation,
@@ -143,6 +173,8 @@ export function useAuth() {
     connectOutlook: connectOutlookMutation,
     disconnectOutlook: disconnectOutlookMutation,
     changePassword: changePasswordMutation,
+    requestEmailChange: requestEmailChangeMutation,
+    confirmEmailChange: confirmEmailChangeMutation,
     updateProfile: updateProfileMutation,
     uploadAvatar: uploadAvatarMutation,
     removeAvatar: removeAvatarMutation,

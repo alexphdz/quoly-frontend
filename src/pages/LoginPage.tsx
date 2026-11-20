@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
+import { ApiError } from '../api/client'
 import { authErrorMessage } from '../lib/authError'
 import { FormFeedback, FormField } from '../components/ui'
 import { Icon } from '../design-system'
@@ -20,10 +21,14 @@ type FormData = z.infer<typeof schema>
 export default function LoginPage() {
   const { t } = useTranslation('common')
   const { login } = useAuth()
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
   })
+  // Unconfirmed account: offer the code screen (which resends a fresh code on
+  // arrival) instead of leaving the user stuck on the error.
+  const emailNotConfirmed = login.error instanceof ApiError && login.error.code === 'email_not_confirmed'
 
   return (
     <AuthStage titleKey="seo.login" descriptionKey="seo.loginDesc">
@@ -79,6 +84,16 @@ export default function LoginPage() {
         <button type="submit" className="ds-btn ds-btn-primary" disabled={login.isPending}>
           {login.isPending ? t('auth.login.submitting') : t('auth.login.submit')}
         </button>
+
+        {emailNotConfirmed && (
+          <button
+            type="button"
+            className="ds-btn ds-btn-secondary"
+            onClick={() => navigate('/confirm-email', { state: { email: getValues('email'), resend: true } })}
+          >
+            {t('auth.login.confirmEmail')}
+          </button>
+        )}
       </form>
 
       <p className="ds-auth-switch">

@@ -115,9 +115,13 @@ async function _doRefresh(): Promise<void> {
     headers: { 'Content-Type': 'application/json', 'Accept-Language': uiLanguage() },
     body: JSON.stringify({ refresh_token: refreshToken }),
   })
+  // 401 `invalid_refresh_token` (revoked, expired or already rotated) ends the
+  // session: the caller clears the stored tokens and sends the user to /login.
   if (!res.ok) throw new Error('refresh_failed')
   const data = await res.json()
   setToken(data.access_token)
+  // Refresh tokens rotate on every use: the old one is revoked, so the new one
+  // must always replace it.
   if (data.refresh_token) setRefreshToken(data.refresh_token)
   if (data.expires_in) setTokenExpiry(data.expires_in)
 }
@@ -166,7 +170,9 @@ async function handleResponse<T>(
         window.location.href = '/login'
       }
     }
-    throw new ApiError(401, detail)
+    // Unauthenticated 401s (login: invalid_credentials, email_not_confirmed,
+    // account_locked) keep the raw code so pages can branch on it.
+    throw new ApiError(401, detail, typeof body.detail === 'string' ? body.detail : undefined, errorExtra(body))
   }
 
   if (!res.ok) {
@@ -178,12 +184,15 @@ async function handleResponse<T>(
   return res.json() as Promise<T>
 }
 
+// Never send a (possibly stale) bearer token on these: a 401 there must read as
+// a login/code error, not as an expired session.
 const PUBLIC_AUTH_PATHS = new Set([
   '/auth/login',
   '/auth/register',
+  '/auth/confirm',
+  '/auth/confirm/resend',
   '/auth/password/reset',
   '/auth/password/reset/confirm',
-  '/auth/confirm/resend',
 ])
 
 function buildHeaders(isJson = true, path?: string): { headers: HeadersInit; hadAuth: boolean } {

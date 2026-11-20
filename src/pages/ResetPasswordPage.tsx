@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
+import { CODE_PATTERN, onlyCodeDigits } from '../hooks/useResendCooldown'
 import { authErrorMessage } from '../lib/authError'
 import { FormFeedback, FormField } from '../components/ui'
 import { Icon } from '../design-system'
@@ -12,6 +13,8 @@ import AuthStage from '../components/auth/AuthStage'
 
 const schema = z
   .object({
+    email: z.string().email('auth.invalidEmail'),
+    code: z.string().regex(CODE_PATTERN, 'auth.codeFormat'),
     password: z.string().min(6, 'auth.passwordMin'),
     confirm: z.string().min(6, 'auth.passwordMin'),
   })
@@ -22,38 +25,21 @@ const schema = z
 
 type FormData = z.infer<typeof schema>
 
-/** Supabase's recovery email lands here with the session in the URL hash
- * (#access_token=...&type=recovery), or an error (#error_description=...). */
-function readRecoveryToken(): { accessToken: string | null; error: string | null } {
-  const raw = window.location.hash.startsWith('#') ? window.location.hash.slice(1) : ''
-  const params = new URLSearchParams(raw)
-  return {
-    accessToken: params.get('access_token'),
-    error: params.get('error_description') || params.get('error'),
-  }
-}
+/** Set by ForgotPasswordPage after the code was requested. */
+type LocationState = { email?: string } | null
 
 export default function ResetPasswordPage() {
   const { t } = useTranslation('common')
   const { confirmPasswordReset } = useAuth()
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
   const [showPassword, setShowPassword] = useState(false)
-  const [{ accessToken, error }] = useState(readRecoveryToken)
+  const knownEmail = ((location.state as LocationState) ?? null)?.email ?? searchParams.get('email') ?? ''
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: { email: knownEmail, code: '', password: '', confirm: '' },
   })
-
-  // No/invalid token in the link.
-  if (!accessToken) {
-    return (
-      <AuthStage titleKey="seo.resetPassword" noindex>
-        <h1>{t('auth.reset.invalidTitle')}</h1>
-        <p className="ds-auth-note">{error || t('auth.reset.invalidBody')}</p>
-        <p className="ds-auth-switch">
-          <Link to="/forgot-password" className="ds-link">{t('auth.reset.requestNew')}</Link>
-        </p>
-      </AuthStage>
-    )
-  }
+  const codeField = register('code')
 
   // Password updated.
   if (confirmPasswordReset.isSuccess) {
@@ -71,12 +57,45 @@ export default function ResetPasswordPage() {
   return (
     <AuthStage titleKey="seo.resetPassword" noindex>
       <h1>{t('auth.reset.title')}</h1>
+      <p className="ds-auth-note">{t('auth.reset.subtitle')}</p>
 
       <form
         onSubmit={handleSubmit(data =>
-          confirmPasswordReset.mutate({ accessToken, newPassword: data.password }),
+          confirmPasswordReset.mutate({ email: data.email, code: data.code, newPassword: data.password }),
         )}
       >
+        <FormField label={t('auth.reset.email')} error={errors.email?.message && t(errors.email.message as 'auth.invalidEmail')}>
+          <input
+            type="email"
+            autoComplete="email"
+            {...register('email')}
+            className="input"
+            placeholder={t('auth.login.emailPlaceholder')}
+          />
+        </FormField>
+
+        <FormField
+          label={t('auth.reset.code')}
+          helper={t('auth.confirm.codeHelp')}
+          error={errors.code?.message && t(errors.code.message as 'auth.codeFormat')}
+        >
+          <input
+            type="text"
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            pattern="[0-9]*"
+            maxLength={6}
+            autoFocus={!!knownEmail}
+            {...codeField}
+            onChange={event => {
+              event.target.value = onlyCodeDigits(event.target.value)
+              void codeField.onChange(event)
+            }}
+            className="input"
+            placeholder={t('auth.confirm.codePlaceholder')}
+          />
+        </FormField>
+
         <FormField label={t('auth.reset.password')} error={errors.password?.message && t(errors.password.message as 'auth.passwordMin')}>
           <div className="ds-auth-pass">
             <input
@@ -116,6 +135,13 @@ export default function ResetPasswordPage() {
           {confirmPasswordReset.isPending ? t('auth.reset.submitting') : t('auth.reset.submit')}
         </button>
       </form>
+
+      <p className="ds-auth-switch">
+        <Link to="/forgot-password" className="ds-link">{t('auth.reset.requestNew')}</Link>
+      </p>
+      <p className="ds-auth-switch">
+        <Link to="/login" className="ds-link">{t('auth.forgot.backToLogin')}</Link>
+      </p>
     </AuthStage>
   )
 }
