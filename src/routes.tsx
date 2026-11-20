@@ -3,6 +3,7 @@ import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-do
 import AppLayout from './components/layout/AppLayout'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import ConfirmEmailPage from './pages/ConfirmEmailPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import OnboardingPage from './pages/OnboardingPage'
@@ -48,18 +49,6 @@ function PublicOnly({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }
 
-// A Supabase recovery link may land on the site root (e.g. when triggered from
-// the Supabase dashboard, which redirects to the Site URL, not our
-// redirect_to) with the session in the URL hash. Route it to the reset page
-// before the router resolves, so the token isn't lost to the auth redirect.
-if (
-  typeof window !== 'undefined' &&
-  window.location.hash.includes('type=recovery') &&
-  window.location.pathname !== '/reset-password'
-) {
-  window.history.replaceState(null, '', `/reset-password${window.location.hash}`)
-}
-
 // Catálogo del design system: solo en desarrollo (no llega al build de producción).
 const DesignSystemShowcase = import.meta.env.DEV ? lazy(() => import('./design-system/showcase/DesignSystemShowcase')) : null
 const DesignSystemParity = import.meta.env.DEV ? lazy(() => import('./design-system/showcase/Parity')) : null
@@ -85,12 +74,16 @@ export const router = createBrowserRouter([
     element: <PublicOnly><RegisterPage /></PublicOnly>,
   },
   {
+    path: '/confirm-email',
+    element: <PublicOnly><ConfirmEmailPage /></PublicOnly>,
+  },
+  {
     path: '/forgot-password',
     element: <PublicOnly><ForgotPasswordPage /></PublicOnly>,
   },
   {
-    // Not PublicOnly: the recovery link may be opened while a stale token is
-    // still in localStorage, and the user must still be able to reset.
+    // Not PublicOnly: a user who forgot the password may still have a stale
+    // token in localStorage, and must still be able to reset with the code.
     path: '/reset-password',
     element: <ResetPasswordPage />,
   },

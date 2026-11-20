@@ -42,7 +42,7 @@
   "apiErrors": {
     "quote_revision_conflict": "Esta cotización cambió desde que la abriste. Recárgala antes de volver a guardar.",
     "invalid_credentials": "Correo o contraseña incorrectos. Inténtalo de nuevo.",
-    "email_not_confirmed": "El correo debe confirmarse antes de iniciar sesión.",
+    "email_not_confirmed": "Confirma tu correo antes de iniciar sesión.",
     "user_banned": "Esta cuenta ha sido suspendida.",
     "weak_password": "La contraseña debe tener al menos 6 caracteres.",
     "same_password": "La nueva contraseña debe ser distinta a la actual.",
@@ -52,9 +52,16 @@
     "password_update_failed": "No se pudo actualizar la contraseña. Inténtalo de nuevo.",
     "email_not_allowed": "Este dominio de correo no está permitido.",
     "user_already_exists": "Este correo ya está registrado. Intenta iniciar sesión.",
-    "over_email_send_rate_limit": "Se enviaron demasiados correos. Espera cerca de una hora e inténtalo de nuevo.",
+    "over_email_send_rate_limit": "Se enviaron demasiados correos. Espera un minuto antes de pedir otro código.",
     "signup_disabled": "No se pueden crear cuentas ahora. Intenta iniciar sesión.",
     "email_address_invalid": "Ingresa un correo electrónico válido.",
+    "account_locked": "Demasiados intentos fallidos. La cuenta queda bloqueada 15 minutos; inténtalo más tarde o restablece tu contraseña.",
+    "rate_limited": "Demasiados intentos. Espera un momento e inténtalo de nuevo.",
+    "invalid_code": "Ese código no es correcto. Revisa el correo e inténtalo de nuevo.",
+    "code_expired": "Este código expiró. Solicita uno nuevo.",
+    "too_many_attempts": "Demasiados intentos incorrectos. Solicita un nuevo código.",
+    "invalid_refresh_token": "Tu sesión expiró. Inicia sesión de nuevo.",
+    "email_exists": "Ese correo ya está en uso por otra cuenta.",
     "rfq_not_found": "Solicitud no encontrada.",
     "commercial_name_required": "Escribe el nombre del producto.",
     "commercial_quantity_required": "Escribe una cantidad entera mayor que cero.",
@@ -151,6 +158,7 @@
     "invalidEmail": "Ingresa un correo electrónico válido",
     "invalidWorkEmail": "Ingresa un correo electrónico corporativo válido",
     "passwordMin": "La contraseña debe tener al menos 6 caracteres",
+    "codeFormat": "Ingresa el código de 6 dígitos",
     "login": {
       "title": "Iniciar sesión",
       "welcomeTitle": "Bienvenido de nuevo",
@@ -165,7 +173,8 @@
       "submitting": "Iniciando sesión…",
       "newToQuoly": "¿No tienes cuenta?",
       "createAccount": "Crear cuenta",
-      "forgotPassword": "¿Olvidaste tu contraseña?"
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "confirmEmail": "Confirmar correo"
     },
     "register": {
       "title": "Crear cuenta",
@@ -177,28 +186,38 @@
       "submit": "Crear cuenta",
       "submitting": "Creando cuenta…",
       "haveAccount": "¿Ya tienes una cuenta?",
-      "signIn": "Iniciar sesión",
-      "checkEmail": {
-        "title": "Confirma tu correo",
-        "body": "Te enviamos un enlace de confirmación a {{email}}. Haz clic para activar tu cuenta y luego inicia sesión.",
-        "resend": "Reenviar correo",
-        "resending": "Enviando…",
-        "resent": "Correo enviado. Revisa tu bandeja (y spam).",
-        "backToLogin": "Volver a iniciar sesión"
-      }
+      "signIn": "Iniciar sesión"
+    },
+    "confirm": {
+      "title": "Confirma tu correo",
+      "body": "Te enviamos un código de 6 dígitos a {{email}}. Ingrésalo para activar tu cuenta.",
+      "bodyNoEmail": "Ingresa tu correo y el código de 6 dígitos que te enviamos.",
+      "email": "Correo electrónico",
+      "code": "Código de confirmación",
+      "codePlaceholder": "123456",
+      "codeHelp": "El código es válido por 15 minutos.",
+      "submit": "Confirmar correo",
+      "submitting": "Confirmando…",
+      "resend": "Reenviar código",
+      "resending": "Enviando…",
+      "resendIn": "Reenviar en {{seconds}} s",
+      "resent": "Te enviamos un nuevo código. Revisa tu bandeja (y spam).",
+      "backToLogin": "Volver a iniciar sesión"
     },
     "forgot": {
       "title": "Recupera tu contraseña",
-      "subtitle": "Ingresa tu correo y te enviaremos un enlace para crear una nueva contraseña.",
+      "subtitle": "Ingresa tu correo y te enviaremos un código de 6 dígitos para crear una nueva contraseña.",
       "email": "Correo electrónico",
-      "submit": "Enviar enlace",
+      "submit": "Enviar código",
       "submitting": "Enviando…",
-      "sentTitle": "Revisa tu correo",
-      "sentBody": "Si existe una cuenta para {{email}}, te enviamos un enlace para restablecer tu contraseña.",
+      "haveCode": "¿Ya tienes un código?",
       "backToLogin": "Volver a iniciar sesión"
     },
     "reset": {
       "title": "Crea una nueva contraseña",
+      "subtitle": "Ingresa el código que enviamos a tu correo y elige una nueva contraseña.",
+      "email": "Correo electrónico",
+      "code": "Código de restablecimiento",
       "password": "Nueva contraseña",
       "confirm": "Confirmar contraseña",
       "submit": "Actualizar contraseña",
@@ -207,9 +226,7 @@
       "successTitle": "Contraseña actualizada",
       "successBody": "Tu contraseña se cambió. Ya puedes iniciar sesión.",
       "goToLogin": "Ir a iniciar sesión",
-      "invalidTitle": "Enlace inválido o expirado",
-      "invalidBody": "Este enlace de restablecimiento ya no es válido. Solicita uno nuevo.",
-      "requestNew": "Solicitar un nuevo enlace"
+      "requestNew": "Solicitar un nuevo código"
     }
   },
   "settings": {
@@ -245,6 +262,18 @@
       "enterCurrent": "Falta la contraseña actual",
       "confirmNew": "Repite la nueva contraseña",
       "mismatch": "Las contraseñas no coinciden"
+    },
+    "email": {
+      "title": "Correo electrónico",
+      "subtitle": "Inicias sesión con {{email}}. Para cambiarlo, enviaremos un código a la nueva dirección.",
+      "newEmail": "Nuevo correo",
+      "sendCode": "Enviar código",
+      "sending": "Enviando…",
+      "codeSent": "Te enviamos un código de 6 dígitos a {{email}}. Ingrésalo para confirmar el cambio.",
+      "code": "Código de confirmación",
+      "confirm": "Confirmar nuevo correo",
+      "confirming": "Confirmando…",
+      "updated": "Correo actualizado"
     },
     "preferences": {
       "title": "Preferencias",
@@ -534,8 +563,10 @@
     "register": "Crea tu cuenta",
     "registerDesc": "Crea una cuenta en Quoly y convierte las respuestas de tus proveedores en cotizaciones comparables.",
     "forgotPassword": "Restablece tu contraseña",
-    "forgotPasswordDesc": "Solicita un enlace para restablecer la contraseña de tu cuenta de Quoly.",
+    "forgotPasswordDesc": "Solicita un código para restablecer la contraseña de tu cuenta de Quoly.",
     "resetPassword": "Define una nueva contraseña",
+    "confirmEmail": "Confirma tu correo",
+    "confirmEmailDesc": "Ingresa el código que te enviamos por correo para activar tu cuenta de Quoly.",
     "asistente": "Agente · Quoly",
     "dashboard": "Inicio",
     "requests": "Solicitudes",

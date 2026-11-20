@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type ReactNode } from 'react'
+import { useState, type CSSProperties, type FormEvent, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Icon, Skel } from '../components/ds'
 import { Button, ConfirmDialog, IconButton, Select, StatusBadge, Tabs, TextButton, TextInput } from '../design-system'
@@ -9,6 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
+import { CODE_PATTERN, onlyCodeDigits, useResendCooldown } from '../hooks/useResendCooldown'
+import { authErrorMessage } from '../lib/authError'
 import { getToken, post, type ApiError } from '../api/client'
 import { SUPPORTED_LOCALES, type Locale } from '../i18n'
 import { useFormat } from '../lib/format'
@@ -31,6 +33,12 @@ const passwordSchema = z
   })
 
 type PasswordForm = z.infer<typeof passwordSchema>
+
+const emailSchema = z.object({
+  new_email: z.string().email('auth.invalidEmail'),
+})
+
+type EmailForm = z.infer<typeof emailSchema>
 
 function emailFromAccessToken(): string | undefined {
   const token = getToken()
@@ -206,6 +214,102 @@ function SecuritySection() {
           <Button type="submit" variant="primary" loading={changePassword.isPending}>{changePassword.isPending ? t('settings.security.updating') : t('settings.security.update')}</Button>
         </div>
       </form>
+    </section>
+  )
+}
+
+// Two steps: send a 6-digit code to the new address, then confirm it. The
+// login email only changes once the code is accepted (`['me']` is refetched).
+function ChangeEmailSection() {
+  const { t } = useTranslation('common')
+  const { user, requestEmailChange, confirmEmailChange } = useAuth()
+  const cooldown = useResendCooldown()
+  const [pendingEmail, setPendingEmail] = useState('')
+  const [code, setCode] = useState('')
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<EmailForm>({
+    resolver: zodResolver(emailSchema),
+  })
+
+  const sendCode = (data: EmailForm) => {
+    requestEmailChange.mutate(data.new_email, {
+      onSuccess: () => {
+        setPendingEmail(data.new_email)
+        setCode('')
+        cooldown.start()
+      },
+    })
+  }
+
+  const resendCode = () => {
+    requestEmailChange.mutate(pendingEmail, { onSuccess: () => cooldown.start() })
+  }
+
+  const confirm = (event: FormEvent) => {
+    event.preventDefault()
+    if (!CODE_PATTERN.test(code)) return
+    confirmEmailChange.mutate(code, {
+      onSuccess: () => {
+        toast(t('settings.email.updated'), 'success')
+        setPendingEmail('')
+        setCode('')
+        reset()
+      },
+    })
+  }
+
+  const cancel = () => {
+    setPendingEmail('')
+    setCode('')
+    confirmEmailChange.reset()
+    requestEmailChange.reset()
+  }
+
+  return (
+    <section className="st-settings-section st-settings-section-follow">
+      <header className="st-settings-heading"><h2>{t('settings.email.title')}</h2><p>{t('settings.email.subtitle', { email: user?.email ?? '' })}</p></header>
+      {pendingEmail ? (
+        <form onSubmit={confirm} className="st-security-form">
+          <p className="ds-meta">{t('settings.email.codeSent', { email: pendingEmail })}</p>
+          <TextInput
+            label={t('settings.email.code')}
+            optionalLabel=""
+            description={t('auth.confirm.codeHelp')}
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            pattern="[0-9]*"
+            maxLength={6}
+            autoFocus
+            value={code}
+            onChange={event => setCode(onlyCodeDigits(event.target.value))}
+            status={confirmEmailChange.error ? 'error' : undefined}
+            message={confirmEmailChange.error ? authErrorMessage(confirmEmailChange.error, t) : undefined}
+          />
+          {requestEmailChange.error && (
+            <FormFeedback>{authErrorMessage(requestEmailChange.error, t)}</FormFeedback>
+          )}
+          <div className="st-inline-actions">
+            <Button type="submit" variant="primary" loading={confirmEmailChange.isPending} disabled={!CODE_PATTERN.test(code)}>{confirmEmailChange.isPending ? t('settings.email.confirming') : t('settings.email.confirm')}</Button>
+            <Button type="button" variant="secondary" disabled={requestEmailChange.isPending || cooldown.coolingDown} onClick={resendCode}>
+              {requestEmailChange.isPending
+                ? t('auth.confirm.resending')
+                : cooldown.coolingDown
+                  ? t('auth.confirm.resendIn', { seconds: cooldown.secondsLeft })
+                  : t('auth.confirm.resend')}
+            </Button>
+            <Button type="button" variant="tertiary" onClick={cancel}>{t('actions.cancel')}</Button>
+          </div>
+        </form>
+      ) : (
+        <form onSubmit={handleSubmit(sendCode)} className="st-security-form">
+          <TextInput type="email" {...register('new_email')} label={t('settings.email.newEmail')} optionalLabel="" autoComplete="email" status={errors.new_email ? 'error' : undefined} message={errors.new_email?.message ? t(errors.new_email.message as 'auth.invalidEmail') : undefined} />
+          {requestEmailChange.error && (
+            <FormFeedback>{authErrorMessage(requestEmailChange.error, t)}</FormFeedback>
+          )}
+          <div>
+            <Button type="submit" variant="primary" loading={requestEmailChange.isPending}>{requestEmailChange.isPending ? t('settings.email.sending') : t('settings.email.sendCode')}</Button>
+          </div>
+        </form>
+      )}
     </section>
   )
 }
@@ -488,7 +592,7 @@ export default function SettingsPage() {
       <Tabs label={t('settings.title')} variant="secondary" items={tabs.map(item => ({ ...item, icon: item.value === 'profile' ? 'user-circle' : item.value === 'security' ? 'lock-simple' : item.value === 'preferences' ? 'gear-six' : 'envelope-simple' }))} value={current} onChange={value => setSearchParams(value === 'profile' ? {} : { seccion: value === 'security' ? 'seguridad' : value === 'preferences' ? 'preferencias' : 'correo' }, { replace: true })} />
       <div className="st-panel" role="tabpanel">
         {current === 'profile' && <ProfileSection />}
-        {current === 'security' && <SecuritySection />}
+        {current === 'security' && <><SecuritySection /><ChangeEmailSection /></>}
         {current === 'preferences' && <PreferencesSection />}
         {current === 'email' && <IntegrationsSection />}
       </div>
