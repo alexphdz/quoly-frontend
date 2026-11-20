@@ -57,7 +57,7 @@ export async function loginAsDemo(page: Page) {
   await loginWith(
     page,
     creds,
-    'Demo login failed: confirm DEMO_EMAIL in Supabase Auth, then retry.',
+    'Demo login failed: register DEMO_EMAIL and confirm it with the emailed code, then retry.',
   )
 }
 
