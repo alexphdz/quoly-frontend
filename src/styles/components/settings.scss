@@ -98,7 +98,9 @@
   p { margin: 0; color: var(--color-text-secondary); font-size: 13px; line-height: 20px; }
 }
 
+.st-settings-section-follow { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--color-border); }
 .st-security-form { display: grid; gap: 20px; width: min(440px, 100%); }
+.st-inline-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .st-password-input { position: relative; }
 .st-password-input .q-control-input { padding-right: 42px; }
 .st-password-input .q-icon-btn { position: absolute; right: 4px; bottom: 4px; }

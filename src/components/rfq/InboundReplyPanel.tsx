@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useReplyToInbound, useSuggestReply } from '../../hooks/useInboundActions'
 import type { ApiError } from '../../api/client'
+import { stripMarkdown } from '../../lib/plainText'
 
 interface Props {
   inboundId: string
@@ -27,7 +28,7 @@ export default function InboundReplyPanel({ inboundId, rfqId, onClose }: Props) 
   // reviews, edits, and sends. Nothing is auto-sent.
   const handleSuggest = () => {
     suggest.mutate(undefined, {
-      onSuccess: data => setSuggestion(data.suggested_reply),
+      onSuccess: data => setSuggestion(stripMarkdown(data.suggested_reply) || null),
     })
   }
 

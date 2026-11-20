@@ -171,13 +171,6 @@ export interface SupplierRead {
   created_at: string
 }
 
-export interface EmailPayload {
-  to: string
-  subject: string
-  body: string
-  reply_to: string
-}
-
 export interface GmailSendResult {
   to: string
   supplier_name: string
@@ -190,4 +183,5 @@ export interface OutlookSendResult {
   outlook_message_id: string
 }
 
-export type SendRequestsResponse = EmailPayload[] | GmailSendResult[] | OutlookSendResult[]
+// Every send goes out from a connected mailbox (no copy-it-yourself fallback).
+export type SendRequestsResponse = GmailSendResult[] | OutlookSendResult[]

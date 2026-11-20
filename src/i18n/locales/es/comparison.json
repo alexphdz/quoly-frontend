@@ -8,7 +8,7 @@
   "toastRecorded": "Adjudicación registrada",
   "title": "Comparación",
   "redesign": {
-    "subtitle": "Compara las ofertas y registra tu decisión.",
+    "subtitle": "Compara las ofertas lado a lado.",
     "requestData": "Datos de la solicitud",
     "quantity": "Cantidad solicitada",
     "delivery": "Lugar de entrega",
@@ -55,7 +55,7 @@
     "suggestionReason": "Menor precio comparable: {{price}} por {{unit}} entre las ofertas incluidas.",
     "noSuggestion": "Sin sugerencia",
     "noSuggestionReason": "No hay suficientes precios comparables para sugerir una oferta.",
-    "suggestionDisclaimer": "Es una sugerencia, no una adjudicación.",
+    "suggestionDisclaimer": "Es solo una sugerencia; la decisión es tuya.",
     "selectSuggested": "Seleccionar proveedor",
     "decisionTitle": "Decisión de compra",
     "decisionRecorded": "La adjudicación está registrada. No cierra la solicitud ni notifica al proveedor.",
@@ -99,8 +99,8 @@
       "missing_other": "{{count}} campos faltantes",
       "leadTime_one": "Entrega en {{count}} día",
       "leadTime_other": "Entrega en {{count}} días",
-      "moq_one": "MOQ {{count}}",
-      "moq_other": "MOQ {{count}}"
+      "moq_one": "MOQ {{moq}}",
+      "moq_other": "MOQ {{moq}}"
     }
   },
   "preview": {
@@ -217,6 +217,7 @@
     "priceBlocked": {
       "moq_above_requested_quantity": "El pedido mínimo del proveedor supera la cantidad solicitada.",
       "cost_line_amount_missing": "Un costo mencionado no tiene monto, así que el total está incompleto.",
+      "cost_line_conversion": "Un cargo está en una moneda o unidad que aún no se puede convertir, así que el total está incompleto.",
       "unquoted_freight": "Otro proveedor indicó el flete por separado y esta oferta no lo aclara.",
       "unquoted_plates": "Otro proveedor indicó las placas por separado y esta oferta no lo aclara.",
       "unquoted_tooling": "Otro proveedor indicó el herramental por separado y esta oferta no lo aclara.",
@@ -244,8 +245,7 @@
   },
   "line": {
     "title": "Comparación por línea",
-    "subtitle": "La adjudicación cubre toda la solicitud.",
-    "splitAward": "Adjudicación dividida · próximamente",
+    "subtitle": "Precios de cada línea de la solicitud, lado a lado.",
     "lineItem": "Línea",
     "bestForLine": "Mejor para la línea",
     "headers": {
@@ -333,7 +333,7 @@
       }
     },
     "review": {
-      "title": "Antes de adjudicar",
+      "title": "Antes de cerrar",
       "empty": "Nada que revisar. Todas las cotizaciones en la comparación están completas y son comparables.",
       "impact": "En juego",
       "unquoted_lines": "{{supplier}} no cotizó {{items}}. La cotización más baja de otro proveedor es {{amount}}.",
@@ -343,9 +343,15 @@
       "advance": "{{supplier}} pide {{percent}}% de anticipo: {{amount}} antes de la entrega.",
       "advanceNoAmount": "{{supplier}} pide {{percent}}% de anticipo.",
       "missing_fields": "{{supplier}} no indicó {{fields}}.",
-      "not_comparable": "Aún no se puede convertir el precio de {{supplier}} a {{currency}} por {{unit}}.",
+      "not_comparable": "El precio de {{supplier}} todavía no es comparable: {{reasons}}.",
       "fx": "{{supplier}} cotizó en {{currency}} (1 {{currency}} = {{rate}} {{base}}). Un movimiento de {{swing}}% en el tipo de cambio mueve su total {{amount}}.",
-      "openQuote": "Abrir cotización"
+      "openQuote": "Abrir cotización",
+      "reasons": {
+        "conversion": "no se pudo convertir a {{currency}} por {{unit}}",
+        "unquoted": "le faltan conceptos que otros proveedores sí cotizaron",
+        "cost_line_amount": "incluye cargos sin monto",
+        "moq": "su mínimo de compra supera la cantidad solicitada"
+      }
     },
     "table": {
       "title": "Por proveedor",
@@ -418,7 +424,17 @@
       "set": "juego",
       "pack": "paquete",
       "container": "contenedor",
-      "m": "metro"
+      "m": "metro",
+      "thousand": "millar"
+    },
+    "issues": {
+      "unquoted_lines": "Conceptos sin cotizar",
+      "moq": "Mínimo de compra mayor a lo solicitado",
+      "advance": "Anticipo alto",
+      "missing_fields": "Datos sin indicar",
+      "not_comparable": "Precio aún no comparable",
+      "fx": "Expuesto al tipo de cambio",
+      "other": "Requiere revisión"
     }
   }
 }

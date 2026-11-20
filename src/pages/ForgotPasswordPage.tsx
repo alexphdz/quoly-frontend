@@ -1,8 +1,7 @@
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import { authErrorMessage } from '../lib/authError'
@@ -18,36 +17,24 @@ type FormData = z.infer<typeof schema>
 export default function ForgotPasswordPage() {
   const { t } = useTranslation('common')
   const { requestPasswordReset } = useAuth()
-  const [submittedEmail, setSubmittedEmail] = useState('')
+  const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
   })
 
   // Anti-enumeration: the backend returns 200 whether or not the email exists,
-  // so we always show the same "if it exists, we sent a link" confirmation.
-  if (requestPasswordReset.isSuccess) {
-    return (
-      <AuthStage titleKey="seo.forgotPassword" descriptionKey="seo.forgotPasswordDesc">
-        <h1>{t('auth.forgot.sentTitle')}</h1>
-        <p className="ds-auth-note">{t('auth.forgot.sentBody', { email: submittedEmail })}</p>
-        <p className="ds-auth-switch">
-          <Link to="/login" className="ds-link">{t('auth.forgot.backToLogin')}</Link>
-        </p>
-      </AuthStage>
-    )
-  }
+  // so we always continue to the code screen without saying either way.
+  const submit = ({ email }: FormData) =>
+    requestPasswordReset.mutate(email, {
+      onSuccess: () => navigate('/reset-password', { state: { email } }),
+    })
 
   return (
     <AuthStage titleKey="seo.forgotPassword" descriptionKey="seo.forgotPasswordDesc">
       <h1>{t('auth.forgot.title')}</h1>
       <p className="ds-auth-note">{t('auth.forgot.subtitle')}</p>
 
-      <form
-        onSubmit={handleSubmit(data => {
-          setSubmittedEmail(data.email)
-          requestPasswordReset.mutate(data.email)
-        })}
-      >
+      <form onSubmit={handleSubmit(submit)}>
         <FormField label={t('auth.forgot.email')} error={errors.email?.message && t(errors.email.message as 'auth.invalidEmail')}>
           <input
             type="email"
@@ -67,6 +54,9 @@ export default function ForgotPasswordPage() {
         </button>
       </form>
 
+      <p className="ds-auth-switch">
+        <Link to="/reset-password" className="ds-link">{t('auth.forgot.haveCode')}</Link>
+      </p>
       <p className="ds-auth-switch">
         <Link to="/login" className="ds-link">{t('auth.forgot.backToLogin')}</Link>
       </p>

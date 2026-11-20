@@ -9,7 +9,7 @@ export function displayNameFromEmail(email: string): string {
 }
 
 /**
- * First name for Home greetings. UserProfile has no name field today;
+ * Fallback first name for Home greetings when the profile has no first_name:
  * reuse the sidebar derivation, but never interpolate the raw email.
  */
 export function greetingFirstName(email: string | undefined | null): string | undefined {

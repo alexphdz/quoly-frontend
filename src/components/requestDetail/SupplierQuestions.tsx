@@ -12,6 +12,7 @@ import { replyToInbound } from '../../api/inbound'
 import { Button, Chip, IntelligenceMark, StatusBadge, TextButton, Textarea } from '../../design-system'
 import { useRelativeTime } from '../../lib/relativeTime'
 import { toast } from '../ui'
+import { stripMarkdown } from '../../lib/plainText'
 
 function compactAgo(iso: string, t: TFunction): string {
   const minutes = Math.max(1, Math.round(Math.abs(Date.now() - new Date(iso).getTime()) / 60_000))
@@ -144,7 +145,7 @@ function SupplierBlock({
     if (fetched.current) return
     fetched.current = true
     suggestBuyerActionReply(rfq.id, items[0].id)
-      .then(res => setSuggestion(res.suggested_reply))
+      .then(res => setSuggestion(stripMarkdown(res.suggested_reply) || null))
       .catch(() => { setSuggestionError(true); setMode('write') })
       .finally(() => setLoadingSuggestion(false))
   }, [rfq.id, items, readOnly])

@@ -21,6 +21,17 @@ const ALIASES: Record<string, string> = {
   boxes: 'box',
   caja: 'box',
   cajas: 'box',
+  carton: 'box',
+  cartons: 'box',
+  'cartón': 'box',
+  case: 'box',
+  cases: 'box',
+  thousand: 'thousand',
+  thousands: 'thousand',
+  thousand_piece: 'thousand',
+  millar: 'thousand',
+  millares: 'thousand',
+  mil: 'thousand',
   roll: 'roll',
   rolls: 'roll',
   rollo: 'roll',
@@ -66,7 +77,7 @@ const ALIASES: Record<string, string> = {
 export function canonicalUnit(raw: string | null | undefined): string | null {
   const value = raw?.trim()
   if (!value) return null
-  return ALIASES[value.toLowerCase()] ?? value
+  return ALIASES[value.toLowerCase().replace(/\.$/, '')] ?? value
 }
 
 export function useUnitLabel() {
@@ -88,5 +99,9 @@ export function useUnitLabel() {
     return i18n.exists(countKey) ? t(countKey) : code
   }
 
-  return { count, per }
+  /** Unit label that agrees with a quantity: "1 pieza", "10,000 piezas". */
+  const forQuantity = (raw: string | null | undefined, quantity: number | null | undefined) =>
+    quantity === 1 ? per(raw) : count(raw)
+
+  return { count, per, forQuantity }
 }

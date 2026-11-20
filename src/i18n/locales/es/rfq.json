@@ -74,9 +74,9 @@
     },
     "activity": {
       "title": "Actividad reciente",
-      "empty": "No hay cotizaciones ni adjudicaciones recientes.",
+      "empty": "No hay cotizaciones ni cierres recientes.",
       "quote": "Cotización recibida",
-      "decided": "Adjudicación registrada",
+      "decided": "Solicitud cerrada",
       "sent": "Solicitud enviada"
     }
   },
@@ -552,7 +552,9 @@
       "reconnectHint": "Reconecta tu buzón en Ajustes → Correo para ver y usar la dirección.",
       "change": "Cambiar",
       "chooseLabel": "Enviar esta solicitud desde"
-    }
+    },
+    "partial": "Se envió a {{sent}} de {{total}} proveedores; se detuvo en {{failedTo}}. Al reintentar solo se envía a los que faltan.",
+    "partialNoAddress": "Se envió a {{sent}} de {{total}} proveedores. Al reintentar solo se envía a los que faltan."
   },
   "sync": {
     "syncing": "Sincronizando…",
@@ -561,15 +563,6 @@
     "newMessages_one": "{{count}} mensaje nuevo",
     "newMessages_other": "{{count}} mensajes nuevos",
     "failed": "No se pudieron sincronizar las respuestas."
-  },
-  "emailPayload": {
-    "notConnected": "Gmail no está conectado. Copia el correo de abajo y envíalo manualmente, o conecta Gmail desde la barra lateral.",
-    "bodyCopied": "Cuerpo del correo copiado",
-    "to": "Para:",
-    "replyTo": "Responder a:",
-    "subject": "Asunto:",
-    "body": "Cuerpo del correo",
-    "copy": "Copiar"
   },
   "summary": {
     "buyerCommercial": "Comprador y comercial",
@@ -941,7 +934,8 @@
       "pallet": "tarimas",
       "container": "contenedores",
       "set": "juegos",
-      "pack": "paquetes"
+      "pack": "paquetes",
+      "thousand": "millares"
     },
     "validation": {
       "required": "Obligatorio",
@@ -1037,7 +1031,7 @@
       "review": "La cotización de {{supplier}} necesita revisión",
       "quote": "Llegó una cotización de {{supplier}}",
       "ask": "Hay una pregunta pendiente en {{rfq}}",
-      "awarded": "Adjudicación registrada",
+      "awarded": "Solicitud cerrada",
       "created": "Creaste la solicitud {{rfq}}",
       "createdContext": "Guardada como borrador",
       "askContext": "{{supplier}}: {{question}}",
@@ -1335,16 +1329,19 @@
       "addNote": "Agregarlos no les envía nada. Tú decides cuándo enviar la solicitud.",
       "fromDirectory": "Desde el directorio",
       "forThisRequest": "Solo para esta solicitud",
-      "confirmTitle_one": "¿Enviar la solicitud a {{count}} proveedor?",
-      "confirmTitle_other": "¿Enviar la solicitud a {{count}} proveedores?",
-      "confirmMailbox": "Se enviará desde tu buzón conectado. Al terminar pasan a «Esperando respuesta».",
-      "confirmNoMailbox": "No tienes un buzón conectado. Verás el texto de la solicitud para copiarlo y enviarlo desde tu correo.",
+      "confirmTitle_one": "¿Enviar a {{count}} proveedor desde {{email}}?",
+      "confirmTitle_other": "¿Enviar a {{count}} proveedores desde {{email}}?",
       "confirmAction_one": "Enviar a {{count}} proveedor",
       "confirmAction_other": "Enviar a {{count}} proveedores",
       "sendFailed": "No pudimos enviar la solicitud.",
       "retrySend": "Reintentar envío",
-      "noMailboxTitle": "No tienes un buzón conectado",
-      "noMailboxText": "Copia la solicitud y envíala desde tu correo. Copiar no envía nada ni cambia la etapa."
+      "noMailboxTitle": "Conecta un buzón para enviar",
+      "noMailboxText": "Las solicitudes salen desde tu propio Gmail u Outlook. Conecta uno en Ajustes → Correo y vuelve para enviar.",
+      "confirmNoUndo": "Los correos no se pueden deshacer. Al enviarse, los proveedores pasan a «Esperando respuesta».",
+      "connectMailbox": "Conectar buzón",
+      "reconnectMailboxTitle": "Reconecta tu buzón para enviar",
+      "reconnectMailboxText": "No tenemos la dirección de tu buzón conectado. Reconéctalo en Ajustes → Correo para enviar desde él.",
+      "reconnectMailbox": "Reconectar buzón"
     },
     "spec": {
       "title": "Requisitos y documentos"

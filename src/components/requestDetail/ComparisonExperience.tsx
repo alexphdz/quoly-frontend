@@ -19,6 +19,8 @@ import {
   Icon, IntelligenceMark, InlineAlert, StatusBadge, Textarea,
 } from '../../design-system'
 import { useCmpFormat } from '../comparison/useCmpFormat'
+import { useUnitLabel } from '../../lib/units'
+import { plainParagraphs } from '../../lib/plainText'
 
 type Props = {
   rfq: RFQDetail
@@ -40,12 +42,19 @@ export default function ComparisonExperience({ rfq, comparison, openAsks }: Prop
 
   const model = useMemo(() => comparison ? buildComparisonModel(comparison, rfq.quantity) : null, [comparison, rfq.quantity])
   const format = useCmpFormat(comparison?.base_unit ?? rfq.base_unit, comparison?.base_currency ?? 'USD')
+  const units = useUnitLabel()
   const locale = i18n.resolvedLanguage === 'es' ? 'es' : 'en'
+  // "0.48 USD / pieza": supplier amounts in the shared number format, unit codes translated.
+  const quoted = (price: number, currency: string | null | undefined, unit: string | null | undefined) => {
+    const amount = format.fmt.unitMoney(price, currency ?? '').trim()
+    const unitLabel = units.per(unit)
+    return unitLabel ? `${amount} / ${unitLabel}` : amount
+  }
 
   // Una solicitud "cerrada" (status decided) da por terminada la comparación.
   const closed = rfq.status === 'decided' || !!rfq.closed_at
   const closedAtText = rfq.closed_at
-    ? new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(rfq.closed_at))
+    ? format.fmt.date(rfq.closed_at, { dateStyle: 'medium', timeStyle: 'short' })
     : null
 
   const confirmClose = async () => {
@@ -61,10 +70,11 @@ export default function ComparisonExperience({ rfq, comparison, openAsks }: Prop
 
   if (!comparison || !model) {
     return <div className="cx-empty"><ContentSection title={t('detail.comparisonEmptyTitle', { ns: 'rfq' })} description={t('detail.comparisonEmptyDescription', { ns: 'rfq' })}>
-      <Button variant="secondary" onClick={() => navigate(`/rfqs/${rfq.id}?tab=quotations`)}>{t('detail.tabs.quotations', { ns: 'rfq' })}</Button>
+      <Button variant="secondary" onClick={() => navigate(`/rfqs/${rfq.id}?tab=quotations`)}>{t('detail.tabs.quotes', { ns: 'rfq' })}</Button>
     </ContentSection></div>
   }
 
+  const summary = plainParagraphs(comparison.summary)
   const prices = model.rows.filter(item => item.comparable != null)
   const suggested = model && prices.length > 1 && prices.some(item => !item.row.spec_evidence_lines?.some(line => line.verdict === 'deviation')) ? model.leader : null
   const statusTone = (row: ComparisonRow) => row.spec_evidence_lines?.some(line => line.verdict === 'deviation')
@@ -80,7 +90,7 @@ export default function ComparisonExperience({ rfq, comparison, openAsks }: Prop
         </div>
         <Expandable title={t('redesign.requestData')}>
           <dl className="cx-request-facts">
-            <div><dt>{t('redesign.quantity')}</dt><dd>{rfq.quantity} {rfq.base_unit}</dd></div>
+            <div><dt>{t('redesign.quantity')}</dt><dd>{rfq.quantity != null ? `${format.qty(rfq.quantity)} ${units.forQuantity(rfq.base_unit, rfq.quantity)}`.trim() : t('redesign.notProvided')}</dd></div>
             <div><dt>{t('redesign.delivery')}</dt><dd>{rfq.delivery_point || t('redesign.notProvided')}</dd></div>
             <div><dt>{t('redesign.incoterm')}</dt><dd>{rfq.incoterms ? `${rfq.incoterms.rule} · ${rfq.incoterms.named_place}` : t('redesign.notProvided')}</dd></div>
             <div><dt>{t('redesign.requirements')}</dt><dd>{rfq.technical_requirements || t('redesign.notProvided')}</dd></div>
@@ -118,15 +128,14 @@ export default function ComparisonExperience({ rfq, comparison, openAsks }: Prop
           <div className="cx-matrix-scroll"><table className="cx-matrix"><thead><tr><th scope="col">{t('redesign.parameter')}</th>{model.rows.map(item => <th scope="col" key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>
             {suggested?.row.quote_id === item.row.quote_id && <span className="cx-suggested-label"><IntelligenceMark size={14} variant="proposed" />{t('redesign.suggestedShort')}</span>}
             <span>{item.row.supplier_name}</span>
-            <small>{item.row.quote_id.slice(0, 8)}</small>
           </th>)}</tr></thead><tbody>
             <tr><th scope="row">{t('redesign.price')}</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>
               <strong className="cx-price">{item.comparable == null ? t('redesign.notComparable') : format.unitPrice(item.comparable)}</strong>
               {item.rank === 1 && prices.length > 1 && <small>{t('redesign.bestPrice')}</small>}
-              {item.comparable == null && item.row.raw_price != null && <small>{t('redesign.quotedPrice', { price: `${item.row.raw_currency ?? ''} ${item.row.raw_price} / ${item.row.raw_unit ?? ''}` })}</small>}
+              {item.comparable == null && item.row.raw_price != null && <small>{t('redesign.quotedPrice', { price: quoted(item.row.raw_price, item.row.raw_currency, item.row.raw_unit) })}</small>}
             </td>)}</tr>
             <tr><th scope="row">{t('redesign.leadTime')}</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>{item.leadDays == null ? t('redesign.notProvided') : t('redesign.days', { count: item.leadDays })}{item.fastest && model.rows.filter(row => row.leadDays != null).length > 1 && <small>{t('redesign.fastest')}</small>}</td>)}</tr>
-            <tr><th scope="row">MOQ</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>{item.row.raw_quantity_moq == null ? t('redesign.notProvided') : item.row.raw_quantity_moq.toLocaleString(i18n.resolvedLanguage)}{item.moqExcess && <small>{t('redesign.moqExceeds')}</small>}</td>)}</tr>
+            <tr><th scope="row">{t('cmp.table.moq')}</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>{item.row.raw_quantity_moq == null ? t('redesign.notProvided') : format.qty(item.row.raw_quantity_moq)}{item.moqExcess && <small>{t('redesign.moqExceeds')}</small>}</td>)}</tr>
             <tr><th scope="row">{t('redesign.payment')}</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>{item.row.raw_payment_terms || t('redesign.notProvided')}</td>)}</tr>
             <tr><th scope="row">{t('redesign.technical')}</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>{item.row.spec_evidence_lines?.length ? <StatusBadge tone={statusTone(item.row)} variant="quiet">{t('redesign.technicalCount', { count: item.row.spec_evidence_lines.length })}</StatusBadge> : t('redesign.notProvided')}</td>)}</tr>
           </tbody></table></div>
@@ -137,10 +146,10 @@ export default function ComparisonExperience({ rfq, comparison, openAsks }: Prop
             {model.rows.map(item => <article key={item.row.quote_id} className="cx-detail-supplier">
               <h4>{item.row.supplier_name}</h4>
               <dl>
-                <div><dt>{t('redesign.originalPrice')}</dt><dd>{item.row.raw_price == null ? t('redesign.notProvided') : `${item.row.raw_currency ?? ''} ${item.row.raw_price} / ${item.row.raw_unit ?? ''}`}</dd></div>
+                <div><dt>{t('redesign.originalPrice')}</dt><dd>{item.row.raw_price == null ? t('redesign.notProvided') : quoted(item.row.raw_price, item.row.raw_currency, item.row.raw_unit)}</dd></div>
                 <div><dt>{t('redesign.validity')}</dt><dd>{item.row.commercial_offer?.quote_validity || t('redesign.notProvided')}</dd></div>
                 <div><dt>{t('redesign.incoterm')}</dt><dd>{item.row.raw_delivery_point || t('redesign.notProvided')}</dd></div>
-                {(item.row.commercial_offer?.price_tiers ?? []).map((tier, index) => <div key={index}><dt>{t('redesign.tier', { quantity: tier.quantity ?? '—' })}</dt><dd>{tier.price == null ? t('redesign.notProvided') : `${tier.currency ?? item.row.raw_currency ?? ''} ${tier.price}`}</dd></div>)}
+                {(item.row.commercial_offer?.price_tiers ?? []).map((tier, index) => <div key={index}><dt>{t('redesign.tier', { quantity: tier.quantity != null ? format.qty(tier.quantity) : '—' })}</dt><dd>{tier.price == null ? t('redesign.notProvided') : quoted(tier.price, tier.currency ?? item.row.raw_currency, tier.unit ?? item.row.raw_unit)}</dd></div>)}
               </dl>
               {item.row.spec_evidence_lines?.length ? <div className="cx-tech-list"><h5>{t('redesign.technical')}</h5>{item.row.spec_evidence_lines.map((line, index) => <div key={`${line.parameter_name}-${index}`}>
                 <strong>{line.parameter_name}</strong><span>{line.reference_wording || t('redesign.notProvided')}</span><span>{line.supplier_wording || t('redesign.notProvided')}</span>
@@ -166,8 +175,8 @@ export default function ComparisonExperience({ rfq, comparison, openAsks }: Prop
 
       <div className="cx-analysis">
         <ContentSection title={<span className="cx-analysis-title"><IntelligenceMark size={20} variant="proposed" />{t('redesign.analysisTitle')}</span>}>
-          <p>{comparison.summary || t('redesign.noAnalysis')}</p>
-          <ul>{model.issues.slice(0, 3).map(issue => <li key={issue.id}><Icon name="warning-circle" size={16} /><span><strong>{issue.supplier}</strong> · {t(`cmp.issues.${issue.kind}`, { defaultValue: issue.kind })}</span></li>)}</ul>
+          {summary.length > 0 ? summary.map((paragraph, index) => <p key={index}>{paragraph}</p>) : <p>{t('redesign.noAnalysis')}</p>}
+          <ul>{model.issues.slice(0, 3).map(issue => <li key={issue.id}><Icon name="warning-circle" size={16} /><span><strong>{issue.supplier}</strong> · {t(`cmp.issues.${issue.kind}`, { defaultValue: t('cmp.issues.other') })}</span></li>)}</ul>
           <small>{t('redesign.analysisBasis')}</small>
         </ContentSection>
         <aside className="cx-suggestion">

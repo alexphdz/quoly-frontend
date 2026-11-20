@@ -5,23 +5,34 @@ export function register(email: string, password: string): Promise<TokenResponse
   return post<TokenResponse>('/auth/register', { email, password })
 }
 
+/** Confirms a new account with the 6-digit code sent by email; returns a full session. */
+export function confirmEmail(email: string, code: string): Promise<TokenResponse> {
+  return post<TokenResponse>('/auth/confirm', { email, code })
+}
+
+export function resendConfirmation(email: string): Promise<{ status: string }> {
+  return post<{ status: string }>('/auth/confirm/resend', { email })
+}
+
 export function login(email: string, password: string): Promise<TokenResponse> {
   return post<TokenResponse>('/auth/login', { email, password })
+}
+
+/** Revokes the refresh tokens server-side. Callers clear the local session regardless of the outcome. */
+export function logout(): Promise<{ status: string }> {
+  return post<{ status: string }>('/auth/logout')
 }
 
 export function requestPasswordReset(email: string): Promise<{ status: string }> {
   return post<{ status: string }>('/auth/password/reset', { email })
 }
 
-export function confirmPasswordReset(accessToken: string, newPassword: string): Promise<{ status: string }> {
+export function confirmPasswordReset(email: string, code: string, newPassword: string): Promise<{ status: string }> {
   return post<{ status: string }>('/auth/password/reset/confirm', {
-    access_token: accessToken,
+    email,
+    code,
     new_password: newPassword,
   })
-}
-
-export function resendConfirmation(email: string): Promise<{ status: string }> {
-  return post<{ status: string }>('/auth/confirm/resend', { email })
 }
 
 export function getMe(): Promise<UserProfile> {
@@ -67,4 +78,13 @@ export function changePassword(currentPassword: string, newPassword: string): Pr
     current_password: currentPassword,
     new_password: newPassword,
   })
+}
+
+/** Starts an email change: the backend sends a 6-digit code to the NEW address. */
+export function requestEmailChange(newEmail: string): Promise<{ status: string }> {
+  return put<{ status: string }>('/auth/email', { new_email: newEmail })
+}
+
+export function confirmEmailChange(code: string): Promise<{ status: string }> {
+  return post<{ status: string }>('/auth/email/confirm', { code })
 }

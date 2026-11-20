@@ -74,9 +74,9 @@
     },
     "activity": {
       "title": "Recent activity",
-      "empty": "No recent quotes or awards.",
+      "empty": "No recent quotes or closed requests.",
       "quote": "Quote received",
-      "decided": "Award recorded",
+      "decided": "Request closed",
       "sent": "Request sent"
     }
   },
@@ -552,7 +552,9 @@
       "reconnectHint": "Reconnect your mailbox in Settings → Email to see and use its address.",
       "change": "Change",
       "chooseLabel": "Send this request from"
-    }
+    },
+    "partial": "Sent to {{sent}} of {{total}} suppliers; it stopped at {{failedTo}}. Retrying only sends to the ones still missing.",
+    "partialNoAddress": "Sent to {{sent}} of {{total}} suppliers. Retrying only sends to the ones still missing."
   },
   "sync": {
     "syncing": "Syncing…",
@@ -561,15 +563,6 @@
     "newMessages_one": "{{count}} new message",
     "newMessages_other": "{{count}} new messages",
     "failed": "Couldn't sync replies. Try again."
-  },
-  "emailPayload": {
-    "notConnected": "Gmail is not connected. Copy the email below and send manually, or connect Gmail from the sidebar.",
-    "bodyCopied": "Email body copied",
-    "to": "To:",
-    "replyTo": "Reply-To:",
-    "subject": "Subject:",
-    "body": "Email body",
-    "copy": "Copy"
   },
   "summary": {
     "buyerCommercial": "Buyer & commercial",
@@ -941,7 +934,8 @@
       "pallet": "pallets",
       "container": "containers",
       "set": "sets",
-      "pack": "packs"
+      "pack": "packs",
+      "thousand": "thousand pieces"
     },
     "validation": {
       "required": "Required",
@@ -1037,7 +1031,7 @@
       "review": "The quote from {{supplier}} needs review",
       "quote": "A quote arrived from {{supplier}}",
       "ask": "There's a pending question in {{rfq}}",
-      "awarded": "Award recorded",
+      "awarded": "Request closed",
       "created": "You created the request {{rfq}}",
       "createdContext": "Saved as draft",
       "askContext": "{{supplier}}: {{question}}",
@@ -1335,16 +1329,19 @@
       "addNote": "Adding them doesn't send them anything. You decide when to send the request.",
       "fromDirectory": "From the directory",
       "forThisRequest": "Just for this request",
-      "confirmTitle_one": "Send the request to {{count}} supplier?",
-      "confirmTitle_other": "Send the request to {{count}} suppliers?",
-      "confirmMailbox": "It will be sent from your connected mailbox. Afterwards they move to “Awaiting response”.",
-      "confirmNoMailbox": "You don't have a connected mailbox. You'll see the request text to copy and send from your email.",
+      "confirmTitle_one": "Send to {{count}} supplier from {{email}}?",
+      "confirmTitle_other": "Send to {{count}} suppliers from {{email}}?",
       "confirmAction_one": "Send to {{count}} supplier",
       "confirmAction_other": "Send to {{count}} suppliers",
       "sendFailed": "We couldn't send the request.",
       "retrySend": "Retry send",
-      "noMailboxTitle": "You don't have a connected mailbox",
-      "noMailboxText": "Copy the request and send it from your email. Copying doesn't send anything or change the stage."
+      "noMailboxTitle": "Connect a mailbox to send",
+      "noMailboxText": "Requests go out from your own Gmail or Outlook. Connect one in Settings → Email and come back to send.",
+      "confirmNoUndo": "Emails can't be unsent. Once sent, suppliers move to “Awaiting response”.",
+      "connectMailbox": "Connect mailbox",
+      "reconnectMailboxTitle": "Reconnect your mailbox to send",
+      "reconnectMailboxText": "We don't have the address of your connected mailbox. Reconnect it in Settings → Email to send from it.",
+      "reconnectMailbox": "Reconnect mailbox"
     },
     "spec": {
       "title": "Requirements and documents"

@@ -1,7 +1,8 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Button, Icon, TextButton } from '../../../design-system'
-import { connectedMailboxes, defaultMailbox } from '../../../lib/mailbox'
+import { MAILBOX_SETTINGS_PATH, connectedMailboxes, defaultMailbox, usableMailboxes } from '../../../lib/mailbox'
 import { useResolveAction } from '../../../hooks/useConversationTurn'
 import { useAuth } from '../../../hooks/useAuth'
 import type { ApiError } from '../../../api/client'
@@ -21,15 +22,20 @@ interface NewSupplier {
 export default function SupplierPickerCard({ card, messageId, conversationId }: SupplierPickerCardProps) {
   const { t } = useTranslation('chat')
   const { user } = useAuth()
+  const navigate = useNavigate()
   const resolveAction = useResolveAction(conversationId)
   const payload = card.payload as unknown as SupplierPickerCardPayload
   const candidates: SupplierCandidate[] = payload?.candidates ?? []
   const confirmToken: string = payload?.confirm_token ?? ''
 
-  // The picker no longer chooses the mailbox: with two connected the backend
-  // asks next with a `send_channel` quick_options card; with one it sends from it.
-  const mailboxes = connectedMailboxes(user)
+  // The picker no longer chooses the mailbox: with two usable (connected + known
+  // address) the backend asks next with a `send_channel` quick_options card; with
+  // one it sends from it right away, so that send asks for confirmation first
+  // (an email can't be unsent). With none nothing can be sent.
+  const mailboxes = usableMailboxes(user)
   const onlyMailbox = mailboxes.length === 1 ? defaultMailbox(mailboxes, user?.default_send_channel) : undefined
+  const unknownAddress = mailboxes.length === 0 ? connectedMailboxes(user)[0] : undefined
+  const unknownProvider = unknownAddress?.channel === 'outlook' ? 'Outlook' : 'Gmail'
   const onlyMailboxProvider = onlyMailbox?.channel === 'outlook' ? 'Outlook' : 'Gmail'
 
   const isEmptyDirectory = candidates.length === 0
@@ -42,6 +48,7 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
   const [newSupplier, setNewSupplier] = useState<NewSupplier>({ name: '', email: '' })
   const [newSuppliers, setNewSuppliers] = useState<NewSupplier[]>([])
   const [error, setError] = useState<string | null>(null)
+  const [confirming, setConfirming] = useState(false)
 
   if (card.state === 'resolved') {
     return (
@@ -81,6 +88,7 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
   async function handleSend() {
     if (totalCount === 0) return
     setError(null)
+    setConfirming(false)
     try {
       await resolveAction.mutateAsync({
         card_id: messageId,
@@ -194,27 +202,62 @@ export default function SupplierPickerCard({ card, messageId, conversationId }: 
 
       {error && <div className="chat-supplier-card-error">{error}</div>}
 
-      <div className="chat-supplier-card-footer">
-        <span className="chat-supplier-footer-label">
-          {mailboxes.length > 1
-            ? t('supplierPicker.mailboxNext')
-            : onlyMailbox
-              ? onlyMailbox.email
-                ? t('supplierPicker.sentFrom', { email: onlyMailbox.email, provider: onlyMailboxProvider })
-                : t('supplierPicker.sentFromUnknown', { provider: onlyMailboxProvider })
-              : t('supplierPicker.noMailbox')}
-        </span>
-        <Button
-          variant="primary"
-          size="sm"
-          icon="paper-plane-tilt"
-          onClick={handleSend}
-          disabled={totalCount === 0 || resolveAction.isPending}
-          loading={resolveAction.isPending}
-        >
-          {t('supplierPicker.sendN', { count: totalCount })}
-        </Button>
-      </div>
+      {confirming && onlyMailbox
+        ? (
+          <div className="chat-supplier-card-footer chat-send-confirm" role="alertdialog" aria-label={t('sendConfirm.title', { count: totalCount, email: onlyMailbox.email })}>
+            <span className="chat-supplier-footer-label">
+              <strong>{t('sendConfirm.title', { count: totalCount, email: onlyMailbox.email })}</strong>
+              {' '}
+              {t('sendConfirm.noUndo')}
+            </span>
+            <span className="chat-send-confirm-actions">
+              <TextButton size="sm" onClick={() => setConfirming(false)} disabled={resolveAction.isPending}>
+                {t('sendConfirm.cancel')}
+              </TextButton>
+              <Button
+                variant="primary"
+                size="sm"
+                icon="paper-plane-tilt"
+                onClick={handleSend}
+                disabled={resolveAction.isPending}
+                loading={resolveAction.isPending}
+              >
+                {t('sendConfirm.send')}
+              </Button>
+            </span>
+          </div>
+        )
+        : (
+          <div className="chat-supplier-card-footer">
+            <span className="chat-supplier-footer-label">
+              {mailboxes.length > 1
+                ? t('supplierPicker.mailboxNext')
+                : onlyMailbox
+                  ? t('supplierPicker.sentFrom', { email: onlyMailbox.email, provider: onlyMailboxProvider })
+                  : (
+                    <>
+                      {unknownAddress
+                        ? t('supplierPicker.sentFromUnknown', { provider: unknownProvider })
+                        : t('supplierPicker.noMailbox')}
+                      {' '}
+                      <TextButton size="sm" onClick={() => navigate(MAILBOX_SETTINGS_PATH)}>
+                        {unknownAddress ? t('mailboxRequired.reconnect') : t('mailboxRequired.connect')}
+                      </TextButton>
+                    </>
+                  )}
+            </span>
+            <Button
+              variant="primary"
+              size="sm"
+              icon="paper-plane-tilt"
+              onClick={mailboxes.length > 1 ? handleSend : () => setConfirming(true)}
+              disabled={totalCount === 0 || mailboxes.length === 0 || resolveAction.isPending}
+              loading={resolveAction.isPending}
+            >
+              {t('supplierPicker.sendN', { count: totalCount })}
+            </Button>
+          </div>
+        )}
     </div>
   )
 }

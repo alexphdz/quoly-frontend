@@ -1,4 +1,4 @@
-import i18n from '../i18n'
+import i18n, { DEFAULT_LOCALE, SUPPORTED_LOCALES, type Locale } from '../i18n'
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1'
 
@@ -46,20 +46,54 @@ export class ApiError extends Error {
   detail: string
   /** Raw backend error code (`detail` may already be translated for display). */
   code?: string
+  /** Extra fields of the error body besides `detail` (e.g. `sent`, `total`, `failed_to` on a send failure). */
+  extra: Record<string, unknown>
 
-  constructor(status: number, detail: string, code?: string) {
+  constructor(status: number, detail: string, code?: string, extra: Record<string, unknown> = {}) {
     super(detail)
     this.name = 'ApiError'
     this.status = status
     this.detail = detail
     this.code = code
+    this.extra = extra
   }
+}
+
+/** Progress of a send that failed (`send_partially_failed` / `send_failed`), when the backend reports it. */
+export interface SendFailureProgress {
+  sent: number
+  total: number
+  failedTo: string | null
+}
+
+export function sendFailureProgress(error: unknown): SendFailureProgress | null {
+  if (!(error instanceof ApiError)) return null
+  const { sent, total, failed_to: failedTo } = error.extra
+  if (typeof sent !== 'number' || typeof total !== 'number') return null
+  return { sent, total, failedTo: typeof failedTo === 'string' && failedTo ? failedTo : null }
+}
+
+function errorExtra(body: unknown): Record<string, unknown> {
+  if (!body || typeof body !== 'object') return {}
+  const rest: Record<string, unknown> = { ...(body as Record<string, unknown>) }
+  delete rest.detail
+  return rest
 }
 
 function apiErrorDetail(detail: unknown, fallback: string): string {
   if (typeof detail !== 'string') return JSON.stringify(detail ?? fallback)
   const translated = i18n.t(`apiErrors.${detail}`, { ns: 'common', defaultValue: '' })
   return translated || detail
+}
+
+/**
+ * Active UI language as a bare primary tag (`es` | `en`). Read on every call so a
+ * language switch applies to the very next request without a reload. The
+ * backend uses it (via `Accept-Language`) for buyer-facing chat output.
+ */
+function uiLanguage(): Locale {
+  const lng = (i18n.resolvedLanguage ?? i18n.language ?? DEFAULT_LOCALE).slice(0, 2)
+  return (SUPPORTED_LOCALES as readonly string[]).includes(lng) ? (lng as Locale) : DEFAULT_LOCALE
 }
 
 async function apiFetch(input: string, init?: RequestInit): Promise<Response> {
@@ -78,12 +112,16 @@ async function _doRefresh(): Promise<void> {
   if (!refreshToken) throw new Error('no_refresh_token')
   const res = await fetch(`${BASE_URL}/auth/refresh`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Accept-Language': uiLanguage() },
     body: JSON.stringify({ refresh_token: refreshToken }),
   })
+  // 401 `invalid_refresh_token` (revoked, expired or already rotated) ends the
+  // session: the caller clears the stored tokens and sends the user to /login.
   if (!res.ok) throw new Error('refresh_failed')
   const data = await res.json()
   setToken(data.access_token)
+  // Refresh tokens rotate on every use: the old one is revoked, so the new one
+  // must always replace it.
   if (data.refresh_token) setRefreshToken(data.refresh_token)
   if (data.expires_in) setTokenExpiry(data.expires_in)
 }
@@ -132,28 +170,33 @@ async function handleResponse<T>(
         window.location.href = '/login'
       }
     }
-    throw new ApiError(401, detail)
+    // Unauthenticated 401s (login: invalid_credentials, email_not_confirmed,
+    // account_locked) keep the raw code so pages can branch on it.
+    throw new ApiError(401, detail, typeof body.detail === 'string' ? body.detail : undefined, errorExtra(body))
   }
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}))
     const detail = apiErrorDetail(body.detail, 'Request failed')
-    throw new ApiError(res.status, detail, typeof body.detail === 'string' ? body.detail : undefined)
+    throw new ApiError(res.status, detail, typeof body.detail === 'string' ? body.detail : undefined, errorExtra(body))
   }
 
   return res.json() as Promise<T>
 }
 
+// Never send a (possibly stale) bearer token on these: a 401 there must read as
+// a login/code error, not as an expired session.
 const PUBLIC_AUTH_PATHS = new Set([
   '/auth/login',
   '/auth/register',
+  '/auth/confirm',
+  '/auth/confirm/resend',
   '/auth/password/reset',
   '/auth/password/reset/confirm',
-  '/auth/confirm/resend',
 ])
 
 function buildHeaders(isJson = true, path?: string): { headers: HeadersInit; hadAuth: boolean } {
-  const h: Record<string, string> = {}
+  const h: Record<string, string> = { 'Accept-Language': uiLanguage() }
   const token = getToken()
   const attachToken = !!token && !(path && PUBLIC_AUTH_PATHS.has(path))
   if (attachToken) h['Authorization'] = `Bearer ${token}`
@@ -267,7 +310,7 @@ export async function del<T = void>(path: string): Promise<T> {
 }
 
 export async function postFormData<T>(path: string, formData: FormData): Promise<T> {
-  const h: Record<string, string> = {}
+  const h: Record<string, string> = { 'Accept-Language': uiLanguage() }
   const token = getToken()
   const hadAuth = !!token
   if (token) h['Authorization'] = `Bearer ${token}`

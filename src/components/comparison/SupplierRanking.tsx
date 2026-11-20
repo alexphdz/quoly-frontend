@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import type { ComparisonModel, RankedRow } from '../../lib/comparisonModel'
+import { detailGaps } from '../../lib/comparisonModel'
+import { useEnumLabels } from '../../i18n/labels'
 import type { ComparisonRow } from '../../types/comparison'
 import { formatLeadTimeParts, formatPriceTierSummary } from '../../lib/comparisonCommercial'
 import { useUnitLabel } from '../../lib/units'
@@ -109,12 +111,13 @@ function SupplierRow({
 }) {
   const { t } = useTranslation('comparison')
   const units = useUnitLabel()
+  const labels = useEnumLabels()
   const { row } = item
   const sourceIcon = SOURCE_ICON[row.source ?? 'manual'] ?? 'edit'
   const tiers = formatPriceTierSummary(row.commercial_offer, f.fmt, units.per)
   const lead = formatLeadTimeParts(row.commercial_offer, row.raw_delivery_lead_time_days, t)
   const leading = item.rank === 1
-  const missingFields = row.missing_fields.filter(field => !['currency_conversion', 'unit_conversion'].includes(field))
+  const missingFields = detailGaps(row).map(field => labels.missingField(field))
   const barWidth = item.comparable != null && model.priceMax > 0 ? Math.max(6, (item.comparable / model.priceMax) * 100) : 0
 
   return (

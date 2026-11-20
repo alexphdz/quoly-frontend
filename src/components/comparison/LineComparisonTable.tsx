@@ -29,7 +29,6 @@ export default function LineComparisonTable({
     <section className="ds-section">
       <h2>{t('line.title')}</h2>
       <p className="ds-meta">{t('line.subtitle')}</p>
-      <p className="ds-meta">{t('line.splitAward')}</p>
       {Object.entries(groups).map(([lineItemId, lineRows]) => {
         const rankedQuoteIds = ranking[lineItemId] ?? []
         const sorted = [...lineRows].sort((a, b) => {
@@ -70,9 +69,9 @@ export default function LineComparisonTable({
                           {row.normalized_price != null ? fmt.unitMoney(row.normalized_price, baseCurrency) : '—'}
                         </td>
                         <td className="tnum text-[var(--text-secondary)]">
-                          {row.raw_price != null ? `${row.raw_price} ${row.raw_currency ?? ''}/${units.per(row.raw_unit) || row.raw_unit || ''}` : '\u2014'}
+                          {row.raw_price != null ? [fmt.unitMoney(row.raw_price, row.raw_currency ?? '').trim(), units.per(row.raw_unit) || row.raw_unit].filter(Boolean).join(' / ') : '\u2014'}
                         </td>
-                        <td className="tnum text-[var(--text-secondary)]">{row.raw_quantity_moq ?? '—'}</td>
+                        <td className="tnum text-[var(--text-secondary)]">{row.raw_quantity_moq != null ? fmt.number(row.raw_quantity_moq) : '—'}</td>
                         <td className="tnum text-[var(--text-secondary)]">{row.raw_delivery_lead_time_days != null ? t('table.leadTimeDays', { count: row.raw_delivery_lead_time_days }) : '—'}</td>
                         <td className="text-[var(--text-secondary)]">{row.raw_payment_terms ?? '—'}</td>
                         <td>
