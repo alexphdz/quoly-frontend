@@ -54,7 +54,7 @@ export default function ComparisonExperience({ rfq, comparison, openAsks }: Prop
   // Una solicitud "cerrada" (status decided) da por terminada la comparación.
   const closed = rfq.status === 'decided' || !!rfq.closed_at
   const closedAtText = rfq.closed_at
-    ? new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(rfq.closed_at))
+    ? format.fmt.date(rfq.closed_at, { dateStyle: 'medium', timeStyle: 'short' })
     : null
 
   const confirmClose = async () => {
@@ -90,7 +90,7 @@ export default function ComparisonExperience({ rfq, comparison, openAsks }: Prop
         </div>
         <Expandable title={t('redesign.requestData')}>
           <dl className="cx-request-facts">
-            <div><dt>{t('redesign.quantity')}</dt><dd>{rfq.quantity != null ? `${format.qty(rfq.quantity)} ${units.count(rfq.base_unit)}`.trim() : t('redesign.notProvided')}</dd></div>
+            <div><dt>{t('redesign.quantity')}</dt><dd>{rfq.quantity != null ? `${format.qty(rfq.quantity)} ${units.forQuantity(rfq.base_unit, rfq.quantity)}`.trim() : t('redesign.notProvided')}</dd></div>
             <div><dt>{t('redesign.delivery')}</dt><dd>{rfq.delivery_point || t('redesign.notProvided')}</dd></div>
             <div><dt>{t('redesign.incoterm')}</dt><dd>{rfq.incoterms ? `${rfq.incoterms.rule} · ${rfq.incoterms.named_place}` : t('redesign.notProvided')}</dd></div>
             <div><dt>{t('redesign.requirements')}</dt><dd>{rfq.technical_requirements || t('redesign.notProvided')}</dd></div>
@@ -135,7 +135,7 @@ export default function ComparisonExperience({ rfq, comparison, openAsks }: Prop
               {item.comparable == null && item.row.raw_price != null && <small>{t('redesign.quotedPrice', { price: quoted(item.row.raw_price, item.row.raw_currency, item.row.raw_unit) })}</small>}
             </td>)}</tr>
             <tr><th scope="row">{t('redesign.leadTime')}</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>{item.leadDays == null ? t('redesign.notProvided') : t('redesign.days', { count: item.leadDays })}{item.fastest && model.rows.filter(row => row.leadDays != null).length > 1 && <small>{t('redesign.fastest')}</small>}</td>)}</tr>
-            <tr><th scope="row">{t('cmp.table.moq')}</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>{item.row.raw_quantity_moq == null ? t('redesign.notProvided') : item.row.raw_quantity_moq.toLocaleString(i18n.resolvedLanguage)}{item.moqExcess && <small>{t('redesign.moqExceeds')}</small>}</td>)}</tr>
+            <tr><th scope="row">{t('cmp.table.moq')}</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>{item.row.raw_quantity_moq == null ? t('redesign.notProvided') : format.qty(item.row.raw_quantity_moq)}{item.moqExcess && <small>{t('redesign.moqExceeds')}</small>}</td>)}</tr>
             <tr><th scope="row">{t('redesign.payment')}</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>{item.row.raw_payment_terms || t('redesign.notProvided')}</td>)}</tr>
             <tr><th scope="row">{t('redesign.technical')}</th>{model.rows.map(item => <td key={item.row.quote_id} className={suggested?.row.quote_id === item.row.quote_id ? 'is-suggested' : undefined}>{item.row.spec_evidence_lines?.length ? <StatusBadge tone={statusTone(item.row)} variant="quiet">{t('redesign.technicalCount', { count: item.row.spec_evidence_lines.length })}</StatusBadge> : t('redesign.notProvided')}</td>)}</tr>
           </tbody></table></div>

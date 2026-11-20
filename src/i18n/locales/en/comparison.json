@@ -99,8 +99,8 @@
       "missing_other": "{{count}} fields missing",
       "leadTime_one": "{{count}}-day lead time",
       "leadTime_other": "{{count}}-day lead time",
-      "moq_one": "MOQ {{count}}",
-      "moq_other": "MOQ {{count}}"
+      "moq_one": "MOQ {{moq}}",
+      "moq_other": "MOQ {{moq}}"
     }
   },
   "preview": {

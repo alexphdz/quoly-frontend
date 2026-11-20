@@ -99,8 +99,8 @@
       "missing_other": "{{count}} campos faltantes",
       "leadTime_one": "Entrega en {{count}} día",
       "leadTime_other": "Entrega en {{count}} días",
-      "moq_one": "MOQ {{count}}",
-      "moq_other": "MOQ {{count}}"
+      "moq_one": "MOQ {{moq}}",
+      "moq_other": "MOQ {{moq}}"
     }
   },
   "preview": {
