@@ -1,4 +1,4 @@
-import i18n from '../i18n'
+import i18n, { DEFAULT_LOCALE, SUPPORTED_LOCALES, type Locale } from '../i18n'
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1'
 
@@ -86,6 +86,16 @@ function apiErrorDetail(detail: unknown, fallback: string): string {
   return translated || detail
 }
 
+/**
+ * Active UI language as a bare primary tag (`es` | `en`). Read on every call so a
+ * language switch applies to the very next request without a reload. The
+ * backend uses it (via `Accept-Language`) for buyer-facing chat output.
+ */
+function uiLanguage(): Locale {
+  const lng = (i18n.resolvedLanguage ?? i18n.language ?? DEFAULT_LOCALE).slice(0, 2)
+  return (SUPPORTED_LOCALES as readonly string[]).includes(lng) ? (lng as Locale) : DEFAULT_LOCALE
+}
+
 async function apiFetch(input: string, init?: RequestInit): Promise<Response> {
   try {
     return await fetch(input, init)
@@ -102,7 +112,7 @@ async function _doRefresh(): Promise<void> {
   if (!refreshToken) throw new Error('no_refresh_token')
   const res = await fetch(`${BASE_URL}/auth/refresh`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Accept-Language': uiLanguage() },
     body: JSON.stringify({ refresh_token: refreshToken }),
   })
   if (!res.ok) throw new Error('refresh_failed')
@@ -177,7 +187,7 @@ const PUBLIC_AUTH_PATHS = new Set([
 ])
 
 function buildHeaders(isJson = true, path?: string): { headers: HeadersInit; hadAuth: boolean } {
-  const h: Record<string, string> = {}
+  const h: Record<string, string> = { 'Accept-Language': uiLanguage() }
   const token = getToken()
   const attachToken = !!token && !(path && PUBLIC_AUTH_PATHS.has(path))
   if (attachToken) h['Authorization'] = `Bearer ${token}`
@@ -291,7 +301,7 @@ export async function del<T = void>(path: string): Promise<T> {
 }
 
 export async function postFormData<T>(path: string, formData: FormData): Promise<T> {
-  const h: Record<string, string> = {}
+  const h: Record<string, string> = { 'Accept-Language': uiLanguage() }
   const token = getToken()
   const hadAuth = !!token
   if (token) h['Authorization'] = `Bearer ${token}`

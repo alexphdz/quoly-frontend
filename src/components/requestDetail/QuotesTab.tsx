@@ -90,7 +90,7 @@ export default function QuotesTab(props: CommercialRequestDetailProps) {
                 <span className="qt3-item-name">{q.supplier_name}</span>
                 <StatusBadge tone={s.tone} variant="quiet" icon={s.icon}>{tq(`v2.status.${q.status}`, { defaultValue: q.status })}</StatusBadge>
                 {o?.raw_price != null
-                  ? <span className="qt3-item-price">{`${o.raw_currency ?? ''} ${fmt.number(o.raw_price, { maximumFractionDigits: 4 })}${unit ? ` / ${unit}` : ''}`.trim()}</span>
+                  ? <span className="qt3-item-price">{[fmt.unitMoney(o.raw_price, o.raw_currency ?? '').trim(), unit].filter(Boolean).join(' / ')}</span>
                   : <span className="qt3-item-price is-missing">{t('cotizaciones.noPrice')}</span>}
                 {q.missing_fields_count > 0 && <span className="qt3-item-meta">{t('cotizaciones.missing', { count: q.missing_fields_count })}</span>}
                 <span aria-hidden="true" className="qt3-item-trace" />

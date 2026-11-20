@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Button, Icon, IntelligenceMark } from '../../../design-system'
 import { useResolveAction } from '../../../hooks/useConversationTurn'
 import { useFormat } from '../../../lib/format'
+import { useUnitLabel } from '../../../lib/units'
 import type { AgentCard, RfqSummaryCard } from '../../../types/agent'
 import { ApiError } from '../../../api/client'
 
@@ -18,15 +19,6 @@ const FIELD_ORDER = [
   'delivery_point', 'response_deadline', 'requested_delivery_date',
   'technical_requirements', 'attachments',
 ]
-
-const CURRENCY_LABEL: Record<string, string> = {
-  MXN: 'MXN · Peso mexicano',
-  USD: 'USD · Dólar estadounidense',
-  EUR: 'EUR · Euro',
-  CAD: 'CAD · Dólar canadiense',
-  GBP: 'GBP · Libra esterlina',
-  CNY: 'CNY · Yuan',
-}
 
 const FIELD_LABEL_ES: Record<string, string> = {
   name: 'Nombre',
@@ -44,6 +36,7 @@ const FIELD_LABEL_ES: Record<string, string> = {
 export default function SummaryCardInteractive({ card, messageId, conversationId }: SummaryCardInteractiveProps) {
   const { t } = useTranslation('chat')
   const fmt = useFormat()
+  const units = useUnitLabel()
   const resolveAction = useResolveAction(conversationId)
   const [error, setError] = useState<string | null>(null)
 
@@ -82,13 +75,16 @@ export default function SummaryCardInteractive({ card, messageId, conversationId
     if (raw == null) return ''
     if (key === 'quantity') {
       const n = Number(raw)
-      const num = Number.isFinite(n) && String(raw).trim() !== '' ? fmt.number(n) : String(raw)
-      const unit = fields['base_unit'] != null ? String(fields['base_unit']) : ''
+      const isNumber = Number.isFinite(n) && String(raw).trim() !== ''
+      const num = isNumber ? fmt.number(n) : String(raw)
+      // Unit codes ("piece") read as words in the UI language, singular for 1.
+      const rawUnit = fields['base_unit'] != null ? String(fields['base_unit']) : ''
+      const unit = rawUnit ? units.forQuantity(rawUnit, isNumber ? n : null) || rawUnit : ''
       return unit ? `${num} ${unit}` : num
     }
     if (key === 'base_currency') {
       const code = String(raw).toUpperCase()
-      return CURRENCY_LABEL[code] ?? String(raw)
+      return t(`rfq:commercial.currencies.${code}`, { defaultValue: String(raw) })
     }
     if (key === 'response_deadline' || key === 'requested_delivery_date') {
       // Parse date-only values at local noon so the timezone never shifts the day.

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Button, Icon, KeyValueGroup, TextButton } from '../../design-system'
 import { useFormat } from '../../lib/format'
+import { useUnitLabel } from '../../lib/units'
 import type { RFQDetail } from '../../types/rfq'
 
 const INCOTERM_NAME: Record<string, string> = {
@@ -20,10 +21,11 @@ export default function RequestPanel({ rfq, stacked, mobile, copied, onCopyEmail
 }) {
   const { t } = useTranslation('rfq')
   const fmt = useFormat()
+  const units = useUnitLabel()
   const navigate = useNavigate()
   const day = (iso: string) => fmt.date(/^\d{4}-\d{2}-\d{2}$/.test(iso) ? `${iso}T12:00:00` : iso, { day: 'numeric', month: 'short', year: 'numeric' })
   const canEdit = rfq.status !== 'decided' && rfq.status !== 'closed'
-  const unit = t(`commercial.units.${rfq.base_unit}`, { defaultValue: rfq.base_unit })
+  const unit = units.forQuantity(rfq.base_unit, rfq.quantity) || rfq.base_unit
   const rule = rfq.incoterms?.rule
   const role = rfq.incoterms?.place_role
   const none = <span className="rd2-none">{t('detalle.panel.notSet')}</span>

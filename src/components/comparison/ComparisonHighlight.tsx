@@ -87,7 +87,7 @@ export default function ComparisonHighlight({
     chips.push({
       key: 'moq',
       icon: 'inventory_2',
-      label: t('highlight.chips.moq', { count: winner.raw_quantity_moq }),
+      label: t('highlight.chips.moq', { count: winner.raw_quantity_moq, moq: fmt.number(winner.raw_quantity_moq) }),
       tone: 'neutral',
     })
   }
