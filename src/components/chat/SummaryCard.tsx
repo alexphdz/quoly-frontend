@@ -4,6 +4,8 @@ import { Button, TextButton, IntelligenceMark } from '../../design-system'
 import { useResolveAction } from '../../hooks/useConversationTurn'
 import type { AgentCard, RfqSummaryCard } from '../../types/agent'
 import { ApiError } from '../../api/client'
+import { useFormat } from '../../lib/format'
+import { useUnitLabel } from '../../lib/units'
 
 interface SummaryCardProps {
   card: AgentCard
@@ -19,6 +21,8 @@ const FIELD_ORDER = [
 
 export default function SummaryCard({ card, messageId, conversationId }: SummaryCardProps) {
   const { t } = useTranslation('chat')
+  const fmt = useFormat()
+  const units = useUnitLabel()
   const resolveAction = useResolveAction(conversationId)
   const [error, setError] = useState<string | null>(null)
 
@@ -76,6 +80,19 @@ export default function SummaryCard({ card, messageId, conversationId }: Summary
 
   const displayFields = FIELD_ORDER.filter(k => fields[k] != null)
 
+  // Raw contract values in the UI language: grouped quantity, unit code as a word.
+  function displayValue(key: string): string {
+    const raw = fields[key]
+    const n = Number(raw)
+    const quantity = Number.isFinite(n) && String(raw).trim() !== '' ? n : null
+    if (key === 'quantity' && quantity != null) return fmt.number(quantity)
+    if (key === 'base_unit') {
+      const q = Number(fields['quantity'])
+      return units.forQuantity(String(raw), Number.isFinite(q) ? q : null) || String(raw)
+    }
+    return String(raw)
+  }
+
   return (
     <div className="chat-card is-pending">
       <div className="chat-card-header">
@@ -103,7 +120,7 @@ export default function SummaryCard({ card, messageId, conversationId }: Summary
                     className={isAssumed ? 'chat-summary-value-text is-assumed' : 'chat-summary-value-text'}
                     title={isAssumed ? t('summary.assumedTooltip') : undefined}
                   >
-                    {String(fields[key])}
+                    {displayValue(key)}
                   </span>
                 </td>
               </tr>
